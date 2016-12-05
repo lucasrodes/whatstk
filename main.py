@@ -25,6 +25,9 @@ dates = ca.get_dates(data)
 
 interventions = ca.get_intervention_table(names, dates, data)
 
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 
 pd.tools.plotting.scatter_matrix(interventions, alpha=0.2, figsize=(6, 6), diagonal='kde')
+plt.suptitle(r'Number of interventions per day', fontsize=18)
 plt.show()

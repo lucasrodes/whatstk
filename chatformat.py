@@ -8,15 +8,31 @@ encoding = "utf-8" # or iso-8859-15, or cp1252, or whatever encoding you use
 
 # Returns information in format [date, username and message]
 def raw2format(l,p):
-	d = [l[0:2], l[3:5], l[6:10], l[12:14], l[15:17]]
-	n = remove_accents(l[20:p-1])
+	header = l[:p-1]
+
+	day = header[0:2]
+	month = header[3:5]
+	# Year can be YY or YYYY
+	pattern_year = '\d{,4}, '
+	py = re.compile(pattern_year)
+	year = py.match(header[6:]).group()[:-2]
+	year_end = py.match(header[6:]).end() + 6
+
+	hour = header[year_end:year_end+2]
+	minute = header[year_end+3:year_end+5]
+
+	d = [day, month, year, hour, minute]
+
+	n = remove_accents(header[year_end+8:p-1])
+	
 	m = l[p+1:]
+
 	return [d,n,m]
 
 # From raw data to a matrix where each row is in format of raw2format
 def create_samples(lines):
 	# Regular expression to find the header of the message
-	pattern = '\d\d/\d\d/\d{,4}, \d\d:\d\d - [^:]*:'
+	pattern = '\d\d.\d\d.\d{,4}, \d\d:\d\d - [^:]*:'
 	p1 = re.compile(pattern)
 	data = []
 
@@ -38,7 +54,7 @@ def create_samples(lines):
 		else:
 			# Pattern not found! Continuation of previous message or WhatsApp alert?
 			# Regular expression to detect WhatsApp alert
-			pattern_alert_whats = '\d\d/\d\d/\d{,4}, \d\d:\d\d -'
+			pattern_alert_whats = '\d\d.\d\d.\d{,4}, \d\d:\d\d -'
 			p2 = re.compile(pattern_alert_whats)
 			m2 = p2.match(line)
 			if (m2 == None):
