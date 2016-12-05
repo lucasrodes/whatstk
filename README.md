@@ -15,5 +15,4 @@ Email the chat of your whatsapp group using your phone. To do so, got to the gro
 - [NumPy](https://github.com/numpy/numpy)
 - [Pandas](https://github.com/pandas-dev/pandas)
 - [SciPy](http://www.scipy.org/install.html)
-<> - [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
 - [Matplotlib](http://matplotlib.org/users/installing.html)
