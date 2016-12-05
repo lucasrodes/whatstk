@@ -10,7 +10,10 @@ Test the program running `python main.py < file.in`, where file.in is the chat y
 
 Email the chat of your whatsapp group using your phone. To do so, got to the group conversation, click the three dots (up-right) and select More. Finally, click on Email chat.
 
-## Requirements
+## Dependencies
 
-- [NumPy](http://www.numpy.org/)
-- [Pandas](http://pandas.pydata.org/)
+- [NumPy](https://github.com/numpy/numpy)
+- [Pandas](https://github.com/pandas-dev/pandas)
+- [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
+- [SciPy](http://www.scipy.org/install.html)
+- [Matplotlib](http://matplotlib.org/users/installing.html)
