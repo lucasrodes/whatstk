@@ -30,8 +30,7 @@ def create_samples(lines):
 			try:
 				data[-1][2] = remove_accents(data[-1][2])
 			except Exception:
-				print ""
-
+				pass
 			
 			pos = m1.end() # Obtain ending position of the match
 			match = m1.group() # String matching the pattern
