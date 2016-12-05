@@ -16,3 +16,4 @@ Email the chat of your whatsapp group using your phone. To do so, got to the gro
 - [Pandas](https://github.com/pandas-dev/pandas)
 - [SciPy](http://www.scipy.org/install.html)
 - [Matplotlib](http://matplotlib.org/users/installing.html)
+- [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
