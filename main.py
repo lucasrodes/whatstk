@@ -6,6 +6,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import chatformat as cf
 import chatplot as cp
+import seaborn as sns
+
+sns.set(style="whitegrid")
 
 # Read Input, execute $ python main.py < file.in 
 lines = []
@@ -37,10 +40,16 @@ plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 
 # Plots
-cp.chat_scatter_matrix(interventions_users_days, 'Number of interventions per day')
+# General
 cp.plot_total_interventions_users(interventions_users_days)
 cp.plot_interventions_per_day(interventions_users_days)
 cp.plot_distribution_total_interventions_per_day(interventions_users_days)
 cp.plot_interventions_per_hour(interventions_users_hours)
+
+
+# Intra-user relations
+cp.chat_scatter_matrix(interventions_users_days, 'Number of interventions per day')
+cp.chat_scatter_matrix_density(interventions_users_days)
+cp.violinplot_users_days(interventions_users_days)
 
 
