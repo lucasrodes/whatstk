@@ -36,7 +36,7 @@ def raw2format(l,p):
 # From raw data to a matrix where each row is in format of raw2format
 def clean_data(lines):
 	# Regular expression to find the header of the message
-	pattern = '\d\d.\d\d.\d{,4}, \d\d:\d\d - [^:]*:'
+	pattern = '\d?\d.\d\d.\d{,4}, \d\d:\d\d - [^:]*:'
 	p1 = re.compile(pattern)
 	data = []
 
@@ -57,7 +57,7 @@ def clean_data(lines):
 		else:
 			# Pattern not found! Continuation of previous message or WhatsApp alert?
 			# Regular expression to detect WhatsApp alert
-			pattern_alert_whats = '\d\d.\d\d.\d{,4}, \d\d:\d\d -'
+			pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d\d:\d\d -'
 			p2 = re.compile(pattern_alert_whats)
 			m2 = p2.match(line)
 			if (m2 == None):
