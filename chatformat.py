@@ -18,12 +18,12 @@
 # This import makes Python use 'print' as in Python 3.x
 from __future__ import print_function
 
+import re
 import unicodedata
+from operator import itemgetter
 
 import numpy as np
 import pandas as pd
-import re
-from operator import itemgetter
 
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 
@@ -92,11 +92,25 @@ def clean_data(lines):
     return data
 
 
-# Function from [1]
+# Function from [3]
 def remove_accents(byte_string):
-    unicode_string = byte_string.decode(encoding)
-    nfkd_form = unicodedata.normalize('NFKD', unicode_string)
-    return "".join([c for c in nfkd_form if not unicodedata.combining(c)])
+    """
+        Strip accents from input String.
+
+        :param byte_string: The input string.
+        :type byte_string: String.
+
+        :returns: The processed String.
+        :rtype: String.
+        """
+    try:
+        byte_string = unicode(byte_string, 'utf-8')
+    except NameError:  # unicode is a default on python 3
+        pass
+    byte_string = unicodedata.normalize('NFD', byte_string)
+    byte_string = byte_string.encode('ascii', 'ignore')
+    byte_string = byte_string.decode("utf-8")
+    return str(byte_string)
 
 
 # Obtain usernames from the chat
@@ -182,10 +196,13 @@ def get_number_interventions_per_hour(hour_, interv_):
     s = [1 if i[0][3] == hour_ else 0 for i in interv_]
     return sum(s)
 
-#  REFERENCES
-#
-# [1] MiniQuark comment,
-# http://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string
-#
-# [2] Comment from Mark Byers,
-# http://stackoverflow.com/questions/3724551/python-uniqueness-for-list-of-lists
+    #  REFERENCES
+    #
+    # [1] MiniQuark comment,
+    # http://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string
+    #
+    # [2] Comment from Mark Byers,
+    # http://stackoverflow.com/questions/3724551/python-uniqueness-for-list-of-lists
+    #
+    # [3] Function from Jer42
+    # http://stackoverflow.com/a/31607735
