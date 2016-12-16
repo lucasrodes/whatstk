@@ -52,8 +52,11 @@ interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
 print("Preparing plots...")
 
 # Enable LaTeX fonts
-plt.rc('text', usetex=True)
-plt.rc('font', family='serif')
+try:
+	plt.rc('text', usetex=True)
+	plt.rc('font', family='serif')
+except Exception:
+	pass
 
 # Plots
 # General
