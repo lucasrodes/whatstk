@@ -27,6 +27,7 @@ import chatplot as cp
 
 sns.set(style="whitegrid")
 
+# TODO Change reading mode for an argv mode
 # Read Input, execute $ python main.py < file.in 
 lines = []
 for line in sys.stdin:
