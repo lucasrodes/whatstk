@@ -29,6 +29,7 @@ encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 
 
 # TODO: VERY SENSITIVE TO DIFFERENT DAYS/MONTH FORMATS
+# TODO Specify that the format [[date], username, message] is that of the output
 # Maps the input line from string to an array of the form: [[date], username, message]
 def raw2format(l, p):
     header = l[:p - 1]
@@ -78,7 +79,7 @@ def raw2format(l, p):
 # From raw data to a matrix where each row is in format of raw2format
 def clean_data(lines):
     # Regular expression to find the header of the message
-    pattern = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d - [^:]*:'
+    pattern = '\d?\d.\d\d.\d{,4}, \d\d:\d\d - [^:]*:'
     p1 = re.compile(pattern)
     data = []
 
@@ -99,7 +100,7 @@ def clean_data(lines):
         else:
             # Pattern not found! Continuation of previous message or WhatsApp alert?
             # Regular expression to detect WhatsApp alert
-            pattern_alert_whats = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d -'
+            pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d\d:\d\d -'
             p2 = re.compile(pattern_alert_whats)
             m2 = p2.match(line)
             if m2 is None:

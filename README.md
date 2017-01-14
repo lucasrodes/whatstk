@@ -20,7 +20,12 @@ click on Email chat.
 - [Pandas](https://github.com/pandas-dev/pandas)
 - [SciPy](http://www.scipy.org/install.html)
 - [Matplotlib](http://matplotlib.org/users/installing.html)
+    - [LaTeX](http://www.tug.org/)
+    - dvipng
+    - ghostscript
 - [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
+
+The sub-dependencies of Matplotlib are needed for plotting with LaTeX fonts.
 
 It is recommended (as well as being the simplest and easiest way) to install these dependencies with `pip` inside a `virtualenv` to keep
 them isolated from the rest of the system.
