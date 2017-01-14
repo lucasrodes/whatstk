@@ -33,21 +33,43 @@ encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 def raw2format(l, p):
     header = l[:p - 1]
 
-    day = header[0:2]
-    month = header[3:5]
+    # day
+    pattern_day = '\d?\d.'
+    py = re.compile(pattern_day)
+    day = py.match(header).group()[:-1]
+    day_end = py.match(header).end()
+
+    # month
+    pattern_month = '\d?\d.'
+    py = re.compile(pattern_month)
+    month = py.match(header[day_end:]).group()[:-1]
+    month_end = py.match(header[day_end:]).end() + day_end
+
     # Year can be YY or YYYY
     pattern_year = '\d{,4}, '
     py = re.compile(pattern_year)
-    year = py.match(header[6:]).group()[:-2]
-    year_end = py.match(header[6:]).end() + 6
+    year = py.match(header[month_end:]).group()[:-2]
+    year_end = py.match(header[month_end:]).end() + month_end
 
-    hour = header[year_end:year_end + 2]
-    minute = header[year_end + 3:year_end + 5]
+    # Hour 
+    pattern_hour = '\d?\d.'
+    py = re.compile(pattern_hour)
+    hour = py.match(header[year_end:]).group()[:-1]
+    hour_end = py.match(header[year_end:]).end() + year_end
 
+    # Minute
+    pattern_minute = '\d?\d .'
+    py = re.compile(pattern_minute)
+    minute = py.match(header[hour_end:]).group()[:-2]
+    minute_end = py.match(header[hour_end:]).end() + hour_end
+
+    # Complete date
     d = [day, month, year, hour, minute]
 
-    n = remove_accents(header[year_end + 8:p - 1])
+    # Name
+    n = remove_accents(header[minute_end:p - 1])
 
+    # Message
     m = l[p + 1:]
 
     return [d, n, m]
@@ -128,7 +150,8 @@ def get_days(data):
 
 
 def get_hours():
-    return ['0' + str(s) if len(str(s)) == 1 else str(s) for s in range(24)]
+    return [str(s) for s in range(24)]
+    #return ['0' + str(s) if len(str(s)) == 1 else str(s) for s in range(24)]
 
 
 # Return DataFrame with interventions of all users (columns) for all days (rows)
