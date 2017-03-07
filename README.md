@@ -16,19 +16,49 @@ click on Email chat.
 
 ## Dependencies
 
-- [NumPy](https://github.com/numpy/numpy)
-- [Pandas](https://github.com/pandas-dev/pandas)
-- [SciPy](http://www.scipy.org/install.html)
-- [Matplotlib](http://matplotlib.org/users/installing.html)
-    - [LaTeX](http://www.tug.org/)
-    - dvipng
-    - ghostscript
-- [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
+Use the `requirements.txt` file to install all dependencies
+`pip install -r requirements.txt`
 
-The sub-dependencies of Matplotlib are needed for plotting with LaTeX fonts.
-
-It is recommended (as well as being the simplest and easiest way) to install these dependencies with `pip` inside a `virtualenv` to keep
+It is highly recommended (as well as being the simplest and easiest way) to install these dependencies with `pip` inside a virtual environment to keep
 them isolated from the rest of the system.
+
+### Virtualenv setup
+
+Install virtualenv
+
+`sudo apt install python3-env`
+
+Create a new virtualenv (we name it `.env`)
+
+`python3 -m venv .env`
+
+Activate the environment
+
+`. .env/bin/activate`
+
+Install all the dependencies
+`pip install -r requirements.txt`
+
+You can exit the environment by typing
+
+`deactivate`
+
+I you modify the project using new libraries you might install, update the `requirements.txt` file
+
+`pip freeze > requirements.txt`
+
+<>- [NumPy](https://github.com/numpy/numpy)
+<>- [Pandas](https://github.com/pandas-dev/pandas)
+<>- [SciPy](http://www.scipy.org/install.html)
+<>- [Matplotlib](http://matplotlib.org/users/installing.html)
+<>    - [LaTeX](http://www.tug.org/)
+<>    - dvipng
+<>    - ghostscript
+<>- [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
+
+<>The sub-dependencies of Matplotlib are needed for plotting with LaTeX fonts.
+
+
 
 ## License
 
