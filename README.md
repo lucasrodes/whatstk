@@ -7,9 +7,9 @@ tools to detect some hidden patterns in whatsapp group chats.
 
 Simply run
 
-`$ python main.py file.in`
+`$ python main.py file`
 
-where `file.in` is the log of the chat you want to analyze. The program will prompt an error if `file.in` does not exist.
+where `file` is the name of the chat log file that you want to analyze. The program will prompt an error if `file.in` does not exist.
 
 ## Dependencies
 
