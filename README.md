@@ -22,14 +22,14 @@ We highly recommended to install these dependencies with `pip` inside a virtual 
 
 ## F.A.Q.
 
-- *How do I obtain the log of my chat?*
+**How do I obtain the log of my chat?**
 
 Email the chat of your whatsapp group using your phone. To do so, got to the
 group conversation, click the three dots (up-right) and select More. Finally,
 click on Email chat.
 
 
-- *How do I setup a virtual environment?*
+**How do I setup a virtual environment?**
 
 Install virtualenv
 
@@ -55,7 +55,9 @@ I you modify the project using new libraries you might install, update the `requ
 
 `$ pip freeze > requirements.txt`
 
-For more details, pleace check the related [Python documentation](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
+For further questions, please consider reading the related documentation [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
+
+
 ## License
 
 whatsapp-stats
