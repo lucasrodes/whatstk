@@ -28,12 +28,6 @@ import chatformat as cf
 
 # sns.set(style="whitegrid")
 
-# TODO Change reading mode for an argv mode
-# Read Input, execute $ python main.py < file.in
-#lines = []
-#for line in sys.stdin:
-#    lines.append(line.rstrip())
-
 # Read file name and store it in the list lines
 fileName = sys.argv[1]
 
