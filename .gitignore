@@ -1,4 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
+test_data/*
 ### Windows template
 # Windows image file caches
 Thumbs.db
@@ -243,3 +244,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Chats and results
+chats/
+results/
