@@ -24,11 +24,9 @@ We highly recommended to install these dependencies with `pip` inside a virtual 
 
 **_How do I obtain the log of my chat?_**
 
-<blockquote>
-Email the chat of your whatsapp group using your phone. To do so, go to the
+> Email the chat of your whatsapp group using your phone. To do so, go to the
 group conversation, click the three dots (up-right) and select More. Finally,
 click on Email chat. More information can be found [here](https://www.whatsapp.com/faq/en/s60/21055276)
-<blockquote/>
 
 **_Is this working for all languages?_**
 
@@ -50,21 +48,21 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > Activate the environment
 
-`$ . .env/bin/activate`
+> `$ . .env/bin/activate`
 
-Install all the dependencies
+> Install all the dependencies
 
-`$ pip install -r requirements.txt`
+> `$ pip install -r requirements.txt`
 
-You can exit the environment by typing
+> You can exit the environment by typing
 
-`$ deactivate`
+> `$ deactivate`
 
-I you modify the project using new libraries you might install, update the `requirements.txt` file
+> I you modify the project using new libraries you might install, update the `requirements.txt` file
 
-`$ pip freeze > requirements.txt`
+> `$ pip freeze > requirements.txt`
 
-For further questions, please consider reading the related documentation [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
+> For further questions, please consider reading the related documentation [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 
 
 ## License
