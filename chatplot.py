@@ -69,7 +69,7 @@ def plot_interventions_per_day(interventions_users_days, ki='line'):
     plt.show()
 
 
-# Distribution of the total number interventions per day. 
+# Distribution of the total number interventions per day.
 #  Plots a histogram and an estimation of its PDF
 def plot_distribution_total_interventions_per_day(interventions_users_days):
     interventions_days = interventions_users_days.sum(axis=1)
