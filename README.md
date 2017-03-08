@@ -1,7 +1,6 @@
-# whatsapp-stats
+# whatstk
 
-This project is in current development. Its purpose is to provide a set of
-tools to detect some hidden patterns in whatsapp group chats.
+We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns.
 
 ## Run
 
@@ -24,38 +23,44 @@ We highly recommended to install these dependencies with `pip` inside a virtual 
 
 **_How do I obtain the log of my chat?_**
 
-Email the chat of your whatsapp group using your phone. To do so, go to the
-group conversation, click the three dots (up-right) and select More. Finally,
+> Email the chat of your whatsapp group using your phone. To do so, go to the group conversation, click the three dots (up-right) and select More. Finally,
 click on Email chat. More information can be found [here](https://www.whatsapp.com/faq/en/s60/21055276)
 
+**_Is this working for all languages?_**
+
+> So far, this code was succesfully ran in the following languages:
+> - English (24-clock)
+> - Spanish (24-clock)
+
+> Please report an issue if it is not working for you!
 
 **_How do I setup a virtual environment?_**
 
-Install virtualenv
+> Install virtualenv
 
-`$ pip install virtualenv`
+> `$ pip install virtualenv`
 
-Create a new virtualenv (we name it `.env`)
+> Create a new virtualenv (we name it `.env`)
 
-`$ python3 -m venv .env`
+> `$ python3 -m venv .env`
 
-Activate the environment
+> Activate the environment
 
-`$ . .env/bin/activate`
+> `$ . .env/bin/activate`
 
-Install all the dependencies
+> Install all the dependencies
 
-`$ pip install -r requirements.txt`
+> `$ pip install -r requirements.txt`
 
-You can exit the environment by typing
+> You can exit the environment by typing
 
-`$ deactivate`
+> `$ deactivate`
 
-I you modify the project using new libraries you might install, update the `requirements.txt` file
+> I you modify the project using new libraries you might install, update the `requirements.txt` file
 
-`$ pip freeze > requirements.txt`
+> `$ pip freeze > requirements.txt`
 
-For further questions, please consider reading the related documentation [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
+> For further questions, please consider reading the related documentation [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 
 
 ## License
