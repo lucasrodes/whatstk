@@ -7,20 +7,29 @@ tools to detect some hidden patterns in whatsapp group chats.
 
 Simply run
 
-`python main.py file.in
+`python main.py file.in`
 
 where file.in is the log of the chat you want to analyze.
 
 ## Dependencies
 
-Use the `requirements.txt` file to install all dependencies
+This project uses some of the most common used Python libraries. Use the `requirements.txt` file to install all dependencies
 
 `pip install -r requirements.txt`
 
-It is highly recommended (as well as being the simplest and easiest way) to install these dependencies with `pip` inside a virtual environment to keep
-them isolated from the rest of the system.
+We highly recommended to install these dependencies with `pip` inside a virtual environment to keep them isolated from the rest of the system.
 
-### Virtualenv setup
+
+## F.A.Q.
+
+- *How do I obtain the log of my chat?*
+
+Email the chat of your whatsapp group using your phone. To do so, got to the
+group conversation, click the three dots (up-right) and select More. Finally,
+click on Email chat.
+
+
+- *How do I setup a virtual environment?*
 
 Install virtualenv
 
@@ -47,14 +56,6 @@ I you modify the project using new libraries you might install, update the `requ
 `$ pip freeze > requirements.txt`
 
 For more details, pleace check the related [Python documentation](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
-
-## F.A.Q.
-
-- *How do I obtain the log of my chat?*
-Email the chat of your whatsapp group using your phone. To do so, got to the
-group conversation, click the three dots (up-right) and select More. Finally,
-click on Email chat.
-
 ## License
 
 whatsapp-stats
