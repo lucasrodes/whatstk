@@ -24,9 +24,9 @@ We highly recommended to install these dependencies with `pip` inside a virtual 
 
 **_How do I obtain the log of my chat?_**
 
-Email the chat of your whatsapp group using your phone. To do so, go to the
+<blockquote> Email the chat of your whatsapp group using your phone. To do so, go to the
 group conversation, click the three dots (up-right) and select More. Finally,
-click on Email chat. More information can be found [here](https://www.whatsapp.com/faq/en/s60/21055276)
+click on Email chat. More information can be found [here](https://www.whatsapp.com/faq/en/s60/21055276) <blockquote/>
 
 **_Is this working for all languages?_**
 
@@ -46,7 +46,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > `$ python3 -m venv .env`
 
-Activate the environment
+> Activate the environment
 
 `$ . .env/bin/activate`
 
