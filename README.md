@@ -9,7 +9,7 @@ Simply run
 
 `$ python main.py file`
 
-where `file` is the name of the chat log file that you want to analyze. The program will prompt an error if `file.in` does not exist.
+where `file` is the name of the chat log file that you want to analyze. The program will prompt an error if `file` does not exist.
 
 ## Dependencies
 
