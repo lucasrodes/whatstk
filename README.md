@@ -9,7 +9,7 @@ Simply run
 
 `$ python main.py file.in`
 
-where file.in is the log of the chat you want to analyze. The program will prompt an error if `file.in` does not exist.
+where `file.in` is the log of the chat you want to analyze. The program will prompt an error if `file.in` does not exist.
 
 ## Dependencies
 
@@ -22,7 +22,7 @@ We highly recommended to install these dependencies with `pip` inside a virtual 
 
 ## F.A.Q.
 
-**How do I obtain the log of my chat?**
+**_How do I obtain the log of my chat_**
 
 Email the chat of your whatsapp group using your phone. To do so, got to the
 group conversation, click the three dots (up-right) and select More. Finally,
