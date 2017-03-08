@@ -1,7 +1,6 @@
-# whatsapp-stats
+# whatstk
 
-This project is in current development. Its purpose is to provide a set of
-tools to detect some hidden patterns in whatsapp group chats.
+We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns.
 
 ## Run
 
