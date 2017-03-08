@@ -58,6 +58,7 @@ days = wp.get_days(data)
 hours = wp.get_hours()
 
 
+
 # Print brief summary of the retrieved data
 print("\n----------------------------------")
 print("Brief summary")
