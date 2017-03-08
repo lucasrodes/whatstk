@@ -64,7 +64,11 @@ print("Brief summary")
 print("\n *", len(users),"users found: ")
 [print("\t", user) for user in users]
 print("\n * Chat was active", len(days), "days")
-print("\n * Chat had", len(data), "interventions")
+print(" * Chat had", len(data), "interventions")
+int_day=len(data)/len(days)
+print(" * Chat had an average of %.2f" % int_day, "interventions/day")
+int_day_pers = int_day/len(users)
+print(" * Chat had an average of %.2f" % int_day_pers, "interventions/day/person")
 print("\n----------------------------------")
 
 
