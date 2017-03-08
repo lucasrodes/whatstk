@@ -75,6 +75,11 @@ def raw2format(messy_message, p):
     year = int(py.match(header[month_end:]).group()[:-2])
     year_end = py.match(header[month_end:]).end() + month_end
 
+    # Ensure we have a 4-digit format year. We assume only dates withinthe 2000
+    # millenial are possible
+    if (str(year) == 2):
+        year += 2000
+
     # Hour
     pattern_hour = '\d?\d.'
     py = re.compile(pattern_hour)
@@ -180,17 +185,21 @@ def parse_data(lines):
     return data
 
 
-# Function from [3]
 def remove_accents(byte_string):
     """
-        Strip accents from input String.
+    Strip accents from input String. Function from [3]
 
-        :param byte_string: The input string.
-        :type byte_string: String.
+    Parameters
+    ----------
+    byte_string: String
+        The input string.
 
-        :returns: The processed String.
-        :rtype: String.
-        """
+    Returns
+    ----------
+    new_string: String
+        The processed String.
+    """
+
     try:
         byte_string = unicode(byte_string, 'utf-8')
     except NameError:  # unicode is a default on python 3
@@ -198,17 +207,46 @@ def remove_accents(byte_string):
     byte_string = unicodedata.normalize('NFD', byte_string)
     byte_string = byte_string.encode('ascii', 'ignore')
     byte_string = byte_string.decode("utf-8")
-    return str(byte_string)
+
+    new_string = str(byte_string)
+
+    return new_string
 
 
-# Obtain usernames from the chat
+
 def get_users(data):
+    """
+    Obtain usernames from the chat
+
+    Parameters
+    ----------
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    list
+        list with the usernames in the chat.
+    """
+
     return np.unique(np.array([d[1] for d in data]))
 
 
-# Obtain dates from conversations from the chat
-# The input data is assumed to be in the shape as
 def get_days(data):
+    """
+    Obtain dates from conversations from the chat
+
+    Parameters
+    ----------
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    days: list
+        list with the days there has been any conversation in the chat
+    """
+
     days_rep = np.array([d[0][:3] for d in data])
     days = [list(x) for x in set(tuple(x) for x in days_rep)]  # From [2]
     days = sorted(days, key=itemgetter(2, 1, 0))
@@ -216,21 +254,40 @@ def get_days(data):
 
 
 def get_hours():
+    """
+    Obtain the hours in a day
+
+    Returns
+    ----------
+    list
+        list with the hours in a day
+    """
+
     return [s for s in range(24)]
-    #return ['0' + str(s) if len(str(s)) == 1 else str(s) for s in range(24)]
 
-#def hour_12to24(hour_24):
-#    d = datetime.strptime(str(hour_24), "%H:%M")
-#    return d.strftime("%I:%M %p")
 
-#def hour_24to12(hour_24):
-#    d = datetime.strptime(hour_24, "%H:%M")
-#    return d.strftime("%I:%M %p")
-
-# Return DataFrame with interventions of all users (columns) for all days (rows)
 def get_intervention_table_days(users, days, data):
+    """
+    Return DataFrame with interventions of all users (columns) for all days (rows)
+
+    Parameters
+    ----------
+    users: list
+        List with the usernames of the chat.
+    days: list
+        Days the chat has been active.
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    df: Dataframe
+        Table containing #interventions per user per each day
+    """
+
     # Put dates into nice visual format
     format_days = nice_format_days(days)
+   # print(format_days)
     interventions_per_day = np.zeros(len(days))
 
     # Loop for all names
@@ -248,8 +305,25 @@ def get_intervention_table_days(users, days, data):
     return df
 
 
-# Return DataFrame with interventions of all users (columns) for all hour times (rows)
 def get_intervention_table_hours(users, hours, data):
+    """
+    Return DataFrame with interventions of all users (columns) for all hour times (rows)
+
+    Parameters
+    ----------
+    users: list
+        List with the usernames of the chat.
+    hours: list
+        Hours the chat has been active.
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    df: Dataframe
+        Table containing #interventions per user per each hour of the day
+    """
+
     interventions_per_hour = np.zeros(len(hours))
 
     # Loop for all users
@@ -266,20 +340,61 @@ def get_intervention_table_hours(users, hours, data):
     return df
 
 
-# Parse ['DD','MM','YYYY'] to 'DD/MM/YYYY'
 def nice_format_days(days):
-    return [d[0] + "/" + d[1] + "/" + d[2] for d in days]
+    """
+    Puts the dates into nice format, i.e. it parses [DD,MM,YYYY] to 'DD/MM/YYYY'
 
+    Parameters
+    ----------
+    days: list
+        Days the chat has been active.
 
-# Obtain a list with all interventions of username_
+    Returns
+    ----------
+    list
+        List of dates (nicely written) the chat has been active
+    """
+    return [str(d[0]) + "/" + str(d[1]) + "/" + str(d[2]) for d in days]
+
 def get_interventions_user(username_, data_):
+    """
+    Obtains a list with all interventions of username_
+
+    Parameters
+    ----------
+    username_: list
+        Days the chat has been active.
+    data_: list
+        Legible data.
+
+    Returns
+    ----------
+    list
+        List of dates (nicely written) the chat has been active
+    """
     return [d for d in data_ if d[1] == username_]
 
 
-# Return the number of interventions in the given day day_
-# Returns an index referring to the position where next date begins
-# in order to reduce the search in subsequent iterations
 def get_number_interventions_per_day(day_, interv_):
+    """
+    Obtains the number of interventions in the day 'day_'
+
+    Parameters
+    ----------
+    day_: list
+        Day we are examining.
+    interv_: list
+        List containing all considered interventions.
+
+    Returns
+    ----------
+    list
+        List containing two parameters. The first one quantifies the number
+        of interventions in day 'day_'. The second one is just the index of
+        the last intervention in 'day_' to make the overall search more
+        efficient
+    """
+
     s = [1 if i[0][:3] == day_ else 0 for i in interv_]
     if s[-1] == 0:
         i = s.index(0)
@@ -288,18 +403,36 @@ def get_number_interventions_per_day(day_, interv_):
     return [sum(s), i]
 
 
-#  Return number of interventions in a specific hour range
 def get_number_interventions_per_hour(hour_, interv_):
+    """
+    Obtains the number of interventions during the hour 'hour_'
+
+    Parameters
+    ----------
+    hour_: list
+        Hour we are examining.
+    interv_: list
+        List containing all considered interventions.
+
+    Returns
+    ----------
+    int
+        quantifies the number of interventions during 'hour_'.
+    """
     s = [1 if i[0][3] == hour_ else 0 for i in interv_]
     return sum(s)
 
-    #  REFERENCES
-    #
-    # [1] MiniQuark comment,
-    # http://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string
-    #
-    # [2] Comment from Mark Byers,
-    # http://stackoverflow.com/questions/3724551/python-uniqueness-for-list-of-lists
-    #
-    # [3] Function from Jer42
-    # http://stackoverflow.com/a/31607735
+
+"""
+REFERENCES
+----------
+
+[1] MiniQuark comment,
+http://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string
+
+[2] Comment from Mark Byers,
+http://stackoverflow.com/questions/3724551/python-uniqueness-for-list-of-lists
+
+[3] Function from Jer42
+http://stackoverflow.com/a/31607735
+"""
