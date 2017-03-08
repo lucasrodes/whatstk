@@ -20,19 +20,13 @@ from __future__ import print_function
 
 import sys
 
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # import seaborn as sns
 
 import chatformat as cf
 # import chatplot as cp
 
 # sns.set(style="whitegrid")
-
-# TODO Change reading mode for an argv mode
-# Read Input, execute $ python main.py < file.in
-#lines = []
-#for line in sys.stdin:
-#    lines.append(line.rstrip())
 
 # Read file name and store it in the list lines
 fileName = sys.argv[1]
@@ -54,24 +48,42 @@ for line in fhand:
 # [date, user, message], where data = [day,month,year,hour,minutes]
 data = cf.parse_data(lines)
 
-print("Data[0]:", data[0])
-
 # Obtain the names of the users from the chat
 users = cf.get_users(data)
-#print("Users:", users)
+
 #  Obtain list of days with interventions
 days = cf.get_days(data)
-#print("Days:", days)
+
 # Obtain the hours in a day
 hours = cf.get_hours()
-#print("Hours:", hours)
+
+
+# Print brief summary of the retrieved data
+print("\n----------------------------------")
+print("Brief summary")
+print("\n *", len(users),"users found: ")
+[print("\t", user) for user in users]
+print("\n * Chat was active", len(days), "days")
+print("\n * Chat had", len(data), "interventions")
+print("\n----------------------------------")
+
+
 # Obtain DataFrame containing interventions per user per day
-# interventions_users_days = cf.get_intervention_table_days(users, days, data)
+interventions_users_days = cf.get_intervention_table_days(users, days, data)
+
 # Obtain DataFrame containing interventions per user per hour
-# interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
+interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
+
 
 # print interventions_users_hours
-# print("Preparing plots...")
+print("Preparing plots...")
+
+from pandas.tools.plotting import andrews_curves
+import pandas as pd
+#plt.figure()
+#andrews_curves(pd.melt(interventions_users_days), 'variable')
+print(pd.melt(interventions_users_days))
+#plt.show()
 
 # Enable LaTeX fonts
 # try:
