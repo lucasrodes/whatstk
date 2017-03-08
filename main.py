@@ -23,8 +23,8 @@ import sys
 import matplotlib.pyplot as plt
 # import seaborn as sns
 
-import chatformat as cf
-# import chatplot as cp
+from whatstk import wparser as wp
+# from whatstk import wplot as wplt
 
 # sns.set(style="whitegrid")
 
@@ -46,16 +46,16 @@ for line in fhand:
 
 # Format the chat text, each row has the format:
 # [date, user, message], where data = [day,month,year,hour,minutes]
-data = cf.parse_data(lines)
+data = wp.parse_data(lines)
 
 # Obtain the names of the users from the chat
-users = cf.get_users(data)
+users = wp.get_users(data)
 
 #  Obtain list of days with interventions
-days = cf.get_days(data)
+days = wp.get_days(data)
 
 # Obtain the hours in a day
-hours = cf.get_hours()
+hours = wp.get_hours()
 
 
 # Print brief summary of the retrieved data
@@ -73,10 +73,10 @@ print("\n----------------------------------")
 
 
 # Obtain DataFrame containing interventions per user per day
-#interventions_users_days = cf.get_intervention_table_days(users, days, data)
+#interventions_users_days = wp.get_intervention_table_days(users, days, data)
 
 # Obtain DataFrame containing interventions per user per hour
-#interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
+#interventions_users_hours = wp.get_intervention_table_hours(users, hours, data)
 
 
 # print interventions_users_hours
