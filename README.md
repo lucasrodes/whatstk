@@ -28,6 +28,13 @@ Email the chat of your whatsapp group using your phone. To do so, go to the
 group conversation, click the three dots (up-right) and select More. Finally,
 click on Email chat. More information can be found [here](https://www.whatsapp.com/faq/en/s60/21055276)
 
+**_Is this working for all languages?_**
+
+So far, this code was succesfully ran in the following languages:
+- English (24-clock)
+- Spanish (24-clock)
+
+Please report an issue if it is not working for you!
 
 **_How do I setup a virtual environment?_**
 
