@@ -7,9 +7,9 @@ tools to detect some hidden patterns in whatsapp group chats.
 
 Simply run
 
-`$ python main.py file.in`
+`$ python main.py file`
 
-where `file.in` is the log of the chat you want to analyze. The program will prompt an error if `file.in` does not exist.
+where `file` is the name of the chat log file that you want to analyze. The program will prompt an error if `file` does not exist.
 
 ## Dependencies
 
@@ -22,11 +22,11 @@ We highly recommended to install these dependencies with `pip` inside a virtual 
 
 ## F.A.Q.
 
-**_How do I obtain the log of my chat_**
+**_How do I obtain the log of my chat?_**
 
-Email the chat of your whatsapp group using your phone. To do so, got to the
+Email the chat of your whatsapp group using your phone. To do so, go to the
 group conversation, click the three dots (up-right) and select More. Finally,
-click on Email chat.
+click on Email chat. More information can be found [here](https://www.whatsapp.com/faq/en/s60/21055276)
 
 
 **_How do I setup a virtual environment?_**
