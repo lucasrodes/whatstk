@@ -30,21 +30,21 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 **_Is this working for all languages?_**
 
-So far, this code was succesfully ran in the following languages:
-- English (24-clock)
-- Spanish (24-clock)
+> So far, this code was succesfully ran in the following languages:
+> - English (24-clock)
+> - Spanish (24-clock)
 
-Please report an issue if it is not working for you!
+> Please report an issue if it is not working for you!
 
 **_How do I setup a virtual environment?_**
 
-Install virtualenv
+> Install virtualenv
 
-`$ pip install virtualenv`
+> `$ pip install virtualenv`
 
-Create a new virtualenv (we name it `.env`)
+> Create a new virtualenv (we name it `.env`)
 
-`$ python3 -m venv .env`
+> `$ python3 -m venv .env`
 
 Activate the environment
 
