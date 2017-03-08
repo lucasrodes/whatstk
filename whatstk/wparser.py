@@ -145,7 +145,7 @@ def parse_data(lines):
     is12clock = bool(re.match(pattern, lines[0]))
 
     # Regular expression to find the header of the message
-    pattern = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[-:] [^:]*: '
+    pattern = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AaPp][Mm])?[-:] [^:]*: '
     # pattern = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):] [^:]*:'
     p1 = re.compile(pattern)
     data = []
@@ -167,7 +167,7 @@ def parse_data(lines):
         else:
             # Pattern not found! Continuation of previous message or WhatsApp alert?
             # Regular expression to detect WhatsApp alert
-            pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[-:]'
+            pattern_alert_whats = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[-:]'
             #pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):]'
             p2 = re.compile(pattern_alert_whats)
             m2 = p2.match(line)
