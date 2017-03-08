@@ -3,16 +3,13 @@
 This project is in current development. Its purpose is to provide a set of
 tools to detect some hidden patterns in whatsapp group chats.
 
-## Test
+## Run
 
-Test the program running `python main.py < file.in`, where file.in is the chat
-you want to analyze.
+Simply run
 
-### Comments on `file.in`
+`python main.py file.in
 
-Email the chat of your whatsapp group using your phone. To do so, got to the
-group conversation, click the three dots (up-right) and select More. Finally,
-click on Email chat.
+where file.in is the log of the chat you want to analyze.
 
 ## Dependencies
 
@@ -50,18 +47,13 @@ I you modify the project using new libraries you might install, update the `requ
 `$ pip freeze > requirements.txt`
 
 For more details, pleace check the related [Python documentation](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
-<>- [NumPy](https://github.com/numpy/numpy)
-<>- [Pandas](https://github.com/pandas-dev/pandas)
-<>- [SciPy](http://www.scipy.org/install.html)
-<>- [Matplotlib](http://matplotlib.org/users/installing.html)
-<>    - [LaTeX](http://www.tug.org/)
-<>    - dvipng
-<>    - ghostscript
-<>- [SeaBorn](http://seaborn.pydata.org/installing.html#installing)
 
-<>The sub-dependencies of Matplotlib are needed for plotting with LaTeX fonts.
+## F.A.Q.
 
-
+- *How do I obtain the log of my chat?*
+Email the chat of your whatsapp group using your phone. To do so, got to the
+group conversation, click the three dots (up-right) and select More. Finally,
+click on Email chat.
 
 ## License
 
