@@ -29,7 +29,7 @@ group conversation, click the three dots (up-right) and select More. Finally,
 click on Email chat.
 
 
-** _How do I setup a virtual environment?_ **
+**_How do I setup a virtual environment?_**
 
 Install virtualenv
 
