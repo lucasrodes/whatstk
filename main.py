@@ -17,56 +17,77 @@
 
 # This import makes Python use 'print' as in Python 3.x
 from __future__ import print_function
+
 import sys
 
-import matplotlib.pyplot as plt
-import seaborn as sns
+# import matplotlib.pyplot as plt
+# import seaborn as sns
 
 import chatformat as cf
-import chatplot as cp
+# import chatplot as cp
 
-sns.set(style="whitegrid")
+# sns.set(style="whitegrid")
 
 # TODO Change reading mode for an argv mode
-# Read Input, execute $ python main.py < file.in 
+# Read Input, execute $ python main.py < file.in
+#lines = []
+#for line in sys.stdin:
+#    lines.append(line.rstrip())
+
+# Read file name and store it in the list lines
+fileName = sys.argv[1]
+
 lines = []
-for line in sys.stdin:
-    lines.append(line.rstrip())
+read = False
+while(not read):
+    try:
+        fhand = open(fileName);
+        read = True
+    except :
+        fileName = input("Invalid filename! Please introduce a correct name: ")
+
+for line in fhand:
+    line = line.rstrip();
+    lines.append(line)
 
 # Format the chat text, each row has the format:
-# [[day,month,year,hour,minutes], user, message]
-data = cf.clean_data(lines)
+# [date, user, message], where data = [day,month,year,hour,minutes]
+data = cf.parse_data(lines)
+
+print("Data[0]:", data[0])
 
 # Obtain the names of the users from the chat
 users = cf.get_users(data)
+#print("Users:", users)
 #  Obtain list of days with interventions
 days = cf.get_days(data)
+#print("Days:", days)
 # Obtain the hours in a day
 hours = cf.get_hours()
-
+#print("Hours:", hours)
 # Obtain DataFrame containing interventions per user per day
-interventions_users_days = cf.get_intervention_table_days(users, days, data)
-# Obtain DataFrame containing interventions per user per hour 
-interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
+# interventions_users_days = cf.get_intervention_table_days(users, days, data)
+# Obtain DataFrame containing interventions per user per hour
+# interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
 
 # print interventions_users_hours
-print("Preparing plots...")
+# print("Preparing plots...")
 
 # Enable LaTeX fonts
-try:
-	plt.rc('text', usetex=True)
-	plt.rc('font', family='serif')
-except Exception:
-	pass
+# try:
+#	plt.rc('text', usetex=True)
+#	plt.rc('font', family='serif')
+#except Exception:
+#	pass
 
 # Plots
 # General
-cp.plot_total_interventions_users(interventions_users_days)
-cp.plot_interventions_per_day(interventions_users_days)
-cp.plot_distribution_total_interventions_per_day(interventions_users_days)
-cp.plot_interventions_per_hour(interventions_users_hours)
+#cp.plot_total_interventions_users(interventions_users_days)
+#cp.plot_interventions_per_day(interventions_users_days)
+#cp.plot_distribution_total_interventions_per_day(interventions_users_days)
+#cp.plot_interventions_per_hour(interventions_users_hours)
 
 #  Intra-user relations
-cp.chat_scatter_matrix(interventions_users_days, 'Number of interventions per day')
-cp.chat_scatter_matrix_density(interventions_users_days)
-cp.violinplot_users_days(interventions_users_days)
+#cp.chat_scatter_matrix(interventions_users_days, 'Number of interventions per day')
+#cp.chat_scatter_matrix_density(interventions_users_days)
+#cp.violinplot_users_days(interventions_users_days)

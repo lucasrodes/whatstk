@@ -17,6 +17,7 @@ click on Email chat.
 ## Dependencies
 
 Use the `requirements.txt` file to install all dependencies
+
 `pip install -r requirements.txt`
 
 It is highly recommended (as well as being the simplest and easiest way) to install these dependencies with `pip` inside a virtual environment to keep
@@ -26,27 +27,29 @@ them isolated from the rest of the system.
 
 Install virtualenv
 
-`sudo apt install python3-env`
+`$ pip install virtualenv`
 
 Create a new virtualenv (we name it `.env`)
 
-`python3 -m venv .env`
+`$ python3 -m venv .env`
 
 Activate the environment
 
-`. .env/bin/activate`
+`$ . .env/bin/activate`
 
 Install all the dependencies
-`pip install -r requirements.txt`
+
+`$ pip install -r requirements.txt`
 
 You can exit the environment by typing
 
-`deactivate`
+`$ deactivate`
 
 I you modify the project using new libraries you might install, update the `requirements.txt` file
 
-`pip freeze > requirements.txt`
+`$ pip freeze > requirements.txt`
 
+For more details, pleace check the related [Python documentation](http://docs.python-guide.org/en/latest/dev/virtualenvs/)
 <>- [NumPy](https://github.com/numpy/numpy)
 <>- [Pandas](https://github.com/pandas-dev/pandas)
 <>- [SciPy](http://www.scipy.org/install.html)

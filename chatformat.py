@@ -18,6 +18,7 @@
 # This import makes Python use 'print' as in Python 3.x
 from __future__ import print_function
 
+from datetime import datetime
 import re
 import unicodedata
 from operator import itemgetter
@@ -26,60 +27,121 @@ import numpy as np
 import pandas as pd
 
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
-
+is12clock = False
 
 # TODO: VERY SENSITIVE TO DIFFERENT DAYS/MONTH FORMATS
 # TODO Specify that the format [[date], username, message] is that of the output
 # Maps the input line from string to an array of the form: [[date], username, message]
-def raw2format(l, p):
-    header = l[:p - 1]
+def raw2format(messy_message, p):
+    """
+    Parses a line of the chat txt file into a legible format
+
+    Parameters
+    ----------
+    messy_message: String
+        String content of a line of the chat
+    p: int
+        Denotes the position where the header (date info) of the message ends
+
+    Returns
+    -------
+    parsed_data: list
+        Legible format for the message messy_message. In particular, it is
+        structured as [date, user, message], where:
+            * date is a list with the format [day, month, year, hour, minutes]
+              containing the information of the date the message was sent
+              (list of integers).
+            * user is the name of the user that sent the message (string).
+            * message is the messatge itself (string).
+    """
+
+    header = messy_message[:p - 2]
 
     # day
     pattern_day = '\d?\d.'
     py = re.compile(pattern_day)
-    day = py.match(header).group()[:-1]
+    day = int(py.match(header).group()[:-1])
     day_end = py.match(header).end()
 
     # month
     pattern_month = '\d?\d.'
     py = re.compile(pattern_month)
-    month = py.match(header[day_end:]).group()[:-1]
+    month = int(py.match(header[day_end:]).group()[:-1])
     month_end = py.match(header[day_end:]).end() + day_end
 
     # Year can be YY or YYYY
     pattern_year = '\d{,4}, '
     py = re.compile(pattern_year)
-    year = py.match(header[month_end:]).group()[:-2]
+    year = int(py.match(header[month_end:]).group()[:-2])
     year_end = py.match(header[month_end:]).end() + month_end
 
-    # Hour 
+    # Hour
     pattern_hour = '\d?\d.'
     py = re.compile(pattern_hour)
-    hour = py.match(header[year_end:]).group()[:-1]
+    hour = int(py.match(header[year_end:]).group()[:-1])
     hour_end = py.match(header[year_end:]).end() + year_end
 
     # Minute
-    pattern_minute = '\d?\d .'
+    pattern_minute = '\d\d.'
     py = re.compile(pattern_minute)
-    minute = py.match(header[hour_end:]).group()[:-2]
+    minute = int(py.match(header[hour_end:]).group()[:-1])
     minute_end = py.match(header[hour_end:]).end() + hour_end
 
+    # Do not care about seconds
+
+    # Separation
+    pattern_sep = '.*[-:] '
+    py = re.compile(pattern_sep)
+    sep_end = py.match(header[minute_end:]).end() + minute_end
+
+    # Change 12 clock to 24 clock!
+    if(is12clock):
+        if(header[sep_end-4] == 'P'):
+            hour += 12
+        if(hour%12 == 0):
+            hour -= 12
+
     # Complete date
-    d = [day, month, year, hour, minute]
+    date = [day, month, year, hour, minute]
 
     # Name
-    n = remove_accents(header[minute_end:p - 1])
+    name = remove_accents(header[sep_end:])
 
     # Message
-    m = l[p + 1:]
+    message = messy_message[p:]
 
-    return [d, n, m]
+    # Parsed data
+    parsed_data = [date, name, message]
+
+    return parsed_data
 
 
-# From raw data to a matrix where each row is in format of raw2format
-def clean_data(lines):
+def parse_data(lines):
+    """
+    Parses the messy data from the txt chat file in a legible format
+
+    Parameters
+    ----------
+    lines: list
+        List containing the chat text, the value at the i:th position
+        corresponds to the i:th line from the chat txt file
+
+    Returns
+    -------
+    data: list
+        List containing the chat in a legible format. In particular, data[i]
+        corresponds to the i:th message and has the format given by raw2format
+        function.
+    """
+
+    # Check if this is 12 or 24 clock
+    pattern = '.* ([AP]M)[-:]'
+    global is12clock
+    is12clock = bool(re.match(pattern, lines[0]))
+
     # Regular expression to find the header of the message
-    pattern = '\d?\d.\d\d.\d{,4}, \d\d:\d\d - [^:]*:'
+    pattern = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[-:] [^:]*: '
+    # pattern = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):] [^:]*:'
     p1 = re.compile(pattern)
     data = []
 
@@ -100,9 +162,11 @@ def clean_data(lines):
         else:
             # Pattern not found! Continuation of previous message or WhatsApp alert?
             # Regular expression to detect WhatsApp alert
-            pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d\d:\d\d -'
+            pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[-:]'
+            #pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):]'
             p2 = re.compile(pattern_alert_whats)
             m2 = p2.match(line)
+
             if m2 is None:
                 #  Merge continuation of messages
                 data[-1][2] = data[-1][2] + "\n" + line
@@ -143,6 +207,7 @@ def get_users(data):
 
 
 # Obtain dates from conversations from the chat
+# The input data is assumed to be in the shape as
 def get_days(data):
     days_rep = np.array([d[0][:3] for d in data])
     days = [list(x) for x in set(tuple(x) for x in days_rep)]  # From [2]
@@ -151,9 +216,16 @@ def get_days(data):
 
 
 def get_hours():
-    return [str(s) for s in range(24)]
+    return [s for s in range(24)]
     #return ['0' + str(s) if len(str(s)) == 1 else str(s) for s in range(24)]
 
+#def hour_12to24(hour_24):
+#    d = datetime.strptime(str(hour_24), "%H:%M")
+#    return d.strftime("%I:%M %p")
+
+#def hour_24to12(hour_24):
+#    d = datetime.strptime(hour_24, "%H:%M")
+#    return d.strftime("%I:%M %p")
 
 # Return DataFrame with interventions of all users (columns) for all days (rows)
 def get_intervention_table_days(users, days, data):
