@@ -7,15 +7,15 @@ tools to detect some hidden patterns in whatsapp group chats.
 
 Simply run
 
-`python main.py file.in`
+`$ python main.py file.in`
 
-where file.in is the log of the chat you want to analyze.
+where file.in is the log of the chat you want to analyze. The program will prompt an error if `file.in` does not exist.
 
 ## Dependencies
 
 This project uses some of the most common used Python libraries. Use the `requirements.txt` file to install all dependencies
 
-`pip install -r requirements.txt`
+`$ pip install -r requirements.txt`
 
 We highly recommended to install these dependencies with `pip` inside a virtual environment to keep them isolated from the rest of the system.
 
