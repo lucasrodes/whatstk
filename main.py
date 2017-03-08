@@ -69,20 +69,20 @@ print("\n----------------------------------")
 
 
 # Obtain DataFrame containing interventions per user per day
-interventions_users_days = cf.get_intervention_table_days(users, days, data)
+#interventions_users_days = cf.get_intervention_table_days(users, days, data)
 
 # Obtain DataFrame containing interventions per user per hour
-interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
+#interventions_users_hours = cf.get_intervention_table_hours(users, hours, data)
 
 
 # print interventions_users_hours
-print("Preparing plots...")
+#print("Preparing plots...")
 
-from pandas.tools.plotting import andrews_curves
-import pandas as pd
+#from pandas.tools.plotting import andrews_curves
+#import pandas as pd
 #plt.figure()
 #andrews_curves(pd.melt(interventions_users_days), 'variable')
-print(pd.melt(interventions_users_days))
+#print(pd.melt(interventions_users_days))
 #plt.show()
 
 # Enable LaTeX fonts
