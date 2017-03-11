@@ -1,6 +1,6 @@
 # whatstk
 
-We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns.
+We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns. Currently, it only parses the data in a suitable format and displays basic information of the chat log.
 
 ## Run
 
@@ -29,7 +29,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 **_Is this working for all languages?_**
 
 > So far, this code was succesfully ran in the following languages:
-> - English (24-clock)
+> - English (12h, 24h-clock)
 > - Spanish (24-clock)
 
 > Please report an issue if it is not working for you!
