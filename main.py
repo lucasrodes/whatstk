@@ -20,12 +20,12 @@ from __future__ import print_function
 
 import sys
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 # import seaborn as sns
 
 from whatstk import wparser as wp
 # from whatstk import wplot as wplt
-
+from whatstk.learning import som
 # sns.set(style="whitegrid")
 
 # Read file name and store it in the list lines
@@ -74,12 +74,17 @@ print("\n----------------------------------")
 
 
 # Obtain DataFrame containing interventions per user per day
-#interventions_users_days = wp.get_intervention_table_days(users, days, data)
-
+interventions_users_days = wp.get_intervention_table_days(users, days, data)
+interventions_users_days = wp.normalize_dataframe(interventions_users_days)
+#print(interventions_users_days)
+#wp.build_dictionary_dates(data)
 # Obtain DataFrame containing interventions per user per hour
 #interventions_users_hours = wp.get_intervention_table_hours(users, hours, data)
 
-
+# Test som
+S = som.self_organizing_map(interventions_users_days, 5, topology="line", num_epochs=100, learning_rate=0.1)
+S.train()
+S.print_results()
 # print interventions_users_hours
 #print("Preparing plots...")
 

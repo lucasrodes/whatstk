@@ -288,7 +288,7 @@ def get_intervention_table_days(users, days, data):
             i = daysdict.get(repr(intervention[0][:3]))
             interventions_per_day[i]+=1
         dictionary[user] = interventions_per_day
-    df = pd.DataFrame.from_dict(dictionary, orient='index')
+    df = pd.DataFrame.from_dict(dictionary, orient='columns')
 
     return df
 
@@ -418,7 +418,9 @@ def build_dictionary_dates(data):
 
 
 def normalize_dataframe(df):
-    return (df - df.mean())/(df.max()-df.min())
+    df1 = df.sub(df.mean(axis=1), axis=0)
+    df2 = df1.divide(df.max(axis=1)-df.min(axis=1), axis=0)
+    return df2
 """
 REFERENCES
 ----------
