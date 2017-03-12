@@ -6,7 +6,7 @@ We aim to create a robust and powerful library that provides a set of tools to a
 
 Simply run
 
-`$ python main.py file`
+`$ python3 main.py file`
 
 where `file` is the name of the chat log file that you want to analyze. The program will prompt an error if `file` does not exist.
 
@@ -14,7 +14,7 @@ where `file` is the name of the chat log file that you want to analyze. The prog
 
 This project uses some of the most common used Python libraries. Use the `requirements.txt` file to install all dependencies
 
-`$ pip install -r requirements.txt`
+`$ pip3 install -r requirements.txt`
 
 We highly recommended to install these dependencies with `pip` inside a virtual environment to keep them isolated from the rest of the system.
 
@@ -30,9 +30,9 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > So far, this code was succesfully ran in the following languages:
 > - English (12h, 24h-clock)
-> - Spanish (24-clock)
+> - Spanish (24h-clock)
 
-> Please report an issue if it is not working for you!
+> Please do not hesitate reporting an issue if it does not work for you!
 
 **_How do I setup a virtual environment?_**
 
@@ -50,7 +50,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > Install all the dependencies
 
-> `$ pip install -r requirements.txt`
+> `$ pip3 install -r requirements.txt`
 
 > You can exit the environment by typing
 
@@ -58,7 +58,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > I you modify the project using new libraries you might install, update the `requirements.txt` file
 
-> `$ pip freeze > requirements.txt`
+> `$ pip3 freeze > requirements.txt`
 
 > For further questions, please consider reading the related documentation [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 
