@@ -29,7 +29,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 **_Is this working for all languages?_**
 
 > So far, this code was succesfully ran in the following languages:
-> - English (24-clock)
+> - English (12h, 24h-clock)
 > - Spanish (24-clock)
 
 > Please report an issue if it is not working for you!
