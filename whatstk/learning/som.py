@@ -2,34 +2,89 @@ import numpy as np
 from scipy.spatial.distance import cdist
 from random import shuffle
 import collections
+import pandas as pd
+
+# TODO:
+# - Add documentation
+# - Remove possible redundancy
+# - Graphical tools to plot the result from the SOM
 
 class self_organizing_map():
 
-    def __init__(self, train_data, num_units, topology="line", num_epochs=100, learning_rate=0.1):
-        self.map = topological_map(num_units, topology='circle')
+    def __init__(self, train_data, num_units, sigma_initial, num_epochs=100, learning_rate_initial=1, topology="line"):
+        # Train data
         self.train_data = train_data
         self.num_features , self.num_samples = train_data.shape
+
+        # Units
         self.num_units = num_units
+        if(self.num_units%2==0):
+            self.num_units += 1
+        self.units = np.random.rand(self.num_units, self.num_features)
+
+        # Epochs
         self.num_epochs = num_epochs
-        self.units = np.random.rand(num_units, self.num_features)
-        self.learning_rate = learning_rate
+
+        # Learning Rate
+        self.learning_rate_initial = learning_rate_initial
+        self.learning_rate_decrease = self.num_epochs/8
+        self.learning_rate = learning_rate_initial
+
+        # Neighbourhood
+        self.sigma_initial = sigma_initial
+        self.sigma_decrease = self.num_epochs/(np.log(4*self.sigma_initial))
+        self.sigma = self.sigma_initial
+
+        # Topology of out space
+        self.topology = topology
+        self.size_neighbourhood = int(np.floor(self.num_units/2))-1
+        self.map = topological_map(self)
+
 
     def train(self):
+        # Get list of users
         users = list(self.train_data)
-        for i in range(self.num_epochs):
-            if (i == 25):
-                self.map.set_size_neighbourhood(1)
-            elif (i == 60):
-                self.map.set_size_neighbourhood(0)
+        # Start training for num_epochs
+        print("SOM-Training \n")
+        print("Starting parameters: ")
+        print("\t learning rate =", self.learning_rate)
+        print("\t sigma =", self.sigma)
+        for epoch in range(self.num_epochs):
+            # Update learning rate and sigma (neighbourhood)
+            self.update_learning_rate(epoch)
+            self.update_sigma(epoch)
 
+            # Shuffle users list (prevent noise fitting) and iterate over it
             shuffle(users)
             for user in users:
+                # Obtain vector for user and find winning unit
                 sample = np.array(self.train_data.get(user))
-                diff = sample - self.units
+                diff = sample - self.map.units
                 winning_unit = np.argmin(np.linalg.norm(diff,axis=1))
-                distance = self.map.get_neighbours(winning_unit)
-                self.units += distance.reshape(-1,1)*self.learning_rate*diff
+                # Obtain neighbourhood levels and update units accordingly
+                neighbour_levels = self.map.get_neighbour_levels(winning_unit, self.sigma)
+                #print(self.learning_rate)
+                #s = ', '.join([str(round(vv,5)) for vv in neighbour_levels])
+                #print(str(user) + " -> unit " + str(winning_unit) + "  ---:--- " + s)
+                self.map.units += neighbour_levels.reshape(-1,1)*self.learning_rate*diff
 
+        print("Ending parameters: ")
+        print("\t learning rate =", round(self.learning_rate,5))
+        print("\t sigma =", round(self.sigma,5))
+        print("----------------------------------")
+
+
+    # Update learning rate
+    def update_learning_rate(self, epoch):
+        self.learning_rate = self.learning_rate_initial*np.exp(-epoch/self.learning_rate_decrease)
+
+
+    # Update sigma (neighbourhood)
+    def update_sigma(self, epoch):
+        self.sigma = self.sigma_initial*np.exp(-epoch/self.sigma_decrease)
+
+
+    # Print results
     def print_results(self):
         print("")
         print("** Results Self Organizing Map **")
@@ -38,60 +93,101 @@ class self_organizing_map():
         results = {}
         for user in users:
             sample = np.array(self.train_data.get(user))
-            diff = sample - self.units
+            diff = sample - self.map.units
             winning_unit = np.argmin(np.linalg.norm(diff,axis=1))
             if (results.get(winning_unit) is None):
                  results[winning_unit] = [user]
             else:
                 results[winning_unit].append(user)
 
-        for i in range(self.num_units):
-            if results.get(i) is None:
-                print(i)
-            else:
-                s = ', '.join(results.get(i))
-                print(str(i) + " - " + s)
+        # Plot as a matrix for 2D-Grids
+        if ((self.topology is "2dgrid") or (self.topology is "2dgridcirc")):
+            s = []
+            for i in range(self.map.side):
+                ss = []
+                for j in range(self.map.side):
+                    if results.get(self.map.side*i+j) is not None:
+                        ss.append(', '.join(results.get(self.map.side*i+j)))
+                    else:
+                        ss.append(' ')
+                s.append(ss)
+            pd.set_option('display.expand_frame_repr', False)
+            print(pd.DataFrame(s))
+
+        # Regular plot
+        else:
+            for i in range(self.map.num_units):
+                if results.get(i) is None:
+                    print(i)
+                else:
+                    s = ', '.join(results.get(i))
+                    print(str(i) + " - " + s)
 
 
+# Class for the topological out space
 class topological_map():
 
-    def __init__(self, num_units, topology="line", size_neighbourhood=2):
-        self.topology = topology
-        self.num_units = num_units
-        self.size_neigh = size_neighbourhood
+    def __init__(self, som):
+        self.topology = som.topology
+        if (self.topology is "2dgrid"):
+            self.num_units = som.num_units**2
+            self.side = int(np.sqrt(self.num_units))
+            self.grid = np.mgrid[0:self.side:1, 0:self.side:1]
+        elif (self.topology is "2dgridcirc"):
+            self.num_units = som.num_units**2
+            self.side = int(np.sqrt(self.num_units))
+            X,Y = np.mgrid[-self.side//2:self.side//2+.1:1, -self.side//2:self.side//2+.1:1]
+            self.neighbourhood_idx = abs(X)+abs(Y)
+        else:
+            self.num_units = som.num_units
+            self.neighbourhood_idx = np.array([k for k in range(self.num_units)])
+        self.units = np.random.rand(self.num_units, som.num_features)
 
 
-    def set_size_neighbourhood(self, size_neighbourhood):
-        self.size_neigh = size_neighbourhood
+    def get_neighbour_levels(self, win_idx, sigma):
 
-
-    def get_neighbours(self, unit_idx):
-        v = np.zeros(self.num_units)
+        # Simple line
         if (self.topology is "line"):
-            lower_limit = max(unit_idx-self.size_neigh, 0)
-            upper_limit = min(unit_idx+self.size_neigh+1, self.num_units-1)
-            v[range(lower_limit, upper_limit)] = 1
+            # Obtain upper and lower limits
+            #lower_limit = max(unit_idx-self.size_neigh, 0)
+            #upper_limit = min(unit_idx+self.size_neigh+1, self.num_units-1)
 
+            # Obtain neighbourhood of winning unit
+            neighbourhood_levels = np.exp(-(self.neighbourhood_idx-win_idx)**2/(2*sigma**2))
+            return neighbourhood_levels
+            #v[range(lower_limit, upper_limit)] = 1
+
+        # Like the line, but first and last coefficients are connected
         elif (self.topology is "circle"):
-            lower_limit = unit_idx-self.size_neigh
-            upper_limit = unit_idx+self.size_neigh+1
+            dist = self.neighbourhood_idx - int((self.num_units-1)/2)
+            neighbourhood_levels = np.exp(-(dist)**2/(2*sigma**2))
+            neighbourhood_levels = np.roll(neighbourhood_levels, win_idx-int(self.num_units/2))
+            return neighbourhood_levels
 
-            if (lower_limit < 0):
-                v = np.ones(self.num_units)
-                lower_limit = self.num_units + lower_limit
-                v[upper_limit+1:lower_limit] = 0
-            elif(upper_limit > self.num_units-1):
-                v = np.ones(self.num_units)
-                upper_limit = (upper_limit)%self.num_units +1
-                v[upper_limit+1:lower_limit] = 0
-            else:
-                v[range(lower_limit, upper_limit)] = 1
+        elif (self.topology is "2dgrid"):
+            # Define grid with distances to the wining unit
+            x = self.grid[0][win_idx//int(self.side)][win_idx%int(self.side)]
+            y = self.grid[1][win_idx//int(self.side)][win_idx%int(self.side)]
+            dist = abs(self.grid[0]-x) + abs(self.grid[1]-y)
+            # Apply 2D Gaussian
+            neighbourhood_levels = np.exp(-(dist)**2/(2*sigma**2))
+            #print("winning unit: " + str(win_idx))
+            #print(neighbourhood_levels)
+            # Convert to array
+            neighbourhood_levels = neighbourhood_levels.reshape(1,-1)
+            return neighbourhood_levels
 
-        #elif (self.topology is "2dgrid"):
-
+        # TODO: Circular 2D-Grid
+        elif (self.topology is "2dgridcirc"):
+            # Shift matrix to the winning unit
+            dist = np.roll(self.neighbourhood_idx,win_idx-int((num_units+1)/2))
+            # Apply 2D Gaussian
+            neighbourhood_levels = np.exp(-(dist)**2/(2*sigma**2))
+            # Convert to array
+            neighbourhood_levels = neighbourhood_levels.reshape(1,-1)
+            return neighbourhood_levels
         #elif (self.topology is "sphere"):
 
         else:
             print("not valid topology")
-
-        return v
+            return 0

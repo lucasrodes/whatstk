@@ -73,7 +73,7 @@ print(" * Chat had an average of %.2f" % int_day_pers, "interventions/day/person
 print("\n----------------------------------")
 
 
-# Obtain DataFrame containing interventions per user per day
+# Obtain DataFrame containing interventions per user per day and normalize the data
 interventions_users_days = wp.get_intervention_table_days(users, days, data)
 interventions_users_days = wp.normalize_dataframe(interventions_users_days)
 #print(interventions_users_days)
@@ -81,8 +81,11 @@ interventions_users_days = wp.normalize_dataframe(interventions_users_days)
 # Obtain DataFrame containing interventions per user per hour
 #interventions_users_hours = wp.get_intervention_table_hours(users, hours, data)
 
-# Test som
-S = som.self_organizing_map(interventions_users_days, 5, topology="line", num_epochs=100, learning_rate=0.1)
+# Test SOM
+# Choose number of units (for 2dgrid and 2dgrid this tells the side length)
+num_units = 10
+S = som.self_organizing_map(interventions_users_days, num_units, sigma_initial=num_units/2, num_epochs=1000,
+    learning_rate_initial=1, topology="2dgridcirc")
 S.train()
 S.print_results()
 # print interventions_users_hours
