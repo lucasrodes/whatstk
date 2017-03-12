@@ -83,11 +83,16 @@ interventions_users_days = wp.normalize_dataframe(interventions_users_days)
 
 # Test SOM
 # Choose number of units (for 2dgrid and 2dgrid this tells the side length)
-num_units = 10
+print("Self-Organizing Map (SOM) \n")
+num_units = int(input("- Number of units: "))
+topology = input("- Topology: ")
+
 S = som.self_organizing_map(interventions_users_days, num_units, sigma_initial=num_units/2, num_epochs=1000,
-    learning_rate_initial=1, topology="line")
+    learning_rate_initial=1, topology=topology)
 S.train()
 S.print_results()
+print("\n----------------------------------")
+
 # print interventions_users_hours
 #print("Preparing plots...")
 

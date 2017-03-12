@@ -45,8 +45,9 @@ class self_organizing_map():
         # Get list of users
         users = list(self.train_data)
         # Start training for num_epochs
-        print("SOM-Training \n")
-        print("Starting parameters: ")
+        print("")
+        print("* Training *")
+        print("- Starting parameters: ")
         print("\t learning rate =", self.learning_rate)
         print("\t sigma =", self.sigma)
         for epoch in range(self.num_epochs):
@@ -68,10 +69,10 @@ class self_organizing_map():
                 #print(str(user) + " -> unit " + str(winning_unit) + "  ---:--- " + s)
                 self.map.units += neighbour_levels.reshape(-1,1)*self.learning_rate*diff
 
-        print("Ending parameters: ")
+        print("- Ending parameters: ")
         print("\t learning rate =", round(self.learning_rate,5))
         print("\t sigma =", round(self.sigma,5))
-        print("----------------------------------")
+
 
 
     # Update learning rate
@@ -87,7 +88,7 @@ class self_organizing_map():
     # Print results
     def print_results(self):
         print("")
-        print("** Results Self Organizing Map **")
+        print("* Results Self Organizing Map *")
         print("")
         users = list(self.train_data)
         results = {}
@@ -101,7 +102,7 @@ class self_organizing_map():
                 results[winning_unit].append(user)
 
         # Plot as a matrix for 2D-Grids
-        if ((self.topology is "2dgrid") or (self.topology is "2dgridcirc")):
+        if ((self.topology == "2dgrid") or (self.topology == "2dgridcirc")):
             s = []
             for i in range(self.map.side):
                 ss = []
@@ -129,11 +130,11 @@ class topological_map():
 
     def __init__(self, som):
         self.topology = som.topology
-        if (self.topology is "2dgrid"):
+        if (self.topology == "2dgrid"):
             self.num_units = som.num_units**2
             self.side = int(np.sqrt(self.num_units))
             self.grid = np.mgrid[0:self.side:1, 0:self.side:1]
-        elif (self.topology is "2dgridcirc"):
+        elif (self.topology == "2dgridcirc"):
             self.num_units = som.num_units**2
             self.side = int(np.sqrt(self.num_units))
             X,Y = np.mgrid[-self.side//2:self.side//2+.1:1, -self.side//2:self.side//2+.1:1]
@@ -147,7 +148,7 @@ class topological_map():
     def get_neighbour_levels(self, win_idx, sigma):
 
         # Simple line
-        if (self.topology is "line"):
+        if (self.topology == "line"):
             # Obtain upper and lower limits
             #lower_limit = max(unit_idx-self.size_neigh, 0)
             #upper_limit = min(unit_idx+self.size_neigh+1, self.num_units-1)
@@ -158,13 +159,13 @@ class topological_map():
             #v[range(lower_limit, upper_limit)] = 1
 
         # Like the line, but first and last coefficients are connected
-        elif (self.topology is "circle"):
+        elif (self.topology == "circle"):
             dist = self.neighbourhood_idx - int((self.num_units-1)/2)
             neighbourhood_levels = np.exp(-(dist)**2/(2*sigma**2))
             neighbourhood_levels = np.roll(neighbourhood_levels, win_idx-int(self.num_units/2))
             return neighbourhood_levels
 
-        elif (self.topology is "2dgrid"):
+        elif (self.topology == "2dgrid"):
             # Define grid with distances to the wining unit
             x = self.grid[0][win_idx//int(self.side)][win_idx%int(self.side)]
             y = self.grid[1][win_idx//int(self.side)][win_idx%int(self.side)]
@@ -178,7 +179,7 @@ class topological_map():
             return neighbourhood_levels
 
         # TODO: Circular 2D-Grid
-        elif (self.topology is "2dgridcirc"):
+        elif (self.topology == "2dgridcirc"):
             # Shift matrix to the winning unit
             dist = np.roll(self.neighbourhood_idx,win_idx-int((num_units+1)/2))
             # Apply 2D Gaussian
