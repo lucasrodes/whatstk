@@ -113,7 +113,7 @@ def raw2format(messy_message, p):
     name = remove_accents(header[sep_end:])
 
     # Message
-    message = messy_message[p:]
+    message = remove_accents(messy_message[p:])
 
     # Parsed data
     parsed_data = [date, name, message]
@@ -144,8 +144,10 @@ def parse_data(lines):
     global is12clock
     is12clock = bool(re.match(pattern, lines[0]))
 
-    # Regular expression to find the header of the message
+    # Regular expression to find the header of the message of a user
     pattern = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AaPp][Mm])?[-:] [^:]*: '
+    # Regular expression to find the header of a whatsapp alert
+    pattern_alert_whats = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AaPp][Mm])?[-:]'
     # pattern = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):] [^:]*:'
     p1 = re.compile(pattern)
     data = []
@@ -153,34 +155,21 @@ def parse_data(lines):
     # Iterate over all lines of the chat
     for line in lines:
         m1 = p1.match(line)
-        if m1 is not None:
-            # Pattern found !
-            # Remove accents from previous message
-            try:
-                data[-1][2] = remove_accents(data[-1][2])
-            except Exception:
-                pass
 
-            pos = m1.end()  # Obtain ending position of the match
-            match = m1.group()  # String matching the pattern
-            data.append(raw2format(line, pos))
-        else:
-            # Pattern not found! Continuation of previous message or WhatsApp alert?
-            # Regular expression to detect WhatsApp alert
-            pattern_alert_whats = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[-:]'
-            #pattern_alert_whats = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):]'
+        if m1 is None:
+            # Not a start of user message!
             p2 = re.compile(pattern_alert_whats)
             m2 = p2.match(line)
 
+            # Continuation of previous message?
             if m2 is None:
                 #  Merge continuation of messages
-                data[-1][2] = data[-1][2] + "\n" + line
-
-                #  Remove accents from previous message
-    try:
-        data[-1][2] = remove_accents(data[-1][2])
-    except Exception:
-        print("")
+                data[-1][2] = data[-1][2] + "\n" + remove_accents(line)
+        else:
+            # Pattern found !
+            pos = m1.end()  # Obtain ending position of the match
+            # match = m1.group()  # String matching the pattern
+            data.append(raw2format(line, pos))
 
     return data
 
@@ -287,24 +276,24 @@ def get_intervention_table_days(users, days, data):
 
     # Put dates into nice visual format
     format_days = nice_format_days(days)
-   # print(format_days)
-    interventions_per_day = np.zeros(len(days))
 
+    daysdict = build_dictionary_dates(data)
     # Loop for all names
-    df = pd.DataFrame()
+    dictionary = {}
     for user in users:
-        interventions = get_interventions_user(user, data)
+        interventions = get_list_interventions_user(user, data)
+        interventions_per_day = np.zeros(len(days))
         # Obtain number of interventions per each day contained in dates
-        index = 0
-        for i in range(len(days)):
-            [interventions_per_day[i], index] = get_number_interventions_per_day(days[i],
-                                                                                 interventions[index:])
-        inter = pd.Series(interventions_per_day, index=format_days)
-        df.insert(0, user, inter)
+        for intervention in interventions:
+            i = daysdict.get(repr(intervention[0][:3]))
+            interventions_per_day[i]+=1
+        dictionary[user] = interventions_per_day
+    df = pd.DataFrame.from_dict(dictionary, orient='index')
 
     return df
 
 
+# TODO: RETHING LOOP AS IN THE ONE ABOVE
 def get_intervention_table_hours(users, hours, data):
     """
     Return DataFrame with interventions of all users (columns) for all hour times (rows)
@@ -356,7 +345,7 @@ def nice_format_days(days):
     """
     return [str(d[0]) + "/" + str(d[1]) + "/" + str(d[2]) for d in days]
 
-def get_interventions_user(username_, data_):
+def get_list_interventions_user(username_, data_):
     """
     Obtains a list with all interventions of username_
 
@@ -423,6 +412,13 @@ def get_number_interventions_per_hour(hour_, interv_):
     return sum(s)
 
 
+def build_dictionary_dates(data):
+    days = [repr(d) for d in get_days(data)]
+    return dict(zip(days,range(len(days))))
+
+
+def normalize_dataframe(df):
+    return (df - df.mean())/(df.max()-df.min())
 """
 REFERENCES
 ----------
