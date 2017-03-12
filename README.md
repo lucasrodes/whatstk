@@ -1,6 +1,6 @@
 # whatstk
 
-We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns. Currently, it only parses the data in a suitable format and displays basic information of the chat log.
+We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns using **unsupervised learning** methods. Currently, it only parses the data in a suitable format and displays basic information of the chat log.
 
 ## Run
 
