@@ -12,4 +12,4 @@ python3 -m ipykernel install --user --name .whatstkenv --display-name "whatstken
 
 You should now be able to select the created kernel from the Jupyter menu bar (Kernel/Change kernel)
 
-![Alt text](files/kernelsetup.png)
+![Alt text](files/kernelsetup.png "Optional title")
