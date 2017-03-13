@@ -18,64 +18,69 @@
 # This import makes Python use 'print' as in Python 3.x
 from __future__ import print_function
 
-import sys
-
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 
-from whatstk import wparser as wp
+from whatstk.wparser import WhatsAppChat
+
 # from whatstk import wplot as wplt
-from whatstk.learning import som
 # sns.set(style="whitegrid")
 
-# Read file name and store it in the list lines
-fileName = sys.argv[1]
-
-lines = []
-read = False
-while(not read):
-    try:
-        fhand = open(fileName);
-        read = True
-    except :
-        fileName = input("Invalid filename! Please introduce a correct name: ")
-
-for line in fhand:
-    line = line.rstrip();
-    lines.append(line)
-
-# Format the chat text, each row has the format:
-# [date, user, message], where data = [day,month,year,hour,minutes]
-data = wp.parse_data(lines)
+wpchat = WhatsAppChat("chats/samplechat.txt")
 
 # Obtain the names of the users from the chat
-users = wp.get_users(data)
-
-#  Obtain list of days with interventions
-days = wp.get_days(data)
-
-# Obtain the hours in a day
-hours = wp.get_hours()
-
+users = wpchat.usernames
+# Obtain list of days with interventions
+days = wpchat.days
+# Obtain number of interventions in the chat
+num_interventions = wpchat.num_interventions
 
 
 # Print brief summary of the retrieved data
 print("\n----------------------------------")
 print("Brief summary")
+# Print name of users
 print("\n *", len(users),"users found: ")
 [print("\t", user) for user in users]
+# Number of days the chat has been active
 print("\n * Chat was active", len(days), "days")
-print(" * Chat had", len(data), "interventions")
-int_day=len(data)/len(days)
+# Number of interventions
+print(" * Chat had", num_interventions, "interventions")
+# Average number of interventions per day
+int_day=num_interventions/len(days)
 print(" * Chat had an average of %.2f" % int_day, "interventions/day")
+# Average number of interventions per day per user
 int_day_pers = int_day/len(users)
 print(" * Chat had an average of %.2f" % int_day_pers, "interventions/day/person")
 print("\n----------------------------------")
 
 
 # Obtain DataFrame containing interventions per user per day and normalize the data
-interventions_users_days = wp.get_intervention_table_days(users, days, data)
-interventions_users_days = wp.normalize_dataframe(interventions_users_days)
+interventions_per_day = wpchat.interventions_per_day
+
+import pandas as pd
+
+df = pd.DataFrame.from_dict(interventions_per_day, orient='columns')
+# Center each dimension
+df = df.sub(df.mean(axis=1), axis=0)
+# Normalize each dimension
+df = df.divide(df.max(axis=1)-df.min(axis=1), axis=0)
+
+from whatstk.learning.som import SelfOrganizingMap
+
+# We define the number of units that we will be using. Large number leads to good global
+# fit but poor local fit (low number leads to the oposite)
+num_units = 5
+# We choose an output space define by an array of neurons arranged in a line fashion
+topology = 'line'
+
+print(df)
+som = SelfOrganizingMap(df, num_units, sigma_initial=num_units/2, num_epochs=1000,
+    learning_rate_initial=1, topology=topology)
+
+som.train()
+som.print_results()
+#interventions_users_days = wp.normalize_dataframe(interventions_users_days)
 #print(interventions_users_days)
 #wp.build_dictionary_dates(data)
 # Obtain DataFrame containing interventions per user per hour
@@ -83,15 +88,15 @@ interventions_users_days = wp.normalize_dataframe(interventions_users_days)
 
 # Test SOM
 # Choose number of units (for 2dgrid and 2dgrid this tells the side length)
-print("Self-Organizing Map (SOM) \n")
-num_units = int(input("- Number of units: "))
-topology = input("- Topology: ")
+#print("Self-Organizing Map (SOM) \n")
+#num_units = int(input("- Number of units: "))
+#topology = input("- Topology: ")
 
-S = som.self_organizing_map(interventions_users_days, num_units, sigma_initial=num_units/2, num_epochs=1000,
-    learning_rate_initial=1, topology=topology)
-S.train()
-S.print_results()
-print("\n----------------------------------")
+#S = som.self_organizing_map(wpchat., num_units, sigma_initial=num_units/2, num_epochs=1000,
+    #learning_rate_initial=1, topology=topology)
+#S.train()
+#S.print_results()
+#print("\n----------------------------------")
 
 # print interventions_users_hours
 #print("Preparing plots...")

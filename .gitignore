@@ -246,5 +246,5 @@ crashlytics-build.properties
 fabric.properties
 
 # Chats and results
-chats/
+mychats/
 results/

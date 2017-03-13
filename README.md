@@ -2,13 +2,13 @@
 
 We aim to create a robust and powerful library that provides a set of tools to analyse chat logs of WhatsApp and possibly detect hidden patterns using **unsupervised learning** methods. Currently, it only parses the data in a suitable format and displays basic information of the chat log.
 
-## Run
+## Organization
 
-Simply run
+This project provides several tools which can be used in several different ways. To illustrate this, we provide with some Jupyter Notebooks and some sample code.
 
-`$ python3 main.py file`
+1. Library whatstk: Contains the files from the library
+2. Notebooks: This includes some jupyter notebooks with illustrative examples of how to use this library
 
-where `file` is the name of the chat log file that you want to analyze. The program will prompt an error if `file` does not exist.
 
 ## Dependencies
 
@@ -16,7 +16,7 @@ This project uses some of the most common used Python libraries. Use the `requir
 
 `$ pip3 install -r requirements.txt`
 
-We highly recommended to install these dependencies with `pip` inside a virtual environment to keep them isolated from the rest of the system.
+We highly recommended to install these dependencies with `pip3` inside a virtual environment to keep them isolated from the rest of the system.
 
 
 ## F.A.Q.
@@ -38,7 +38,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > Install virtualenv
 
-> `$ pip install virtualenv`
+> `$ pip3 install virtualenv`
 
 > Create a new virtualenv (we name it `.env`)
 
@@ -46,7 +46,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > Activate the environment
 
-> `$ . .env/bin/activate`
+> `$ . .whatstkenv/bin/activate`
 
 > Install all the dependencies
 

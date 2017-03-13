@@ -29,6 +29,25 @@ import pandas as pd
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 is12clock = False
 
+
+def read_chat(filename):
+
+    raw_data = []
+    read = False
+    while(not read):
+        try:
+            fhand = open(filename);
+            read = True
+        except :
+            filename = input("Invalid filename! Please introduce a correct name: ")
+
+    for line in fhand:
+        line = line.rstrip();
+        raw_data.append(line)
+
+    return raw_data
+
+
 # TODO: VERY SENSITIVE TO DIFFERENT DAYS/MONTH FORMATS
 # TODO Specify that the format [[date], username, message] is that of the output
 # Maps the input line from string to an array of the form: [[date], username, message]
@@ -121,7 +140,7 @@ def raw2format(messy_message, p):
     return parsed_data
 
 
-def parse_data(lines):
+def parse_chat(lines):
     """
     Parses the messy data from the txt chat file in a legible format
 
@@ -288,9 +307,9 @@ def get_intervention_table_days(users, days, data):
             i = daysdict.get(repr(intervention[0][:3]))
             interventions_per_day[i]+=1
         dictionary[user] = interventions_per_day
-    df = pd.DataFrame.from_dict(dictionary, orient='columns')
+    #df = pd.DataFrame.from_dict(dictionary, orient='columns')
 
-    return df
+    return dictionary
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
@@ -417,10 +436,16 @@ def build_dictionary_dates(data):
     return dict(zip(days,range(len(days))))
 
 
-def normalize_dataframe(df):
-    df1 = df.sub(df.mean(axis=1), axis=0)
-    df2 = df1.divide(df.max(axis=1)-df.min(axis=1), axis=0)
-    return df2
+class WhatsAppChat():
+
+    def __init__(self, filename):
+        self.raw_chat = read_chat(filename)
+        self.parsed_data = parse_chat(self.raw_chat)
+        self.usernames = get_users(self.parsed_data)
+        self.days = get_days(self.parsed_data)
+        self.hours = get_hours()
+        self.num_interventions = len(self.parsed_data)
+        self.interventions_per_day = get_intervention_table_days(self.usernames, self.days, self.parsed_data)
 """
 REFERENCES
 ----------

@@ -9,11 +9,17 @@ import pandas as pd
 # - Remove possible redundancy
 # - Graphical tools to plot the result from the SOM
 
-class self_organizing_map():
+def normalize(df):
+    df1 = df.sub(df.mean(axis=1), axis=0)
+    df2 = df1.divide(df.max(axis=1)-df.min(axis=1), axis=0)
+    return df2
+
+
+class SelfOrganizingMap():
 
     def __init__(self, train_data, num_units, sigma_initial, num_epochs=100, learning_rate_initial=1, topology="line"):
         # Train data
-        self.train_data = train_data
+        self.train_data = train_data#normalize(train_data)
         self.num_features , self.num_samples = train_data.shape
 
         # Units
@@ -38,7 +44,7 @@ class self_organizing_map():
         # Topology of out space
         self.topology = topology
         self.size_neighbourhood = int(np.floor(self.num_units/2))-1
-        self.map = topological_map(self)
+        self.map = TopologicalMap(self)
 
 
     def train(self):
@@ -124,9 +130,8 @@ class self_organizing_map():
                     s = ', '.join(results.get(i))
                     print(str(i) + " - " + s)
 
-
 # Class for the topological out space
-class topological_map():
+class TopologicalMap():
 
     def __init__(self, som):
         self.topology = som.topology
