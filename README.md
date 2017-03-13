@@ -6,8 +6,8 @@ We aim to create a robust and powerful library that provides a set of tools to a
 
 This project provides several tools which can be used in several different ways. To illustrate this, we provide with some Jupyter Notebooks and some sample code.
 
-1. Library whatstk: Contains the files from the library
-2. Notebooks: This includes some jupyter notebooks with illustrative examples of how to use this library
+1. [Library whatstk](whatstk): Contains the files from the library
+2. [Notebooks](notebooks): This includes some jupyter notebooks with illustrative examples of how to use this library
 
 
 ## Dependencies
