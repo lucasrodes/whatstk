@@ -4,7 +4,7 @@ If you are using a virtual environment, follow the steps below to setup it for t
 
 First be sure that you are inside the virtual environment (note that out environment is named `.whatstkenv`).
 
-`source activate .whatstkenv`
+`source .whatstkenv/bin/activate`
 
 Next, run the following command to create a kernel for the Jupyter Notebook
 
