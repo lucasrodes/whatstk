@@ -67,7 +67,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 whatsapp-stats
 
-Copyright (C) 2016  Lucas Rodés Guirao, Albert Aparicio, Nicolas Cuervo Benavides
+Copyright (C) 2016  Lucas Rodés Guirao, Albert Aparicio
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
