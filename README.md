@@ -65,7 +65,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 ## License
 
-whatsapp-stats
+whatstk
 
 Copyright (C) 2017 Lucas Rodés Guirao, Albert Aparicio
 
