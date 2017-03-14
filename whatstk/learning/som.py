@@ -46,7 +46,6 @@ class SelfOrganizingMap():
         self.size_neighbourhood = int(np.floor(self.num_units/2))-1
         self.map = TopologicalMap(self)
 
-
     def train(self):
         # Get list of users
         users = list(self.train_data)
@@ -130,6 +129,7 @@ class SelfOrganizingMap():
                     s = ', '.join(results.get(i))
                     print(str(i) + " - " + s)
 
+                    
 # Class for the topological out space
 class TopologicalMap():
 
