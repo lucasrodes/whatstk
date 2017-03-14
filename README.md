@@ -42,7 +42,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > Create a new virtualenv (we name it `.env`)
 
-> `$ python3 -m venv .env`
+> `$ python3 -m venv .whatstkenv`
 
 > Activate the environment
 
