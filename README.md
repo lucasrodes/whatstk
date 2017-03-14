@@ -40,7 +40,7 @@ click on Email chat. More information can be found [here](https://www.whatsapp.c
 
 > `$ pip3 install virtualenv`
 
-> Create a new virtualenv (we name it `.env`)
+> Create a new virtualenv (we name it `.whatstkenv`)
 
 > `$ python3 -m venv .whatstkenv`
 
