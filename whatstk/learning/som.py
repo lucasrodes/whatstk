@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.spatial.distance import cdist
+#from scipy.spatial.distance import cdist
 from random import shuffle
 import collections
 import pandas as pd
@@ -129,7 +129,7 @@ class SelfOrganizingMap():
                     s = ', '.join(results.get(i))
                     print(str(i) + " - " + s)
 
-                    
+
 # Class for the topological out space
 class TopologicalMap():
 
