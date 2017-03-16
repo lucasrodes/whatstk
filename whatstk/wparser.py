@@ -18,7 +18,7 @@
 # This import makes Python use 'print' as in Python 3.x
 from __future__ import print_function
 
-from datetime import datetime
+from datetime import datetime as dt
 import re
 import unicodedata
 from operator import itemgetter
@@ -131,7 +131,7 @@ def raw2format(messy_message, p):
             hour -= 12
 
     # Complete date
-    date = [day, month, year, hour, minute]
+    date = dt(year, month, day, hour, minute)
 
     # Name
     name = remove_accents(header[sep_end:])
@@ -242,7 +242,7 @@ def get_users(data):
         list with the usernames in the chat.
     """
 
-    return np.unique(np.array([d[1] for d in data]))
+    return data['Username'].unique()
 
 
 def get_days(data):
@@ -259,10 +259,7 @@ def get_days(data):
     days: list
         list with the days there has been any conversation in the chat
     """
-
-    days_rep = np.array([d[0][:3] for d in data])
-    days = [list(x) for x in set(tuple(x) for x in days_rep)]  # From [2]
-    days = sorted(days, key=itemgetter(2, 1, 0))
+    return len(np.unique([d.date() for d in data['Date']]))
     return days
 
 
@@ -299,22 +296,46 @@ def get_intervention_table_days(users, days, data):
     """
 
     # Put dates into nice visual format
-    format_days = nice_format_days(days)
+    #format_days = nice_format_days(days)
 
-    daysdict = build_dictionary_dates(data)
+    #daysdict = build_dictionary_dates(data)
     # Loop for all names
-    dictionary = {}
-    for user in users:
-        interventions = get_list_interventions_user(user, data)
-        interventions_per_day = np.zeros(len(days))
-        # Obtain number of interventions per each day contained in dates
-        for intervention in interventions:
-            i = daysdict.get(repr(intervention[0][:3]))
-            interventions_per_day[i]+=1
-        dictionary[user] = interventions_per_day
+    #dictionary = {}
+    #for user in users:
+    #    interventions = get_list_interventions_user(user, data)
+    #    interventions_per_day = np.zeros(len(days))
+    #    # Obtain number of interventions per each day contained in dates
+    #    for intervention in interventions:
+    #        i = daysdict.get(repr(intervention[0][:3]))
+    #        interventions_per_day[i]+=1
+    #    dictionary[user] = interventions_per_day
     #df = pd.DataFrame.from_dict(dictionary, orient='columns')
 
+    dictionary = {}
+
     return dictionary
+
+
+def nice_format_days(days):
+    """
+    Puts the dates into nice format, i.e. it parses [DD,MM,YYYY] to 'DD/MM/YYYY'
+
+    Parameters
+    ----------
+    days: list
+        Days the chat has been active.
+
+    Returns
+    ----------
+    list
+        List of dates (nicely written) the chat has been active
+    """
+    return [str(d[0]) + "/" + str(d[1]) + "/" + str(d[2]) for d in days]
+
+
+def build_dictionary_dates(data):
+    days = [repr(d) for d in get_days(data)]
+    return dict(zip(days,range(len(days))))
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
@@ -352,22 +373,6 @@ def get_intervention_table_hours(users, hours, data):
 
     return df
 
-
-def nice_format_days(days):
-    """
-    Puts the dates into nice format, i.e. it parses [DD,MM,YYYY] to 'DD/MM/YYYY'
-
-    Parameters
-    ----------
-    days: list
-        Days the chat has been active.
-
-    Returns
-    ----------
-    list
-        List of dates (nicely written) the chat has been active
-    """
-    return [str(d[0]) + "/" + str(d[1]) + "/" + str(d[2]) for d in days]
 
 def get_list_interventions_user(username_, data_):
     """
@@ -436,14 +441,13 @@ def get_number_interventions_per_hour(hour_, interv_):
     return sum(s)
 
 
-def build_dictionary_dates(data):
-    days = [repr(d) for d in get_days(data)]
-    return dict(zip(days,range(len(days))))
+
 
 
 class WhatsAppChat():
 
     def __init__(self, filename, regex = None, regex_alert = None):
+        # Set regular expressions to detect headers
         if (regex is not None):
             self.regex = regex
         else:
@@ -454,13 +458,49 @@ class WhatsAppChat():
         else:
             self.regex_alert = self.regex[:-8]
 
+        # Store raw text
         self.raw_chat = read_chat(filename)
-        self.parsed_data = parse_chat(self.raw_chat, self.regex, self.regex_alert)
-        self.usernames = get_users(self.parsed_data)
-        self.days = get_days(self.parsed_data)
+        # Parse text to a list of lists
+        self.parsed_chat = parse_chat(self.raw_chat, self.regex, self.regex_alert)
+        self.parsed_chat = pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])
+
+        # Get basic information
+        self.usernames = get_users(self.parsed_chat)
+        self.days = get_days(self.parsed_chat)
         self.hours = get_hours()
-        self.num_interventions = len(self.parsed_data)
-        self.interventions_per_day = get_intervention_table_days(self.usernames, self.days, self.parsed_data)
+        self.num_interventions = len(self.parsed_chat)
+
+        # Advanced attributes that might be removed from constructor!
+        # self.interventions_per_day =
+
+
+    def response_matrix(self):
+        # Who answers who?
+        return 0
+
+    def interventions_per_day():
+        # DataFrame with interventions per day per user (row: user, column: day)
+        return get_intervention_table_days(self.usernames, self.days, self.parsed_chat)
+
+
+    def to_csv(self, filename, sep = ',', encoding = 'utf-8'):
+        """
+        Converts the pandas DataFrame into a CSV file
+
+        Parameters
+        ----------
+        filename: string
+            Name of the stored CSV file
+        sep: string
+            Separator in the CSV file
+        encoding: string
+            Encoding used to store the string content
+        """
+        if (self.chat_DataFrame is None):
+            self.get_DataFrame()
+
+        self.chat_DataFrame.to_csv(filename, sep=sep, encoding=encoding)
+
 
 """
 REFERENCES
