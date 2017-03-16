@@ -114,15 +114,15 @@ def raw2format(messy_message, p):
 
     # Do not care about seconds
 
-    print(header[minute_end:])
+    #print(header[minute_end:])
     # Separation
     #pattern_sep = '.*[-:] '
     pattern_sep = '.*[-:] '
     py = re.compile(pattern_sep)
     m = py.match(header[minute_end:])
     sep_end = m.end() + minute_end
-    print(m.group())
-    print(is12clock)
+    #print(m.group())
+    #print(is12clock)
     # Change 12 clock to 24 clock!
     if(is12clock):
         if('P' in m.group()):#if(header[sep_end-4] == 'P'):
