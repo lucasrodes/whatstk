@@ -244,7 +244,7 @@ def get_users(data):
         list with the usernames in the chat.
     """
 
-    return data['Username'].unique()
+    return np.unique(np.array([d[1] for d in data]))
 
 
 def get_days(data):
@@ -261,7 +261,8 @@ def get_days(data):
     days: list
         list with the days there has been any conversation in the chat
     """
-    return np.unique([d.date() for d in data['Date']])
+    #return np.unique([d.date() for d in data['Date']])
+    return np.unique([d[0].date() for d in data])
 
 
 def get_hours():
@@ -296,27 +297,16 @@ def get_intervention_table_days(users, days, data):
         Table containing #interventions per user per each day
     """
 
-    # Put dates into nice visual format
-    #format_days = nice_format_days(days)
+    dix = defaultdict(dict)
 
-    #daysdict = build_dictionary_dates(data)
-    # Loop for all names
-    #dictionary = {}
-    #for user in users:
-    #    interventions = get_list_interventions_user(user, data)
-    #    interventions_per_day = np.zeros(len(days))
-    #    # Obtain number of interventions per each day contained in dates
-    #    for intervention in interventions:
-    #        i = daysdict.get(repr(intervention[0][:3]))
-    #        interventions_per_day[i]+=1
-    #    dictionary[user] = interventions_per_day
-    #df = pd.DataFrame.from_dict(dictionary, orient='columns')
+    for d in data:
+        date = d[0].date()
+        user = d[1]
+        dix[date][user] = dix[date].get(user,0) + 1
 
-    dictionary = defaultdict(dict)
-
-
-
-    return dictionary
+    df = pd.DataFrame.from_dict(dix, orient='columns')
+    df = df.fillna(0)
+    return df
 
 
 def nice_format_days(days):
@@ -465,7 +455,6 @@ class WhatsAppChat():
         self.raw_chat = read_chat(filename)
         # Parse text to a list of lists
         self.parsed_chat = parse_chat(self.raw_chat, self.regex, self.regex_alert)
-        self.parsed_chat = pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])
 
         # Get basic information
         self.usernames = get_users(self.parsed_chat)
@@ -481,9 +470,13 @@ class WhatsAppChat():
         # Who answers who?
         return 0
 
-    def interventions_per_day():
+    def interventions_per_day(self):
         # DataFrame with interventions per day per user (row: user, column: day)
         return get_intervention_table_days(self.usernames, self.days, self.parsed_chat)
+
+
+    def to_DataFrame():
+        return pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])
 
 
     def to_csv(self, filename, sep = ',', encoding = 'utf-8'):
