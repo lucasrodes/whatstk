@@ -53,7 +53,7 @@ def read_chat(filename):
 # TODO: VERY SENSITIVE TO DIFFERENT DAYS/MONTH FORMATS
 # TODO Specify that the format [[date], username, message] is that of the output
 # Maps the input line from string to an array of the form: [[date], username, message]
-def raw2format(messy_message, p):
+def raw2format(messy_message, p, complete_names=True):
     """
     Parses a line of the chat txt file into a legible format
 
@@ -137,6 +137,8 @@ def raw2format(messy_message, p):
 
     # Name
     name = remove_accents(header[sep_end:])
+    #if (not complete_names):
+    #    name = name.split(' ')[0]
 
     # Message
     message = remove_accents(messy_message[p:])
@@ -229,7 +231,7 @@ def remove_accents(byte_string):
 
 
 
-def get_users(data):
+def get_users(data, complete_names='True'):
     """
     Obtain usernames from the chat
 
@@ -243,7 +245,6 @@ def get_users(data):
     list
         list with the usernames in the chat.
     """
-
     return np.unique(np.array([d[1] for d in data]))
 
 
@@ -309,26 +310,8 @@ def get_intervention_table_days(users, days, data):
     return df
 
 
-def nice_format_days(days):
-    """
-    Puts the dates into nice format, i.e. it parses [DD,MM,YYYY] to 'DD/MM/YYYY'
-
-    Parameters
-    ----------
-    days: list
-        Days the chat has been active.
-
-    Returns
-    ----------
-    list
-        List of dates (nicely written) the chat has been active
-    """
-    return [str(d[0]) + "/" + str(d[1]) + "/" + str(d[2]) for d in days]
-
-
-def build_dictionary_dates(data):
-    days = [repr(d) for d in get_days(data)]
-    return dict(zip(days,range(len(days))))
+def get_response_matrix():
+    return 0
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
@@ -466,16 +449,38 @@ class WhatsAppChat():
         # self.interventions_per_day =
 
 
-    def response_matrix(self):
-        # Who answers who?
-        return 0
+    def response_matrix_probability(self, ptype = 'absolute'):
+        dix = defaultdict(dict)
+        for user in self.usernames:
+            dix[user][user] = 0
+        for i in range(1,len(self.parsed_chat)):
+            user_old = self.parsed_chat[i-1][1]
+            user_new = self.parsed_chat[i][1]
+            if (user_old != user_new):
+                dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
+
+        df = pd.DataFrame.from_dict(dix)
+
+        if (ptype != 'absolute'):
+            df /= df.sum().sum()
+            if (ptype == 'joint'):
+                df = df
+            elif (ptype == 'conditional_replier'):
+                df = df.divide(df.sum(axis=1), axis=0)
+            elif (ptype == 'conditional_replied'):
+                df /= df.sum(axis=0)
+            df = df.fillna(0)
+
+        df = df.fillna(0)
+        return df
+
 
     def interventions_per_day(self):
         # DataFrame with interventions per day per user (row: user, column: day)
         return get_intervention_table_days(self.usernames, self.days, self.parsed_chat)
 
 
-    def to_DataFrame():
+    def to_DataFrame(self):
         return pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])
 
 
