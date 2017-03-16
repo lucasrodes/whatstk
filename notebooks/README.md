@@ -24,5 +24,6 @@ To setup your virtual environment for IPython please refer to [VENVIPYTHON.md](V
 ## Index of tutorials
 
 - [SimilarityMapTutorial](SimilarityMapTutorial.ipynb): Tutorial that shows how you can obtain a similarity map of your users
+- [ResponseMatrixTutorial](ResponseMatrixTutorial.ipynb): Tutorial explaining how to get the response matrix of a chat group
 
 
