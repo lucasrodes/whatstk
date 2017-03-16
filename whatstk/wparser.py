@@ -304,7 +304,7 @@ def get_intervention_table_days(users, days, data):
         user = d[1]
         dix[date][user] = dix[date].get(user,0) + 1
 
-    df = pd.DataFrame.from_dict(dix, orient='columns')
+    df = pd.DataFrame.from_dict(dix, orient='index')
     df = df.fillna(0)
     return df
 
