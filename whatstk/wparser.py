@@ -89,7 +89,8 @@ def raw2format(messy_message, p):
     month_end = py.match(header[day_end:]).end() + day_end
 
     # Year can be YY or YYYY
-    pattern_year = '\d{,4}, '
+    #pattern_year = '\d{,4}, '
+    pattern_year = '\d{,4},? '
     py = re.compile(pattern_year)
     year = int(py.match(header[month_end:]).group()[:-2])
     year_end = py.match(header[month_end:]).end() + month_end
@@ -106,21 +107,25 @@ def raw2format(messy_message, p):
     hour_end = py.match(header[year_end:]).end() + year_end
 
     # Minute
-    pattern_minute = '\d\d.'
+    pattern_minute = '\d\d'
     py = re.compile(pattern_minute)
-    minute = int(py.match(header[hour_end:]).group()[:-1])
+    minute = int(py.match(header[hour_end:]).group())
     minute_end = py.match(header[hour_end:]).end() + hour_end
 
     # Do not care about seconds
 
+    print(header[minute_end:])
     # Separation
+    #pattern_sep = '.*[-:] '
     pattern_sep = '.*[-:] '
     py = re.compile(pattern_sep)
-    sep_end = py.match(header[minute_end:]).end() + minute_end
-
+    m = py.match(header[minute_end:])
+    sep_end = m.end() + minute_end
+    print(m.group())
+    print(is12clock)
     # Change 12 clock to 24 clock!
     if(is12clock):
-        if(header[sep_end-4] == 'P'):
+        if('P' in m.group()):#if(header[sep_end-4] == 'P'):
             hour += 12
         if(hour%12 == 0):
             hour -= 12
@@ -140,7 +145,7 @@ def raw2format(messy_message, p):
     return parsed_data
 
 
-def parse_chat(lines):
+def parse_chat(lines, regex_pattern, regex_pattern_alert):
     """
     Parses the messy data from the txt chat file in a legible format
 
@@ -159,15 +164,15 @@ def parse_chat(lines):
     """
 
     # Check if this is 12 or 24 clock
-    pattern = '.* ([AP]M)[-:]'
+    pattern = '.* ([AaPp][Mm])?( )?[-:]'
     global is12clock
     is12clock = bool(re.match(pattern, lines[0]))
 
     # Regular expression to find the header of the message of a user
-    pattern = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AaPp][Mm])?[-:] [^:]*: '
+    pattern = regex_pattern
     # Regular expression to find the header of a whatsapp alert
-    pattern_alert_whats = '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AaPp][Mm])?[-:]'
-    # pattern = '\d?\d.\d\d.\d{,4}, \d?\d:\d\d(:\d\d)? ([AP]M)?[(-):] [^:]*:'
+    pattern_alert_whats = regex_pattern_alert
+
     p1 = re.compile(pattern)
     data = []
 
@@ -438,14 +443,25 @@ def build_dictionary_dates(data):
 
 class WhatsAppChat():
 
-    def __init__(self, filename):
+    def __init__(self, filename, regex = None, regex_alert = None):
+        if (regex is not None):
+            self.regex = regex
+        else:
+            self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
+
+        if (regex_alert is not None):
+            self.regex_alert = regex_alert
+        else:
+            self.regex_alert = self.regex[:-8]
+
         self.raw_chat = read_chat(filename)
-        self.parsed_data = parse_chat(self.raw_chat)
+        self.parsed_data = parse_chat(self.raw_chat, self.regex, self.regex_alert)
         self.usernames = get_users(self.parsed_data)
         self.days = get_days(self.parsed_data)
         self.hours = get_hours()
         self.num_interventions = len(self.parsed_data)
         self.interventions_per_day = get_intervention_table_days(self.usernames, self.days, self.parsed_data)
+
 """
 REFERENCES
 ----------
