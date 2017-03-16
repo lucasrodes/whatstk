@@ -1,6 +1,6 @@
 In this directory you can find some examples of how `whatstk` can be used.
 
-### Installation
+### Jupyter setup
 
 #### Install Jupyter
 
