@@ -26,6 +26,8 @@ from operator import itemgetter
 import numpy as np
 import pandas as pd
 
+from collections import defaultdict
+
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 is12clock = False
 
@@ -127,8 +129,8 @@ def raw2format(messy_message, p):
     if(is12clock):
         if('P' in m.group()):#if(header[sep_end-4] == 'P'):
             hour += 12
-        if(hour%12 == 0):
-            hour -= 12
+        if(hour == 24):
+            hour = 12
 
     # Complete date
     date = dt(year, month, day, hour, minute)
@@ -259,8 +261,7 @@ def get_days(data):
     days: list
         list with the days there has been any conversation in the chat
     """
-    return len(np.unique([d.date() for d in data['Date']]))
-    return days
+    return np.unique([d.date() for d in data['Date']])
 
 
 def get_hours():
@@ -311,7 +312,9 @@ def get_intervention_table_days(users, days, data):
     #    dictionary[user] = interventions_per_day
     #df = pd.DataFrame.from_dict(dictionary, orient='columns')
 
-    dictionary = {}
+    dictionary = defaultdict(dict)
+
+
 
     return dictionary
 
