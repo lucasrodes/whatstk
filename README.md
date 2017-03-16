@@ -5,14 +5,16 @@ whatstk is a Python module for WhatsApp chat group analysis and distributed unde
 The project was started in December 2016 by [lucasrodes](github.com/lucasrodes) and [albertaparicio](github.com/albertaparicio).
 
 
-## Installation
+### Installation
 
-### Download
+#### Download
 
-`git clone https://github.com/lucasrodes/whatstk.git`
-`cd whatstk`
+```
+git clone https://github.com/lucasrodes/whatstk.git
+cd whatstk
+```
 
-### Dependencies
+#### Dependencies
 
 This project uses some of the most common Python libraries:
 
@@ -28,7 +30,7 @@ We highly recommended to install these dependencies inside a virtual environment
 For running the examples, Jupyter Notebook is required.
 
 
-## License
+### License
 
 whatstk
 
