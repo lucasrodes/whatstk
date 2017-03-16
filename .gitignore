@@ -248,3 +248,7 @@ fabric.properties
 # Chats and results
 mychats/
 results/
+stable_requirements.txt
+main.py
+.whatstkenv/
+.eenv/

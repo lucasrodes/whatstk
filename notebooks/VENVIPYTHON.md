@@ -1,15 +1,24 @@
-# SETUP
 
 If you are using a virtual environment, follow the steps below to setup it for the Jupyter Notebook.
 
-First be sure that you are inside the virtual environment (note that out environment is named `.whatstkenv`).
+### Enter your virtual environment
 
-`source .whatstkenv/bin/activate`
+`. ../.whatstkenv/bin/activate`
 
-Next, run the following command to create a kernel for the Jupyter Notebook
+### Install IPykernel
+
+`pip3 install ipykernel`
+
+### Create an IPython kernel
+
+Next, run the following command to create a kernel in order to use our virtual environment in the Jupyter Notebook
 
 `python3 -m ipykernel install --user --name .whatstkenv --display-name "whatstkenv"`
 
+### Run Jupyter and choose your kernel
+
 You should now be able to select the created kernel from the Jupyter menu bar (Kernel/Change kernel, see picture below).
+
+`jupyter notebook`
 
 ![](files/kernelsetup.png?raw=true)
