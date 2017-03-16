@@ -5,13 +5,7 @@ If you are using a virtual environment, follow the steps below to setup it for t
 
 `. ../.whatstkenv/bin/activate`
 
-### Download Jupyter
-
-Make sure you have downloaded the Jupyter notebook
-
-`pip3 install jupyter`
-
-### Download IPykernel
+### Install IPykernel
 
 `pip3 install ipykernel`
 
