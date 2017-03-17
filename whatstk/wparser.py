@@ -470,6 +470,7 @@ class WhatsAppChat():
             elif (ptype == 'conditional_replied'):
                 df /= df.sum(axis=0)
             df = df.fillna(0)
+            df *= 100
 
         df = df.fillna(0)
         return df
