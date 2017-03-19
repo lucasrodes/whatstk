@@ -12,9 +12,9 @@ Make sure you have downloaded the Jupyter notebook
 
 Simply run
 
-`jupyter notebook tutorial.ipynb`
+`jupyter notebook <tutorialname>.ipynb`
 
-to start the `tutorial.ipynb` notebook.
+to start the `<tutorialname>.ipynb` notebook.
 
 #### Virtual environment for IPython
 

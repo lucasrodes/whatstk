@@ -279,7 +279,7 @@ def get_hours():
     return [s for s in range(24)]
 
 
-def get_intervention_table_days(users, days, data):
+def get_intervention_table_days(data):
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
 
@@ -310,14 +310,44 @@ def get_intervention_table_days(users, days, data):
     return df
 
 
+def get_intervention_table_days_hours(data):
+    """
+    Return DataFrame with interventions of all users (columns) for all days (rows)
+
+    Parameters
+    ----------
+    users: list
+        List with the usernames of the chat.
+    days: list
+        Days the chat has been active.
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    df: Dataframe
+        Table containing #interventions per user per each day
+    """
+
+    dix = defaultdict(dict)
+
+    for d in data:
+        date_with_hour = str(d[0].date()) + ' ' + str(d[0].hour)
+        user = d[1]
+        dix[date_with_hour][user] = dix[date_with_hour].get(user,0) + 1
+
+    df = pd.DataFrame.from_dict(dix, orient='index')
+    df = df.fillna(0)
+    return df
+
 def get_response_matrix():
     return 0
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
-def get_intervention_table_hours(users, hours, data):
+"""def get_intervention_table_hoursday(users, hours, data):
     """
-    Return DataFrame with interventions of all users (columns) for all hour times (rows)
+"""Return DataFrame with interventions of all users (columns) for all hour times (rows)
 
     Parameters
     ----------
@@ -333,7 +363,7 @@ def get_intervention_table_hours(users, hours, data):
     df: Dataframe
         Table containing #interventions per user per each hour of the day
     """
-
+"""
     interventions_per_hour = np.zeros(len(hours))
 
     # Loop for all users
@@ -347,7 +377,7 @@ def get_intervention_table_hours(users, hours, data):
         inter = pd.Series(interventions_per_hour, index=hours)
         df.insert(0, user, inter)
 
-    return df
+    return df"""
 
 
 def get_list_interventions_user(username_, data_):
@@ -476,9 +506,14 @@ class WhatsAppChat():
         return df
 
 
-    def interventions_per_day(self):
-        # DataFrame with interventions per day per user (row: user, column: day)
-        return get_intervention_table_days(self.usernames, self.days, self.parsed_chat)
+    def interventions(self, timestep='days'):
+
+        if (timestep == 'days'):
+            return get_intervention_table_days(self.parsed_chat)
+        elif (timestep == 'hours'):
+            return get_intervention_table_days_hours(self.parsed_chat)
+        else:
+            return 0
 
 
     def to_DataFrame(self):
