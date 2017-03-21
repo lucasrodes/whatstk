@@ -18,13 +18,15 @@
 # This import makes Python use 'print' as in Python 3.x
 from __future__ import print_function
 
-from datetime import datetime
+from datetime import datetime as dt
 import re
 import unicodedata
 from operator import itemgetter
 
 import numpy as np
 import pandas as pd
+
+from collections import defaultdict
 
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 is12clock = False
@@ -51,7 +53,7 @@ def read_chat(filename):
 # TODO: VERY SENSITIVE TO DIFFERENT DAYS/MONTH FORMATS
 # TODO Specify that the format [[date], username, message] is that of the output
 # Maps the input line from string to an array of the form: [[date], username, message]
-def raw2format(messy_message, p):
+def raw2format(messy_message, p, complete_names=True):
     """
     Parses a line of the chat txt file into a legible format
 
@@ -127,14 +129,16 @@ def raw2format(messy_message, p):
     if(is12clock):
         if('P' in m.group()):#if(header[sep_end-4] == 'P'):
             hour += 12
-        if(hour%12 == 0):
-            hour -= 12
+        if(hour == 24):
+            hour = 12
 
     # Complete date
-    date = [day, month, year, hour, minute]
+    date = dt(year, month, day, hour, minute)
 
     # Name
     name = remove_accents(header[sep_end:])
+    #if (not complete_names):
+    #    name = name.split(' ')[0]
 
     # Message
     message = remove_accents(messy_message[p:])
@@ -227,7 +231,7 @@ def remove_accents(byte_string):
 
 
 
-def get_users(data):
+def get_users(data, complete_names='True'):
     """
     Obtain usernames from the chat
 
@@ -241,7 +245,6 @@ def get_users(data):
     list
         list with the usernames in the chat.
     """
-
     return np.unique(np.array([d[1] for d in data]))
 
 
@@ -259,11 +262,8 @@ def get_days(data):
     days: list
         list with the days there has been any conversation in the chat
     """
-
-    days_rep = np.array([d[0][:3] for d in data])
-    days = [list(x) for x in set(tuple(x) for x in days_rep)]  # From [2]
-    days = sorted(days, key=itemgetter(2, 1, 0))
-    return days
+    #return np.unique([d.date() for d in data['Date']])
+    return np.unique([d[0].date() for d in data])
 
 
 def get_hours():
@@ -279,7 +279,7 @@ def get_hours():
     return [s for s in range(24)]
 
 
-def get_intervention_table_days(users, days, data):
+def get_intervention_table_days(data):
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
 
@@ -298,29 +298,56 @@ def get_intervention_table_days(users, days, data):
         Table containing #interventions per user per each day
     """
 
-    # Put dates into nice visual format
-    format_days = nice_format_days(days)
+    dix = defaultdict(dict)
 
-    daysdict = build_dictionary_dates(data)
-    # Loop for all names
-    dictionary = {}
-    for user in users:
-        interventions = get_list_interventions_user(user, data)
-        interventions_per_day = np.zeros(len(days))
-        # Obtain number of interventions per each day contained in dates
-        for intervention in interventions:
-            i = daysdict.get(repr(intervention[0][:3]))
-            interventions_per_day[i]+=1
-        dictionary[user] = interventions_per_day
-    #df = pd.DataFrame.from_dict(dictionary, orient='columns')
+    for d in data:
+        date = d[0].date()
+        user = d[1]
+        dix[date][user] = dix[date].get(user,0) + 1
 
-    return dictionary
+    df = pd.DataFrame.from_dict(dix, orient='index')
+    df = df.fillna(0)
+    return df
+
+
+def get_intervention_table_days_hours(data):
+    """
+    Return DataFrame with interventions of all users (columns) for all days (rows)
+
+    Parameters
+    ----------
+    users: list
+        List with the usernames of the chat.
+    days: list
+        Days the chat has been active.
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    df: Dataframe
+        Table containing #interventions per user per each day
+    """
+
+    dix = defaultdict(dict)
+
+    for d in data:
+        date_with_hour = str(d[0].date()) + ' ' + str(d[0].hour)
+        user = d[1]
+        dix[date_with_hour][user] = dix[date_with_hour].get(user,0) + 1
+
+    df = pd.DataFrame.from_dict(dix, orient='index')
+    df = df.fillna(0)
+    return df
+
+def get_response_matrix():
+    return 0
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
-def get_intervention_table_hours(users, hours, data):
+"""def get_intervention_table_hoursday(users, hours, data):
     """
-    Return DataFrame with interventions of all users (columns) for all hour times (rows)
+"""Return DataFrame with interventions of all users (columns) for all hour times (rows)
 
     Parameters
     ----------
@@ -336,7 +363,7 @@ def get_intervention_table_hours(users, hours, data):
     df: Dataframe
         Table containing #interventions per user per each hour of the day
     """
-
+"""
     interventions_per_hour = np.zeros(len(hours))
 
     # Loop for all users
@@ -350,24 +377,8 @@ def get_intervention_table_hours(users, hours, data):
         inter = pd.Series(interventions_per_hour, index=hours)
         df.insert(0, user, inter)
 
-    return df
+    return df"""
 
-
-def nice_format_days(days):
-    """
-    Puts the dates into nice format, i.e. it parses [DD,MM,YYYY] to 'DD/MM/YYYY'
-
-    Parameters
-    ----------
-    days: list
-        Days the chat has been active.
-
-    Returns
-    ----------
-    list
-        List of dates (nicely written) the chat has been active
-    """
-    return [str(d[0]) + "/" + str(d[1]) + "/" + str(d[2]) for d in days]
 
 def get_list_interventions_user(username_, data_):
     """
@@ -436,14 +447,13 @@ def get_number_interventions_per_hour(hour_, interv_):
     return sum(s)
 
 
-def build_dictionary_dates(data):
-    days = [repr(d) for d in get_days(data)]
-    return dict(zip(days,range(len(days))))
+
 
 
 class WhatsAppChat():
 
     def __init__(self, filename, regex = None, regex_alert = None):
+        # Set regular expressions to detect headers
         if (regex is not None):
             self.regex = regex
         else:
@@ -454,13 +464,80 @@ class WhatsAppChat():
         else:
             self.regex_alert = self.regex[:-8]
 
+        # Store raw text
         self.raw_chat = read_chat(filename)
-        self.parsed_data = parse_chat(self.raw_chat, self.regex, self.regex_alert)
-        self.usernames = get_users(self.parsed_data)
-        self.days = get_days(self.parsed_data)
+        # Parse text to a list of lists
+        self.parsed_chat = parse_chat(self.raw_chat, self.regex, self.regex_alert)
+
+        # Get basic information
+        self.usernames = get_users(self.parsed_chat)
+        self.days = get_days(self.parsed_chat)
         self.hours = get_hours()
-        self.num_interventions = len(self.parsed_data)
-        self.interventions_per_day = get_intervention_table_days(self.usernames, self.days, self.parsed_data)
+        self.num_interventions = len(self.parsed_chat)
+
+        # Advanced attributes that might be removed from constructor!
+        # self.interventions_per_day =
+
+
+    def response_matrix_probability(self, ptype = 'absolute'):
+        dix = defaultdict(dict)
+        for user in self.usernames:
+            dix[user][user] = 0
+        for i in range(1,len(self.parsed_chat)):
+            user_old = self.parsed_chat[i-1][1]
+            user_new = self.parsed_chat[i][1]
+            if (user_old != user_new):
+                dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
+
+        df = pd.DataFrame.from_dict(dix)
+
+        if (ptype != 'absolute'):
+            df /= df.sum().sum()
+            if (ptype == 'joint'):
+                df = df
+            elif (ptype == 'conditional_replier'):
+                df = df.divide(df.sum(axis=1), axis=0)
+            elif (ptype == 'conditional_replied'):
+                df /= df.sum(axis=0)
+            df = df.fillna(0)
+            df *= 100
+
+        df = df.fillna(0)
+        return df
+
+
+    def interventions(self, timestep='days'):
+
+        if (timestep == 'days'):
+            return get_intervention_table_days(self.parsed_chat)
+        elif (timestep == 'hours'):
+            return get_intervention_table_days_hours(self.parsed_chat)
+        else:
+            return 0
+
+
+    def to_DataFrame(self):
+        return pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])
+
+
+    def to_csv(self, filename, sep = ',', encoding = 'utf-8'):
+        """
+        Converts the pandas DataFrame into a CSV file
+
+        Parameters
+        ----------
+        filename: string
+            Name of the stored CSV file
+        sep: string
+            Separator in the CSV file
+        encoding: string
+            Encoding used to store the string content
+        """
+        if (self.chat_DataFrame is None):
+            self.get_DataFrame()
+
+        self.chat_DataFrame.to_csv(filename, sep=sep, encoding=encoding)
+
 
 """
 REFERENCES

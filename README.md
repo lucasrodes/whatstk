@@ -1,4 +1,4 @@
-# whatstk
+# [whatstk](http://lucasrodes.github.io/whatstk)
 
 whatstk is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license.
 
@@ -36,7 +36,7 @@ whatstk
 
 Copyright (C) 2017 Lucas Rodés Guirao, Albert Aparicio
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 

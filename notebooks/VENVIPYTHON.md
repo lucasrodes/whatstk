@@ -13,7 +13,7 @@ If you are using a virtual environment, follow the steps below to setup it for t
 
 Next, run the following command to create a kernel in order to use our virtual environment in the Jupyter Notebook
 
-`python3 -m ipykernel install --user --name .whatstkenv --display-name "whatstkenv"`
+`python3 -m ipykernel install --user --name <envname> --display-name "<envname>"`
 
 ### Run Jupyter and choose your kernel
 
