@@ -4,13 +4,13 @@
 
 If this raises an error, try installing `sudo apt install python3-venv`
 
-Create a new virtualenv (e.g. .whatstkenv)
+Create a new virtualenv
 
-`$ python3 -m venv .whatstkenv`
+`$ python3 -m venv <envname>`
 
 Activate the environment
 
-`$ . .whatstkenv/bin/activate`
+`$ . <envname>/bin/activate`
 
 Install all the dependencies from `requirements.txt`
 
