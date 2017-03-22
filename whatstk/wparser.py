@@ -340,6 +340,40 @@ def get_intervention_table_days_hours(data):
     df = df.fillna(0)
     return df
 
+
+def get_intervention_grid_week_hours(data):
+    """
+    Return DataFrame with interventions of all users (columns) for all days (rows)
+
+    Parameters
+    ----------
+    users: list
+        List with the usernames of the chat.
+    days: list
+        Days the chat has been active.
+    data: list
+        Legible data.
+
+    Returns
+    ----------
+    df: Dataframe
+        Table containing #interventions per user per each day
+    """
+    weekdays = {0:'Monday', 1:'Tuesday', 2:'Wednesday', 3:'Thursday', 4:'Friday', 5:'Saturday', 6:'Sunday'}
+    dix = defaultdict(dict)
+
+    for d in data:
+        hour = d[0].hour
+        day = weekdays[d[0].weekday()]
+        dix[day][hour] = dix[day].get(hour,0) + 1
+
+    df = pd.DataFrame.from_dict(dix, orient='index')
+    df = df.fillna(0)
+    df = df.reindex(index= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        columns= np.arange(0,24))
+    return df
+
+
 def get_response_matrix():
     return 0
 
@@ -506,7 +540,7 @@ class WhatsAppChat():
         return df
 
 
-    def interventions(self, timestep='days'):
+    def user_interventions(self, timestep='days'):
 
         if (timestep == 'days'):
             return get_intervention_table_days(self.parsed_chat)
@@ -515,6 +549,9 @@ class WhatsAppChat():
         else:
             return 0
 
+
+    def week_hour_grid(self):
+        return get_intervention_grid_week_hours(self.parsed_chat);
 
     def to_DataFrame(self):
         return pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])

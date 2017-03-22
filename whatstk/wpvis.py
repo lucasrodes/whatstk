@@ -16,7 +16,7 @@ def vis_response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel
     elif(ptype == 'conditional_replied'):
         title += 'P(replier | replied)'
 
-    ax = sns.heatmap(response_matrix, annot=True, fmt=fmt, annot_kws={"size":anot_size})
+    ax = sns.heatmap(response_matrix, annot=True, fmt=fmt, annot_kws={"size":anot_size}, cbar=False)
     labels = [m.replace(' ', '\n')  if len(m.split(' '))>1 else m for m in response_matrix.columns]
 
     ax.axes.set_title(title,fontsize=title_size)
@@ -26,6 +26,23 @@ def vis_response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel
 
     ax.set_xticklabels(labels)
     ax.set_yticklabels(labels[::-1])
+    sns.plt.yticks(rotation=0)
+
+    sns.plt.show()
+
+# Visualize Response Matrix
+def vis_week_hour_grid(week_hour_grid, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8, cmap="YlGnBu"):
+
+    title = 'Week Hour Activity Grid'
+    fmt = 'g'
+
+    ax = sns.heatmap(week_hour_grid, annot=True, fmt=fmt, annot_kws={"size":anot_size}, cmap=cmap, cbar=False)
+
+    ax.axes.set_title(title,fontsize=title_size)
+    ax.set_xlabel("Hours",fontsize=xlabel_size)
+    ax.set_ylabel("Days",fontsize=ylabel_size)
+    ax.tick_params(labelsize=tick_size)
+
     sns.plt.yticks(rotation=0)
 
     sns.plt.show()
