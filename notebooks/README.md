@@ -1,4 +1,6 @@
-In this directory you can find some examples of how `whatstk` can be used.
+In this directory you can find some examples of how `whatstk` can be used. Note that some of this notebooks require libraries. To install them simply run
+
+`pip3 install -r requirements.txt`
 
 ### Jupyter setup
 
