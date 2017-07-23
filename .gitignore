@@ -247,14 +247,5 @@ fabric.properties
 
 # Chats and results
 mychats/
-results/
-stable_requirements.txt
-main.py
-.whatstkenv/
-.eenv/
-chatlog.csv
-examples_requirements.txt
 notebooks/Untitled.ipynb
-test-responsematrix.py
-test.py
-trying.csv
+.whatstk
