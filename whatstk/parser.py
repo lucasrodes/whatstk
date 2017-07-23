@@ -222,55 +222,17 @@ def remove_accents(byte_string):
 
     return new_string
 
-
-def get_users(data):
-    """
-    Obtain usernames from the chat
-
-    Parameters
-    ----------
-    data: list
-        Legible data.
-
-    Returns
-    ----------
-    list
-        list with the usernames in the chat.
-    """
-    return np.unique(np.array([d[1] for d in data]))
+# TODO: document
+def user_interventions(chat, timestep='days'):
+    if timestep == 'days':
+        return user_interventions_days(chat.parsed_chat)
+    elif timestep == 'hours':
+        return user_interventions_hours(chat.parsed_chat)
+    else:
+        return 0
 
 
-def get_days(data):
-    """
-    Obtain dates from conversations from the chat
-
-    Parameters
-    ----------
-    data: list
-        Legible data.
-
-    Returns
-    ----------
-    days: list
-        list with the days there has been any conversation in the chat
-    """
-    return np.unique([d[0].date() for d in data])
-
-
-def get_hours():
-    """
-    Obtain the hours in a day
-
-    Returns
-    ----------
-    list
-        list with the hours in a day
-    """
-
-    return [s for s in range(24)]
-
-
-def get_intervention_table_days(data):
+def user_interventions_days(data):
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
 
@@ -297,7 +259,7 @@ def get_intervention_table_days(data):
     return df
 
 
-def get_intervention_table_days_hours(data):
+def user_interventions_hours(data):
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
 
@@ -353,12 +315,117 @@ def week_hour_grid(chat):
     return df
 
 
-def get_response_matrix():
-    return 0
+class WhatsAppChat:
+
+    def __init__(self, filename, regex=None, regex_alert=None):
+        # Set regular expressions to detect headers
+        if regex is not None:
+            self.regex = regex
+        else:
+            self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
+
+        if regex_alert is not None:
+            self.regex_alert = regex_alert
+        else:
+            self.regex_alert = self.regex[:-8]
+
+        # Store raw text
+        self.raw_chat = read_chat(filename)
+        # Parse text to a list of lists
+        self.parsed_chat = parse_chat(self.raw_chat, self.regex, self.regex_alert)
+
+    @property
+    def usernames(self):
+        """
+        Obtain usernames from the chat
+
+        Returns
+        ----------
+        list
+            list with the usernames in the chat.
+        """
+        return np.unique(np.array([d[1] for d in self.parsed_chat]))
+
+    @property
+    def days(self):
+        """
+        Obtain dates from conversations from the chat
+
+        Returns
+        ----------
+        days: list
+            list with the days there has been any conversation in the chat
+        """
+        return np.unique([d[0].date() for d in self.parsed_chat])
+
+    @property
+    def hours(self):
+        """
+        Obtain the hours in a day
+
+        Returns
+        ----------
+        list
+            list with the hours in a day
+        """
+
+        return [s for s in range(24)]
+
+    @property
+    def num_interventions(self):
+        """
+        Number of interventions in a chat
+        :return: integer value
+        """
+        return len(self.parsed_chat)
+
+    def response_matrix_probability(self, ptype='absolute'):
+        dix = defaultdict(dict)
+        for user in self.usernames:
+            dix[user][user] = 0
+        for i in range(1,len(self.parsed_chat)):
+            user_old = self.parsed_chat[i-1][1]
+            user_new = self.parsed_chat[i][1]
+            if user_old != user_new:
+                dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
+
+        df = pd.DataFrame.from_dict(dix)
+
+        if ptype != 'absolute':
+            df /= df.sum().sum()
+            if ptype == 'joint':
+                df = df
+            elif ptype == 'conditional_replier':
+                df = df.divide(df.sum(axis=1), axis=0)
+            elif ptype == 'conditional_replied':
+                df /= df.sum(axis=0)
+            df = df.fillna(0)
+            df *= 100
+
+        df = df.fillna(0)
+        return df
+
+    def to_DataFrame(self):
+        return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username', 'Message'])
+
+    def to_csv(self, filename, sep=',', encoding='utf-8'):
+        """
+        Converts the pandas DataFrame into a CSV file
+
+        Parameters
+        ----------
+        filename: string
+            Name of the stored CSV file
+        sep: string
+            Separator in the CSV file
+        encoding: string
+            Encoding used to store the string content
+        """
+        self.to_DataFrame().to_csv(filename, sep=sep, encoding=encoding)
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
-"""def get_intervention_table_hoursday(users, hours, data):
+'''def get_intervention_table_hoursday(users, hours, data):
     """
 """Return DataFrame with interventions of all users (columns) for all hour times (rows)
 
@@ -390,7 +457,7 @@ def get_response_matrix():
         inter = pd.Series(interventions_per_hour, index=hours)
         df.insert(0, user, inter)
 
-    return df"""
+    return df
 
 
 def get_list_interventions_user(username, data):
@@ -440,6 +507,7 @@ def get_number_interventions_per_day(day_, interv_):
     return [sum(s), i]
 
 
+
 def get_number_interventions_per_hour(hour_, interv_):
     """
     Obtains the number of interventions during the hour 'hour_'
@@ -458,89 +526,7 @@ def get_number_interventions_per_hour(hour_, interv_):
     """
     s = [1 if i[0][3] == hour_ else 0 for i in interv_]
     return sum(s)
-
-
-class WhatsAppChat:
-
-    def __init__(self, filename, regex=None, regex_alert=None):
-        # Set regular expressions to detect headers
-        if regex is not None:
-            self.regex = regex
-        else:
-            self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
-
-        if regex_alert is not None:
-            self.regex_alert = regex_alert
-        else:
-            self.regex_alert = self.regex[:-8]
-
-        # Store raw text
-        self.raw_chat = read_chat(filename)
-        # Parse text to a list of lists
-        self.parsed_chat = parse_chat(self.raw_chat, self.regex, self.regex_alert)
-
-        # Get basic information
-        self.usernames = get_users(self.parsed_chat)
-        self.days = get_days(self.parsed_chat)
-        self.hours = get_hours()
-        self.num_interventions = len(self.parsed_chat)
-
-        # Advanced attributes that might be removed from constructor!
-        # self.interventions_per_day =
-
-    def response_matrix_probability(self, ptype='absolute'):
-        dix = defaultdict(dict)
-        for user in self.usernames:
-            dix[user][user] = 0
-        for i in range(1,len(self.parsed_chat)):
-            user_old = self.parsed_chat[i-1][1]
-            user_new = self.parsed_chat[i][1]
-            if user_old != user_new:
-                dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
-
-        df = pd.DataFrame.from_dict(dix)
-
-        if ptype != 'absolute':
-            df /= df.sum().sum()
-            if ptype == 'joint':
-                df = df
-            elif ptype == 'conditional_replier':
-                df = df.divide(df.sum(axis=1), axis=0)
-            elif ptype == 'conditional_replied':
-                df /= df.sum(axis=0)
-            df = df.fillna(0)
-            df *= 100
-
-        df = df.fillna(0)
-        return df
-
-    def user_interventions(self, timestep='days'):
-
-        if timestep == 'days':
-            return get_intervention_table_days(self.parsed_chat)
-        elif timestep == 'hours':
-            return get_intervention_table_days_hours(self.parsed_chat)
-        else:
-            return 0
-
-    def to_DataFrame(self):
-        return pd.DataFrame(self.parsed_chat, columns = ['Date', 'Username', 'Message'])
-
-    def to_csv(self, filename, sep=',', encoding='utf-8'):
-        """
-        Converts the pandas DataFrame into a CSV file
-
-        Parameters
-        ----------
-        filename: string
-            Name of the stored CSV file
-        sep: string
-            Separator in the CSV file
-        encoding: string
-            Encoding used to store the string content
-        """
-        self.to_DataFrame().to_csv(filename, sep=sep, encoding=encoding)
-
+'''
 
 """
 REFERENCES
