@@ -16,20 +16,23 @@ $ cd whatstk
 It is assumed that you are using Python 3. Next, you can install all its dependencies by running
 
 ```
-$ bash install_dependencies
+$ bash install_dependencies.sh
 ```
 
-This will create a virtual environment named `.whatstk` and install all the python libraries required in the project.
- If you wish, you can have a look at [install_dependencies.sh](install_dependencies.sh) for more details.
- 
- 
-Note that to run the notebook examples, Jupyter Notebook is required.
+This creates a virtual environment named `.whatstk` and installs all the python libraries required in the project. You can now
+start the virtual environment by running
 
+```
+$ source .whatstk/bin/activate
+```
+
+
+Find more details in [install_dependencies.sh](install_dependencies.sh).
 ### License
 
 whatstk
 
-Copyright (C) 2017 Lucas Rodés Guirao, Albert Aparicio
+Copyright (C) 2017 Lucas Rodés-Guirao, Albert Aparicio Isarn
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
