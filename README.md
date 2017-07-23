@@ -7,28 +7,23 @@ The project was started in December 2016 by [lucasrodes](https://github.com/luca
 
 ### Installation
 
-#### Download
+First download the repo.
+```
+$ git clone https://github.com/lucasrodes/whatstk.git
+$ cd whatstk
+```
+
+It is assumed that you are using Python 3. Next, you can install all its dependencies by running
 
 ```
-git clone https://github.com/lucasrodes/whatstk.git
-cd whatstk
+$ bash install_dependencies
 ```
 
-#### Dependencies
-
-This project uses some of the most common Python libraries:
-
-- NumPy (>= 1.12)
-- Pandas (>= 0.19.2)
-
-Use the requirements.txt file to install all dependencies
-
-`$ pip3 install -r requirements.txt`
-
-
-We highly recommended to install these dependencies inside a virtual environment to keep them isolated from the rest of the system. For how to setup a virtual environment, take a look at [SETVENV.md](SETVENV.md).
-
-For running the examples, Jupyter Notebook is required.
+This will create a virtual environment named `.whatstk` and install all the python libraries required in the project.
+ If you wish, you can have a look at [install_dependencies.sh](install_dependencies.sh) for more details.
+ 
+ 
+Note that to run the notebook examples, Jupyter Notebook is required.
 
 ### License
 
