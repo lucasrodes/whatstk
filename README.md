@@ -4,7 +4,7 @@ whatstk is a Python module for WhatsApp chat group analysis and distributed unde
 
 The project was started in December 2016 by [lucasrodes](https://github.com/lucasrodes) and [albertaparicio](https://github.com/albertaparicio).
 
-:star: Please star our project if you found it interesting :smiley:!
+:star: Please star our project if you found it interesting to keep us motivated :smiley:!
 ### Installation
 
 First download the repo.
