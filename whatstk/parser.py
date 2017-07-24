@@ -222,6 +222,7 @@ def remove_accents(byte_string):
 
     return new_string
 
+
 # TODO: document
 def user_interventions(chat, timestep='days'):
     if timestep == 'days':
@@ -315,6 +316,33 @@ def week_hour_grid(chat):
     return df
 
 
+def response_matrix(chat, ptype='absolute'):
+    dix = defaultdict(dict)
+    for user in chat.usernames:
+        dix[user][user] = 0
+    for i in range(1, len(chat.parsed_chat)):
+        user_old = chat.parsed_chat[i-1][1]
+        user_new = chat.parsed_chat[i][1]
+        if user_old != user_new:
+            dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
+
+    df = pd.DataFrame.from_dict(dix)
+
+    if ptype != 'absolute':
+        df /= df.sum().sum()
+        if ptype == 'joint':
+            df = df
+        elif ptype == 'conditional_replier':
+            df = df.divide(df.sum(axis=1), axis=0)
+        elif ptype == 'conditional_replied':
+            df /= df.sum(axis=0)
+        df = df.fillna(0)
+        df *= 100
+
+    df = df.fillna(0)
+    return df
+
+
 class WhatsAppChat:
 
     def __init__(self, filename, regex=None, regex_alert=None):
@@ -378,32 +406,6 @@ class WhatsAppChat:
         :return: integer value
         """
         return len(self.parsed_chat)
-
-    def response_matrix_probability(self, ptype='absolute'):
-        dix = defaultdict(dict)
-        for user in self.usernames:
-            dix[user][user] = 0
-        for i in range(1,len(self.parsed_chat)):
-            user_old = self.parsed_chat[i-1][1]
-            user_new = self.parsed_chat[i][1]
-            if user_old != user_new:
-                dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
-
-        df = pd.DataFrame.from_dict(dix)
-
-        if ptype != 'absolute':
-            df /= df.sum().sum()
-            if ptype == 'joint':
-                df = df
-            elif ptype == 'conditional_replier':
-                df = df.divide(df.sum(axis=1), axis=0)
-            elif ptype == 'conditional_replied':
-                df /= df.sum(axis=0)
-            df = df.fillna(0)
-            df *= 100
-
-        df = df.fillna(0)
-        return df
 
     def to_DataFrame(self):
         return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username', 'Message'])
