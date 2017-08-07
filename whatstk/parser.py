@@ -78,23 +78,46 @@ def raw2format(messy_message, p):
 
     header = messy_message[:p - 2]
 
-    # day
-    pattern_day = '\d?\d.'
+    # patterns
+    pattern_day = '\d?\d[^0-9]'
+    pattern_month = '\d?\d[^0-9]'
+    pattern_year = '\d{,4}[^0-9]' #'\d{,4},? '
+
+    # First date
     py = re.compile(pattern_day)
-    day = int(py.match(header).group()[:-1])
-    day_end = py.match(header).end()
-
-    # month
-    pattern_month = '\d?\d.'
-    py = re.compile(pattern_month)
-    month = int(py.match(header[day_end:]).group()[:-1])
-    month_end = py.match(header[day_end:]).end() + day_end
-
-    # Year can be YY or YYYY
-    pattern_year = '\d{,4},? '
-    py = re.compile(pattern_year)
-    year = int(py.match(header[month_end:]).group()[:-2])
-    year_end = py.match(header[month_end:]).end() + month_end
+    day = py.match(header)
+    if day is None:
+        # year
+        py = re.compile(pattern_year)
+        year_match = py.match(header)
+        year = int(year_match.group()[:-1])
+        year_end = year_match.end()
+        # month
+        py = re.compile(pattern_month)
+        month_match = py.match(header[year_end:])
+        month = int(month_match.group()[:-1])
+        month_end = month_match.end() + year_end
+        # day
+        py = re.compile(pattern_day + " ")
+        day_match = py.match(header[month_end:])
+        day = int(day_match.group()[:-2])
+        date_end = day_match.end() + month_end
+    else:
+        # day
+        py = re.compile(pattern_day)
+        day_match = py.match(header)
+        day = int(day_match.group()[:-1])
+        day_end = day_match.end()
+        # month
+        py = re.compile(pattern_month)
+        month_match = py.match(header[day_end:])
+        month = int(month_match.group()[:-1])
+        month_end = month_match.end() + day_end
+        # year
+        py = re.compile(pattern_year + " ")
+        year_match = py.match(header[month_end:])
+        year = int(year_match.group()[:-2])
+        date_end = year_match.end() + month_end
 
     # Ensure we have a 4-digit format year. We assume only dates starting in 2000 year as valid
     if len(str(year)) == 2:
@@ -103,14 +126,16 @@ def raw2format(messy_message, p):
     # Hour
     pattern_hour = '\d?\d.'
     py = re.compile(pattern_hour)
-    hour = int(py.match(header[year_end:]).group()[:-1])
-    hour_end = py.match(header[year_end:]).end() + year_end
+    hour_match = py.match(header[date_end:])
+    hour = int(hour_match.group()[:-1])
+    hour_end = hour_match.end() + date_end
 
     # Minute
     pattern_minute = '\d\d'
     py = re.compile(pattern_minute)
-    minute = int(py.match(header[hour_end:]).group())
-    minute_end = py.match(header[hour_end:]).end() + hour_end
+    minute_match = py.match(header[hour_end:])
+    minute = int(minute_match.group())
+    minute_end = minute_match.end() + hour_end
 
     # Do not care about seconds
 
@@ -161,13 +186,13 @@ def parse_chat(lines, regex_pattern, regex_pattern_alert):
     """
 
     # Check if this is 12 or 24 clock
-    pattern = '.* ([AaPp][Mm])?( )?[-:]'
+    pattern = '.* ([AaPp][Mm])( )?[-:]'
     global is12clock
     is12clock = bool(re.match(pattern, lines[0]))
 
     # Regular expression to find the header of the message of a user
     pattern = regex_pattern
-    # Regular expression to find the header of a whatsapp alert
+    # Regular expression to find the header of a WhatsApp alert
     pattern_alert_whats = regex_pattern_alert
 
     p1 = re.compile(pattern)
@@ -224,16 +249,16 @@ def remove_accents(byte_string):
 
 
 # TODO: document
-def user_interventions(chat, timestep='days'):
+def user_interventions(chat, timestep='days', length=False):
     if timestep == 'days':
-        return user_interventions_days(chat.parsed_chat)
-    elif timestep == 'hours':
-        return user_interventions_hours(chat.parsed_chat)
+        return user_interventions_days(chat.parsed_chat, length)
+    #elif timestep == 'hours':
+    #    return user_interventions_hours(chat.parsed_chat)
     else:
         return 0
 
 
-def user_interventions_days(data):
+def user_interventions_days(data, length=False):
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
 
@@ -253,7 +278,10 @@ def user_interventions_days(data):
     for d in data:
         date = d[0].date()
         user = d[1]
-        dix[date][user] = dix[date].get(user, 0) + 1
+        if length:
+            dix[date][user] = dix[date].get(user, 0) + len(d[2])
+        else:
+            dix[date][user] = dix[date].get(user, 0) + 1
 
     df = pd.DataFrame.from_dict(dix, orient='index')
     df = df.fillna(0)
@@ -362,7 +390,8 @@ class WhatsAppChat:
         if regex is not None:
             self.regex = regex
         else:
-            self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
+            # self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
+            self.regex = '\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
 
         if regex_alert is not None:
             self.regex_alert = regex_alert
