@@ -1,27 +1,27 @@
 import seaborn as sns
+import matplotlib.pyplot as plt
+
 
 # Visualize Response Matrix
-def vis_response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8):
+def response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8):
 
     title = 'Response Matrix: '
-    fmt = '.2f'#'.1g'
-    if(ptype == 'absolute'):
+    fmt = '.2f'
+    if ptype == 'absolute':
         title += 'Number of responses'
-        #fmt = 'g'
-    elif(ptype == 'joint'):
+    elif ptype == 'joint':
         title += 'P(replied, replier)'
-        #fmt = '.1g'
-    elif(ptype == 'conditional_replier'):
+    elif ptype == 'conditional_replier':
         title += 'P(replied | replier)'
-    elif(ptype == 'conditional_replied'):
+    elif ptype == 'conditional_replied':
         title += 'P(replier | replied)'
 
-    ax = sns.heatmap(response_matrix, annot=True, fmt=fmt, annot_kws={"size":anot_size}, cbar=False)
-    labels = [m.replace(' ', '\n')  if len(m.split(' '))>1 else m for m in response_matrix.columns]
+    ax = sns.heatmap(response_matrix, annot=True, fmt=fmt, annot_kws={"size": anot_size}, cbar=False)
+    labels = [m.replace(' ', '\n') if len(m.split(' ')) > 1 else m for m in response_matrix.columns]
 
     ax.axes.set_title(title,fontsize=title_size)
-    ax.set_xlabel("Replied",fontsize=xlabel_size)
-    ax.set_ylabel("Replier",fontsize=ylabel_size)
+    ax.set_xlabel("Replied", fontsize=xlabel_size)
+    ax.set_ylabel("Replier", fontsize=ylabel_size)
     ax.tick_params(labelsize=tick_size)
 
     ax.set_xticklabels(labels)
@@ -30,19 +30,37 @@ def vis_response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel
 
     sns.plt.show()
 
+
 # Visualize Response Matrix
-def vis_week_hour_grid(week_hour_grid, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8, cmap="YlGnBu"):
+def week_hour_grid(week_hour_grid, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8, cmap="YlGnBu"):
 
     title = 'Week Hour Activity Grid'
     fmt = 'g'
 
-    ax = sns.heatmap(week_hour_grid, annot=True, fmt=fmt, annot_kws={"size":anot_size}, cmap=cmap, cbar=False)
+    ax = sns.heatmap(week_hour_grid, annot=True, fmt=fmt, annot_kws={"size": anot_size}, cmap=cmap, cbar=False)
 
-    ax.axes.set_title(title,fontsize=title_size)
-    ax.set_xlabel("Hours",fontsize=xlabel_size)
-    ax.set_ylabel("Days",fontsize=ylabel_size)
+    ax.axes.set_title(title, fontsize=title_size)
+    ax.set_xlabel("Hours", fontsize=xlabel_size)
+    ax.set_ylabel("Days", fontsize=ylabel_size)
     ax.tick_params(labelsize=tick_size)
 
     sns.plt.yticks(rotation=0)
 
     sns.plt.show()
+
+
+def temporal_data(dataframe, title):
+    sns.set_style("ticks")
+    NUM_COLORS = len(list(dataframe))
+
+    cm = plt.get_cmap('gist_rainbow')
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.set_color_cycle([cm(1. * i / NUM_COLORS) for i in range(NUM_COLORS)])
+
+    plt.plot(dataframe)
+    plt.title(title, fontsize=20)
+    plt.xlabel("Time (days)", fontsize=15)
+    plt.legend(list(dataframe), fontsize=15)
+    plt.grid()
+    plt.show()

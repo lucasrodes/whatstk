@@ -280,7 +280,7 @@ def user_interventions_hours(data):
     for d in data:
         date_with_hour = str(d[0].date()) + ' ' + str(d[0].hour)
         user = d[1]
-        dix[date_with_hour][user] = dix[date_with_hour].get(user,0) + 1
+        dix[date_with_hour][user] = dix[date_with_hour].get(user, 0) + 1
 
     df = pd.DataFrame.from_dict(dix, orient='index')
     df = df.fillna(0)
@@ -341,6 +341,18 @@ def response_matrix(chat, ptype='absolute'):
 
     df = df.fillna(0)
     return df
+
+
+def histogram_intervention_length(chat):
+    dix = defaultdict(list)
+
+    for intervention in chat.parsed_chat:
+        if intervention[2] != "<Media omitted>" and len(intervention[2]) != 0:
+            dix["user"].append(intervention[1])
+            dix["length"].append(len(intervention[2]))
+            dix["intervention"].append(intervention[2])
+
+    return pd.DataFrame(dix)
 
 
 class WhatsAppChat:
