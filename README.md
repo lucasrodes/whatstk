@@ -28,6 +28,10 @@ $ source .whatstk/bin/activate
 
 
 Find more details in [install_dependencies.sh](install_dependencies.sh).
+
+### Contribute
+If you have any suggestion or you found any bug in the code please report it as an Issue or [text me](mailto: lucasrg@kth.se). Furthermore, we are open to pull requests from the community!
+
 ### License
 
 whatstk
