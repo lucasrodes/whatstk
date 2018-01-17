@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 # Visualize Response Matrix
-def response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8):
+def response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8, cmap='RdYlGn_r'):
 
     title = 'Response Matrix: '
     fmt = '.2f'
@@ -16,7 +16,7 @@ def response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel_siz
     elif ptype == 'conditional_replied':
         title += 'P(replier | replied)'
 
-    ax = sns.heatmap(response_matrix, annot=True, fmt=fmt, annot_kws={"size": anot_size}, cbar=False)
+    ax = sns.heatmap(response_matrix, annot=True, fmt=fmt, annot_kws={"size": anot_size}, cbar=False, cmap=cmap)
     labels = [m.replace(' ', '\n') if len(m.split(' ')) > 1 else m for m in response_matrix.columns]
 
     ax.axes.set_title(title,fontsize=title_size)
@@ -26,13 +26,13 @@ def response_matrix(response_matrix, ptype='absolute', title_size=20, xlabel_siz
 
     ax.set_xticklabels(labels)
     ax.set_yticklabels(labels[::-1])
-    sns.plt.yticks(rotation=0)
+    plt.yticks(rotation=0)
 
-    sns.plt.show()
+    plt.show()
 
 
 # Visualize Response Matrix
-def week_hour_grid(week_hour_grid, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8, cmap="YlGnBu"):
+def week_hour_grid(week_hour_grid, ptype='absolute', title_size=20, xlabel_size=12, ylabel_size=12, tick_size=8, anot_size=8, cmap='RdYlGn_r'):
 
     title = 'Week Hour Activity Grid'
     fmt = 'g'
