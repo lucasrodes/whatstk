@@ -33,7 +33,7 @@ is12clock = False
 
 def read_chat(filename):
     """
-    reads a chat file and stores it as X
+    reads a chat file and returns it as X
     :param filename:
     :return:
     """
@@ -53,27 +53,15 @@ def read_chat(filename):
     return raw_data
 
 
-def raw2format(messy_message, p):
+def raw2format(messy_message: str, p: int) -> list:
     """
     Parses a line of the chat txt file into a legible format
-
-    Parameters
-    ----------
-    messy_message: String
-        String content of a line of the chat
-    p: int
-        Denotes the position where the header (date info) of the message ends
-
-    Returns
-    -------
-    parsed_data: list
-        Legible format for the message messy_message. In particular, it is
-        structured as [date, user, message], where:
-            * date is a list with the format [day, month, year, hour, minutes]
-              containing the information of the date the message was sent
-              (list of integers).
-            * user is the name of the user that sent the message (string).
-            * message is the messatge itself (string).
+        :param p: Denotes the position where the header (date info) of the message ends
+        :param messy_message: String content of a line of the chat
+        :return: Legible format of messy_message. It contains three fields: [date, user, message], where (1) date is a
+        list with the format [day, month, year, hour, minutes] containing the information of the date the message was
+        sent (list of integers), (2) user is the name of the user that sent the message (string) and (3) message is the
+        message itself (string).
     """
 
     header = messy_message[:p - 2]
@@ -81,7 +69,7 @@ def raw2format(messy_message, p):
     # patterns
     pattern_day = '\d?\d[^0-9]'
     pattern_month = '\d?\d[^0-9]'
-    pattern_year = '\d{,4}[^0-9]' #'\d{,4},? '
+    pattern_year = '\d{,4}[^0-9]'
 
     # First date
     py = re.compile(pattern_day)
@@ -167,20 +155,14 @@ def raw2format(messy_message, p):
     return parsed_data
 
 
-def parse_chat(lines, regex_pattern, regex_pattern_alert):
+def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str) -> list:
     """
     Parses the messy data from the txt chat file in a legible format
-
-    Parameters
-    ----------
-    lines: list
-        List containing the chat text, the value at the i:th position
+        :param lines: List containing the chat text, the value at the i:th position
         corresponds to the i:th line from the chat txt file
-
-    Returns
-    -------
-    data: list
-        List containing the chat in a legible format. In particular, data[i]
+        :param regex_pattern: Regex pattern to detect the headers
+        :param regex_pattern_alert: Regex pattern to detect the headers of alert messages
+        :return: List containing the chat in a legible format. In particular, data[i]
         corresponds to the i:th message and has the format given by raw2format
         function.
     """
@@ -216,25 +198,17 @@ def parse_chat(lines, regex_pattern, regex_pattern_alert):
             pos = m1.end()  # Obtain ending position of the match
             # match = m1.group()  # String matching the pattern
             data.append(raw2format(line, pos))
-
     return data
 
 
-def remove_accents(byte_string):
+def remove_accents(byte_string: str) -> str:
     """
     Strip accents from input String. Function from [3]
-
-    Parameters
-    ----------
-    byte_string: String
-        The input string.
-
-    Returns
-    ----------
-    new_string: String
-        The processed String.
+        :param byte_string: String to remove accents from
+        :return: Input string without accents
     """
-
+    return byte_string
+    """
     try:
         byte_string = unicode(byte_string, 'utf-8')
     except NameError:  # unicode step not necessary in python 3
@@ -246,10 +220,11 @@ def remove_accents(byte_string):
     new_string = str(byte_string)
 
     return new_string
+    """
 
 
 # TODO: document
-def user_interventions(chat, timestep='days', length=False):
+def user_interventions(chat: "WhatsAppChat", timestep: str='days', length: bool=False) -> pd.DataFrame:
     if timestep == 'days':
         return user_interventions_days(chat.parsed_chat, length)
     #elif timestep == 'hours':
@@ -258,7 +233,7 @@ def user_interventions(chat, timestep='days', length=False):
         return 0
 
 
-def user_interventions_days(data, length=False):
+def user_interventions_days(data: list, length=False) -> pd.DataFrame:
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
 
@@ -271,6 +246,9 @@ def user_interventions_days(data, length=False):
     ----------
     df: DataFrame
         Table containing #interventions per user per each day
+        :param data:
+        :param length:
+        :return:
     """
 
     dix = defaultdict(dict)
@@ -315,19 +293,11 @@ def user_interventions_hours(data):
     return df
 
 
-def week_hour_grid(chat):
+def week_hour_grid(chat: pd.DataFrame) -> pd.DataFrame:
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
-
-    Parameters
-    ----------
-    chat: DataFrame
-        DataFrame containing the interventions of all users, including the text.
-
-    Returns
-    ----------
-    df: DataFrame
-        Table containing #interventions per user per each day
+        :param chat: DataFrame containing the interventions of all users, including the text.
+        :return: DataFrame containing #interventions per user per each day and hour
     """
     weekdays = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
     dix = defaultdict(dict)
@@ -344,7 +314,13 @@ def week_hour_grid(chat):
     return df
 
 
-def response_matrix(chat, ptype='absolute'):
+def response_matrix(chat: pd.DataFrame, ptype: str='absolute') -> pd.DataFrame:
+    """
+    Obtains the response matrix between users in the chat group
+        :param chat: DataFrame containing the interventions of all users, including the text.
+        :param ptype: Options for the response matrix (normalized, conditional probabilities etc.)
+        :return: Response matrix as DataFrame
+    """
     dix = defaultdict(dict)
     for user in chat.usernames:
         dix[user][user] = 0
@@ -371,7 +347,12 @@ def response_matrix(chat, ptype='absolute'):
     return df
 
 
-def histogram_intervention_length(chat):
+def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
+    """
+        Obtains the response matrix between users in the chat group
+            :param chat: DataFrame containing the interventions of all users, including the text.
+            :return:
+        """
     dix = defaultdict(list)
 
     for intervention in chat.parsed_chat:
@@ -448,10 +429,7 @@ class WhatsAppChat:
         """
         return len(self.parsed_chat)
 
-    def to_DataFrame(self):
-        return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username', 'Message'])
-
-    def to_csv(self, filename, sep=',', encoding='utf-8'):
+    def export_csv(self, filename, sep=',', encoding='utf-8'):
         """
         Converts the pandas DataFrame into a CSV file
 
@@ -464,7 +442,8 @@ class WhatsAppChat:
         encoding: string
             Encoding used to store the string content
         """
-        self.to_DataFrame().to_csv(filename, sep=sep, encoding=encoding)
+        df = pd.DataFrame(self.parsed_chat, columns=['Date', 'Username', 'Message'])
+        df.to_csv(filename, sep=sep, encoding=encoding)
 
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
