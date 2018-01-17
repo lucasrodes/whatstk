@@ -28,6 +28,7 @@ $ source .whatstk/bin/activate
 
 
 Find more details in [install_dependencies.sh](install_dependencies.sh).
+This is due to your directory being located within a path with spaces (more info [here](https://stackoverflow.com/questions/7911003/cant-install-via-pip-with-virtualenv)). Please use a path without spaces!
 
 ### Contribute
 If you have any suggestion or you found any bug in the code please report it as an Issue or [text me](mailto:lucasrg@kth.se). Furthermore, we are open to pull requests from the community!
