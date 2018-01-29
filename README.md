@@ -30,10 +30,12 @@ $ source .whatstk/bin/activate
 Find more details in [install_dependencies.sh](install_dependencies.sh).
 This is due to your directory being located within a path with spaces (more info [here](https://stackoverflow.com/questions/7911003/cant-install-via-pip-with-virtualenv)). Please use a path without spaces!
 
-### Header Support
+### Known issues
+
+#### Header Support
 The header of the chat log texts varies depending on your phone settings. We are making our best to provide support for all of them, but some might not be yet covered. Please check the list of supported headers in this [thread](https://github.com/lucasrodes/whatstk/issues/7) and comment if your header format is not supported!
 
-#### Known issues
+#### Installation: bad interpreter
 While running the installation, you might encounter an error like 
 
 ```
