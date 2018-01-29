@@ -1,0 +1,51 @@
+# Supported headers
+Currently, the supported formats are:
+
+- [x] DD.MM.YYYY, hh:mm - username:
+- [x] DD.MM.YYYY, hh:mm: username:
+- [x] DD.MM.YYYY, hh:mm PM - username:
+- [x] DD.MM.YYYY, hh:mm PM: username:
+- [x] DD.MM.YYYY, hh:mm:ss - username:
+- [x] DD.MM.YYYY, hh:mm:ss: username:
+- [x] DD.MM.YYYY, hh:mm:ss PM - username:
+- [x] DD.MM.YYYY, hh:mm:ss PM: username:
+- [x] DD/MM/YYYY, hh:mm - username:
+- [x] DD/MM/YYYY, hh:mm: username:
+- [x] DD/MM/YYYY, hh:mm PM - username:
+- [x] DD/MM/YYYY, hh:mm PM: username:
+- [x] DD/MM/YYYY, hh:mm:ss - username:
+- [x] DD/MM/YYYY, hh:mm:ss: username:
+- [x] DD/MM/YYYY, hh:mm:ss PM - username:
+- [x] DD/MM/YYYY, hh:mm:ss PM: username:
+- [x] DD-MM-YYYY, hh:mm - username:
+- [x] DD-MM-YYYY, hh:mm: username:
+- [x] DD-MM-YYYY, hh:mm PM - username:
+- [x] DD-MM-YYYY, hh:mm PM: username:
+- [x] DD-MM-YYYY, hh:mm:ss - username:
+- [x] DD-MM-YYYY, hh:mm:ss: username:
+- [x] DD-MM-YYYY, hh:mm:ss PM - username:
+- [x] DD-MM-YYYY, hh:mm:ss PM: username:
+- [ ] MM.DD.YYYY, hh:mm - username:
+- [ ] MM.DD.YYYY, hh:mm: username:
+- [ ] MM.DD.YYYY, hh:mm PM - username:
+- [ ] MM.DD.YYYY, hh:mm PM: username:
+- [ ] MM.DD.YYYY, hh:mm:ss - username:
+- [ ] MM.DD.YYYY, hh:mm:ss: username:
+- [ ] MM.DD.YYYY, hh:mm:ss PM - username:
+- [ ] MM.DD.YYYY, hh:mm:ss PM: username:
+- [ ] MM/DD/YYYY, hh:mm - username:
+- [ ] MM/DD/YYYY, hh:mm: username:
+- [ ] MM/DD/YYYY, hh:mm PM - username:
+- [ ] MM/DD/YYYY, hh:mm PM: username:
+- [ ] MM/DD/YYYY, hh:mm:ss - username:
+- [ ] MM/DD/YYYY, hh:mm:ss: username:
+- [ ] MM/DD/YYYY, hh:mm:ss PM - username:
+- [ ] MM/DD/YYYY, hh:mm:ss PM: username:
+- [ ] MM-DD-YYYY, hh:mm - username:
+- [ ] MM-DD-YYYY, hh:mm: username:
+- [ ] MM-DD-YYYY, hh:mm:ss - username:
+- [ ] MM-DD-YYYY, hh:mm:ss: username:
+- [ ] MM-DD-YYYY, hh:mm:ss PM - username:
+- [ ] MM-DD-YYYY, hh:mm:ss PM: username:
+- [ ] MM-DD-YYYY, hh:mm:ss PM - username:
+- [ ] MM-DD-YYYY, hh:mm:ss PM: username:
