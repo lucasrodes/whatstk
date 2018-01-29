@@ -1,3 +1,4 @@
+# Supported headers
 Currently, the supported formats are:
 
 - [x] DD.MM.YYYY, hh:mm - username:
