@@ -301,16 +301,22 @@ def week_hour_grid(chat: pd.DataFrame) -> pd.DataFrame:
     """
     weekdays = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
     dix = defaultdict(dict)
-
+    count=0
     for d in chat.parsed_chat:
-        hour = d[0].hour
-        day = weekdays[d[0].weekday()]
+        hour = (d[0].hour - 8)
+        if hour < 0:
+            count +=1
+            day = weekdays[(d[0].weekday()-1)%7]
+        else:
+            day = weekdays[d[0].weekday()]
+        hour = hour%24
         dix[day][hour] = dix[day].get(hour, 0) + 1
 
     df = pd.DataFrame.from_dict(dix, orient='index')
     df = df.fillna(0)
     df = df.reindex(index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
                     columns=list(range(0, 24)))
+    print(count)
     return df
 
 
