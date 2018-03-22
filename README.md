@@ -1,3 +1,6 @@
+:construction: :construction_worker: I am currently working on a major code refactoring and official project documentation. Expect news this April 2018.
+
+----
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
 whatstk is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license.
