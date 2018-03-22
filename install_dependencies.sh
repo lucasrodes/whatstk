@@ -13,4 +13,3 @@ python3 -m ipykernel install --user --name .whatstk --display-name "whatstk"
 
 echo ">> Installing python dependencies"
 pip3 install -r requirements.txt
-

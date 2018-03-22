@@ -53,7 +53,7 @@ def read_chat(filename):
     return raw_data
 
 
-def raw2format(messy_message: str, p: int) -> list:
+def raw2format(messy_message: str, p: int, date_format) -> list:
     """
     Parses a line of the chat txt file into a legible format
         :param p: Denotes the position where the header (date info) of the message ends
@@ -65,51 +65,82 @@ def raw2format(messy_message: str, p: int) -> list:
     """
 
     header = messy_message[:p - 2]
+    # Patterns
+    pattern = {
+        'd': '\d?\d[^0-9]',
+        'm': '\d?\d[^0-9]',
+        'y': '\d{,4}[^0-9]'
+    }
 
-    # patterns
-    pattern_day = '\d?\d[^0-9]'
-    pattern_month = '\d?\d[^0-9]'
-    pattern_year = '\d{,4}[^0-9]'
+    date = {}
 
+    aux = 0
+    if header[0] == '[':
+        aux = 1
+
+    # First date component
+    py = re.compile(pattern[date_format[0]])
+    match_0 = py.match(header[aux:])
+    date[date_format[0]] = int(match_0.group()[:-1])
+    date0_end = match_0.end() + aux
+    
+    # Second date component
+    py = re.compile(pattern[date_format[1]])
+    match_1 = py.match(header[date0_end:])
+    date[date_format[1]] = int(match_1.group()[:-1])
+    date1_end = match_1.end() + date0_end
+    
+    # Third date component
+    py = re.compile(pattern[date_format[2]] + " ")
+    match_2 = py.match(header[date1_end:])
+    date[date_format[2]] = int(match_2.group()[:-2])
+    date_end = match_2.end() + date1_end
+    
+    # Ensure we have a 4-digit format year. We assume only dates starting in
+    # 2000 year as valid
+    if len(str(date['y'])) == 2:
+        date['y'] += 2000
+        
+    """
     # First date
-    py = re.compile(pattern_day)
+    py = re.compile(pattern['d'])
     day = py.match(header)
     if day is None:
         # year
-        py = re.compile(pattern_year)
+        py = re.compile(pattern['y'])
         year_match = py.match(header)
         year = int(year_match.group()[:-1])
         year_end = year_match.end()
         # month
-        py = re.compile(pattern_month)
+        py = re.compile(pattern['m'])
         month_match = py.match(header[year_end:])
         month = int(month_match.group()[:-1])
         month_end = month_match.end() + year_end
         # day
-        py = re.compile(pattern_day + " ")
+        py = re.compile(pattern['d'] + " ")
         day_match = py.match(header[month_end:])
         day = int(day_match.group()[:-2])
         date_end = day_match.end() + month_end
     else:
         # day
-        py = re.compile(pattern_day)
+        py = re.compile(pattern['d'])
         day_match = py.match(header)
-        day = int(day_match.group()[:-1])
+        date['d'] = int(day_match.group()[:-1])
         day_end = day_match.end()
         # month
-        py = re.compile(pattern_month)
+        py = re.compile(pattern['m'])
         month_match = py.match(header[day_end:])
-        month = int(month_match.group()[:-1])
+        date['m'] = int(month_match.group()[:-1])
         month_end = month_match.end() + day_end
         # year
-        py = re.compile(pattern_year + " ")
+        py = re.compile(pattern['y'] + " ")
         year_match = py.match(header[month_end:])
-        year = int(year_match.group()[:-2])
+        date['y'] = int(year_match.group()[:-2])
         date_end = year_match.end() + month_end
 
-    # Ensure we have a 4-digit format year. We assume only dates starting in 2000 year as valid
-    if len(str(year)) == 2:
-        year += 2000
+    if len(str(date['y'])) == 2:
+        date['y'] += 2000
+    """
 
     # Hour
     pattern_hour = '\d?\d.'
@@ -128,7 +159,7 @@ def raw2format(messy_message: str, p: int) -> list:
     # Do not care about seconds
 
     # Separation
-    pattern_sep = '.*[-:] '
+    pattern_sep = '.*[-:\]] '
     py = re.compile(pattern_sep)
     m = py.match(header[minute_end:])
     sep_end = m.end() + minute_end
@@ -141,7 +172,7 @@ def raw2format(messy_message: str, p: int) -> list:
             hour = 12
 
     # Complete date
-    date = datetime(year, month, day, hour, minute)
+    date = datetime(date['y'], date['m'], date['d'], hour, minute)
 
     # Name
     name = remove_accents(header[sep_end:])
@@ -155,7 +186,8 @@ def raw2format(messy_message: str, p: int) -> list:
     return parsed_data
 
 
-def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str) -> list:
+def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str,
+               date_format) -> list:
     """
     Parses the messy data from the txt chat file in a legible format
         :param lines: List containing the chat text, the value at the i:th position
@@ -168,7 +200,7 @@ def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str) -> lis
     """
 
     # Check if this is 12 or 24 clock
-    pattern = '.* ([AaPp][Mm])( )?[-:]'
+    pattern = '.* ([AaPp][Mm])( )?[-:\]]'
     global is12clock
     is12clock = bool(re.match(pattern, lines[0]))
 
@@ -197,7 +229,7 @@ def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str) -> lis
             # Pattern found !
             pos = m1.end()  # Obtain ending position of the match
             # match = m1.group()  # String matching the pattern
-            data.append(raw2format(line, pos))
+            data.append(raw2format(line, pos, date_format=date_format))
     return data
 
 
@@ -372,13 +404,16 @@ def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
 
 class WhatsAppChat:
 
-    def __init__(self, filename, regex=None, regex_alert=None):
+    def __init__(self, filename, regex=None, regex_alert=None,
+                 date_format='dmy'):
         # Set regular expressions to detect headers
         if regex is not None:
             self.regex = regex
         else:
             # self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
-            self.regex = '\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
+            self.regex = '(\[)?\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?(' \
+                         '[' \
+                         'AaPp][Mm])?( )?[-:\]] [^:]*: '
 
         if regex_alert is not None:
             self.regex_alert = regex_alert
@@ -388,7 +423,8 @@ class WhatsAppChat:
         # Store raw text
         self.raw_chat = read_chat(filename)
         # Parse text to a list of lists
-        self.parsed_chat = parse_chat(self.raw_chat, self.regex, self.regex_alert)
+        self.parsed_chat = parse_chat(self.raw_chat, self.regex,
+                                      self.regex_alert, date_format=date_format)
 
     @property
     def usernames(self):
