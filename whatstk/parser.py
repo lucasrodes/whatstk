@@ -20,22 +20,23 @@ from __future__ import print_function
 
 from datetime import datetime
 import re
-import unicodedata
 
 import numpy as np
 import pandas as pd
 
-from collections import defaultdict
 
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 is12clock = False
 
 
-def read_chat(filename):
-    """
-    reads a chat file and returns it as X
-    :param filename:
-    :return:
+def read_file(filename):
+    """ Reads a text file and retrieves all its lines.
+
+    :param filename: Path to the whatsapp log file.
+    :type: str
+    :return: List containing the content from **file**. Each element in
+        the list is a line from the text in **file**.
+    :rtype: list
     """
     raw_data = []
     read = False
@@ -44,7 +45,8 @@ def read_chat(filename):
             fhand = open(filename)
             read = True
         except:
-            filename = input("Invalid filename! Please introduce a correct name: ")
+            filename = input("Invalid filename! Please introduce a correct "
+                             "name: ")
 
     for line in fhand:
         line = line.rstrip()
@@ -53,18 +55,23 @@ def read_chat(filename):
     return raw_data
 
 
-def raw2format(messy_message: str, p: int, date_format) -> list:
-    """
-    Parses a line of the chat txt file into a legible format
-        :param p: Denotes the position where the header (date info) of the message ends
-        :param messy_message: String content of a line of the chat
-        :return: Legible format of messy_message. It contains three fields: [date, user, message], where (1) date is a
-        list with the format [day, month, year, hour, minutes] containing the information of the date the message was
-        sent (list of integers), (2) user is the name of the user that sent the message (string) and (3) message is the
-        message itself (string).
+def textline_refactor(messy_message, p, date_format):
+    """ Parses a line of the chat txt file into a legible format
+
+    :param p: Position where the header (date info) of the message ends.
+    :type p: int
+    :param messy_message: Text line from a log file.
+    :type messy_message: str
+    :param date_format: The format of the date.
+    :type date_format: str
+    :return: Legible format of messy_message. It contains three fields:
+        *   **date** (datetime): Date when a specific message was sent.
+        *   **user** (str): Name of the user that sent a specific message
+        *   **message** (str): , Message sent by the user.
     """
 
     header = messy_message[:p - 2]
+
     # Patterns
     pattern = {
         'd': '\d?\d[^0-9]',
@@ -74,96 +81,30 @@ def raw2format(messy_message: str, p: int, date_format) -> list:
 
     date = {}
 
-    aux = 0
+    offset = 0
     if header[0] == '[':
-        aux = 1
+        offset = 1
 
     # First date component
-    py = re.compile(pattern[date_format[0]])
-    match_0 = py.match(header[aux:])
-    date[date_format[0]] = int(match_0.group()[:-1])
-    date0_end = match_0.end() + aux
-    
+    date[date_format[0]], date0_end = _get_date_component(header, pattern[
+        date_format[0]], offset)
     # Second date component
-    py = re.compile(pattern[date_format[1]])
-    match_1 = py.match(header[date0_end:])
-    date[date_format[1]] = int(match_1.group()[:-1])
-    date1_end = match_1.end() + date0_end
-    
+    date[date_format[1]], date1_end = _get_date_component(header, pattern[
+        date_format[1]], date0_end)
     # Third date component
-    py = re.compile(pattern[date_format[2]] + " ")
-    match_2 = py.match(header[date1_end:])
-    date[date_format[2]] = int(match_2.group()[:-2])
-    date_end = match_2.end() + date1_end
-    
-    # Ensure we have a 4-digit format year. We assume only dates starting in
-    # 2000 year as valid
-    if len(str(date['y'])) == 2:
-        date['y'] += 2000
-        
-    """
-    # First date
-    py = re.compile(pattern['d'])
-    day = py.match(header)
-    if day is None:
-        # year
-        py = re.compile(pattern['y'])
-        year_match = py.match(header)
-        year = int(year_match.group()[:-1])
-        year_end = year_match.end()
-        # month
-        py = re.compile(pattern['m'])
-        month_match = py.match(header[year_end:])
-        month = int(month_match.group()[:-1])
-        month_end = month_match.end() + year_end
-        # day
-        py = re.compile(pattern['d'] + " ")
-        day_match = py.match(header[month_end:])
-        day = int(day_match.group()[:-2])
-        date_end = day_match.end() + month_end
-    else:
-        # day
-        py = re.compile(pattern['d'])
-        day_match = py.match(header)
-        date['d'] = int(day_match.group()[:-1])
-        day_end = day_match.end()
-        # month
-        py = re.compile(pattern['m'])
-        month_match = py.match(header[day_end:])
-        date['m'] = int(month_match.group()[:-1])
-        month_end = month_match.end() + day_end
-        # year
-        py = re.compile(pattern['y'] + " ")
-        year_match = py.match(header[month_end:])
-        date['y'] = int(year_match.group()[:-2])
-        date_end = year_match.end() + month_end
-
-    if len(str(date['y'])) == 2:
-        date['y'] += 2000
-    """
-
+    date[date_format[2]], date2_end = _get_date_component(header, pattern[
+        date_format[2]], date1_end)
     # Hour
-    pattern_hour = '\d?\d.'
-    py = re.compile(pattern_hour)
-    hour_match = py.match(header[date_end:])
-    hour = int(hour_match.group()[:-1])
-    hour_end = hour_match.end() + date_end
-
-    # Minute
-    pattern_minute = '\d\d'
-    py = re.compile(pattern_minute)
-    minute_match = py.match(header[hour_end:])
-    minute = int(minute_match.group())
-    minute_end = minute_match.end() + hour_end
-
-    # Do not care about seconds
-
+    hour, hour_end = _get_date_component(header, '\d?\d.', date2_end)
+    # Minutes
+    minute, minute_end = _get_date_component(header, '\d\d.', hour_end)
     # Separation
-    pattern_sep = '.*[-:\]] '
-    py = re.compile(pattern_sep)
-    m = py.match(header[minute_end:])
-    sep_end = m.end() + minute_end
+    m, sep_end = _get_date_component(header, '.*[-:\]] ', minute_end)
 
+    # Ensure we have a 4-digit format year. We assume only dates starting in
+    #  2000 year as valid
+    if len(str(date['y'])) == 2:
+        date['y'] += 2000
     # Change 12 clock to 24 clock!
     if is12clock:
         if 'P' in m.group():
@@ -173,30 +114,68 @@ def raw2format(messy_message: str, p: int, date_format) -> list:
 
     # Complete date
     date = datetime(date['y'], date['m'], date['d'], hour, minute)
-
-    # Name
-    name = remove_accents(header[sep_end:])
-
+    # Username
+    username = remove_accents(header[sep_end:])
     # Message
-    message = remove_accents(messy_message[p:])
-
+    message = remove_accents(messy_message[p:])  # TODO: use accents!
     # Parsed data
-    parsed_data = [date, name, message]
+    parsed_data = [date, username, message]
+
+    # py = re.compile(pattern[date_format[0]])
+    # match_0 = py.match(header[offset:])
+    # date[date_format[0]] = int(match_0.group()[:-1])
+    # date0_end = match_0.end() + offset
+    # py = re.compile(pattern[date_format[1]])
+    # match_1 = py.match(header[date0_end:])
+    # date[date_format[1]] = int(match_1.group()[:-1])
+    # date1_end = match_1.end() + date0_end
+    # py = re.compile(pattern[date_format[2]] + " ")
+    # match_2 = py.match(header[date1_end:])
+    # date[date_format[2]] = int(match_2.group()[:-2])
+    # date_end = match_2.end() + date1_end
+    # pattern_hour = '\d?\d.'
+    # py = re.compile(pattern_hour)
+    # hour_match = py.match(header[date_end:])
+    # hour = int(hour_match.group()[:-1])
+    # hour_end = hour_match.end() + date_end
+    # pattern_minute = '\d\d'
+    # py = re.compile(pattern_minute)
+    # minute_match = py.match(header[hour_end:])
+    # minute = int(minute_match.group())
+    # minute_end = minute_match.end() + hour_end
+    # pattern_sep = '.*[-:\]] '
+    # py = re.compile(pattern_sep)
+    # m = py.match(header[minute_end:])
+    # sep_end = m.end() + minute_end
 
     return parsed_data
 
 
-def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str,
-               date_format) -> list:
-    """
-    Parses the messy data from the txt chat file in a legible format
-        :param lines: List containing the chat text, the value at the i:th position
-        corresponds to the i:th line from the chat txt file
-        :param regex_pattern: Regex pattern to detect the headers
-        :param regex_pattern_alert: Regex pattern to detect the headers of alert messages
-        :return: List containing the chat in a legible format. In particular, data[i]
-        corresponds to the i:th message and has the format given by raw2format
-        function.
+def _get_date_component(header, pattern, offset):
+    py = re.compile(pattern)
+    match_0 = py.match(header[offset:])
+    component = int(match_0.group()[:-1])
+    component_end = match_0.end() + offset
+    return component, component_end
+
+
+def parse_chat(lines, regex_pattern, regex_pattern_alert, date_format):
+    """ Parses the messy data from the txt chat file in a legible format.
+
+    :param lines: List containing the chat text, the value at the i:th position
+        corresponds to the i:th line from the chat txt file.
+    :type lines: list
+    :param regex_pattern: Regex pattern to detect the headers.
+    :type regex_pattern: str
+    :param regex_pattern_alert: Regex pattern to detect the headers of alert
+        messages.
+    :type regex_pattern_alert: str
+    :param date_format: -
+    :type date_format: str
+    :return: List containing the chat in a legible format. In particular, data[i]
+        corresponds to the i:th message and has the format given by
+        textline_refactor function.
+    :rtype: list
     """
 
     # Check if this is 12 or 24 clock
@@ -229,7 +208,7 @@ def parse_chat(lines: list, regex_pattern: str, regex_pattern_alert: str,
             # Pattern found !
             pos = m1.end()  # Obtain ending position of the match
             # match = m1.group()  # String matching the pattern
-            data.append(raw2format(line, pos, date_format=date_format))
+            data.append(textline_refactor(line, pos, date_format=date_format))
     return data
 
 
@@ -255,153 +234,6 @@ def remove_accents(byte_string: str) -> str:
     """
 
 
-# TODO: document
-def user_interventions(chat: "WhatsAppChat", timestep: str='days', length: bool=False) -> pd.DataFrame:
-    if timestep == 'days':
-        return user_interventions_days(chat.parsed_chat, length)
-    #elif timestep == 'hours':
-    #    return user_interventions_hours(chat.parsed_chat)
-    else:
-        return 0
-
-
-def user_interventions_days(data: list, length=False) -> pd.DataFrame:
-    """
-    Return DataFrame with interventions of all users (columns) for all days (rows)
-
-    Parameters
-    ----------
-    data: list
-        DataFrame containing the interventions of all users, including the text.
-
-    Returns
-    ----------
-    df: DataFrame
-        Table containing #interventions per user per each day
-        :param data:
-        :param length:
-        :return:
-    """
-
-    dix = defaultdict(dict)
-
-    for d in data:
-        date = d[0].date()
-        user = d[1]
-        if length:
-            dix[date][user] = dix[date].get(user, 0) + len(d[2])
-        else:
-            dix[date][user] = dix[date].get(user, 0) + 1
-
-    df = pd.DataFrame.from_dict(dix, orient='index')
-    df = df.fillna(0)
-    return df
-
-
-def user_interventions_hours(data):
-    """
-    Return DataFrame with interventions of all users (columns) for all days (rows)
-
-    Parameters
-    ----------
-    data: DataFrame
-        DataFrame containing the interventions of all users, including the text.
-
-    Returns
-    ----------
-    df: DataFrame
-        Table containing #interventions per user per each day
-    """
-
-    dix = defaultdict(dict)
-
-    for d in data:
-        date_with_hour = str(d[0].date()) + ' ' + str(d[0].hour)
-        user = d[1]
-        dix[date_with_hour][user] = dix[date_with_hour].get(user, 0) + 1
-
-    df = pd.DataFrame.from_dict(dix, orient='index')
-    df = df.fillna(0)
-    return df
-
-
-def week_hour_grid(chat: pd.DataFrame) -> pd.DataFrame:
-    """
-    Return DataFrame with interventions of all users (columns) for all days (rows)
-        :param chat: DataFrame containing the interventions of all users, including the text.
-        :return: DataFrame containing #interventions per user per each day and hour
-    """
-    weekdays = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
-    dix = defaultdict(dict)
-    count=0
-    for d in chat.parsed_chat:
-        hour = (d[0].hour - 8)
-        if hour < 0:
-            count +=1
-            day = weekdays[(d[0].weekday()-1)%7]
-        else:
-            day = weekdays[d[0].weekday()]
-        hour = hour%24
-        dix[day][hour] = dix[day].get(hour, 0) + 1
-
-    df = pd.DataFrame.from_dict(dix, orient='index')
-    df = df.fillna(0)
-    df = df.reindex(index=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                    columns=list(range(0, 24)))
-    print(count)
-    return df
-
-
-def response_matrix(chat: pd.DataFrame, ptype: str='absolute') -> pd.DataFrame:
-    """
-    Obtains the response matrix between users in the chat group
-        :param chat: DataFrame containing the interventions of all users, including the text.
-        :param ptype: Options for the response matrix (normalized, conditional probabilities etc.)
-        :return: Response matrix as DataFrame
-    """
-    dix = defaultdict(dict)
-    for user in chat.usernames:
-        dix[user][user] = 0
-    for i in range(1, len(chat.parsed_chat)):
-        user_old = chat.parsed_chat[i-1][1]
-        user_new = chat.parsed_chat[i][1]
-        if user_old != user_new:
-            dix[user_old][user_new] = dix[user_old].get(user_new,0) + 1
-
-    df = pd.DataFrame.from_dict(dix)
-
-    if ptype != 'absolute':
-        df /= df.sum().sum()
-        if ptype == 'joint':
-            df = df
-        elif ptype == 'conditional_replier':
-            df = df.divide(df.sum(axis=1), axis=0)
-        elif ptype == 'conditional_replied':
-            df /= df.sum(axis=0)
-        df = df.fillna(0)
-        df *= 100
-
-    df = df.fillna(0)
-    return df
-
-
-def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
-    """
-        Obtains the response matrix between users in the chat group
-            :param chat: DataFrame containing the interventions of all users, including the text.
-            :return:
-        """
-    dix = defaultdict(list)
-
-    for intervention in chat.parsed_chat:
-        if intervention[2] != "<Media omitted>" and len(intervention[2]) != 0:
-            dix["user"].append(intervention[1])
-            dix["length"].append(len(intervention[2]))
-            dix["intervention"].append(intervention[2])
-
-    return pd.DataFrame(dix)
-
-
 class WhatsAppChat:
 
     def __init__(self, filename, regex=None, regex_alert=None,
@@ -421,7 +253,7 @@ class WhatsAppChat:
             self.regex_alert = self.regex[:-8]
 
         # Store raw text
-        self.raw_chat = read_chat(filename)
+        self.raw_chat = read_file(filename)
         # Parse text to a list of lists
         self.parsed_chat = parse_chat(self.raw_chat, self.regex,
                                       self.regex_alert, date_format=date_format)
@@ -451,6 +283,7 @@ class WhatsAppChat:
         return np.unique([d[0].date() for d in self.parsed_chat])
 
     @property
+    # TODO: implement real
     def hours(self):
         """
         Obtain the hours in a day
@@ -471,6 +304,10 @@ class WhatsAppChat:
         """
         return len(self.parsed_chat)
 
+    def to_df(self):
+        return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username',
+                                                       'Message'])
+
     def export_csv(self, filename, sep=',', encoding='utf-8'):
         """
         Converts the pandas DataFrame into a CSV file
@@ -484,113 +321,7 @@ class WhatsAppChat:
         encoding: string
             Encoding used to store the string content
         """
-        df = pd.DataFrame(self.parsed_chat, columns=['Date', 'Username', 'Message'])
-        df.to_csv(filename, sep=sep, encoding=encoding)
-
-
-# TODO: RETHING LOOP AS IN THE ONE ABOVE
-'''def get_intervention_table_hoursday(users, hours, data):
-    """
-"""Return DataFrame with interventions of all users (columns) for all hour times (rows)
-
-    Parameters
-    ----------
-    users: list
-        List with the usernames of the chat.
-    hours: list
-        Hours the chat has been active.
-    data: list
-        Legible data.
-
-    Returns
-    ----------
-    df: Dataframe
-        Table containing #interventions per user per each hour of the day
-    """
-"""
-    interventions_per_hour = np.zeros(len(hours))
-
-    # Loop for all users
-    df = pd.DataFrame()
-    for user in users:
-        interventions = get_interventions_user(user, data)
-        # Obtain number of interventions per each day contained in hours
-        for i in range(len(hours)):
-            interventions_per_hour[i] = get_number_interventions_per_hour(hours[i],
-                                                                          interventions)
-        inter = pd.Series(interventions_per_hour, index=hours)
-        df.insert(0, user, inter)
-
-    return df
-
-
-def get_list_interventions_user(username, data):
-    """
-    Obtains a list with all interventions of username_
-
-    Parameters
-    ----------
-    username_: list
-        Days the chat has been active.
-    data_: list
-        Legible data.
-
-    Returns
-    ----------
-    list
-        List of dates (nicely written) the chat has been active
-    """
-    return [d for d in data if d[1] == username]
-
-
-def get_number_interventions_per_day(day_, interv_):
-    """
-    Obtains the number of interventions in the day 'day_'
-
-    Parameters
-    ----------
-    day_: list
-        Day we are examining.
-    interv_: list
-        List containing all considered interventions.
-
-    Returns
-    ----------
-    list
-        List containing two parameters. The first one quantifies the number
-        of interventions in day 'day_'. The second one is just the index of
-        the last intervention in 'day_' to make the overall search more
-        efficient
-    """
-
-    s = [1 if i[0][:3] == day_ else 0 for i in interv_]
-    if s[-1] == 0:
-        i = s.index(0)
-    else:
-        i = -1
-    return [sum(s), i]
-
-
-
-def get_number_interventions_per_hour(hour_, interv_):
-    """
-    Obtains the number of interventions during the hour 'hour_'
-
-    Parameters
-    ----------
-    hour_: list
-        Hour we are examining.
-    interv_: list
-        List containing all considered interventions.
-
-    Returns
-    ----------
-    int
-        quantifies the number of interventions during 'hour_'.
-    """
-    s = [1 if i[0][3] == hour_ else 0 for i in interv_]
-    return sum(s)
-'''
+        self.to_df().to_csv(filename, sep=sep, encoding=encoding)
 
 """
 REFERENCES

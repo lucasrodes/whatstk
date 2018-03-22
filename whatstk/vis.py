@@ -55,10 +55,10 @@ def temporal_data(dataframe, title):
 
     cm = plt.get_cmap('gist_rainbow')
     fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.set_color_cycle([cm(1. * i / NUM_COLORS) for i in range(NUM_COLORS)])
+    #ax = fig.add_subplot(111)
+    #ax.set_color_cycle([cm(1. * i / NUM_COLORS) for i in range(NUM_COLORS)])
 
-    plt.plot(dataframe)
+    plt.plot(dataframe, color=[cm(1. * i / NUM_COLORS) for i in range(NUM_COLORS)])
     plt.title(title, fontsize=20)
     plt.xlabel("Time (days)", fontsize=15)
     plt.legend(list(dataframe), fontsize=15)
