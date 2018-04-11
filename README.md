@@ -1,4 +1,4 @@
-:construction: :construction_worker: I am currently working on a major code refactoring and official project documentation. Expect news this April 2018.
+:construction: :construction_worker: I am currently busy and hardly find time to mantain this repository. However I am willing to push a major code refactoring along with official documentation by May 2018. If anyone feels like helping please contact me.
 
 ----
 # [whatstk](http://lucasrodes.github.io/whatstk)
