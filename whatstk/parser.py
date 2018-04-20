@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # This import makes Python use 'print' as in Python 3.x
+
+#%%
 from __future__ import print_function
 
 from datetime import datetime
@@ -29,8 +31,7 @@ from collections import defaultdict
 
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 is12clock = False
-
-
+#%%
 def read_file(filename):
     """ Reads a text file and retrieves all its lines.
 
@@ -55,8 +56,7 @@ def read_file(filename):
         raw_data.append(line)
 
     return raw_data
-
-
+#%%
 def textline_refactor(messy_message, p, date_format):
     """ Parses a line of the chat txt file into a legible format
 
@@ -97,7 +97,7 @@ def textline_refactor(messy_message, p, date_format):
     date[date_format[2]], date2_end = _get_date_component(header, pattern[
         date_format[2]], date1_end)
     # Hour
-    hour, hour_end = _get_date_component(header, '\d?\d.', date2_end)
+    hour, hour_end = _get_date_component(header, '.\d?\d.', date2_end)
     # Minutes
     minute, minute_end = _get_date_component(header, '\d\d.', hour_end)
     # Separation
@@ -109,7 +109,7 @@ def textline_refactor(messy_message, p, date_format):
         date['y'] += 2000
     # Change 12 clock to 24 clock!
     if is12clock:
-        if 'P' in m.group():
+        if 'P' in m:
             hour += 12
         if hour == 24:
             hour = 12
@@ -151,16 +151,26 @@ def textline_refactor(messy_message, p, date_format):
     # sep_end = m.end() + minute_end
 
     return parsed_data
+#%%
+def _get_date_component(header, pattern, offset):
+    py = re.compile(pattern)
+    match_0 = py.match(header[offset:])
+    try:
+        component = int(match_0.group()[:-1])
+    except:
+        component = match_0.group()[:-1]
+    component_end = match_0.end() + offset
+    return component, component_end
 
-
+'''
 def _get_date_component(header, pattern, offset):
     py = re.compile(pattern)
     match_0 = py.match(header[offset:])
     component = int(match_0.group()[:-1])
     component_end = match_0.end() + offset
     return component, component_end
-
-
+'''
+#%%
 def parse_chat(lines, regex_pattern, regex_pattern_alert, date_format):
     """ Parses the messy data from the txt chat file in a legible format.
 
@@ -204,7 +214,7 @@ def parse_chat(lines, regex_pattern, regex_pattern_alert, date_format):
 
             # Continuation of previous message?
             if m2 is None:
-                #  Merge continuation of messages
+                #  Merge continuation of messages
                 data[-1][2] = data[-1][2] + "\n" + remove_accents(line)
         else:
             # Pattern found !
@@ -212,8 +222,7 @@ def parse_chat(lines, regex_pattern, regex_pattern_alert, date_format):
             # match = m1.group()  # String matching the pattern
             data.append(textline_refactor(line, pos, date_format=date_format))
     return data
-
-
+#%%
 def remove_accents(byte_string: str) -> str:
     """
     Strip accents from input String. Function from [3]
@@ -234,8 +243,7 @@ def remove_accents(byte_string: str) -> str:
 
     return new_string
     """
-
-
+#%%
 # TODO: document
 def user_interventions(chat: "WhatsAppChat", timestep: str='days', length: bool=False) -> pd.DataFrame:
     if timestep == 'days':
@@ -244,8 +252,7 @@ def user_interventions(chat: "WhatsAppChat", timestep: str='days', length: bool=
     #    return user_interventions_hours(chat.parsed_chat)
     else:
         return 0
-
-
+#%%
 def user_interventions_days(data: list, length=False) -> pd.DataFrame:
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
@@ -277,8 +284,7 @@ def user_interventions_days(data: list, length=False) -> pd.DataFrame:
     df = pd.DataFrame.from_dict(dix, orient='index')
     df = df.fillna(0)
     return df
-
-
+#%%
 def user_interventions_hours(data):
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
@@ -304,8 +310,7 @@ def user_interventions_hours(data):
     df = pd.DataFrame.from_dict(dix, orient='index')
     df = df.fillna(0)
     return df
-
-
+#%%
 def week_hour_grid(chat: pd.DataFrame) -> pd.DataFrame:
     """
     Return DataFrame with interventions of all users (columns) for all days (rows)
@@ -331,8 +336,7 @@ def week_hour_grid(chat: pd.DataFrame) -> pd.DataFrame:
                     columns=list(range(0, 24)))
     print(count)
     return df
-
-
+#%%
 def response_matrix(chat: pd.DataFrame, ptype: str='absolute') -> pd.DataFrame:
     """
     Obtains the response matrix between users in the chat group
@@ -364,8 +368,7 @@ def response_matrix(chat: pd.DataFrame, ptype: str='absolute') -> pd.DataFrame:
 
     df = df.fillna(0)
     return df
-
-
+#%%
 def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
     """
         Obtains the response matrix between users in the chat group
@@ -381,8 +384,7 @@ def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
             dix["intervention"].append(intervention[2])
 
     return pd.DataFrame(dix)
-
-
+#%%
 class WhatsAppChat:
 
     def __init__(self, filename, regex=None, regex_alert=None,
