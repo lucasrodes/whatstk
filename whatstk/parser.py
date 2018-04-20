@@ -161,15 +161,6 @@ def _get_date_component(header, pattern, offset):
         component = match_0.group()[:-1]
     component_end = match_0.end() + offset
     return component, component_end
-
-'''
-def _get_date_component(header, pattern, offset):
-    py = re.compile(pattern)
-    match_0 = py.match(header[offset:])
-    component = int(match_0.group()[:-1])
-    component_end = match_0.end() + offset
-    return component, component_end
-'''
 #%%
 def parse_chat(lines, regex_pattern, regex_pattern_alert, date_format):
     """ Parses the messy data from the txt chat file in a legible format.
