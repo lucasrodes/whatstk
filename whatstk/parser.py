@@ -220,7 +220,7 @@ def remove_accents(byte_string: str) -> str:
         :param byte_string: String to remove accents from
         :return: Input string without accents
     """
-    return byte_string
+    return remove_nullbytes(byte_string)
     """
     try:
         byte_string = unicode(byte_string, 'utf-8')
@@ -234,6 +234,22 @@ def remove_accents(byte_string: str) -> str:
 
     return new_string
     """
+#%%
+def remove_nullbytes(byte_string: str) -> str:
+    """
+    Strip white spaces and null bytes from input String for export/importing into CSV.
+    I was getting error to import the exported CSV into Orange3.
+    Maybe this should go into remove_accents.
+        :param byte_string: String to remove whitespaces and null bytes from
+        :return: Input string without these characters
+    """
+    # Checks for null bytes "\x00" to import on Orange3 or other python library using csv
+    # Probably this could be better done with Pandas
+    if byte_string.count('\x00'):
+        byte_string = byte_string.strip().replace('\x00', '')
+        return byte_string
+    else:
+        return byte_string
 #%%
 # TODO: document
 def user_interventions(chat: "WhatsAppChat", timestep: str='days', length: bool=False) -> pd.DataFrame:
