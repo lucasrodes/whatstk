@@ -394,22 +394,26 @@ def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
 #%%
 class WhatsAppChat:
 
-    def __init__(self, filename, regex=None, regex_alert=None,
-                 date_format='dmy'):
+    def __init__(self, filename, regex='default', date_format='dmy'):
+        
+        regex_dict = {
+                'default': ('(\[)?\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:\]] [^:]*: ', '(\[)?\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:\]]'),
+                'regex_1': ('\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: ', '\d?\d.\d?\d.\d{,4}, \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:]'),
+                }
         # Set regular expressions to detect headers
-        if regex is not None:
-            self.regex = regex
+        if type(regex) == str:
+            if regex in regex_dict.keys():
+                self.regex = regex_dict[regex][0]
+                self.regex_alert = regex_dict[regex][1]
+            else:
+                print("Regex not defined internally.")
+                print("Please type your regex as a tuple ('regex','regex alert')")
+        elif type(regex) == tuple:
+            self.regex = regex[0]
+            self.regex_alert = regex[1]
         else:
-            # self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
-            self.regex = '(\[)?\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?(' \
-                         '[' \
-                         'AaPp][Mm])?( )?[-:\]] [^:]*: '
-
-        if regex_alert is not None:
-            self.regex_alert = regex_alert
-        else:
-            self.regex_alert = self.regex[:-8]
-
+            print("Please type your regex as a tuple ('regex','regex alert')")
+            
         # Store raw text
         self.raw_chat = read_file(filename)
         # Parse text to a list of lists
@@ -466,7 +470,7 @@ class WhatsAppChat:
         return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username',
                                                        'Message'])
 
-    def export_csv(self, filename, sep=',', encoding='utf-8'):
+    def export_csv(self, filename, sep=',', encoding='utf-8', index=False):
         """
         Converts the pandas DataFrame into a CSV file
 
@@ -478,8 +482,10 @@ class WhatsAppChat:
             Separator in the CSV file
         encoding: string
             Encoding used to store the string content
+        index: boolean
+            Whether to write row (index) names (default False)
         """
-        self.to_df().to_csv(filename, sep=sep, encoding=encoding)
+        self.to_df().to_csv(filename, sep=sep, encoding=encoding, index=index)
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
 '''def get_intervention_table_hoursday(users, hours, data):
