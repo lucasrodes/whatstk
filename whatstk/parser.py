@@ -20,7 +20,6 @@ from __future__ import print_function
 
 from datetime import datetime
 import re
-import unicodedata
 
 import numpy as np
 import pandas as pd
@@ -29,6 +28,96 @@ from collections import defaultdict
 
 encoding = "utf-8"  # or iso-8859-15, or cp1252, or whatever encoding you use
 is12clock = False
+
+
+class WhatsAppChat:
+
+    def __init__(self, filename, regex=None, regex_alert=None,
+                 date_format='dmy'):
+        # Set regular expressions to detect headers
+        if regex is not None:
+            self.regex = regex
+        else:
+            # self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
+            self.regex = '(\[)?\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?(' \
+                         '[' \
+                         'AaPp][Mm])?( )?[-:\]] [^:]*: '
+
+        if regex_alert is not None:
+            self.regex_alert = regex_alert
+        else:
+            self.regex_alert = self.regex[:-8]
+
+        # Store raw text
+        self.raw_chat = read_file(filename)
+        # Parse text to a list of lists
+        self.parsed_chat = parse_chat(self.raw_chat, self.regex,
+                                      self.regex_alert, date_format=date_format)
+
+    @property
+    def usernames(self):
+        """
+        Obtain usernames from the chat
+
+        Returns
+        ----------
+        list
+            list with the usernames in the chat.
+        """
+        return np.unique(np.array([d[1] for d in self.parsed_chat]))
+
+    @property
+    def days(self):
+        """
+        Obtain dates from conversations from the chat
+
+        Returns
+        ----------
+        days: list
+            list with the days there has been any conversation in the chat
+        """
+        return np.unique([d[0].date() for d in self.parsed_chat])
+
+    @property
+    # TODO: implement real
+    def hours(self):
+        """
+        Obtain the hours in a day
+
+        Returns
+        ----------
+        list
+            list with the hours in a day
+        """
+
+        return [s for s in range(24)]
+
+    @property
+    def num_interventions(self):
+        """
+        Number of interventions in a chat
+        :return: integer value
+        """
+        return len(self.parsed_chat)
+
+    def to_df(self):
+        return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username',
+                                                       'Message'])
+
+    def export_csv(self, filename, sep=',', encoding='utf-8'):
+        """
+        Converts the pandas DataFrame into a CSV file
+
+        Parameters
+        ----------
+        filename: string
+            Name of the stored CSV file
+        sep: string
+            Separator in the CSV file
+        encoding: string
+            Encoding used to store the string content
+        """
+        self.to_df().to_csv(filename, sep=sep, encoding=encoding)
 
 
 def read_file(filename):
@@ -55,6 +144,59 @@ def read_file(filename):
         raw_data.append(line)
 
     return raw_data
+
+
+def parse_chat(lines, regex, regex_alert, date_format):
+    """ Parses the messy data from the txt chat file in a legible format.
+
+    :param lines: List containing the chat text, the value at the i:th position
+        corresponds to the i:th line from the chat txt file.
+    :type lines: list
+    :param regex: Regex pattern to detect the headers.
+    :type regex: str
+    :param regex_alert: Regex pattern to detect the headers of alert
+        messages.
+    :type regex_alert: str
+    :param date_format: -
+    :type date_format: str
+    :return: List containing the chat in a legible format. In particular, data[i]
+        corresponds to the i:th message and has the format given by
+        textline_refactor function.
+    :rtype: list
+    """
+
+    # Check if this is 12 or 24 clock
+    pattern = '.* ([AaPp][Mm])( )?[-:\]]'
+    global is12clock
+    is12clock = bool(re.match(pattern, lines[0]))
+
+    # Regular expression to find the header of the message of a user
+    pattern = regex
+    # Regular expression to find the header of a WhatsApp alert
+    pattern_alert_whats = regex_alert
+
+    p1 = re.compile(pattern)
+    data = []
+
+    # Iterate over all lines of the chat
+    for line in lines:
+        m1 = p1.match(line)
+
+        if m1 is None:
+            # Not a start of user message!
+            p2 = re.compile(pattern_alert_whats)
+            m2 = p2.match(line)
+
+            # Continuation of previous message?
+            if m2 is None:
+                #  Merge continuation of messages
+                data[-1][2] = data[-1][2] + "\n" + remove_accents(line)
+        else:
+            # Pattern found !
+            pos = m1.end()  # Obtain ending position of the match
+            # match = m1.group()  # String matching the pattern
+            data.append(textline_refactor(line, pos, date_format=date_format))
+    return data
 
 
 def textline_refactor(messy_message, p, date_format):
@@ -159,59 +301,6 @@ def _get_date_component(header, pattern, offset):
     component = int(match_0.group()[:-1])
     component_end = match_0.end() + offset
     return component, component_end
-
-
-def parse_chat(lines, regex_pattern, regex_pattern_alert, date_format):
-    """ Parses the messy data from the txt chat file in a legible format.
-
-    :param lines: List containing the chat text, the value at the i:th position
-        corresponds to the i:th line from the chat txt file.
-    :type lines: list
-    :param regex_pattern: Regex pattern to detect the headers.
-    :type regex_pattern: str
-    :param regex_pattern_alert: Regex pattern to detect the headers of alert
-        messages.
-    :type regex_pattern_alert: str
-    :param date_format: -
-    :type date_format: str
-    :return: List containing the chat in a legible format. In particular, data[i]
-        corresponds to the i:th message and has the format given by
-        textline_refactor function.
-    :rtype: list
-    """
-
-    # Check if this is 12 or 24 clock
-    pattern = '.* ([AaPp][Mm])( )?[-:\]]'
-    global is12clock
-    is12clock = bool(re.match(pattern, lines[0]))
-
-    # Regular expression to find the header of the message of a user
-    pattern = regex_pattern
-    # Regular expression to find the header of a WhatsApp alert
-    pattern_alert_whats = regex_pattern_alert
-
-    p1 = re.compile(pattern)
-    data = []
-
-    # Iterate over all lines of the chat
-    for line in lines:
-        m1 = p1.match(line)
-
-        if m1 is None:
-            # Not a start of user message!
-            p2 = re.compile(pattern_alert_whats)
-            m2 = p2.match(line)
-
-            # Continuation of previous message?
-            if m2 is None:
-                #  Merge continuation of messages
-                data[-1][2] = data[-1][2] + "\n" + remove_accents(line)
-        else:
-            # Pattern found !
-            pos = m1.end()  # Obtain ending position of the match
-            # match = m1.group()  # String matching the pattern
-            data.append(textline_refactor(line, pos, date_format=date_format))
-    return data
 
 
 def remove_accents(byte_string: str) -> str:
@@ -382,95 +471,6 @@ def histogram_intervention_length(chat: pd.DataFrame) -> pd.DataFrame:
 
     return pd.DataFrame(dix)
 
-
-class WhatsAppChat:
-
-    def __init__(self, filename, regex=None, regex_alert=None,
-                 date_format='dmy'):
-        # Set regular expressions to detect headers
-        if regex is not None:
-            self.regex = regex
-        else:
-            # self.regex = '\d?\d.\d?\d.\d{,4},? \d?\d:\d\d(:\d\d)?( )?([AaPp][Mm])?( )?[-:] [^:]*: '
-            self.regex = '(\[)?\d{,4}.\d{,4}.\d{,4},? \d?\d:\d\d(:\d\d)?( )?(' \
-                         '[' \
-                         'AaPp][Mm])?( )?[-:\]] [^:]*: '
-
-        if regex_alert is not None:
-            self.regex_alert = regex_alert
-        else:
-            self.regex_alert = self.regex[:-8]
-
-        # Store raw text
-        self.raw_chat = read_file(filename)
-        # Parse text to a list of lists
-        self.parsed_chat = parse_chat(self.raw_chat, self.regex,
-                                      self.regex_alert, date_format=date_format)
-
-    @property
-    def usernames(self):
-        """
-        Obtain usernames from the chat
-
-        Returns
-        ----------
-        list
-            list with the usernames in the chat.
-        """
-        return np.unique(np.array([d[1] for d in self.parsed_chat]))
-
-    @property
-    def days(self):
-        """
-        Obtain dates from conversations from the chat
-
-        Returns
-        ----------
-        days: list
-            list with the days there has been any conversation in the chat
-        """
-        return np.unique([d[0].date() for d in self.parsed_chat])
-
-    @property
-    # TODO: implement real
-    def hours(self):
-        """
-        Obtain the hours in a day
-
-        Returns
-        ----------
-        list
-            list with the hours in a day
-        """
-
-        return [s for s in range(24)]
-
-    @property
-    def num_interventions(self):
-        """
-        Number of interventions in a chat
-        :return: integer value
-        """
-        return len(self.parsed_chat)
-
-    def to_df(self):
-        return pd.DataFrame(self.parsed_chat, columns=['Date', 'Username',
-                                                       'Message'])
-
-    def export_csv(self, filename, sep=',', encoding='utf-8'):
-        """
-        Converts the pandas DataFrame into a CSV file
-
-        Parameters
-        ----------
-        filename: string
-            Name of the stored CSV file
-        sep: string
-            Separator in the CSV file
-        encoding: string
-            Encoding used to store the string content
-        """
-        self.to_df().to_csv(filename, sep=sep, encoding=encoding)
 
 # TODO: RETHING LOOP AS IN THE ONE ABOVE
 '''def get_intervention_table_hoursday(users, hours, data):
