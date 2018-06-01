@@ -1,0 +1,3 @@
+# Include the license files
+include COPYING
+include CODE_OF_CONDUCT.md
