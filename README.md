@@ -2,7 +2,7 @@ Working towards first release. Coming soon, instructions in this readme are not 
 ----
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.0.2-brightgreen.svg?style=for-the-badge)
+![Package version](https://img.shields.io/badge/whatstk-v0.0.3-brightgreen.svg?style=for-the-badge)
 [![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/lucasrodes/whatstk/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/lucasrodes/whatstk/network)
@@ -12,11 +12,15 @@ whatstk is a Python module for WhatsApp chat group analysis and distributed unde
 The project was started in December 2016 by [lucasrodes](https://github.com/lucasrodes) and [albertaparicio](https://github.com/albertaparicio).
 
 :star: Please **star** our project if you found it interesting to **keep us motivated** :smiley:!
+
 ### Installation
 
 ```
 pip install whatstk
 ```
+
+### Getting Started
+TODO
 
 ### Known issues
 
