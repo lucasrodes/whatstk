@@ -35,7 +35,7 @@ counts = interventions(chat, 'date', msg_length=False)
 counts_cumsum = counts.cumsum()
 plot(vis(counts_cumsum, 'cummulative characters sent per day'))
 ```
-!](assets/example1.png)
+![](assets/example1.png)
 
 *Note*: More examples to come soon.
 
