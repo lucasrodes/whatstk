@@ -262,7 +262,6 @@ setup.cfg
 testreport.html
 testreport.xml
 version-info.cfg
-.bumpversion.cfg
 
 docs
 version-info.cfg
