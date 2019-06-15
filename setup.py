@@ -22,7 +22,7 @@ setup(
     license='GPL-v3',
     install_requires=requirements,
     packages=find_packages('.'),
-    package_dir={'': ','},
+    package_dir={'': '.'},
     py_modules=[os.path.splitext(os.path.basename(path))[0] for path in glob.glob('./*.py')],
     include_package_data=True,
     zip_safe=False,

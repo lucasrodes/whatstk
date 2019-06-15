@@ -15,8 +15,7 @@ The project was started in December 2016 by [lucasrodes](https://github.com/luca
 ### Installation
 
 ```
-git clone https://github.com/lucasrodes/whatstk
-pip install .
+pip install whatstk
 ```
 
 ### Getting Started
