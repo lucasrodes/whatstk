@@ -13,7 +13,7 @@ with open('requirements.txt', encoding='utf-8') as f:
 
 setup(
     name='whatstk',
-    version="0.1.2",
+    version="0.1.3",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
