@@ -5,10 +5,10 @@ import os
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(this_directory, 'README.md')) as f:
+with open('README.md') as f:
     long_description = f.read()
 
-with open(os.path.join(this_directory, 'requirements.txt'), encoding='utf-8') as f:
+with open('requirements.txt', encoding='utf-8') as f:
     requirements = [req.strip() for req in f.readlines()]
 
 
