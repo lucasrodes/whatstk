@@ -14,6 +14,8 @@ The project was started in December 2016 by [lucasrodes](https://github.com/luca
 
 ### Installation
 
+Tested on Python 3.7
+
 ```
 pip install whatstk
 ```
