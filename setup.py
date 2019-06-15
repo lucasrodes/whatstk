@@ -14,7 +14,7 @@ with open(os.path.join(this_directory, 'requirements.txt'), encoding='utf-8') as
 
 setup(
     name='whatstk',
-    version="0.0.1",
+    version="0.0.0",
     description='Parser and analytics tools for WhatsApp group chats',
     long_description=long_description,
     url='http://github.com/lucasrodes/whatstk',
@@ -26,7 +26,7 @@ setup(
     zip_safe=False,
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GPL-3.0 License",
         "Operating System :: OS Independent",
     ],
 )
