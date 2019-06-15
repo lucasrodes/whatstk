@@ -1,5 +1,4 @@
-:construction: :construction_worker: I am currently busy and hardly find time to mantain this repository. However I am willing to push a major code refactoring along with official documentation by May 2018. If anyone feels like helping please contact me.
-
+:construction: :construction_worker: Working towards first release. Coming soon, instructions in this readme are not valid at the moment.
 ----
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
@@ -14,28 +13,9 @@ The project was started in December 2016 by [lucasrodes](https://github.com/luca
 :star: Please **star** our project if you found it interesting to **keep us motivated** :smiley:!
 ### Installation
 
-First download the repo.
 ```
-$ git clone https://github.com/lucasrodes/whatstk.git
-$ cd whatstk
+pip install whatstk
 ```
-
-It is assumed that you are using Python 3. Next, you can install all its dependencies by running
-
-```
-$ bash install_dependencies.sh
-```
-
-This creates a virtual environment named `.whatstk` and installs all the python libraries required in the project. You can now
-start the virtual environment by running
-
-```
-$ source .whatstk/bin/activate
-```
-
-
-Find more details in [install_dependencies.sh](install_dependencies.sh).
-This is due to your directory being located within a path with spaces (more info [here](https://stackoverflow.com/questions/7911003/cant-install-via-pip-with-virtualenv)). Please use a path without spaces!
 
 ### Known issues
 
