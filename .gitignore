@@ -249,3 +249,20 @@ fabric.properties
 mychats/
 notebooks/Untitled.ipynb
 .whatstk
+./TODO.md
+examples
+
+
+#tox stuff
+tox.ini
+.coveragerc
+requirements-flake.txt
+requirements-test.txt
+setup.cfg
+testreport.html
+testreport.xml
+version-info.cfg
+
+docs
+assets
+version-info.cfg

@@ -1,1 +1,1 @@
-from whatstk.core import *
+name = "whatstk"
