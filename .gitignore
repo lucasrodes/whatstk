@@ -249,7 +249,7 @@ fabric.properties
 mychats/
 notebooks/Untitled.ipynb
 .whatstk
-./TODO.md
+todos.md
 examples
 
 
@@ -262,6 +262,7 @@ setup.cfg
 testreport.html
 testreport.xml
 version-info.cfg
+.bumpversion.cfg
 
 docs
 assets
