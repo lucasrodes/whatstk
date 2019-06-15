@@ -1,8 +1,8 @@
-:construction: :construction_worker: Working towards first release. Coming soon, instructions in this readme are not valid at the moment.
+Working towards first release. Coming soon, instructions in this readme are not valid at the moment.
 ----
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.0.1-brightgreen.svg?style=for-the-badge)
+![Package version](https://img.shields.io/badge/whatstk-v0.0.0-brightgreen.svg?style=for-the-badge)
 [![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/lucasrodes/whatstk/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/lucasrodes/whatstk/network)
