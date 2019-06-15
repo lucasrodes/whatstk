@@ -26,16 +26,18 @@ pip install whatstk
 
 ```python
 from whatstk.core import WhatsAppChat, interventions
-from whatstk.plot import vis
-from plotly.offline import plot
 
 filename = 'chats/example.txt'
+# [IMPORTANT] Choose header format accordingly
 hformat = '%d.%m.%y, %H:%M - %name:'
-
 chat = WhatsAppChat.from_txt(filename, hformat)
 counts = interventions(chat, 'date', msg_length=False)
 counts_cumsum = counts.cumsum()
-plot(vis(counts_cumsum, 'cummulative characters sent per day'))
+
+# Plot result
+from plotly.offline import plot
+from whatstk.plot import vis
+plot(vis(counts_cumsum, 'cumulative characters sent per day'))
 ```
 ![](assets/example1.png)
 
