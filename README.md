@@ -1,5 +1,3 @@
-Working towards first release. Coming soon, instructions in this readme are not valid at the moment.
-----
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
 ![Package version](https://img.shields.io/badge/whatstk-v0.0.0-brightgreen.svg?style=for-the-badge)
@@ -21,21 +19,25 @@ pip install whatstk
 ```
 
 ### Getting Started
-TODO
 
-### Known issues
+#### Cumulative messages sent by day
 
-#### Header Support
-The header of the chat log texts varies depending on your phone settings. We are making our best to provide support for all of them, but some might not be yet covered. Please check the list of supported headers in this [thread](https://github.com/lucasrodes/whatstk/issues/7) and comment if your header format is not supported!
+```python
+from whatstk.core import WhatsAppChat, interventions
+from whatstk.plot import vis
+from plotly.offline import plot
 
-#### Installation: bad interpreter
-While running the installation, you might encounter an error like 
+filename = 'chats/example.txt'
+hformat = '%d.%m.%y, %H:%M - %name:'
 
+chat = WhatsAppChat.from_txt(filename, hformat)
+counts = interventions(chat, 'date', msg_length=False)
+counts_cumsum = counts.cumsum()
+plot(vis(counts_cumsum, 'cummulative characters sent per day'))
 ```
-bad interpreter: No such file or directory
-```
+!](assets/example1.png)
 
-This is due to your directory being located within a path with spaces (more info [here](https://stackoverflow.com/questions/7911003/cant-install-via-pip-with-virtualenv)). Please use a path without spaces!
+*Note*: More examples to come soon.
 
 ### Contribute
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
