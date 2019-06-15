@@ -27,13 +27,14 @@ def vis(user_data, title):
     :Example:
 
         >>> from whatstk.core import WhatsAppChat, interventions
-        >>> from plotly.offline import plot
         >>> filename = 'path/to/samplechat.txt'
         >>> hformat = '%d/%m/%y, %H:%M - %name:'
         >>> chat = WhatsAppChat.from_txt(filename, hformat)
         >>> counts = interventions(chat, 'date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
-        >>> plot(vis(counts_cumsum, 'cummulative characters sent per day'))
+        >>> from plotly.offline import plot
+        >>> from whatstk.plot import vis
+        >>> plot(vis(counts_cumsum, 'cumulative characters sent per day'))
 
     :param user_data:
     :param title:
@@ -44,14 +45,14 @@ def vis(user_data, title):
 
     for username in user_data:
         trace = go.Scatter(
-            x = user_data.index,
-            y = user_data[username],
+            x=user_data.index,
+            y=user_data[username],
             showlegend=True,
             name=username,
             text=user_data.index
         )
         data.append(trace)
 
-    layout = dict(title=title, xaxis = dict(title = 'Date'))
+    layout = dict(title=title, xaxis=dict(title = 'Date'))
 
     return dict(data=data, layout=layout)
