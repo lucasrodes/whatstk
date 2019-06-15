@@ -1,6 +1,6 @@
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.1.0-brightgreen.svg?style=for-the-badge)
+![Package version](https://img.shields.io/badge/whatstk-v0.1.1-brightgreen.svg?style=for-the-badge)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/stargazers)
@@ -15,7 +15,8 @@ The project was started in December 2016 by [lucasrodes](https://github.com/luca
 ### Installation
 
 ```
-pip install whatstk
+git clone https://github.com/lucasrodes/whatstk
+pip install .
 ```
 
 ### Getting Started
