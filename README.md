@@ -2,10 +2,12 @@ Working towards first release. Coming soon, instructions in this readme are not 
 ----
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.0.3-brightgreen.svg?style=for-the-badge)
-[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/lucasrodes/whatstk/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg?style=for-the-badge)](https://github.com/lucasrodes/whatstk/network)
+![Package version](https://img.shields.io/badge/whatstk-v0.0.3-brightgreen.svg?style=for-the-badge) <\br>
+
+![Build](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)
+[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/network)
 
 whatstk is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license.
 
