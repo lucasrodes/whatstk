@@ -1,5 +1,5 @@
-from whatstk.alpha.parser import generate_regex, parse_chat, fix_df
-from whatstk.alpha.exceptions import *
+from .alpha.parser import generate_regex, parse_chat, fix_df
+from .alpha.exceptions import *
 import pandas as pd
 
 
@@ -13,11 +13,33 @@ class WhatsAppChat:
 
     @classmethod
     def from_txt(cls, filename, hformat, encoding='utf-8'):
-        """Create instance from chat log txt file.
+        """Create instance from chat log txt file hosted locally.
 
         :param filename: Name to the txt chat log file.
         :type filename: str
-        :param hformat: Format of the header. USe the following keywords:
+        :param hformat: Format of the header. Check whatstk.WhatsAppChat.prepare_df docs.
+        :type hformat: str
+        :param encoding: Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
+        :type encoding: str
+        :return: WhatsAppChat instance with loaded and parsed chat.
+        :rtype: whatstk.core.WhatsAppChat
+        """
+        # read file
+        with open(filename, encoding=encoding) as f:
+            text = f.read()
+
+        # Prepare DataFrame
+        df = cls.prepare_df(text, hformat)
+
+        return cls(df)
+
+    @staticmethod
+    def prepare_df(text, hformat):
+        """Get a DataFrame-formatted chat.
+
+        :param text: Loaded chat as plain text.
+        :type text: str
+        :param hformat: Format of the header. Ude the following keywords:
                         - %y: for year.
                         - %m: for month.
                         - %d: for day.
@@ -32,27 +54,18 @@ class WhatsAppChat:
 
                          Example 2: To the header '2016-08-12, 4:20 PM - username:' corresponds the syntax
                         '%y-%m-%d, %H:%M %P - %name:'.
-        :param encoding: Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
-        :type encoding: str
-        :return: WhatsAppChat instance with loaded and parsed chat.
-        :rtype: whatstk.core.WhatsAppChat
+        :type hformat: str
+        :return: DataFrame containing the chat.
+        :rtype: pandas.DataFrame
         """
-        # TODO: assert encoding and filename exist
-
-        # read file
-        with open(filename, encoding=encoding) as f:
-            text = f.read()
-
         # generate regex
         r, r_x = generate_regex(hformat=hformat)
 
-        #  parse chat to dataframe
+        #  parse chat to DataFrame
         df = parse_chat(text, r)
 
         # get rid of wp warning messages
-        df = fix_df(r_x, df)
-
-        return cls(df)
+        return fix_df(r_x, df)
 
     def to_csv(self, filename):
         """Save data as csv.
@@ -62,25 +75,50 @@ class WhatsAppChat:
         """
         self.df.to_csv(filename)
 
+    def __len__(self):
+        """Get length of DataFrame
+
+        :return: Length.
+        :rtype: int
+        """
+        return len(self.df)
+
+    def shape(self):
+        """Get shape of DataFrame-formatted chat.
+
+        :return: Shape.
+        :rtype: tuple
+        """
+        return self.df.shape
+
 
 def interventions(chat, date_mode='date', msg_length=False):
-    """Get number of interventions per user per unit of time. The unit of time can be chose by means of argument
-    'mode':
+    """Get number of interventions per user per unit of time.
 
-        - 'date': Grouped by particular date (year, month and day).
-        - 'hour': Grouped by hours.
-        - 'month': Grouped by months.
-        - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
-        - 'hourweekday': Grouped by weekday and hour.
+    The unit of time can be chosen by means of argument `date_mode`.
 
-    :param chat: Object containing parsed whatsapp chat.
+    :Example: Get counts of sent messages per user. Also cumulative.
+
+        >>> from whatstk.core import WhatsAppChat, interventions
+        >>> filename = 'path/to/samplechat.txt'
+        >>> hformat = '%d/%m/%y, %H:%M - %name:'
+        >>> chat = WhatsAppChat.from_txt(filename, hformat)
+        >>> counts = interventions(chat, 'date', msg_length=False)
+        >>> counts_cumsum = counts.cumsum()
+
+    :param chat: Object containing parsed WhatsApp chat.
     :type chat: whatstk.WhatsAppChat
-    :param date_mode: Choose mode to group interventions by.
+    :param date_mode: Choose mode to group interventions by. Available modes are:
+                        - 'date': Grouped by particular date (year, month and day).
+                        - 'hour': Grouped by hours.
+                        - 'month': Grouped by months.
+                        - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
+                        - 'hourweekday': Grouped by weekday and hour.
     :type date_mode: str
-    :param msg_length: Set to True if what's interesting is the length of the messages rather than the number of the
-                        messatges themselves.
+    :param msg_length: Set to True to count the number of characters instead of number of messages sent.
     :type msg_length: bool
-    :return:
+    :return: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
+    :rtype: pandas.DataFrame
     :raises whatstk.exceptions.InterventionModeError: if invalid mode is chosen.
     """
     if date_mode == 'date':
@@ -101,6 +139,7 @@ def interventions(chat, date_mode='date', msg_length=False):
     n_interventions.index.name = date_mode
     n_interventions.columns = n_interventions.columns.get_level_values('username')
     return n_interventions
+
 
 def _interventions(chat, index_date, msg_length):
     """Get number of interventions per day per user

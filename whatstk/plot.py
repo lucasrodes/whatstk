@@ -22,6 +22,23 @@ import plotly.graph_objs as go
 
 
 def vis(user_data, title):
+    """
+
+    :Example:
+
+        >>> from whatstk.core import WhatsAppChat, interventions
+        >>> from plotly.offline import plot
+        >>> filename = 'path/to/samplechat.txt'
+        >>> hformat = '%d/%m/%y, %H:%M - %name:'
+        >>> chat = WhatsAppChat.from_txt(filename, hformat)
+        >>> counts = interventions(chat, 'date', msg_length=False)
+        >>> counts_cumsum = counts.cumsum()
+        >>> plot(vis(counts_cumsum, 'cummulative characters sent per day'))
+
+    :param user_data:
+    :param title:
+    :return:
+    """
     # Create a trace
     data = []
 
