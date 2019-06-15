@@ -1,5 +1,4 @@
 """setup script"""
-import configparser
 from setuptools import setup, find_packages
 import os
 
@@ -14,7 +13,7 @@ with open('requirements.txt', encoding='utf-8') as f:
 
 setup(
     name='whatstk',
-    version="0.1.1",
+    version="0.1.2",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -23,7 +22,7 @@ setup(
     author_email='hi@lcsrg.me',
     license='MIT',
     install_requires=requirements,
-    packages=["whatstk"],
+    packages=find_packages('.'),
     zip_safe=False,
     classifiers=[
         "Development Status :: 3 - Alpha",
