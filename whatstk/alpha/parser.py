@@ -105,7 +105,7 @@ def parse_chat(text, regex):
     for i in range(len(headers)):
         line_dict = parse_line(text, headers, i)
         result.append(line_dict)
-    print(result)
+    # print(result)
     df_chat = pd.DataFrame.from_records(result, index='date')
     return df_chat[['username', 'message']]
 
