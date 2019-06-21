@@ -1,6 +1,6 @@
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.1.7-brightgreen.svg?style=for-the-badge)
+![Package version](https://img.shields.io/badge/whatstk-v0.1.11-brightgreen.svg?style=for-the-badge)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/stargazers)
@@ -22,15 +22,28 @@ pip install whatstk
 
 ### Getting Started
 
-#### Cumulative messages sent by day
+#### Obtain a dataframe from your chat log file
 
+Export your WhatsApp chat using your phone and send it to your computer. Make sure to choose the correct format of 
+the header. In the example here, the header (see [example.txt](chats/example.txt)) uses the syntax '%d.%m.%y, %H:%M -
+ %name:'. Header example: `07.08.2016, 19:30 - Misty:`
+ 
+ 
 ```python
-from whatstk.core import WhatsAppChat, interventions
+from whatstk.core import WhatsAppChat
 
 filename = 'chats/example.txt'
 # [IMPORTANT] Choose header format accordingly
 hformat = '%d.%m.%y, %H:%M - %name:'
 chat = WhatsAppChat.from_txt(filename, hformat)
+```
+
+#### Plot the cumulative messages sent by day
+Once you have your chat object, you can visualise the cumulative number of messages sent per day using the following 
+code
+
+```python
+from whatstk.core import interventions
 counts = interventions(chat, 'date', msg_length=False)
 counts_cumsum = counts.cumsum()
 

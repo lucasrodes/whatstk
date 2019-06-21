@@ -60,6 +60,7 @@ class WhatsAppChat:
         """
         # generate regex
         r, r_x = generate_regex(hformat=hformat)
+        # print(r)
 
         #  parse chat to DataFrame
         df = parse_chat(text, r)

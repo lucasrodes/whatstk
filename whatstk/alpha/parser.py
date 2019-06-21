@@ -74,11 +74,17 @@ def parse_line(text, headers, i):
     else:
         hour = int(result_['hour'])
 
+    # Check format of year. If year is 2-digit represented we add 2000
+    if len(result_['year']) == 2:
+        year = int(result_['year']) + 2000
+    else:
+        year = int(result_['year'])
+
     if 'seconds' not in result_:
-        date = datetime(int(result_['year']), int(result_['month']), int(result_['day']), hour,
+        date = datetime(year, int(result_['month']), int(result_['day']), hour,
                         int(result_['minutes']))
     else:
-        date = datetime(int(result_['year']), int(result_['month']), int(result_['day']), hour,
+        date = datetime(year, int(result_['month']), int(result_['day']), hour,
                         int(result_['minutes']), int(result_['seconds']))
     username = result_['username']
     message = get_message(text, headers, i)
@@ -99,7 +105,6 @@ def parse_chat(text, regex):
     for i in range(len(headers)):
         line_dict = parse_line(text, headers, i)
         result.append(line_dict)
-    print(result)
     df_chat = pd.DataFrame.from_records(result, index='date')
     return df_chat[['username', 'message']]
 

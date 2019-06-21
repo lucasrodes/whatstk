@@ -12,7 +12,7 @@ with open(os.path.join(this_directory, 'requirements.txt')) as f:
 
 setup(
     name='whatstk',
-    version="0.1.7",
+    version="0.1.11",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
