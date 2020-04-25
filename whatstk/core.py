@@ -1,5 +1,5 @@
-from .alpha.parser import generate_regex, parse_chat, fix_df
-from .alpha.exceptions import *
+from whatstk.alpha.parser import generate_regex, parse_chat, fix_df
+from whatstk.alpha.exceptions import *
 import pandas as pd
 
 
