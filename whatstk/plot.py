@@ -22,23 +22,28 @@ import plotly.graph_objs as go
 
 
 def vis(user_data, title):
-    """
+    """Obtain Figure to plot using plotly.
+
+    Does not work if you use date_mode='hourweekday'.
 
     :Example:
 
         >>> from whatstk.core import WhatsAppChat, interventions
         >>> filename = 'path/to/samplechat.txt'
         >>> hformat = '%d/%m/%y, %H:%M - %name:'
-        >>> chat = WhatsAppChat.from_txt(filename, hformat)
-        >>> counts = interventions(chat, 'date', msg_length=False)
+        >>> chat = WhatsAppChat.from_txt(filename, hformat=hformat)
+        >>> counts = interventions(chat=chat, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
         >>> from plotly.offline import plot
         >>> from whatstk.plot import vis
         >>> plot(vis(counts_cumsum, 'cumulative characters sent per day'))
 
-    :param user_data:
-    :param title:
-    :return:
+    :param user_data: Input data.
+    :type user_data: pandas.DataFrame
+    :param title: Title of figure.
+    :type title: str
+    :return: Figure.
+    :rtype: dict
     """
     # Create a trace
     data = []
