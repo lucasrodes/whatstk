@@ -1,9 +1,9 @@
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.1.11-teal.svg)
+![Package version](https://img.shields.io/badge/whatstk-v0.1.11-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
-[![Documentation](https://img.shields.io/badge/documentation-darkblue.svg)](docs/index.md)
+[![Documentation](https://img.shields.io/badge/documentation-blue.svg)](docs/index.md)
 [![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/network)
