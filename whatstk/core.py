@@ -75,7 +75,7 @@ class WhatsAppChat:
         r, r_x = generate_regex(hformat=hformat)
         # print(r)
 
-        #  parse chat to DataFrame
+        # Parse chat to DataFrame
         df = parse_chat(text, r)
 
         # get rid of wp warning messages
