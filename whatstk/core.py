@@ -1,4 +1,5 @@
 from whatstk.alpha.parser import generate_regex, parse_chat, fix_df
+from whatstk.alpha.auto_header import extract_header_from_text
 from whatstk.alpha.exceptions import *
 import pandas as pd
 
@@ -30,14 +31,16 @@ class WhatsAppChat:
         with open(filename, encoding=encoding) as f:
             text = f.read()
 
-        if auto_header:
+        if not hformat and auto_header:
             hformat = extract_header_from_text(text)
             if not hformat:
                 raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
                                    " input argument `hformat`.")
-        elif not hformat:
+        elif not (hformat or auto_header):
             raise ValueError("If auto_header is False, hformat can't be None.")
 
+        # Bracket is reserved character in RegEx, add backslash before them.
+        hformat.replace('[', '\[').replace(']', '\]')
         # Prepare DataFrame
         df = cls.prepare_df(text, hformat)
 
