@@ -47,7 +47,7 @@ Once you have your chat object, you can visualise the cumulative number of messa
 code
 
 ```python
-from whatstk.core import interventions
+from whatstk import interventions
 counts = interventions(chat, 'date', msg_length=False)
 counts_cumsum = counts.cumsum()
 
