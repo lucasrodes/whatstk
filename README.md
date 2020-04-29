@@ -72,7 +72,7 @@ the method `interventions()` with `date_mode` argument set to `'day'`. With this
 
 
 ```python
-from whatstk import interventions
+from whatstk.analysis import interventions
 counts = interventions(chat=chat, date_mode='date', msg_length=False)
 counts_cumsum = counts.cumsum()
 

@@ -1,4 +1,5 @@
-from whatstk.core import WhatsAppChat, interventions
+from whatstk.objects import WhatsAppChat
+from whatstk.analysis import interventions
 
 
 name = "whatstk"
