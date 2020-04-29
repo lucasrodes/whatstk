@@ -1,0 +1,5 @@
+renderer:
+  type: markdown
+  render_toc: true
+  signature_with_def: true
+  signature_class_prefix: true
