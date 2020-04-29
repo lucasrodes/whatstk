@@ -2,7 +2,8 @@
 
 ![Package version](https://img.shields.io/badge/whatstk-v0.1.11-brightgreen.svg?style=for-the-badge)
 
-[![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/baldassarreFe/lucasrodes/blob/master/LICENSE)
+[![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
+[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/network)
 
@@ -30,13 +31,16 @@ the header. In the example here, the header (see [example.txt](chats/example.txt
  
  
 ```python
-from whatstk.core import WhatsAppChat
+from whatstk import WhatsAppChat
 
 filename = 'chats/example.txt'
-# [IMPORTANT] Choose header format accordingly
-hformat = '%d.%m.%y, %H:%M - %name:'
-chat = WhatsAppChat.from_txt(filename, hformat)
+chat = WhatsAppChat.from_txt(filename)
 ```
+
+* _Note 1: By default, header auto-detect feature is used. If it does not work, use hformat variable to specify your
+header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:'`._
+* _Note 2: If your chat uses 12h clock, it may not work as expected. If it is your case, please report it in the issues section._
+
 
 #### Plot the cumulative messages sent by day
 Once you have your chat object, you can visualise the cumulative number of messages sent per day using the following 
@@ -50,7 +54,7 @@ counts_cumsum = counts.cumsum()
 # Plot result
 from plotly.offline import plot
 from whatstk.plot import vis
-plot(vis(counts_cumsum, 'cumulative characters sent per day'))
+plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
 ```
 ![](assets/example1.png)
 
