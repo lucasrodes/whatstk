@@ -22,7 +22,6 @@
   * [WhatsAppChat](#.whatstk.objects.WhatsAppChat)
     * [\_\_init\_\_](#.whatstk.objects.WhatsAppChat.__init__)
     * [from\_txt](#.whatstk.objects.WhatsAppChat.from_txt)
-    * [prepare\_df](#.whatstk.objects.WhatsAppChat.prepare_df)
     * [to\_csv](#.whatstk.objects.WhatsAppChat.to_csv)
     * [\_\_len\_\_](#.whatstk.objects.WhatsAppChat.__len__)
     * [shape](#.whatstk.objects.WhatsAppChat.shape)
@@ -308,39 +307,6 @@ Create instance from chat log txt file hosted locally.
 **Returns**:
 
 - `WhatsAppChat` - Class instance with loaded and parsed chat.
-
-<a name=".whatstk.objects.WhatsAppChat.prepare_df"></a>
-#### prepare\_df
-
-```python
- | @staticmethod
- | def WhatsAppChat.prepare_df(text, hformat)
-```
-
-Get a DataFrame-formatted chat.
-
-**Arguments**:
-
-- `text` _str_ - Loaded chat as plain text.
-- `hformat` _str_ - Format of the header. Ude the following keywords:
-  - %y: for year.
-  - %m: for month.
-  - %d: for day.
-  - %H: for hour.
-  - %M: for minutes.
-  - %S: for seconds.
-  - %P: To denote 12h clock.
-  - %name: for the username
-  
-  Example 1: To the header '12/08/2016, 16:20 - username:' corresponds the syntax
-  '%d/%m/%y, %H:%M - %name:'.
-  
-  Example 2: To the header '2016-08-12, 4:20 PM - username:' corresponds the syntax
-  '%y-%m-%d, %H:%M %P - %name:'.
-
-**Returns**:
-
-- `pandas.DataFrame` - DataFrame containing the chat.
 
 <a name=".whatstk.objects.WhatsAppChat.to_csv"></a>
 #### to\_csv
