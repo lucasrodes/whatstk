@@ -12,11 +12,13 @@ class WhatsAppChat:
         self.users = self.df.username.unique().tolist()
 
     @classmethod
-    def from_txt(cls, filename, hformat, encoding='utf-8'):
+    def from_txt(cls, filename, auto_header=True, hformat=None, encoding='utf-8'):
         """Create instance from chat log txt file hosted locally.
-
+        
         :param filename: Name to the txt chat log file.
         :type filename: str
+        :param auto_header: Set to True to detect header automatically, otherwise set to False. Defaults to True. If
+        False, you have to provide a value to `hformat`.
         :param hformat: Format of the header. Check whatstk.WhatsAppChat.prepare_df docs.
         :type hformat: str
         :param encoding: Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
@@ -24,9 +26,17 @@ class WhatsAppChat:
         :return: WhatsAppChat instance with loaded and parsed chat.
         :rtype: whatstk.core.WhatsAppChat
         """
-        # read file
+        # Read file
         with open(filename, encoding=encoding) as f:
             text = f.read()
+
+        if auto_header:
+            hformat = extract_header_from_text(text)
+            if not hformat:
+                raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
+                                   " input argument `hformat`.")
+        elif not hformat:
+            raise ValueError("If auto_header is False, hformat can't be None.")
 
         # Prepare DataFrame
         df = cls.prepare_df(text, hformat)
