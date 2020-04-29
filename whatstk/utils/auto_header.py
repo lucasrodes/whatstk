@@ -4,7 +4,7 @@ import logging
 
 separators = {'.', ',', '-', '/', ':', '[', ']'}
 
-def extract_header_from_tex(text, encoding='utf-8'):
+def extract_header_from_text(text, encoding='utf-8'):
     """Extract header from filename.
 
     Args:
@@ -21,10 +21,10 @@ def extract_header_from_tex(text, encoding='utf-8'):
     # Get format auto
     try:
         hformat = extract_header_format_from_lines(lines)
-        logging.info("Format found was %s", hformat)
+        print("Format found was %s", hformat)
         return hformat
     except:
-        logging.info("Format not found.")
+        print("Format not found.")
     return None
     
 def issep(s):

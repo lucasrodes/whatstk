@@ -1,6 +1,6 @@
-from whatstk.alpha.parser import generate_regex, parse_chat, fix_df
-from whatstk.alpha.auto_header import extract_header_from_text
-from whatstk.alpha.exceptions import *
+from whatstk.utils.parser import generate_regex, parse_chat, fix_df
+from whatstk.utils.auto_header import extract_header_from_text
+from whatstk.utils.exceptions import *
 import pandas as pd
 
 
