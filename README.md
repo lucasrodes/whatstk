@@ -3,7 +3,7 @@
 ![Package version](https://img.shields.io/badge/whatstk-v0.1.11-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
-[![Python 3.6](https://img.shields.io/badge/python-3.7|3.8-blue.svg)](https://www.python.org/downloads/release/python-3/)
+[![Python 3.6](https://img.shields.io/badge/python-3.5|3.7|3.8-blue.svg)](https://www.python.org/downloads/release/python-3/)
 [![Documentation](https://img.shields.io/badge/documentation-royalblue.svg)](docs/index.md)
 [![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
 
