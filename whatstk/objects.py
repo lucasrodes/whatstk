@@ -1,3 +1,8 @@
+from whatstk.utils.parser import generate_regex, parse_chat, remove_alerts_from_df
+from whatstk.utils.auto_header import extract_header_from_text
+from whatstk.utils.exceptions import InterventionModeError
+
+
 
 class WhatsAppChat:
     """Use this class to load and play with your chat log."""
@@ -38,12 +43,12 @@ class WhatsAppChat:
         # Bracket is reserved character in RegEx, add backslash before them.
         hformat.replace('[', '\[').replace(']', '\]')
         # Prepare DataFrame
-        df = cls.prepare_df(text, hformat)
+        df = cls._prepare_df(text, hformat)
 
         return cls(df)
 
     @staticmethod
-    def prepare_df(text, hformat):
+    def _prepare_df(text, hformat):
         """Get a DataFrame-formatted chat.
 
         Args:
