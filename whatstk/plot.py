@@ -34,6 +34,7 @@ def vis(user_data, title):
 
     Example:
 
+        ```python
         >>> from whatstk import WhatsAppChat, interventions
         >>> filename = 'path/to/samplechat.txt'
         >>> chat = WhatsAppChat.from_txt(filename)
@@ -42,7 +43,8 @@ def vis(user_data, title):
         >>> from plotly.offline import plot
         >>> from whatstk.plot import vis
         >>> plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
-    
+        ```
+
     """
     # Create a trace
     data = []
