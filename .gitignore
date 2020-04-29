@@ -263,5 +263,10 @@ testreport.html
 testreport.xml
 version-info.cfg
 
-docs
+docs2
 version-info.cfg
+py37
+*.ipynb
+
+.pypirc
+learn/

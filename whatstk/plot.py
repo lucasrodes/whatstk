@@ -8,8 +8,7 @@
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# but WITHOUT ANY WARRANTY; without even the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -22,23 +21,30 @@ import plotly.graph_objs as go
 
 
 def vis(user_data, title):
-    """
+    """Obtain Figure to plot using plotly.
 
-    :Example:
+    Does not work if you use date_mode='hourweekday'.
 
-        >>> from whatstk.core import WhatsAppChat, interventions
+    Args:
+        user_data (pandas.DataFrame): Input data.
+        title (str): Title of figure.
+    
+    Returns:
+        dict: Figure.
+
+    Example:
+
+        ```python
+        >>> from whatstk import WhatsAppChat, interventions
         >>> filename = 'path/to/samplechat.txt'
-        >>> hformat = '%d/%m/%y, %H:%M - %name:'
-        >>> chat = WhatsAppChat.from_txt(filename, hformat)
-        >>> counts = interventions(chat, 'date', msg_length=False)
+        >>> chat = WhatsAppChat.from_txt(filename)
+        >>> counts = interventions(chat=chat, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
         >>> from plotly.offline import plot
         >>> from whatstk.plot import vis
-        >>> plot(vis(counts_cumsum, 'cumulative characters sent per day'))
+        >>> plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
+        ```
 
-    :param user_data:
-    :param title:
-    :return:
     """
     # Create a trace
     data = []
