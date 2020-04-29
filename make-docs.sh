@@ -5,9 +5,11 @@
 mkdir -p docs
 mkdir -p docs/modules
 
-rm -fr docs/modules/*
+rm -fr docs/*
 pydoc-markdown pydoc-markdown.yaml -m whatstk >> docs/index.md
 
+# mkdir -p docs/modules
+# rm -fr docs/modules/*
 # pydoc-markdown pydoc-markdown.yaml -m whatstk.objects >> docs/modules/whatstk.objects.md
 # pydoc-markdown pydoc-markdown.yaml -m whatstk.plot >> docs/modules/whatstk.plot.md
 # pydoc-markdown pydoc-markdown.yaml -m whatstk.analysis >> docs/modules/whatstk.analysis.md
