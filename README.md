@@ -61,7 +61,7 @@ chat.df.info()
 </details>
 
 _Note 1: By default, header auto-detect feature is used. If it does not work, use hformat variable to specify your
-header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:'`. More on this [here](#header)_.
+header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:'`. More on this [here](#whats_the_header)_.
 
 _Note 2: If your chat uses 12h clock, it may not work as expected. If it is your case, please report it in the issues section._
 
@@ -84,6 +84,68 @@ plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
 
 ![](assets/example1.png)
 
+### What's the header?
+The chat file syntax can differ between devices, OS and language settings, which makes it hard some times to correctly parse the data and make WhatsTK work correctly.
+
+The header appears for each message sent in the chat. It contains a timestamp and the name of the user that sent the message.
+
+See it for yourself and open the exported chat file. You will find that the messages have a similar format like the one
+below:
+
+```
+15.04.2016, 15:04 - You created group “Sample Group”
+06.08.2016, 13:18 - Messages you send to this group are now secured with end-to-end encryption. Tap for more info.
+06.08.2016, 13:23 - Ash Ketchum: Hey guys!
+06.08.2016, 13:25 - Brock: Hey Ash, good to have a common group!
+06.08.2016, 13:30 - Misty: Hey guys! Long time haven't heard anything from you
+06.08.2016, 13:45 - Ash Ketchum: Indeed. I think having a whatsapp group nowadays is a good idea
+06.08.2016, 14:30 - Misty: Definetly
+06.08.2016, 17:25 - Brock: I totally agree
+07.08.2016, 11:45 - Prof. Oak: Kids, shall I design a smart poke-ball?
+```
+
+In this example, the header is `day.month.year, hour:minutes - username:` which corresponds to the header format
+`%d.%m.%y, %H:%M - %name:`. However, in your case it may be something else. Check table below to see the codes for each
+header unit.
+
+<table class="tg" style="display: flex; justify-content: center;">
+  <tr>
+    <th class="tg-7btt">Date Unit Code</th>
+    <th class="tg-7btt">Definition</th>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%y</td>
+    <td class="tg-0pky">Year</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%m</td>
+    <td class="tg-0pky">Month of the year (1-12)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%d</td>
+    <td class="tg-0pky">Day of the month (0-31)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%H</td>
+    <td class="tg-0pky">Hour 24h-clock (0-23)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%P</td>
+    <td class="tg-0pky">Hour 12h-clock (1-12)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%M</td>
+    <td class="tg-0pky">Minutes (0-60)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%S</td>
+    <td class="tg-0pky">Seconds (0-60)</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">%name</td>
+    <td class="tg-0pky">Name of user</td>
+  </tr>
+</table>
 
 ### Contribute
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
