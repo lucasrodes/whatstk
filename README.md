@@ -61,7 +61,7 @@ chat.df.info()
 </details>
 
 _Note 1: By default, header auto-detect feature is used. If it does not work, use hformat variable to specify your
-header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:'`. More on this [here](#whats_the_header)_.
+header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:'`. More on this [here](#whats-the-header)_.
 
 _Note 2: If your chat uses 12h clock, it may not work as expected. If it is your case, please report it in the issues section._
 
