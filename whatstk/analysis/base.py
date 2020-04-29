@@ -10,11 +10,11 @@ def interventions(chat, date_mode='date', msg_length=False):
         Get counts of sent messages per user. Also cumulative.
 
         ```python
-        >>> from whatstk.core import WhatsAppChat, interventions
+        >>> from whatstk import WhatsAppChat
+        >>> from whatstk.analysis interventions
         >>> filename = 'path/to/samplechat.txt'
-        >>> hformat = '%d/%m/%y, %H:%M - %name:'
-        >>> chat = WhatsAppChat.from_txt(filename, hformat)
-        >>> counts = interventions(chat, 'date', msg_length=False)
+        >>> chat = WhatsAppChat.from_txt(filename)
+        >>> counts = interventions(chat, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
         ```
         
