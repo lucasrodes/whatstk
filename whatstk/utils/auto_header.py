@@ -21,10 +21,10 @@ def extract_header_from_text(text, encoding='utf-8'):
     # Get format auto
     try:
         hformat = extract_header_format_from_lines(lines)
-        print("Format found was %s", hformat)
+        logging.info("Format found was %s", hformat)
         return hformat
     except:
-        print("Format not found.")
+        logging.info("Format not found.")
     return None
     
 def issep(s):
