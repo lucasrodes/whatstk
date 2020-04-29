@@ -1,5 +1,6 @@
-from whatstk.alpha.parser import generate_regex, parse_chat, fix_df
-from whatstk.alpha.exceptions import *
+from whatstk.utils.parser import generate_regex, parse_chat, fix_df
+from whatstk.utils.auto_header import extract_header_from_text
+from whatstk.utils.exceptions import *
 import pandas as pd
 
 
@@ -12,11 +13,13 @@ class WhatsAppChat:
         self.users = self.df.username.unique().tolist()
 
     @classmethod
-    def from_txt(cls, filename, hformat, encoding='utf-8'):
+    def from_txt(cls, filename, auto_header=True, hformat=None, encoding='utf-8'):
         """Create instance from chat log txt file hosted locally.
-
+        
         :param filename: Name to the txt chat log file.
         :type filename: str
+        :param auto_header: Set to True to detect header automatically, otherwise set to False. Defaults to True. If
+        False, you have to provide a value to `hformat`.
         :param hformat: Format of the header. Check whatstk.WhatsAppChat.prepare_df docs.
         :type hformat: str
         :param encoding: Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
@@ -24,10 +27,20 @@ class WhatsAppChat:
         :return: WhatsAppChat instance with loaded and parsed chat.
         :rtype: whatstk.core.WhatsAppChat
         """
-        # read file
+        # Read file
         with open(filename, encoding=encoding) as f:
             text = f.read()
 
+        if not hformat and auto_header:
+            hformat = extract_header_from_text(text)
+            if not hformat:
+                raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
+                                   " input argument `hformat`.")
+        elif not (hformat or auto_header):
+            raise ValueError("If auto_header is False, hformat can't be None.")
+
+        # Bracket is reserved character in RegEx, add backslash before them.
+        hformat.replace('[', '\[').replace(']', '\]')
         # Prepare DataFrame
         df = cls.prepare_df(text, hformat)
 
@@ -62,7 +75,7 @@ class WhatsAppChat:
         r, r_x = generate_regex(hformat=hformat)
         # print(r)
 
-        #  parse chat to DataFrame
+        # Parse chat to DataFrame
         df = parse_chat(text, r)
 
         # get rid of wp warning messages
