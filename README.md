@@ -1,8 +1,9 @@
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.1.11-brightgreen.svg?style=for-the-badge)
+![Package version](https://img.shields.io/badge/whatstk-v0.1.11-teal.svg)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
+[![Documentation](https://img.shields.io/badge/documentation-darkblue.svg)](docs/index.md)
 [![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/network)
@@ -25,6 +26,7 @@ pip install whatstk
 
 Make sure to first obtain the chat to be analyzed. Export it as a `txt` file using your phone (more info on this [here](https://lcsrg.me/whatstk-gui/#faqs)).
 
+Check more on how-to use it in the [docs](docs/index.md)
 
 #### Obtain a dataframe from your chat log file
 
@@ -72,7 +74,7 @@ the method `interventions()` with `date_mode` argument set to `'day'`. With this
 
 
 ```python
-from whatstk import interventions
+from whatstk.analysis import interventions
 counts = interventions(chat=chat, date_mode='date', msg_length=False)
 counts_cumsum = counts.cumsum()
 

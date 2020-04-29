@@ -18,11 +18,12 @@ regex_simplifier = {
 def generate_regex(hformat):
     """Generate the appropriate regular expression from simplified syntax.
 
+    Args:
+        hformat (str): Simplified syntax for the header.
+    
+    Returns: 
+        str: Regular expression corresponding to the specified syntax.
 
-    :param hformat: Simplified syntax for the header.
-    :type hformat: str
-    :return: Regular expression corresponding to the specified syntax.
-    :rtype: str
     """
     items = re.findall(r'\%\w*', hformat)
     for i in items:
@@ -33,35 +34,37 @@ def generate_regex(hformat):
     return hformat, hformat_x
 
 
-def get_message(text, headers, i):
-    """Get i:th message from text.
-
-    :param text: Whole log chat text.
-    :type text: str
-    :param headers: All headers.
-    :type headers: list
-    :param i: Index denoting the message number.
-    :type i: int
-    :return: i:th message.
-    :rtype: str
+def parse_chat(text, regex):
     """
-    msg_start = headers[i].end()
-    msg_end = headers[i + 1].start() if i < len(headers) - 1 else headers[i].endpos
-    msg = text[msg_start:msg_end].strip()
-    return msg
+
+    Args: 
+        text (str) Whole log chat text.
+        regex (str): Regular expression
+    
+    Returns:
+        pandas.DataFrame: DataFrame with messages sent by users, index is the date the messages was sent.
+
+    """
+    result = []
+    headers = list(re.finditer(regex, text))
+    for i in range(len(headers)):
+        line_dict = _parse_line(text, headers, i)
+        result.append(line_dict)
+    df_chat = pd.DataFrame.from_records(result, index='date')
+    return df_chat[['username', 'message']]
 
 
-def parse_line(text, headers, i):
+def _parse_line(text, headers, i):
     """Get date, username and message from the i:th intervention.
 
-    :param text: Whole log chat text.
-    :type text: str
-    :param headers: All headers.
-    :type headers: list
-    :param i: Index denoting the message number.
-    :type i: int
-    :return: i:th date, username and message.
-    :rtype: dict
+    Args:
+        text (str): Whole log chat text.
+        headers (list): All headers.
+        i (int): Index denoting the message number.
+    
+    Returns: 
+        dict: i:th date, username and message.
+
     """
     result_ = headers[i].groupdict()
     if 'ampm' in result_:
@@ -87,45 +90,56 @@ def parse_line(text, headers, i):
         date = datetime(year, int(result_['month']), int(result_['day']), hour,
                         int(result_['minutes']), int(result_['seconds']))
     username = result_['username']
-    message = get_message(text, headers, i)
+    message = _get_message(text, headers, i)
     return dict(date=date, username=username, message=message)
 
 
-def parse_chat(text, regex):
-    """
+def remove_alerts_from_df(r_x, df):
+    """Tries to get rid of alert/notification messages
 
-    :param text: Whole log chat text.
-    :type text: str
-    :param regex: Regular expression
-    :type regex: str
-    :return:
-    """
-    result = []
-    headers = list(re.finditer(regex, text))
-    for i in range(len(headers)):
-        line_dict = parse_line(text, headers, i)
-        result.append(line_dict)
-    df_chat = pd.DataFrame.from_records(result, index='date')
-    return df_chat[['username', 'message']]
+    Args:
+        r_x (str): Regular expression to detect whatsapp warnings.
+        df (pandas.DataFrame): DataFrame with all interventions.
 
+    Returns: 
+        pandas.DataFrame: Fixed version of input dataframe.
 
-def fix_df(r_x, df):
-    """Get rid of alert/notification messages
-
-    :param r_x: Regular expression to detect whatsapp warnings.
-    :type r_x: str
-    :param df: DataFrame with all interventions.
-    :type df: pandas.DataFrame
-    :return: Fixed version of input dataframe.
-    :rtype: pandas.DataFrame
     """
     df_new = df.copy()
-    df_new.loc[:, 'message'] = df_new['message'].apply(lambda x: fix_line_df(r_x, x))
+    df_new.loc[:, 'message'] = df_new['message'].apply(lambda x: _remove_alerts_from_line(r_x, x))
     return df_new
 
 
-def fix_line_df(r_x, line_df):
+def _remove_alerts_from_line(r_x, line_df):
+    """Remove line content that is not desirable (automatic alerts etc.)
+
+    Args:
+        r_x (str): Regula expression to detect WhatsApp warnings.
+        line_df (str): Message sent as string.
+
+    Returns:
+        str: Cleaned message string.
+
+    """
     if re.search(r_x, line_df):
         return line_df[:re.search(r_x, line_df).start()]
     else:
         return line_df
+
+
+def _get_message(text, headers, i):
+    """Get i:th message from text.
+
+    Args:
+        text (str): Whole log chat text.
+        headers (list): All headers.
+        i (int): Index denoting the message number.
+    
+    Returns: 
+        str: i:th message.
+
+    """
+    msg_start = headers[i].end()
+    msg_end = headers[i + 1].start() if i < len(headers) - 1 else headers[i].endpos
+    msg = text[msg_start:msg_end].strip()
+    return msg
