@@ -1,17 +1,16 @@
 dist: xenial
 language: python
 python:
-- 3.7
+- 3.7.2
 - 3.8
 install:
 - pip install .
-#pip install -r requirements.txt 
 script:
 - pytest
 deploy:
   provider: pypi
   user: lucasrodes
   password:
-    secure: fqmlRL4Cbg8p+OolNSZW84I6iiIXKvrEcH5w2WSaQ1D+qO8b0+xMgLttypQ3vf+hFFc0K6HXHg9HNONFx8yP0/GNAKEl6gwk2ld3+JTM/rKAceVsoZlq6PwnoQqiityDGZHIg8pXVbKdccGQwWh1jvsMNQG3ACFpNZKHYjjESMSDtib9DsvqwdfwbUrjaM7Ucdvmw+ABeD4yDKgG1bU9pMnE+zdQe+9EsmFYY+K5FEdY6vre76BUadTl1MUn9mnUGi7bJHY+QXFxu23X5mvo7fPyII06Ss8lFcsJI/EjZlemr+aYTOXwKgUhfC+Rf3DGcEIRFNuPrq4WMUI7ox+ehE64L3Eved4jIlI1U+hWHitWT6FX+1xdg67lVPQqhbJN4vhhjJEz1+n55BkADp+zQ2UB/IfZbNgBNFtNf+NQYi87d2zNss+FP1Pg1qI0LsqwfroiLNfh2HBCMl6G5tjlU0OBbbiVsLxHxxk9i0uuDcp6FbCPwWZ/bUlj2EP+HPpuCYlzUQjySe+1T0WoGDx9ltXCQzHxiRPlU4i4q7EguMTLBG4vmA5HtYyOqEk0s5z5nsggYAu2ZTx5r3jmsQHElls5de96z4xDhNLMiz5IDngO/9niR65NhWEJXY8kEWubh+mQHvVDGl2rFC38ZwoGbs2+5Uq+Gzgp1b+byOoEc4E=
+    secure: z0Phj0i34mGtRYMyTZsc/5PGC7se0U3O5E7YCOUg/14JCcRTZoqd4U4XPU0VchH3cgLax2p8xHnVJ3n1VcgBdEiuBGyU6xNacgPanONBFGk479S5wAPA6cTVvYarDZ9Oh5/f8JmP+WiqZUzLJQtoFprf1xjpOq5SECynx45+o/XJOcAL0JbNAV2C00WZG/lbRayESX+5EwIv0NzXki8aouJQMBklCvbp0I/kEc3xBsAavQdqji6/6169YZ+B0IuyjRq2SCvqNtmvxNScqn/Mvov1qSnuZ0ljxU0bG2StPyfA6cY5h9J3L9IuqrXMeJmY79aCL6xWZzv7emBMn0Q5Ly3wpiv2nnznhOVRzoDz5YptrNm45P/M0qiYtw+1pHRpHVjZ5LlSAVsIGNfjhvlsZw7ZzI70+WziW9v/+UszwURABrggE/kfAMeMjKTfRtXbPXqE0XApubdJrS9hiGHcaqkJVOasDB5zr7lkAg4bcDIyYsU9oGhcC5UKqn/jF0VcXyUoF4UFuuqNg+MjP1B96FMPdbWc1R9XEkYuqSva3fXehPw6RB/P5DGt8neBHywkuKsuUkxlOLBFdurS0O4i6dUZh4uXoDYQHM0brYo3U43yzTUR4CDQzazNVeg3kCj08eF8lvmf6H7OGSaWmQpyMvavb5vITPfS9v+UyOEjZ84=
   on:
     tags: true
