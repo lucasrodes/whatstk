@@ -161,7 +161,8 @@ header unit.
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
 For other issues/bugs/suggestions, please report it as an issue or [text me](mailto:lucasrg@kth.se).
 
-###  Pull Requests
+### Pull Requests
+
 Make sure to test your code before issuing a pull request:
 
 ```
