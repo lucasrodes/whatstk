@@ -3,9 +3,13 @@
 ![Package version](https://img.shields.io/badge/whatstk-v0.2.4-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
+[![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
 [![Python 3.6](https://img.shields.io/badge/python-3.7|3.8-blue.svg)](https://www.python.org/downloads/release/python-3/)
 [![Documentation](https://img.shields.io/badge/documentation-royalblue.svg)](docs/index.md)
-[![GitHub license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
+[![GitHub
+license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
+
+
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 > [Get the Desktop App](https://lcsrg.me/whatstk-gui)
 
@@ -28,7 +32,7 @@ Make sure to first obtain the chat to be analyzed. Export it as a `txt` file usi
 
 Check more on how-to use it in the [docs](docs/index.md)
 
-#### Obtain a dataframe from your chat log file
+### Obtain a dataframe from your chat log file
 
 Load your chat using the object `WhatsAppChat`. Example below we use chat [example.txt](chats/example.txt)
  
@@ -68,7 +72,7 @@ header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:
 _Note 2: If your chat uses 12h clock, it may not work as expected. If it is your case, please report it in the issues section._
 
 
-#### Plot the cumulative messages sent by day
+### Plot the cumulative messages sent by day
 Once you have your `WhatsAppChat` object, you can easily get the number of interventions per user per, say, `day` using 
 the method `interventions()` with `date_mode` argument set to `'day'`. With this, some minor processing, `plotly` and `vis` method from `whatstk.plot` you can get really insightful plots.
 
@@ -86,7 +90,7 @@ plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
 
 ![](assets/example1.png)
 
-### What's the header?
+## What's the header?
 The chat file syntax can differ between devices, OS and language settings, which makes it hard some times to correctly parse the data and make WhatsTK work correctly.
 
 The header appears for each message sent in the chat. It contains a timestamp and the name of the user that sent the message.
@@ -148,6 +152,9 @@ header unit.
     <td class="tg-0pky">Name of user</td>
   </tr>
 </table>
+
+## Known issues
+- 12h clock header format is not supported.
 
 ## Contribute
 
