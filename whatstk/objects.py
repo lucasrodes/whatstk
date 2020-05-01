@@ -1,6 +1,5 @@
 from whatstk.utils.parser import generate_regex, parse_chat, remove_alerts_from_df
 from whatstk.utils.auto_header import extract_header_from_text
-from whatstk.utils.exceptions import InterventionModeError
 
 
 

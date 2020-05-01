@@ -32,7 +32,7 @@ def interventions(chat, date_mode='date', msg_length=False):
         pandas.DataFrame: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
 
     Raises:
-        whatstk.exceptions.InterventionModeError: if invalid mode is chosen.
+        ValueError: if invalid mode is chosen.
 
     """
     if date_mode == 'date':
@@ -47,7 +47,7 @@ def interventions(chat, date_mode='date', msg_length=False):
     elif date_mode == 'month':
         n_interventions = _interventions(chat, [chat.df.index.month], msg_length)
     else:
-        raise InterventionModeError("Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
+        raise ValueError("Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
                                     "'hourweekday' and 'month".format(date_mode))
 
     if date_mode == 'hourweekday':

@@ -161,4 +161,6 @@ Make sure to test your code before issuing a pull request:
 py.test --cov-report term --cov=whatstk tests/
 ```
 
+_Note 1: Use `--html=testreport.html --cov-report html` to generate HTML reports._
+
 However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
