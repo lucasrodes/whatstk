@@ -257,7 +257,6 @@ examples
 tox.ini
 .coveragerc
 requirements-flake.txt
-requirements-test.txt
 setup.cfg
 testreport.html
 testreport.xml

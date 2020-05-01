@@ -1,14 +1,18 @@
 dist: xenial
 language: python
 python:
-- 3.7.2
-- 3.8
-- 3.5
+  - 3.7.2
+  - 3.8
+  - 3.5
+before_install:
+  - pip install -r requirements-test.txt
 install:
-- pip install .
+  - pip install .
 #pip install -r requirements.txt 
 script:
-- pytest
+  - pytest
+after_success:
+  - codecov # submit coverage
 deploy:
   provider: pypi
   user: lucasrodes
