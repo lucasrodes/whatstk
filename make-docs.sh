@@ -1,5 +1,7 @@
-# Make sure to have pydoc-markdown:develop installed
+# Make sure to have pydoc-markdown (develop branch) installed
 # pip install git+https://github.com/NiklasRosenstein/pydoc-markdown.git@develop
+#
+# Then simply execute `sh make-docs.sh`
 
 # Script to make documentation
 mkdir -p docs

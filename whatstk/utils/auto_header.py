@@ -205,9 +205,9 @@ def _extract_header_format_from_components(elements_list, template_list):
         template = template_list[0]
         hour_code = "%H"
     # day
-    day_pos = ((dates_df.max()>27) & (dates_df.max()<32)).argmax()
+    day_pos = ((dates_df.max()>27) & (dates_df.max()<32)).idxmax()
     # year
-    year_pos = dates_df.std().argmin()
+    year_pos = dates_df.std().idxmin()
     # month and hour
     positions = (dates_df.max() < 13) # & (dates_df.max() > 11) 
     positions = positions.index[positions].tolist()

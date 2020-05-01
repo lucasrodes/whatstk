@@ -1,18 +1,23 @@
 dist: xenial
 language: python
 python:
-- 3.7.2
-- 3.8
-- 3.5
+  - 3.7.2
+  - 3.8
+before_install:
+  - pip install -r requirements-test.txt
 install:
-- pip install .
+  - ls -l
+  - pip uninstall whatstk
+  - pip install -e .
 #pip install -r requirements.txt 
 script:
-- pytest
+  - pip freeze | grep whatstk
+  - pytest --cov-report term --cov=whatstk tests/
+after_success:
+  - codecov # submit coverage
 deploy:
   provider: pypi
-  user: lucasrodes
-  password:
-    secure: fqmlRL4Cbg8p+OolNSZW84I6iiIXKvrEcH5w2WSaQ1D+qO8b0+xMgLttypQ3vf+hFFc0K6HXHg9HNONFx8yP0/GNAKEl6gwk2ld3+JTM/rKAceVsoZlq6PwnoQqiityDGZHIg8pXVbKdccGQwWh1jvsMNQG3ACFpNZKHYjjESMSDtib9DsvqwdfwbUrjaM7Ucdvmw+ABeD4yDKgG1bU9pMnE+zdQe+9EsmFYY+K5FEdY6vre76BUadTl1MUn9mnUGi7bJHY+QXFxu23X5mvo7fPyII06Ss8lFcsJI/EjZlemr+aYTOXwKgUhfC+Rf3DGcEIRFNuPrq4WMUI7ox+ehE64L3Eved4jIlI1U+hWHitWT6FX+1xdg67lVPQqhbJN4vhhjJEz1+n55BkADp+zQ2UB/IfZbNgBNFtNf+NQYi87d2zNss+FP1Pg1qI0LsqwfroiLNfh2HBCMl6G5tjlU0OBbbiVsLxHxxk9i0uuDcp6FbCPwWZ/bUlj2EP+HPpuCYlzUQjySe+1T0WoGDx9ltXCQzHxiRPlU4i4q7EguMTLBG4vmA5HtYyOqEk0s5z5nsggYAu2ZTx5r3jmsQHElls5de96z4xDhNLMiz5IDngO/9niR65NhWEJXY8kEWubh+mQHvVDGl2rFC38ZwoGbs2+5Uq+Gzgp1b+byOoEc4E=
+  user: $USER_PYPI
+  password: $PWD_PYPI
   on:
     tags: true
