@@ -1,6 +1,6 @@
 # [whatstk](http://lucasrodes.github.io/whatstk)
 
-![Package version](https://img.shields.io/badge/whatstk-v0.2.1-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
+![Package version](https://img.shields.io/badge/whatstk-v0.2.2-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
 [![Python 3.6](https://img.shields.io/badge/python-3.7|3.8-blue.svg)](https://www.python.org/downloads/release/python-3/)
