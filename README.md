@@ -150,5 +150,15 @@ header unit.
 </table>
 
 ## Contribute
+
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
 For other issues/bugs/suggestions, please report it as an issue or [text me](mailto:lucasrg@kth.se).
+
+###  Pull Requests
+Make sure to test your code before issuing a pull request:
+
+```
+py.test --cov-report term --cov=whatstk tests/
+```
+
+However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
