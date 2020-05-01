@@ -1,6 +1,5 @@
 pytest
 pytest-mock
 pytest-cov
-pytest-html
 coverage
 codecov
