@@ -6,7 +6,6 @@ python:
 before_install:
   - pip install -r requirements-test.txt
 install:
-  - ECHO "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
   - ls -l
   - pip uninstall whatstk
   - pip install -e .
