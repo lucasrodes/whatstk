@@ -255,9 +255,8 @@ examples
 
 #tox stuff
 tox.ini
-.coveragerc
+#.coveragerc
 requirements-flake.txt
-requirements-test.txt
 setup.cfg
 testreport.html
 testreport.xml
@@ -270,3 +269,4 @@ py37
 
 .pypirc
 learn/
+assets/style.css

@@ -17,7 +17,6 @@
   * [parse\_chat](#.whatstk.utils.parser.parse_chat)
   * [remove\_alerts\_from\_df](#.whatstk.utils.parser.remove_alerts_from_df)
 * [whatstk.utils.exceptions](#.whatstk.utils.exceptions)
-  * [InterventionModeError](#.whatstk.utils.exceptions.InterventionModeError)
 * [whatstk.objects](#.whatstk.objects)
   * [WhatsAppChat](#.whatstk.objects.WhatsAppChat)
     * [\_\_init\_\_](#.whatstk.objects.WhatsAppChat.__init__)
@@ -120,7 +119,7 @@ The unit of time can be chosen by means of argument `date_mode`.
 
 **Raises**:
 
-- `whatstk.exceptions.InterventionModeError` - if invalid mode is chosen.
+- `ValueError` - if invalid mode is chosen.
 
 <a name=".whatstk.core"></a>
 ## whatstk.core
@@ -254,15 +253,6 @@ Tries to get rid of alert/notification messages
 
 Library exceptions.
 
-<a name=".whatstk.utils.exceptions.InterventionModeError"></a>
-### InterventionModeError
-
-```python
-class InterventionModeError(Exception)
-```
-
-Raised when a non-implemented mode is selected.
-
 <a name=".whatstk.objects"></a>
 ## whatstk.objects
 
@@ -338,6 +328,7 @@ Get length of DataFrame
 #### shape
 
 ```python
+ | @property
  | def WhatsAppChat.shape()
 ```
 

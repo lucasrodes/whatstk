@@ -1,6 +1,8 @@
 include *.md
 include LICENSE
 include requirements.txt
+include requirements-test.txt
+include .coveragerc
 
 recursive-include altair *.py *.json *.ipynb *.html
 global-exclude *.py[co] __pycache__
