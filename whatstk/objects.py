@@ -99,6 +99,7 @@ class WhatsAppChat:
         """
         return len(self.df)
 
+    @property
     def shape(self):
         """Get shape of DataFrame-formatted chat.
 
