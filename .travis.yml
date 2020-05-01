@@ -6,9 +6,13 @@ python:
 before_install:
   - pip install -r requirements-test.txt
 install:
-  - pip install .
+  - ECHO "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+  - ls -l
+  - pip uninstall whatstk
+  - pip install -e .
 #pip install -r requirements.txt 
 script:
+  - pip freeze | grep whatstk
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage
