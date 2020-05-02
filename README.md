@@ -17,6 +17,12 @@ whatstk is a Python module for WhatsApp chat group analysis and distributed unde
 
 :star: Please **star** our project if you found it interesting to **keep us motivated** :smiley:!
 
+### Content
+* [Installation](#installation)
+* [Gettin Started](#getting-started)
+* [What's the header?](#whats-the-header)
+* [Known Issues](#known-issues)
+* [Contributing](#contributing)
 ---
 ## Installation
 
@@ -163,7 +169,7 @@ header unit.
 
 ---
 
-## Contribute
+## Contributing
 
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
 For other issues/bugs/suggestions, please report it as an issue or [text me](mailto:lucasrg@kth.se).
