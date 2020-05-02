@@ -1,4 +1,4 @@
-# [whatstk](http://lucasrodes.github.io/whatstk)
+# whatstk: python whatsapp parser and analysis tool
 
 ![Package version](https://img.shields.io/badge/whatstk-v0.2.5-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
@@ -172,3 +172,5 @@ py.test --cov-report term --cov=whatstk tests/
 _Note 1: Use `--html=testreport.html --cov-report html` to generate HTML reports._
 
 However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
+
+### Chat with us
