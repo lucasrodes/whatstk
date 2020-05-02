@@ -1,4 +1,4 @@
-# [whatstk](http://lucasrodes.github.io/whatstk)
+# whatstk: python whatsapp parser and analysis tool
 
 ![Package version](https://img.shields.io/badge/whatstk-v0.2.5-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
@@ -17,7 +17,13 @@ whatstk is a Python module for WhatsApp chat group analysis and distributed unde
 
 :star: Please **star** our project if you found it interesting to **keep us motivated** :smiley:!
 
-
+### Content
+* [Installation](#installation)
+* [Getting Started](#getting-started)
+* [What's the header?](#whats-the-header)
+* [Known Issues](#known-issues)
+* [Contributing](#contributing)
+---
 ## Installation
 
 Tested on Python 3.7
@@ -25,6 +31,8 @@ Tested on Python 3.7
 ```
 pip install whatstk
 ```
+
+---
 
 ## Getting Started
 
@@ -90,6 +98,7 @@ plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
 
 ![](assets/example1.png)
 
+---
 ## What's the header?
 The chat file syntax can differ between devices, OS and language settings, which makes it hard some times to correctly parse the data and make WhatsTK work correctly.
 
@@ -153,10 +162,14 @@ header unit.
   </tr>
 </table>
 
+---
+
 ## Known issues
 - 12h clock header format is not supported.
 
-## Contribute
+---
+
+## Contributing
 
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
 For other issues/bugs/suggestions, please report it as an issue or [text me](mailto:lucasrg@kth.se).
@@ -172,3 +185,7 @@ py.test --cov-report term --cov=whatstk tests/
 _Note 1: Use `--html=testreport.html --cov-report html` to generate HTML reports._
 
 However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
+
+### Chat with us
+
+Join our [Discord group](https://discord.gg/KUeeJh).
