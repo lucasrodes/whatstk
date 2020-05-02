@@ -11,7 +11,7 @@ license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://
 
 
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
-> [Get the Desktop App](https://lcsrg.me/whatstk-gui)
+<!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
 whatstk is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license. 
 
