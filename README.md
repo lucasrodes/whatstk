@@ -26,8 +26,6 @@ whatstk is a Python module for WhatsApp chat group analysis and distributed unde
 ---
 ## Installation
 
-Tested on Python 3.7
-
 ```
 pip install whatstk
 ```
