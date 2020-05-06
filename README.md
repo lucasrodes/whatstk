@@ -1,6 +1,6 @@
 # whatstk: python whatsapp parser and analysis tool
 
-![Package version](https://img.shields.io/badge/whatstk-v0.2.5-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
+![Package version](https://img.shields.io/badge/whatstk-v0.2.6-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
 [![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.org/lucasrodes/whatstk)
 [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
