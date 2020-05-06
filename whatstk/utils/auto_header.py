@@ -107,9 +107,22 @@ def _extract_header_parts(header):
     l = len(header)
     count = 0
 
-    for e in header:
-        # Push element to b    
-        if e.isspace():
+    # Replace PM/AM/a.m./p.m. to "%P"
+    code = " %P "
+    header = header.replace(' PM ', code)\
+                    .replace(' AM ', code)\
+                    .replace(' a.m. ', code)\
+                    .replace(' p.m. ', code)
+    count = 0
+    for i in range(len(header)):
+        if count >= len(header):
+            break
+        e = header[count]
+        # Push element to b
+        if header[count: count+3] == '%P ':
+            t += "%P "
+            count += 2
+        elif e.isspace():
             if e_cum and is_num:
                 b.append(int(e_cum))
                 e_cum = ""
@@ -147,6 +160,8 @@ def _extract_header_parts(header):
                 t += '{}'
             e_cum += e
             is_num = True
+
+        count += 1
 
     if e_cum.isdigit():
         b.append(int(e_cum))
@@ -187,7 +202,7 @@ def _extract_header_format_from_components(elements_list, template_list):
     df = pd.DataFrame(elements_list_)
     dates_df = df.select_dtypes(int)
     
-    # Check if 12h 
+    # Check if 12h  TO BE REMOVED
     pos = df.select_dtypes(object).nunique().idxmin()
     vv = df[pos].iloc[0]
 
@@ -224,7 +239,7 @@ def _extract_header_format_from_components(elements_list, template_list):
         day_pos: '%d',
         year_pos: '%y',
         month_pos: '%m',
-        hour_pos: hour_code,
+        hour_pos: '%H',
         minutes_pos: '%M'
     }
     
@@ -239,5 +254,5 @@ def _extract_header_format_from_components(elements_list, template_list):
     # print(codes)
     # print(template)
     code_template = template.format(*codes) + ':'
-    #print(code_template)
+    # print(code_template)
     return code_template

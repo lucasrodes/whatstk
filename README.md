@@ -1,8 +1,8 @@
 # whatstk: python whatsapp parser and analysis tool
 
-![Package version](https://img.shields.io/badge/whatstk-v0.2.5-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
+![Package version](https://img.shields.io/badge/whatstk-v0.2.6-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
 
-[![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.com/lucasrodes/whatstk)
+[![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.org/lucasrodes/whatstk)
 [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
 [![Python 3.6](https://img.shields.io/badge/python-3.7|3.8-blue.svg)](https://www.python.org/downloads/release/python-3/)
 [![Documentation](https://img.shields.io/badge/documentation-royalblue.svg)](docs/index.md)
@@ -162,15 +162,10 @@ header unit.
 
 ---
 
-## Known issues
-- 12h clock header format is not supported.
-
----
-
 ## Contributing
 
 We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
-For other issues/bugs/suggestions, please report it as an issue or [text me](mailto:lucasrg@kth.se).
+For other issues/bugs/suggestions, please report it in the [issues section](https://github.com/lucasrodes/whatstk/issues).
 
 ### Pull Requests
 
