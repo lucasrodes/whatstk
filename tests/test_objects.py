@@ -1,16 +1,17 @@
 from whatstk.objects import WhatsAppChat
+import os
 import pandas as pd
 import pytest
 
 
-def test_object_auto():
-    filename = 'tests/chats/example_1.txt'
-    chat = WhatsAppChat.from_txt(filename)
-    assert(isinstance(chat.df, pd.DataFrame))
+filenames_path = "./tests/chats"
+filenames = [os.path.join(filenames_path, f) for f in os.listdir(filenames_path) if f.endswith(".txt")]
 
-    filename = 'tests/chats/example_2.txt'
-    chat = WhatsAppChat.from_txt(filename)
-    assert(isinstance(chat.df, pd.DataFrame))
+
+def test_object_auto():
+    for filename in filenames:
+        chat = WhatsAppChat.from_txt(filename)
+        assert(isinstance(chat.df, pd.DataFrame))
 
 
 def test_object_hformat():
@@ -26,9 +27,9 @@ def test_object_hformat():
 
 
 def test_object_error():
-    filename = 'tests/chats/example_1.txt'
-    with pytest.raises(ValueError):
-        chat = WhatsAppChat.from_txt(filename, auto_header=False)
+    for filename in filenames:
+        with pytest.raises(ValueError):
+            chat = WhatsAppChat.from_txt(filename, auto_header=False)
 
 
 def test_object_len_shape():
