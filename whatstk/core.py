@@ -19,6 +19,14 @@ def df_from_txt(filename, auto_header=True, hformat=None, encoding='utf-8'):
     Returns:
         pandas.DataFrame: Chat in DataFrame format with following columns: date (index), username, message.
 
+    Example:
+
+        ```python
+        >>>  from whatstk import df_from_txt
+        >>> filename = 'path/to/chat.txt'
+        >>> df = df_from_txt(filename)
+        ```
+
     """
     chat = WhatsAppChat.from_txt(
         filename=filename,

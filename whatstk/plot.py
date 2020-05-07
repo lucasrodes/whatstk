@@ -35,7 +35,8 @@ def vis(user_data, title):
     Example:
 
         ```python
-        >>> from whatstk import WhatsAppChat, interventions
+        >>> from whatstk.objects import WhatsAppChat
+        >>> from whatstk.analysis import interventions
         >>> filename = 'path/to/samplechat.txt'
         >>> chat = WhatsAppChat.from_txt(filename)
         >>> counts = interventions(chat=chat, date_mode='date', msg_length=False)
