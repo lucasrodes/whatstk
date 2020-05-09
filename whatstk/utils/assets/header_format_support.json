@@ -4,7 +4,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y-%m-%d, %I:%M %P - %name:",
+        "format": "%Y-%m-%d, %I:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -13,7 +13,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y/%m/%d, %I:%M %P - %name:",
+        "format": "%Y/%m/%d, %I:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -22,7 +22,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y.%m.%d, %I:%M %P- %name:",
+        "format": "%Y.%m.%d, %I:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -31,7 +31,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y-%m-%d %I:%M %P] %name:",
+        "format": "[%Y-%m-%d %I:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -40,7 +40,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y/%m/%d %I:%M %P] %name:",
+        "format": "[%Y/%m/%d %I:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -49,7 +49,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y.%m.%d %I:%M %P] %name:",
+        "format": "[%Y.%m.%d %I:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -60,7 +60,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y-%m-%d, %I:%M:%S %P - %name:",
+        "format": "%Y-%m-%d, %I:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -69,7 +69,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y/%m/%d, %I:%M:%S %P - %name:",
+        "format": "%Y/%m/%d, %I:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -78,7 +78,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y.%m.%d, %I:%M:%S %P - %name:",
+        "format": "%Y.%m.%d, %I:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -87,7 +87,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y-%m-%d %I:%M:%S %P] %name:",
+        "format": "[%Y-%m-%d %I:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -96,7 +96,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y/%m/%d %I:%M:%S %P] %name:",
+        "format": "[%Y/%m/%d %I:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -105,7 +105,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y.%m.%d %I:%M:%S %P] %name:",
+        "format": "[%Y.%m.%d %I:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -119,7 +119,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y-%d-%m, %I:%M %P - %name:",
+        "format": "%Y-%d-%m, %I:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -128,7 +128,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y/%d/%m, %I:%M %P - %name:",
+        "format": "%Y/%d/%m, %I:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -137,7 +137,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y.%d.%m, %I:%M %P- %name:",
+        "format": "%Y.%d.%m, %I:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -146,7 +146,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y-%d-%m %I:%M %P] %name:",
+        "format": "[%Y-%d-%m %I:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -155,7 +155,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y/%d/%m %I:%M %P] %name:",
+        "format": "[%Y/%d/%m %I:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -164,7 +164,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y.%d.%m %I:%M %P] %name:",
+        "format": "[%Y.%d.%m %I:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -175,7 +175,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y-%d-%m, %I:%M:%S %P - %name:",
+        "format": "%Y-%d-%m, %I:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -184,7 +184,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y/%d/%m, %I:%M:%S %P - %name:",
+        "format": "%Y/%d/%m, %I:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -193,7 +193,7 @@
         "auto_header": 0
     },
     {
-        "format": "%Y.%d.%m, %I:%M:%S %P - %name:",
+        "format": "%Y.%d.%m, %I:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -202,7 +202,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y-%d-%m %I:%M:%S %P] %name:",
+        "format": "[%Y-%d-%m %I:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -211,7 +211,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y/%d/%m %I:%M:%S %P] %name:",
+        "format": "[%Y/%d/%m %I:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -220,7 +220,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%Y.%d.%m %I:%M:%S %P] %name:",
+        "format": "[%Y.%d.%m %I:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -234,7 +234,7 @@
         "auto_header": 0
     },
     {
-        "format": "%d-%m-%Y, %H:%M %P - %name:",
+        "format": "%d-%m-%Y, %H:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -243,7 +243,7 @@
         "auto_header": 0
     },
     {
-        "format": "%d/%m/%Y, %H:%M %P - %name:",
+        "format": "%d/%m/%Y, %H:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -252,7 +252,7 @@
         "auto_header": 0
     },
     {
-        "format": "%d.%m.%Y, %H:%M %P- %name:",
+        "format": "%d.%m.%Y, %H:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -261,7 +261,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%d-%m-%Y %H:%M %P] %name:",
+        "format": "[%d-%m-%Y %H:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -270,7 +270,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%d/%m/%Y %H:%M %P] %name:",
+        "format": "[%d/%m/%Y %H:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -279,7 +279,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%d.%m.%Y %H:%M %P] %name:",
+        "format": "[%d.%m.%Y %H:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -290,7 +290,7 @@
         "auto_header": 0
     },
     {
-        "format": "%d-%m-%Y, %H:%M:%S %P - %name:",
+        "format": "%d-%m-%Y, %H:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -299,7 +299,7 @@
         "auto_header": 0
     },
     {
-        "format": "%d/%m/%Y, %H:%M:%S %P - %name:",
+        "format": "%d/%m/%Y, %H:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -308,7 +308,7 @@
         "auto_header": 0
     },
     {
-        "format": "%d.%m.%Y, %H:%M:%S %P - %name:",
+        "format": "%d.%m.%Y, %H:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -317,7 +317,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%d-%m-%Y %H:%M:%S %P] %name:",
+        "format": "[%d-%m-%Y %H:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -326,7 +326,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%d/%m/%Y %H:%M:%S %P] %name:",
+        "format": "[%d/%m/%Y %H:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -335,7 +335,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%d.%m.%Y %H:%M:%S %P] %name:",
+        "format": "[%d.%m.%Y %H:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -349,7 +349,7 @@
         "auto_header": 0
     },
     {
-        "format": "%m-%d-%Y, %H:%M %P - %name:",
+        "format": "%m-%d-%Y, %H:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -358,7 +358,7 @@
         "auto_header": 0
     },
     {
-        "format": "%m/%d/%Y, %H:%M %P - %name:",
+        "format": "%m/%d/%Y, %H:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -367,7 +367,7 @@
         "auto_header": 0
     },
     {
-        "format": "%m.%d.%Y, %H:%M %P- %name:",
+        "format": "%m.%d.%Y, %H:%M %p - %name:",
         "auto_header": 0
     },
 
@@ -376,7 +376,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%m-%d-%Y %H:%M %P] %name:",
+        "format": "[%m-%d-%Y %H:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -385,7 +385,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%m/%d/%Y %H:%M %P] %name:",
+        "format": "[%m/%d/%Y %H:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -394,7 +394,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%m.%d.%Y %H:%M %P] %name:",
+        "format": "[%m.%d.%Y %H:%M %p] %name:",
         "auto_header": 0
     },
 
@@ -405,7 +405,7 @@
         "auto_header": 0
     },
     {
-        "format": "%m-%d-%Y, %H:%M:%S %P - %name:",
+        "format": "%m-%d-%Y, %H:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -414,7 +414,7 @@
         "auto_header": 0
     },
     {
-        "format": "%m/%d/%Y, %H:%M:%S %P - %name:",
+        "format": "%m/%d/%Y, %H:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -423,7 +423,7 @@
         "auto_header": 0
     },
     {
-        "format": "%m.%d.%Y, %H:%M:%S %P - %name:",
+        "format": "%m.%d.%Y, %H:%M:%S %p - %name:",
         "auto_header": 0
     },
 
@@ -432,7 +432,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%m-%d-%Y %H:%M:%S %P] %name:",
+        "format": "[%m-%d-%Y %H:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -441,7 +441,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%m/%d/%Y %H:%M:%S %P] %name:",
+        "format": "[%m/%d/%Y %H:%M:%S %p] %name:",
         "auto_header": 0
     },
 
@@ -450,7 +450,7 @@
         "auto_header": 0
     },
     {
-        "format": "[%m.%d.%Y %H:%M:%S %P] %name:",
+        "format": "[%m.%d.%Y %H:%M:%S %p] %name:",
         "auto_header": 0
     }
 

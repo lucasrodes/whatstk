@@ -1,15 +1,19 @@
+import os
 from datetime import datetime, timedelta
-from lorem_text import lorem
-from scipy.stats import lomax
+import itertools
 import numpy as np
 import pandas as pd
-from whatstk.objects import WhatsAppChat
+from scipy.stats import lomax
+from lorem import sentence
 from emoji.unicode_codes import EMOJI_UNICODE
+from whatstk.objects import WhatsAppChat
+from whatstk.utils.hformat import get_list_supported_hformats
 
 
 USERS = [
     'John', 'Mary', 'Giuseppe'
 ]
+
 
 class ChatGenerator:
     """Generate a chat."""
@@ -36,7 +40,9 @@ class ChatGenerator:
 
         """
         emojis = self.generate_emojis()
-        messages = [lorem.sentence() + ' ' + emojis[i] for i in range(self.size)]
+        s = sentence(count=self.size, comma=(0, 2), word_range=(4, 8))
+        sentences = list(itertools.islice(s, self.size))
+        messages = [sentences[i] + ' ' + emojis[i] for i in range(self.size)]
         return messages
 
     def generate_emojis(self, k=1):
@@ -68,9 +74,9 @@ class ChatGenerator:
         if not last:
             last = datetime.now()
             last = last.replace(microsecond=0)
-        c = 1.0365
-        scale = 1.06
-        loc = 20
+        c = 1.0065
+        scale = 40.06
+        loc = 30
         ts_ = [0] + np.round(lomax.rvs(c=c, loc=loc, scale=scale, size=self.size-1, random_state=100)).cumsum().tolist()
         ts = [last-timedelta(minutes=t) for t in ts_]
         return ts[::-1]
@@ -132,3 +138,20 @@ class ChatGenerator:
         if not hformat:
             hformat = '%Y-%m-%d, %H:%M - %name:'
         chat.to_txt(filename=filename, hformat=hformat)
+
+
+def generate_chats_all_formats(output_path, size=2000, verbose=False):
+    """Generate a chat and export to all supported formats.
+
+    Args:
+        output_path (str): Path to directory to export all generated chats as txt.
+        size (int, optional): Number of messages of the chat. Defaults to 2000.
+
+    """
+    hformats = get_list_supported_hformats()
+    cg = ChatGenerator(size=size)
+    for hformat in hformats:
+        print("Exporting format: {}".format(hformat)) if verbose else 0
+        filename = '{}.txt'.format(hformat.replace(' ', '_').replace('/', '\\'))
+        filepath = os.path.join(output_path, filename)
+        cg.generate(filepath, hformat=hformat)

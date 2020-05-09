@@ -5,7 +5,6 @@ import json
 this_directory = os.path.abspath(os.path.dirname(__file__))
 assets_folder = 'assets'
 hformat_support_filename = 'header_format_support.json'
-
 hformat_support_filepath = os.path.join(this_directory, assets_folder, hformat_support_filename)
 
 
@@ -24,10 +23,13 @@ def is_supported(hformat):
     with open(hformat_support_filepath, 'r') as f:
         h = json.load(f)
 
+    if ('%P' in hformat or "%p" in hformat):
+        hformat = hformat.replace("%P", "%p").replace("%H", "%I")
+
     auto_header_support = 0
     support = 0
     for hh in h:
-        if hformat == hh['format']:
+        if hformat == hh['format'] :
             support = 1
             auto_header_support = hh['auto_header']
     
@@ -50,3 +52,15 @@ def is_supported_verbose(hformat):
         'not ' if not auto_header_support else '',
     )
     return msg
+
+
+def get_list_supported_hformats():
+    """Get list of supported formats.
+
+    Returns:
+        list: List with supported formats (as str).
+
+    """
+    with open(hformat_support_filepath, 'r') as f:
+        h = json.load(f)
+    return [hh['format'] for hh in h]
