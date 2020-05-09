@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from whatstk.objects import WhatsAppChat
-from whatstk.utils.chat_generator import ChatGenerator
+from whatstk.utils.chat_generator import ChatGenerator, generate_chats_all_formats
 
 
 USERS = ['laurent', 'anna', 'lua', 'miquel']
@@ -73,3 +73,8 @@ def test_export(tmpdir):
     chat = cg.generate()
     filename = tmpdir.join("export.txt")
     chat = cg.export(chat, str(filename))
+
+
+def test_generate_chats_all_formats(tmpdir):
+    output_path = tmpdir.mkdir("output")
+    generate_chats_all_formats(output_path, size=2, verbose=False)
