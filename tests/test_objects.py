@@ -41,3 +41,10 @@ def test_object_len_shape():
     s = chat.shape
     assert(isinstance(s, tuple))
     assert(len(s)==2)
+
+
+def test_object_to_csv(tmpdir):
+    filename = 'tests/chats/example_1.txt'
+    chat = WhatsAppChat.from_txt(filename)
+    filename = tmpdir.join("export.csv")
+    chat.to_csv(filename=filename)

@@ -45,28 +45,6 @@ class WhatsAppChat:
 
         return cls(df)
 
-    def to_txt(self, filename, hformat="%Y-%m-%d, %H:%M - %name:"):
-        """Export chat as txt file.
-
-        Usefull to export the chat to different formats.
-
-        Args:
-            hformat (str, optional): Header format. Defaults to "%Y-%m-%d, %H:%M - %name:".
-            filename (str): Name of the file to export.
-
-        """
-        lines = []
-        raw_lines = self.df.reset_index().values.tolist()
-        for line in raw_lines:
-            date, user, text = line
-            hformat = hformat.replace('%name', '{name}')
-            header = date.strftime(hformat).format(name=user)
-            formatted_line = '{} {}'.format(header, text)
-            lines.append(formatted_line)
-        text = '\n'.join(lines)
-        with open(filename, 'w') as f:
-            f.write(text)
-
     @staticmethod
     def _prepare_df(text, hformat):
         """Get a DataFrame-formatted chat.
@@ -100,6 +78,28 @@ class WhatsAppChat:
 
         # get rid of wp warning messages
         return remove_alerts_from_df(r_x, df)
+
+    def to_txt(self, filename, hformat="%Y-%m-%d, %H:%M - %name:"):
+        """Export chat as txt file.
+
+        Usefull to export the chat to different formats.
+
+        Args:
+            hformat (str, optional): Header format. Defaults to "%Y-%m-%d, %H:%M - %name:".
+            filename (str): Name of the file to export.
+
+        """
+        lines = []
+        raw_lines = self.df.reset_index().values.tolist()
+        for line in raw_lines:
+            date, user, text = line
+            hformat = hformat.replace('%name', '{name}')
+            header = date.strftime(hformat).format(name=user)
+            formatted_line = '{} {}'.format(header, text)
+            lines.append(formatted_line)
+        text = '\n'.join(lines)
+        with open(filename, 'w') as f:
+            f.write(text)
 
     def to_csv(self, filename):
         """Save data as csv.
