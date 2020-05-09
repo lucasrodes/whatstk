@@ -89,6 +89,8 @@ class WhatsAppChat:
             filename (str): Name of the file to export.
 
         """
+        if not filename.endswith('.txt'):
+            raise ValueError("filename must end with .txt")
         lines = []
         raw_lines = self.df.reset_index().values.tolist()
         for line in raw_lines:
@@ -108,6 +110,8 @@ class WhatsAppChat:
             filename (str): Name of file.
 
         """
+        if not filename.endswith('.csv'):
+            raise ValueError("filename must end with .csv")
         self.df.to_csv(filename)
 
     def __len__(self):

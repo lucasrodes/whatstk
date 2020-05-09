@@ -64,7 +64,7 @@ def test_generate_2():
 def test_generate_3(tmpdir):
     cg = ChatGenerator(size=10, users=USERS)
     filename = tmpdir.join("export.txt")
-    chat = cg.generate(filename=filename)
+    chat = cg.generate(filename=str(filename))
     assert(isinstance(chat, WhatsAppChat))
 
 
@@ -72,4 +72,4 @@ def test_export(tmpdir):
     cg = ChatGenerator(size=10, users=USERS)
     chat = cg.generate()
     filename = tmpdir.join("export.txt")
-    chat = cg.export(chat, filename)
+    chat = cg.export(chat, str(filename))

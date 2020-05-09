@@ -43,8 +43,24 @@ def test_object_len_shape():
     assert(len(s)==2)
 
 
-def test_object_to_csv(tmpdir):
+def test_object_to_csv_1(tmpdir):
     filename = 'tests/chats/example_1.txt'
     chat = WhatsAppChat.from_txt(filename)
     filename = tmpdir.join("export.csv")
-    chat.to_csv(filename=filename)
+    chat.to_csv(filename=str(filename))
+
+
+def test_object_to_csv_2(tmpdir):
+    filename = 'tests/chats/example_1.txt'
+    chat = WhatsAppChat.from_txt(filename)
+    filename = tmpdir.join("export")
+    with pytest.raises(ValueError):
+        chat.to_csv(filename=str(filename))
+
+
+def test_object_to_txt(tmpdir):
+    filename = 'tests/chats/example_1.txt'
+    chat = WhatsAppChat.from_txt(filename)
+    filename = tmpdir.join("export")
+    with pytest.raises(ValueError):
+        chat.to_txt(filename=str(filename))
