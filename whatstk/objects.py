@@ -39,7 +39,7 @@ class WhatsAppChat:
         elif not (hformat or auto_header):
             raise ValueError("If auto_header is False, hformat can't be None.")
         # Bracket is reserved character in RegEx, add backslash before them.
-        hformat.replace('[', '\[').replace(']', '\]')
+        hformat = hformat.replace('[', '\[').replace(']', '\]')
         # Prepare DataFrame
         df = cls._prepare_df(text, hformat)
 
@@ -52,7 +52,7 @@ class WhatsAppChat:
         Args:
             text (str): Loaded chat as plain text.
             hformat (str): Format of the header. Ude the following keywords:
-                            - %y: for year.
+                            - %Y: for year.
                             - %m: for month.
                             - %d: for day.
                             - %H: for hour.

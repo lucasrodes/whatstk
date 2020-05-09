@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 regex_simplifier = {
+    '%Y': '(?P<year>\d{2,4})',
     '%y': '(?P<year>\d{2,4})',
     '%m': '(?P<month>\d{1,2})',
     '%d': '(?P<day>\d{1,2})',
@@ -27,6 +28,7 @@ def generate_regex(hformat):
         str: Regular expression corresponding to the specified syntax.
 
     """
+    print(hformat)
     items = re.findall(r'\%\w*', hformat)
     for i in items:
         hformat = hformat.replace(i, regex_simplifier[i])

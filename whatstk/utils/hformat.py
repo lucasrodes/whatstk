@@ -25,7 +25,8 @@ def is_supported(hformat):
 
     if ('%P' in hformat or "%p" in hformat):
         hformat = hformat.replace("%P", "%p").replace("%H", "%I")
-
+    if '%y' in hformat:
+        hformat.replace('%y', '%Y')
     auto_header_support = 0
     support = 0
     for hh in h:
