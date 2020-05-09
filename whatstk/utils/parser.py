@@ -8,9 +8,11 @@ regex_simplifier = {
     '%m': '(?P<month>\d{1,2})',
     '%d': '(?P<day>\d{1,2})',
     '%H': '(?P<hour>\d{1,2})',
+    '%I': '(?P<hour>\d{1,2})',
     '%M': '(?P<minutes>\d{2})',
     '%S': '(?P<seconds>\d{2})',
     '%P': '(?P<ampm>[AaPp].? ?[Mm].?)',
+    '%p': '(?P<ampm>[AaPp].? ?[Mm].?)',
     '%name': '(?P<username>[^:]*)'
 }
 
