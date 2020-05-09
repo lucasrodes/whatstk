@@ -4,6 +4,7 @@ from scipy.stats import lomax
 import numpy as np
 import pandas as pd
 from whatstk.objects import WhatsAppChat
+from emoji.unicode_codes import EMOJI_UNICODE
 
 
 USERS = [
@@ -34,8 +35,26 @@ class ChatGenerator:
             list: List with messages (as strings).
 
         """
-        messages = [lorem.sentence() for i in range(self.size)]
+        emojis = self.generate_emojis()
+        messages = [lorem.sentence() + ' ' + emojis[i] for i in range(self.size)]
         return messages
+
+    def generate_emojis(self, k=1):
+        """Generate random list of emojis.
+
+        Emojis are sampled from a list of `n` emojis and `k*n` empty strings.
+
+        Args:
+            k (int, optional): Defaults to 20.
+
+        Returns:
+            list: List with emojis
+
+        """
+        emojis = list(EMOJI_UNICODE.values())
+        n = len(emojis)
+        emojis = emojis + [''] * k*n
+        return np.random.choice(emojis, self.size)
 
     def generate_timestamps(self, last=None):
         """Generate list of timestamps.
