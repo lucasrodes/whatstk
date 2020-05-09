@@ -31,6 +31,9 @@ class WhatsAppChat:
         with open(filename, encoding=encoding) as f:
             text = f.read()
 
+        if hformat:
+            # Bracket is reserved character in RegEx, add backslash before them.
+            hformat = hformat.replace('[', '\[').replace(']', '\]')
         if not hformat and auto_header:
             hformat = extract_header_from_text(text)
             if not hformat:
@@ -38,8 +41,7 @@ class WhatsAppChat:
                                    " input argument `hformat`.")
         elif not (hformat or auto_header):
             raise ValueError("If auto_header is False, hformat can't be None.")
-        # Bracket is reserved character in RegEx, add backslash before them.
-        hformat = hformat.replace('[', '\[').replace(']', '\]')
+        
         # Prepare DataFrame
         df = cls._prepare_df(text, hformat)
 

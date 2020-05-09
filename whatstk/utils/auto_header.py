@@ -55,6 +55,20 @@ def extract_header_format_from_lines(lines):
 
     """
     # Obtain header format from list of lines
+    elements_list, template_list = _extract_elements_template_from_lines(lines)
+    return _extract_header_format_from_components(elements_list, template_list)
+
+
+def _extract_elements_template_from_lines(lines):
+    """Get elements_list and template_list from lines.
+
+    Args:
+        lines (list): List with messages.
+
+    Returns:
+        tuple: elements_list (list), template_list (list)
+    """
+    # Obtain header format from list of lines
     fheaders = []
     elements_list = []
     template_list = []
@@ -64,7 +78,7 @@ def extract_header_format_from_lines(lines):
             elements, template = _extract_header_parts(header)
             elements_list.append(elements)
             template_list.append(template)
-    return _extract_header_format_from_components(elements_list, template_list)
+    return elements_list, template_list
 
 
 def _extract_possible_header_from_line(line):
@@ -108,20 +122,20 @@ def _extract_header_parts(header):
     count = 0
 
     # Replace PM/AM/a.m./p.m. to "%P"
-    code = " %P "
-    header = header.replace(' PM ', code)\
-                    .replace(' AM ', code)\
-                    .replace(' a.m. ', code)\
-                    .replace(' p.m. ', code)
+    code = " %p"
+    header = header.replace(' PM', code)\
+                    .replace(' AM', code)\
+                    .replace(' a.m.', code)\
+                    .replace(' p.m.', code)
     count = 0
     for i in range(len(header)):
         if count >= len(header):
             break
         e = header[count]
         # Push element to b
-        if header[count: count+3] == '%P ':
-            t += "%P "
-            count += 2
+        if header[count: count+2] == '%p':
+            t += "%p"
+            count += 1
         elif e.isspace():
             if e_cum and is_num:
                 b.append(int(e_cum))
@@ -201,49 +215,43 @@ def _extract_header_format_from_components(elements_list, template_list):
     # Get positions
     df = pd.DataFrame(elements_list_)
     dates_df = df.select_dtypes(int)
-    
-    # Check if 12h  TO BE REMOVED
-    pos = df.select_dtypes(object).nunique().idxmin()
-    vv = df[pos].iloc[0]
 
-    if ('pm' in vv) or ('PM' in vv) or ('am' in vv) or ('AM' in vv) or \
-        ('p.m.' in vv) or ('a.m.' in vv) or ('P.M.' in vv) or ('A.M.' in vv):
-        pos = pos
-    else:
-        pos = None
+    template = template_list[0]
     
-    if pos:
-        x = template_list[0].split('{}')
-        template = "{}".join(x[:pos+1])+"{}".join(x[pos+1:])
-        hour_code = "%P"
+    if '%p' in template:
+        hour_code = "%I"
     else:
-        template = template_list[0]
         hour_code = "%H"
+
     # day
     day_pos = ((dates_df.max()>27) & (dates_df.max()<32)).idxmax()
+    dates_df = dates_df.drop(columns=[day_pos])
     # year
-    year_pos = dates_df.std().idxmin()
-    # month and hour
-    positions = (dates_df.max() < 13) # & (dates_df.max() > 11) 
-    positions = positions.index[positions].tolist()
-    # print(positions)
-    if len(positions) == 1:
-        month_pos = positions[0]
-        hour_pos = 3
-    else:
-        month_pos = dates_df[positions].diff().nunique().idxmin()
-        hour_pos = dates_df[positions].diff().nunique().idxmax()
+    # year_pos = dates_df.std().idxmin()
+    pos = [0,1,2]
+    pos.remove(day_pos)
+    year_pos = dates_df[pos].max().idxmax()  # Only consider positions 0,1,2
+    dates_df = dates_df.drop(columns=[year_pos])
+    # Month
+    month_pos = dates_df.columns.min()
+    dates_df = dates_df.drop(columns=[month_pos])
+    # Hour
+    hour_pos = 3
+    dates_df = dates_df.drop(columns=[hour_pos])
+    # Minute
     minutes_pos = 4
+    dates_df = dates_df.drop(columns=[minutes_pos])
 
     dates_pos = {
         day_pos: '%d',
         year_pos: '%y',
         month_pos: '%m',
-        hour_pos: '%H',
+        hour_pos: hour_code,
         minutes_pos: '%M'
     }
     
-    if dates_df.shape[1] > 5:
+    # Seconds
+    if dates_df.shape[1] > 0:
         seconds_pos = 5
         dates_pos[seconds_pos] = '%S'
 

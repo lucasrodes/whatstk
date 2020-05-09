@@ -28,7 +28,6 @@ def generate_regex(hformat):
         str: Regular expression corresponding to the specified syntax.
 
     """
-    print(hformat)
     items = re.findall(r'\%\w*', hformat)
     for i in items:
         hformat = hformat.replace(i, regex_simplifier[i])
