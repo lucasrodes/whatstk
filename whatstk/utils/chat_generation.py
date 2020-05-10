@@ -140,7 +140,7 @@ class ChatGenerator:
         chat.to_txt(filename=filename, hformat=hformat)
 
 
-def generate_chats_hformats(output_path, size=2000, hformats=None verbose=False):
+def generate_chats_hformats(output_path, size=2000, hformats=None, verbose=False):
     """Generate a chat and export using given header format.
 
     If no hformat specified, chat is generated & exported using all supported header formats.
