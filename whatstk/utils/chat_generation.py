@@ -7,7 +7,7 @@ from scipy.stats import lomax
 from lorem import sentence
 from emoji.unicode_codes import EMOJI_UNICODE
 from whatstk.objects import WhatsAppChat
-from whatstk.utils.hformat import get_list_supported_hformats
+from whatstk.utils.hformat import get_supported_hformats_as_list
 
 
 USERS = [
@@ -140,15 +140,21 @@ class ChatGenerator:
         chat.to_txt(filename=filename, hformat=hformat)
 
 
-def generate_chats_all_formats(output_path, size=2000, verbose=False):
-    """Generate a chat and export to all supported formats.
+def generate_chats_hformats(output_path, size=2000, hformats=None verbose=False):
+    """Generate a chat and export using given header format.
+
+    If no hformat specified, chat is generated & exported using all supported header formats.
 
     Args:
         output_path (str): Path to directory to export all generated chats as txt.
         size (int, optional): Number of messages of the chat. Defaults to 2000.
+        hformats (list, optional): List of header formats to use when exporting chat. If None, 
+                                    defaults to all supported header formats.
+        verbose (bool): Set to True to print runtime messages.
 
     """
-    hformats = get_list_supported_hformats()
+    if not hformats:
+        hformats = get_supported_hformats_as_list()
     cg = ChatGenerator(size=size)
     for hformat in hformats:
         print("Exporting format: {}".format(hformat)) if verbose else 0
