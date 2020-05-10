@@ -1,4 +1,4 @@
-from whatstk.utils.hformat import is_supported, is_supported_verbose, get_list_supported_hformats
+from whatstk.utils.hformat import is_supported, is_supported_verbose, get_supported_hformats_as_list
 
 
 def test_is_available_1():
@@ -21,7 +21,7 @@ def test_is_available_verbose():
     assert(isinstance(support_msg, str))
 
 
-def test_get_list_supported_hformats():
-    supported_headers = get_list_supported_hformats()
+def test_get_supported_hformats_as_list():
+    supported_headers = get_supported_hformats_as_list()
     assert(isinstance(supported_headers, list))
     assert(all([isinstance(h, str) for h in supported_headers]))

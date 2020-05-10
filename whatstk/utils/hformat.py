@@ -55,7 +55,7 @@ def is_supported_verbose(hformat):
     return msg
 
 
-def get_list_supported_hformats():
+def get_supported_hformats_as_list():
     """Get list of supported formats.
 
     Returns:
@@ -65,3 +65,15 @@ def get_list_supported_hformats():
     with open(hformat_support_filepath, 'r') as f:
         h = json.load(f)
     return [hh['format'] for hh in h]
+
+
+def get_supported_hformats_as_dict():
+    """Get dictionary with supported formats and relevant info.
+
+    Returns:
+        dict: Dict with two elements, `format` (header format) and `auto_header` (if auto_header is supported).
+
+    """
+    with open(hformat_support_filepath, 'r') as f:
+        h = json.load(f)
+    return h
