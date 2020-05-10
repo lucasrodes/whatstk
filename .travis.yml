@@ -9,12 +9,13 @@ install:
   - ls -l
   - pip uninstall whatstk
   - pip install -e .
+  - whatstk-generate-chats --size 500 tests/chats/  # Generate chats
 #pip install -r requirements.txt 
 script:
-  - pip freeze | grep whatstk
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage
+  # add docs step
 deploy:
   provider: pypi
   user: $USER_PYPI
