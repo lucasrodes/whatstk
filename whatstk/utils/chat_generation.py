@@ -11,7 +11,7 @@ from whatstk.utils.hformat import get_list_supported_hformats
 
 
 USERS = [
-    'John', 'Mary', 'Giuseppe'
+    'John', 'Mary', 'Giuseppe', '+1 123 456 789'
 ]
 
 
@@ -112,14 +112,14 @@ class ChatGenerator:
 
         Args:
             filename (str): Set to a string name to export the generated chat. Must have txt format.
-            hformat (str): Header format of the text to be generated. If None, defaults to '%Y-%m-%d, %H:%M - %name:'.
+            hformat (str): Header format of the text to be generated. If None, defaults to '%y-%m-%d, %H:%M - %name:'.
 
         Returns:
             WhatsAppChat: Chat with random messages.
 
         """
         if not hformat:
-            hformat = '%Y-%m-%d, %H:%M - %name:'
+            hformat = '%y-%m-%d, %H:%M - %name:'
         df = self.generate_df()
         chat = WhatsAppChat(df)
         if filename:
@@ -132,11 +132,11 @@ class ChatGenerator:
         Args:
             chat (WhatsAppChat): Chat as WhatsAppChat instance.
             filename (str): Name of the file.
-            hformat (str, optional): Format of the header. Defaults to '%Y-%m-%d, %H:%M - %name:'.
+            hformat (str, optional): Format of the header. Defaults to '%y-%m-%d, %H:%M - %name:'.
 
         """
         if not hformat:
-            hformat = '%Y-%m-%d, %H:%M - %name:'
+            hformat = '%y-%m-%d, %H:%M - %name:'
         chat.to_txt(filename=filename, hformat=hformat)
 
 
