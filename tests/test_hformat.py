@@ -2,21 +2,21 @@ from whatstk.utils.hformat import is_supported, is_supported_verbose, get_suppor
 
 
 def test_is_supported_1():
-    hformat = '%Y-%m-%d, %H:%M - %name:'
+    hformat = '%y-%m-%d, %H:%M - %name:'
     support, autoh_support = is_supported(hformat)
     assert(isinstance(support, bool))
     assert(isinstance(autoh_support, bool))
 
 
 def test_is_supported_2():
-    hformat = '%Y-%m-%d, %I:%M %P - %name:'
+    hformat = '%y-%m-%d, %I:%M %p - %name:'
     support, autoh_support = is_supported(hformat)
     assert(isinstance(support, bool))
     assert(isinstance(autoh_support, bool))
 
 
 def test_is_supported_verbose():
-    hformat = '%Y-%m-%d, %I:%M %P - %name:'
+    hformat = '%y-%m-%d, %I:%M %p - %name:'
     support_msg = is_supported_verbose(hformat)
     assert(isinstance(support_msg, str))
 

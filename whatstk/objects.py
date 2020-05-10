@@ -97,7 +97,7 @@ class WhatsAppChat:
         if not filename.endswith('.txt'):
             raise ValueError("filename must end with .txt")
         if not hformat:
-            hformat = "%Y-%m-%d, %H:%M - %name:"
+            hformat = "%y-%m-%d, %H:%M - %name:"
         lines = []
         raw_lines = self.df.reset_index().values.tolist()
         for line in raw_lines:

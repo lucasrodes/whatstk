@@ -57,7 +57,7 @@ def test_generate_1():
 
 def test_generate_2():
     cg = ChatGenerator(size=10, users=USERS)
-    chat = cg.generate(hformat='%Y-%m-%d, %H:%M - %name:')
+    chat = cg.generate(hformat='y-%m-%d, %H:%M - %name:')
     assert(isinstance(chat, WhatsAppChat))
 
 
