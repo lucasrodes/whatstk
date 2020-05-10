@@ -1,16 +1,20 @@
 import re
 import pandas as pd
 from datetime import datetime
+from whatstk.utils.exceptions import RegexError
 
 
 regex_simplifier = {
+    '%Y': '(?P<year>\d{2,4})',
     '%y': '(?P<year>\d{2,4})',
     '%m': '(?P<month>\d{1,2})',
     '%d': '(?P<day>\d{1,2})',
     '%H': '(?P<hour>\d{1,2})',
+    '%I': '(?P<hour>\d{1,2})',
     '%M': '(?P<minutes>\d{2})',
     '%S': '(?P<seconds>\d{2})',
     '%P': '(?P<ampm>[AaPp].? ?[Mm].?)',
+    '%p': '(?P<ampm>[AaPp].? ?[Mm].?)',
     '%name': '(?P<username>[^:]*)'
 }
 
@@ -44,14 +48,20 @@ def parse_chat(text, regex):
     Returns:
         pandas.DataFrame: DataFrame with messages sent by users, index is the date the messages was sent.
 
+    Raises:
+        RegexError: When provided regex could not match the text.
+
     """
     result = []
     headers = list(re.finditer(regex, text))
     for i in range(len(headers)):
         line_dict = _parse_line(text, headers, i)
         result.append(line_dict)
-    df_chat = pd.DataFrame.from_records(result, index='date')
-    return df_chat[['username', 'message']]
+    if len(result) > 0:
+        df_chat = pd.DataFrame.from_records(result, index='date')
+        return df_chat[['username', 'message']]
+    else:
+        raise RegexError("Could not match the provided regex with provided text. Not match was found.")
 
 
 def _parse_line(text, headers, i):

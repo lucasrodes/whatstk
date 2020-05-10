@@ -1,0 +1,456 @@
+[
+    {
+        "format": "%y-%m-%d, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y-%m-%d, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y/%m/%d, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y/%m/%d, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y.%m.%d, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y.%m.%d, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y-%m-%d %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y-%m-%d %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y/%m/%d %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y/%m/%d %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y.%m.%d %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y.%m.%d %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+    {
+        "format": "%y-%m-%d, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y-%m-%d, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y/%m/%d, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y/%m/%d, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y.%m.%d, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y.%m.%d, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y-%m-%d %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y-%m-%d %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y/%m/%d %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y/%m/%d %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y.%m.%d %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y.%m.%d %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+
+
+
+    {
+        "format": "%y-%d-%m, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y-%d-%m, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y/%d/%m, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y/%d/%m, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y.%d.%m, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y.%d.%m, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y-%d-%m %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y-%d-%m %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y/%d/%m %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y/%d/%m %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y.%d.%m %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y.%d.%m %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+    {
+        "format": "%y-%d-%m, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y-%d-%m, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y/%d/%m, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y/%d/%m, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%y.%d.%m, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%y.%d.%m, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y-%d-%m %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y-%d-%m %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y/%d/%m %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y/%d/%m %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%y.%d.%m %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%y.%d.%m %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+
+
+
+    {
+        "format": "%d-%m-%y, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%d-%m-%y, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%d/%m/%y, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%d/%m/%y, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%d.%m.%y, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%d.%m.%y, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%d-%m-%y %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%d-%m-%y %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%d/%m/%y %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%d/%m/%y %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%d.%m.%y %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%d.%m.%y %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+    {
+        "format": "%d-%m-%y, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%d-%m-%y, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%d/%m/%y, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%d/%m/%y, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%d.%m.%y, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%d.%m.%y, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%d-%m-%y %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%d-%m-%y %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%d/%m/%y %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%d/%m/%y %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%d.%m.%y %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%d.%m.%y %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+
+
+
+    {
+        "format": "%m-%d-%y, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%m-%d-%y, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%m/%d/%y, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%m/%d/%y, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%m.%d.%y, %H:%M - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%m.%d.%y, %I:%M %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%m-%d-%y %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%m-%d-%y %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%m/%d/%y %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%m/%d/%y %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%m.%d.%y %H:%M] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%m.%d.%y %I:%M %p] %name:",
+        "auto_header": 1
+    },
+
+
+
+    {
+        "format": "%m-%d-%y, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%m-%d-%y, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%m/%d/%y, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%m/%d/%y, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "%m.%d.%y, %H:%M:%S - %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "%m.%d.%y, %I:%M:%S %p - %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%m-%d-%y %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%m-%d-%y %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%m/%d/%y %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%m/%d/%y %I:%M:%S %p] %name:",
+        "auto_header": 1
+    },
+
+    {
+        "format": "[%m.%d.%y %H:%M:%S] %name:",
+        "auto_header": 1
+    },
+    {
+        "format": "[%m.%d.%y %I:%M:%S %p] %name:",
+        "auto_header": 1
+    }
+]

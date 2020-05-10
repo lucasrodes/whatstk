@@ -1,8 +1,11 @@
-import pandas as pd
 import logging
+import re
+import pandas as pd
+from whatstk.utils.exceptions import RegexError
 
 
 separators = {'.', ',', '-', '/', ':', '[', ']'}
+
 
 def extract_header_from_text(text, encoding='utf-8'):
     """Extract header from filename.
@@ -19,29 +22,32 @@ def extract_header_from_text(text, encoding='utf-8'):
     lines = text.split('\n')
 
     # Get format auto
+    # hformat = extract_header_format_from_lines(lines)
+    # return hformat
     try:
         hformat = extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
+        # print(hformat)
         return hformat
     except:
         logging.info("Format not found.")
     return None
     
-def issep(s):
-    """Check if `s` is a separator character.
+# def issep(s):
+#     """Check if `s` is a separator character.
 
-    Separator can be one of the following: '.', ',', '-', '/', ':', '[' or ']'.
+#     Separator can be one of the following: '.', ',', '-', '/', ':', '[' or ']'.
 
-    Args:
-        s (str): Character to be checked.
+#     Args:
+#         s (str): Character to be checked.
 
-    Returns:
-        bool: True if `s` is a separator, False otherwise.
+#     Returns:
+#         bool: True if `s` is a separator, False otherwise.
 
-    """
-    if s in separators:
-        return True
-    return False
+#     """
+#     if s in separators:
+#         return True
+#     return False
 
 
 def extract_header_format_from_lines(lines):
@@ -55,20 +61,37 @@ def extract_header_format_from_lines(lines):
 
     """
     # Obtain header format from list of lines
+    elements_list, template_list = _extract_elements_template_from_lines(lines)
+    return _extract_header_format_from_components(elements_list, template_list)
+
+
+def _extract_elements_template_from_lines(lines):
+    """Get elements_list and template_list from lines.
+
+    Args:
+        lines (list): List with messages.
+
+    Returns:
+        tuple: elements_list (list), template_list (list)
+    """
+    # Obtain header format from list of lines
     fheaders = []
     elements_list = []
     template_list = []
     for line in lines:
         header = _extract_possible_header_from_line(line)
         if header:
-            elements, template = _extract_header_parts(header)
+            try:
+                elements, template = _extract_header_parts(header)
+            except RegexError:
+                continue
             elements_list.append(elements)
             template_list.append(template)
-    return _extract_header_format_from_components(elements_list, template_list)
+    return elements_list, template_list
 
 
 def _extract_possible_header_from_line(line):
-    """Given a `line` extract possible header.
+    """Given a `line` extract possible header. Uses ':' as separator.
 
     Args:
         line (str): Line containing header and message body.
@@ -84,6 +107,8 @@ def _extract_possible_header_from_line(line):
         header = line_split[0]
         if not header.isprintable():
             header = header.replace('\u200e', '').replace('\u202e', '')
+        if header[-1] != ':':
+            header += ':'
         return header
     return None
 
@@ -97,81 +122,57 @@ def _extract_header_parts(header):
     Returns:
         tuple: Contains two elements, (i) list with components and (ii) string template which specifies the formatting
                 of the components.
-    """ 
-    # Given header, obtain template (for format) and elements
-    b = []
-    t = ""
-    is_num = False
-    e_cum = ""
-    push = False
-    l = len(header)
-    count = 0
+    """
 
-    # Replace PM/AM/a.m./p.m. to "%P"
-    code = " %P "
-    header = header.replace(' PM ', code)\
-                    .replace(' AM ', code)\
-                    .replace(' a.m. ', code)\
-                    .replace(' p.m. ', code)
-    count = 0
-    for i in range(len(header)):
-        if count >= len(header):
-            break
-        e = header[count]
-        # Push element to b
-        if header[count: count+3] == '%P ':
-            t += "%P "
-            count += 2
-        elif e.isspace():
-            if e_cum and is_num:
-                b.append(int(e_cum))
-                e_cum = ""
-                is_num = False
-                t += '{} '
-            elif e_cum and not is_num:
-                e_cum += " "
-            elif t:
-                if issep(t[-1]):
-                    t += ' '
-        elif issep(e):
-            if e_cum:
-                b.append(int(e_cum) if is_num else e_cum)
-                e_cum = ""
-                is_num = False
-                t += '{}'
-            if e == '[':
-                t += '\['
-            elif e == ']':
-                t += '\]'
+    def get_last_idx_digit(v, i):
+        if i+1 < len(v):
+            if v[i+1].isdigit():
+                return get_last_idx_digit(v, i+1)
+        return i
+
+
+    # def get_last_idx_alpha(v, i):
+    #     if i+1 < len(v):
+    #         if v[i+1].isalpha():
+    #             return get_last_idx_alpha(v, i+1)
+    #         elif i+2 < len(v):
+    #             if v[i+1].isspace() and v[i+2].isalpha():
+    #                 return get_last_idx_alpha(v, i+2)
+    #     return i
+
+    hformat_elements = []
+    hformat_template = ''
+    i = 0
+    while i<len(header):
+        if header[i].isdigit():
+            j = get_last_idx_digit(header, i)
+            hformat_elements.append(int(header[i:j+1]))
+            hformat_template += '{}'
+            i = j
+        else:
+            if header[i] in ['[', ']']:
+                hformat_template += '\\'+header[i]
             else:
-                t += e
-        elif e.isalpha():
-            if e_cum and is_num:
-                b.append(int(e_cum))
-                e_cum = ""
-                is_num = False
-                t += '{}'
-            e_cum += e
-        elif e.isdigit():
-            if e_cum and not is_num:
-                b.append(e_cum)
-                e_cum = ""
-                is_num = False
-                t += '{}'
-            e_cum += e
-            is_num = True
-
-        count += 1
-
-    if e_cum.isdigit():
-        b.append(int(e_cum))
-        t += '{}'
-    elif e_cum.replace(' ', '').isalnum():
-        b.append(e_cum)
-        t += '{}'
-    else:
-        t += e_cum
-    return b, t
+                hformat_template += header[i]
+        i += 1
+    items = re.findall('[-|\]]\s[^:]*:', hformat_template)
+    if len(items) !=1:
+        # print(header)
+        # print(hformat_elements)
+        # print(hformat_template)
+        raise RegexError("Username match was not possible. Check that header (%s) is of format " \
+                            "'... - %name:' or '[...] %name:'", hformat_template)
+    hformat_template = hformat_template.replace(items[0][2:-1], '%name')
+    code = ' %p'
+    hformat_template = hformat_template.replace(' PM', code)\
+                                        .replace(' AM', code)\
+                                        .replace(' A.M.', code)\
+                                        .replace(' P.M.', code)\
+                                        .replace(' am', code)\
+                                        .replace(' pm', code)\
+                                        .replace(' a.m.', code)\
+                                        .replace(' p.m.', code)
+    return hformat_elements, hformat_template
 
 
 def _extract_header_format_from_components(elements_list, template_list):
@@ -196,54 +197,47 @@ def _extract_header_format_from_components(elements_list, template_list):
         if (len(e)==len_mode) and ("".join([str(type(ee).__name__) for ee in e])==type_mode):
             elements_list_.append(e)
             template_list_.append(t)
-    
     # print(elements_list[0])
     # Get positions
     df = pd.DataFrame(elements_list_)
     dates_df = df.select_dtypes(int)
-    
-    # Check if 12h  TO BE REMOVED
-    pos = df.select_dtypes(object).nunique().idxmin()
-    vv = df[pos].iloc[0]
 
-    if ('pm' in vv) or ('PM' in vv) or ('am' in vv) or ('AM' in vv) or \
-        ('p.m.' in vv) or ('a.m.' in vv) or ('P.M.' in vv) or ('A.M.' in vv):
-        pos = pos
-    else:
-        pos = None
+    template = template_list[0]
     
-    if pos:
-        x = template_list[0].split('{}')
-        template = "{}".join(x[:pos+1])+"{}".join(x[pos+1:])
-        hour_code = "%P"
+    if '%p' in template:
+        hour_code = "%I"
     else:
-        template = template_list[0]
         hour_code = "%H"
+
     # day
     day_pos = ((dates_df.max()>27) & (dates_df.max()<32)).idxmax()
+    dates_df = dates_df.drop(columns=[day_pos])
     # year
-    year_pos = dates_df.std().idxmin()
-    # month and hour
-    positions = (dates_df.max() < 13) # & (dates_df.max() > 11) 
-    positions = positions.index[positions].tolist()
-    # print(positions)
-    if len(positions) == 1:
-        month_pos = positions[0]
-        hour_pos = 3
-    else:
-        month_pos = dates_df[positions].diff().nunique().idxmin()
-        hour_pos = dates_df[positions].diff().nunique().idxmax()
+    # year_pos = dates_df.std().idxmin()
+    pos = [0,1,2]
+    pos.remove(day_pos)
+    year_pos = dates_df[pos].max().idxmax()  # Only consider positions 0,1,2
+    dates_df = dates_df.drop(columns=[year_pos])
+    # Month
+    month_pos = dates_df.columns.min()
+    dates_df = dates_df.drop(columns=[month_pos])
+    # Hour
+    hour_pos = 3
+    dates_df = dates_df.drop(columns=[hour_pos])
+    # Minute
     minutes_pos = 4
+    dates_df = dates_df.drop(columns=[minutes_pos])
 
     dates_pos = {
         day_pos: '%d',
         year_pos: '%y',
         month_pos: '%m',
-        hour_pos: '%H',
+        hour_pos: hour_code,
         minutes_pos: '%M'
     }
     
-    if dates_df.shape[1] > 5:
+    # Seconds
+    if dates_df.shape[1] > 0:
         seconds_pos = 5
         dates_pos[seconds_pos] = '%S'
 
@@ -253,6 +247,10 @@ def _extract_header_format_from_components(elements_list, template_list):
     codes = dates_codes + ['%name']
     # print(codes)
     # print(template)
-    code_template = template.format(*codes) + ':'
+    # print(template)
+    # print(codes)
+    code_template = template.format(*codes)
+    # print(code_template)
+    # print('---------------')
     # print(code_template)
     return code_template
