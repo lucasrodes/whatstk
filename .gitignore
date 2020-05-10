@@ -270,3 +270,4 @@ py37
 .pypirc
 learn/
 assets/style.css
+tests/chats/*
