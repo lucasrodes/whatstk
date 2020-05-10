@@ -1,6 +1,7 @@
 import re
 import pandas as pd
 from datetime import datetime
+from whatstk.utils.exceptions import RegexError
 
 
 regex_simplifier = {
@@ -47,14 +48,20 @@ def parse_chat(text, regex):
     Returns:
         pandas.DataFrame: DataFrame with messages sent by users, index is the date the messages was sent.
 
+    Raises:
+        RegexError: When provided regex could not match the text.
+
     """
     result = []
     headers = list(re.finditer(regex, text))
     for i in range(len(headers)):
         line_dict = _parse_line(text, headers, i)
         result.append(line_dict)
-    df_chat = pd.DataFrame.from_records(result, index='date')
-    return df_chat[['username', 'message']]
+    if len(result) > 0:
+        df_chat = pd.DataFrame.from_records(result, index='date')
+        return df_chat[['username', 'message']]
+    else:
+        raise RegexError("Could not match the provided regex with provided text. Not match was found.")
 
 
 def _parse_line(text, headers, i):
