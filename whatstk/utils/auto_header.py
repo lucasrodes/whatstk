@@ -27,6 +27,7 @@ def extract_header_from_text(text, encoding='utf-8'):
     try:
         hformat = extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
+        # print(hformat)
         return hformat
     except:
         logging.info("Format not found.")
@@ -162,6 +163,15 @@ def _extract_header_parts(header):
         raise RegexError("Username match was not possible. Check that header (%s) is of format " \
                             "'... - %name:' or '[...] %name:'", hformat_template)
     hformat_template = hformat_template.replace(items[0][2:-1], '%name')
+    code = ' %p'
+    hformat_template = hformat_template.replace(' PM', code)\
+                                        .replace(' AM', code)\
+                                        .replace(' A.M.', code)\
+                                        .replace(' P.M.', code)\
+                                        .replace(' am', code)\
+                                        .replace(' pm', code)\
+                                        .replace(' a.m.', code)\
+                                        .replace(' p.m.', code)
     return hformat_elements, hformat_template
 
 
