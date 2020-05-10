@@ -84,18 +84,20 @@ class WhatsAppChat:
         # get rid of wp warning messages
         return remove_alerts_from_df(r_x, df)
 
-    def to_txt(self, filename, hformat="%Y-%m-%d, %H:%M - %name:"):
+    def to_txt(self, filename, hformat=None):
         """Export chat as txt file.
 
         Usefull to export the chat to different formats.
 
         Args:
-            hformat (str, optional): Header format. Defaults to "%Y-%m-%d, %H:%M - %name:".
+            hformat (str, optional): Header format. Defaults to "%y-%m-%d, %H:%M - %name:".
             filename (str): Name of the file to export.
 
         """
         if not filename.endswith('.txt'):
             raise ValueError("filename must end with .txt")
+        if not hformat:
+            hformat = "%Y-%m-%d, %H:%M - %name:"
         lines = []
         raw_lines = self.df.reset_index().values.tolist()
         for line in raw_lines:
