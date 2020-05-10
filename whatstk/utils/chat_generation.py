@@ -19,7 +19,7 @@ class ChatGenerator:
     """Generate a chat."""
 
 
-    def __init__(self, size, users=None):
+    def __init__(self, size, users=None, seed=100):
         """Instantiate ChatGenerator class.
 
         Args:
@@ -29,6 +29,8 @@ class ChatGenerator:
         """
         self.size = size
         self.users = USERS if not users else users
+        self.seed = seed
+        np.random.seed(seed=self.seed)
     
     def generate_messages(self):
         """Generate list of messages.
@@ -77,8 +79,9 @@ class ChatGenerator:
         c = 1.0065
         scale = 40.06
         loc = 30
-        ts_ = [0] + np.round(lomax.rvs(c=c, loc=loc, scale=scale, size=self.size-1, random_state=100)).cumsum().tolist()
-        ts = [last-timedelta(minutes=t) for t in ts_]
+        ts_ = [0] + lomax.rvs(c=c, loc=loc, scale=scale, size=self.size-1, random_state=self.seed)\
+                .cumsum().tolist()
+        ts = [last-timedelta(seconds=t*60) for t in ts_]
         return ts[::-1]
 
     def generate_users(self):
@@ -118,26 +121,11 @@ class ChatGenerator:
             WhatsAppChat: Chat with random messages.
 
         """
-        if not hformat:
-            hformat = '%y-%m-%d, %H:%M - %name:'
         df = self.generate_df()
         chat = WhatsAppChat(df)
         if filename:
-            self.export(chat=chat, filename=filename, hformat=hformat)
+            chat.to_txt(filename=filename, hformat=hformat)
         return chat
-
-    def export(self, chat, filename, hformat=None):
-        """Export chat as txt file.
-
-        Args:
-            chat (WhatsAppChat): Chat as WhatsAppChat instance.
-            filename (str): Name of the file.
-            hformat (str, optional): Format of the header. Defaults to '%y-%m-%d, %H:%M - %name:'.
-
-        """
-        if not hformat:
-            hformat = '%y-%m-%d, %H:%M - %name:'
-        chat.to_txt(filename=filename, hformat=hformat)
 
 
 def generate_chats_hformats(output_path, size=2000, hformats=None, verbose=False):
@@ -155,9 +143,9 @@ def generate_chats_hformats(output_path, size=2000, hformats=None, verbose=False
     """
     if not hformats:
         hformats = get_supported_hformats_as_list()
-    cg = ChatGenerator(size=size)
+    chat = ChatGenerator(size=size).generate()
     for hformat in hformats:
         print("Exporting format: {}".format(hformat)) if verbose else 0
         filename = '{}.txt'.format(hformat.replace(' ', '_').replace('/', '\\'))
         filepath = os.path.join(output_path, filename)
-        cg.generate(filepath, hformat=hformat)
+        chat.to_txt(filename=filepath, hformat=hformat)
