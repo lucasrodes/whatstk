@@ -10,7 +10,20 @@ filename = "./tests/chats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 
 def test_interventions_date():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='date', msg_length=False)
+    counts = interventions(chat=chat, date_mode='date', msg_length=False)
+
+    assert(isinstance(counts, pd.DataFrame))
+    # Asswert chat df and counts df have same users
+    assert(set(chat.users) == set(counts.columns))
+
+    # Assert chat df and counts df have same date window
+    assert(chat.df.index.max().date() == counts.index.max().date())
+    assert(chat.df.index.min().date() == counts.index.min().date())
+
+
+def test_interventions_date_2():
+    chat = WhatsAppChat.from_txt(filename)
+    counts = interventions(df=chat.df, date_mode='date', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -23,7 +36,7 @@ def test_interventions_date():
 
 def test_interventions_date_msg_length():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='date', msg_length=True)
+    counts = interventions(chat=chat, date_mode='date', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -36,7 +49,7 @@ def test_interventions_date_msg_length():
 
 def test_interventions_hour():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='hour', msg_length=False)
+    counts = interventions(chat=chat, date_mode='hour', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -50,7 +63,7 @@ def test_interventions_hour():
 
 def test_interventions_hour_msg_length():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='hour', msg_length=True)
+    counts = interventions(chat=chat, date_mode='hour', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -63,7 +76,7 @@ def test_interventions_hour_msg_length():
 
 def test_interventions_month():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='month', msg_length=False)
+    counts = interventions(chat=chat, date_mode='month', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -77,7 +90,7 @@ def test_interventions_month():
 
 def test_interventions_month_msg_length():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='month', msg_length=False)
+    counts = interventions(chat=chat, date_mode='month', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -90,7 +103,7 @@ def test_interventions_month_msg_length():
 
 def test_interventions_weekday():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='weekday', msg_length=False)
+    counts = interventions(chat=chat, date_mode='weekday', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -104,7 +117,7 @@ def test_interventions_weekday():
 
 def test_interventions_weekday_msg_length():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='weekday', msg_length=True)
+    counts = interventions(chat=chat, date_mode='weekday', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -118,7 +131,7 @@ def test_interventions_weekday_msg_length():
 
 def test_interventions_hourweekday():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='hourweekday', msg_length=False)
+    counts = interventions(chat=chat, date_mode='hourweekday', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -135,7 +148,7 @@ def test_interventions_hourweekday():
 
 def test_interventions_hourweekday_msg_length():
     chat = WhatsAppChat.from_txt(filename)
-    counts = interventions(chat, date_mode='hourweekday', msg_length=True)
+    counts = interventions(chat=chat, date_mode='hourweekday', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
@@ -149,9 +162,15 @@ def test_interventions_hourweekday_msg_length():
     assert(counts.index.levels[1].max() == chat.df.index.hour.max())
     assert(counts.index.levels[1].min() == chat.df.index.hour.min())
 
-def test_interventions_error():
+def test_interventions_error_1():
     chat = WhatsAppChat.from_txt(filename)
     with pytest.raises(ValueError):
-        counts = interventions(chat, date_mode='error', msg_length=False)
+        counts = interventions(chat=chat, date_mode='error', msg_length=False)
     with pytest.raises(ValueError):
-        counts = interventions(chat, date_mode='error', msg_length=True)
+        counts = interventions(chat=chat, date_mode='error', msg_length=True)
+
+
+def test_interventions_error_2():
+    chat = WhatsAppChat.from_txt(filename)
+    with pytest.raises(ValueError):
+        counts = interventions(date_mode='hour', msg_length=False)

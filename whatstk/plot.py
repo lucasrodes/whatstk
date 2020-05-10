@@ -35,11 +35,11 @@ def vis(user_data, title):
     Example:
 
         ```python
-        >>> from whatstk.objects import WhatsAppChat
+        >>> from whatstk import df_from_txt
         >>> from whatstk.analysis import interventions
         >>> filename = 'path/to/samplechat.txt'
-        >>> chat = WhatsAppChat.from_txt(filename)
-        >>> counts = interventions(chat=chat, date_mode='date', msg_length=False)
+        >>> df = df_from_txt(filename)
+        >>> counts = interventions(df=df, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
         >>> from plotly.offline import plot
         >>> from whatstk.plot import vis
