@@ -33,21 +33,21 @@ def extract_header_from_text(text, encoding='utf-8'):
         logging.info("Format not found.")
     return None
     
-def issep(s):
-    """Check if `s` is a separator character.
+# def issep(s):
+#     """Check if `s` is a separator character.
 
-    Separator can be one of the following: '.', ',', '-', '/', ':', '[' or ']'.
+#     Separator can be one of the following: '.', ',', '-', '/', ':', '[' or ']'.
 
-    Args:
-        s (str): Character to be checked.
+#     Args:
+#         s (str): Character to be checked.
 
-    Returns:
-        bool: True if `s` is a separator, False otherwise.
+#     Returns:
+#         bool: True if `s` is a separator, False otherwise.
 
-    """
-    if s in separators:
-        return True
-    return False
+#     """
+#     if s in separators:
+#         return True
+#     return False
 
 
 def extract_header_format_from_lines(lines):
@@ -131,14 +131,14 @@ def _extract_header_parts(header):
         return i
 
 
-    def get_last_idx_alpha(v, i):
-        if i+1 < len(v):
-            if v[i+1].isalpha():
-                return get_last_idx_alpha(v, i+1)
-            elif i+2 < len(v):
-                if v[i+1].isspace() and v[i+2].isalpha():
-                    return get_last_idx_alpha(v, i+2)
-        return i
+    # def get_last_idx_alpha(v, i):
+    #     if i+1 < len(v):
+    #         if v[i+1].isalpha():
+    #             return get_last_idx_alpha(v, i+1)
+    #         elif i+2 < len(v):
+    #             if v[i+1].isspace() and v[i+2].isalpha():
+    #                 return get_last_idx_alpha(v, i+2)
+    #     return i
 
     hformat_elements = []
     hformat_template = ''
