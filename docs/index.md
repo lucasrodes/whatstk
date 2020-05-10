@@ -77,11 +77,11 @@ Does not work if you use date_mode='hourweekday'.
 
   
   ```python
-  >>> from whatstk.objects import WhatsAppChat
+  >>> from whatstk import df_from_txt
   >>> from whatstk.analysis import interventions
   >>> filename = 'path/to/samplechat.txt'
-  >>> chat = WhatsAppChat.from_txt(filename)
-  >>> counts = interventions(chat=chat, date_mode='date', msg_length=False)
+  >>> df = df_from_txt(filename)
+  >>> counts = interventions(df=df, date_mode='date', msg_length=False)
   >>> counts_cumsum = counts.cumsum()
   >>> from plotly.offline import plot
   >>> from whatstk.plot import vis
@@ -98,7 +98,7 @@ Does not work if you use date_mode='hourweekday'.
 #### interventions
 
 ```python
-def interventions(chat, date_mode='date', msg_length=False)
+def interventions(df=None, chat=None, date_mode='date', msg_length=False)
 ```
 
 Get number of interventions per user per unit of time.
@@ -110,17 +110,18 @@ The unit of time can be chosen by means of argument `date_mode`.
   Get counts of sent messages per user. Also cumulative.
   
   ```python
-  >>> from whatstk.objects import WhatsAppChat
+  >>> from whatstk import df_from_txt
   >>> from whatstk.analysis interventions
   >>> filename = 'path/to/samplechat.txt'
-  >>> chat = WhatsAppChat.from_txt(filename)
-  >>> counts = interventions(chat, date_mode='date', msg_length=False)
+  >>> df = df_from_txt(filename)
+  >>> counts = interventions(df=df, date_mode='date', msg_length=False)
   >>> counts_cumsum = counts.cumsum()
   ```
   
 
 **Arguments**:
 
+- `df` _pd.DataFrame_ - Chat as DataFrame.
 - `chat` _WhatsAppChat_ - Object containing parsed WhatsApp chat.
 - `date_mode` _str_ - Choose mode to group interventions by. Available modes are:
   - 'date': Grouped by particular date (year, month and day).
