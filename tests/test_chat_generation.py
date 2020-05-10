@@ -68,13 +68,6 @@ def test_generate_3(tmpdir):
     assert(isinstance(chat, WhatsAppChat))
 
 
-def test_export(tmpdir):
-    cg = ChatGenerator(size=10, users=USERS)
-    chat = cg.generate()
-    filename = tmpdir.join("export.txt")
-    chat = cg.export(chat, str(filename))
-
-
 def test_generate_chats_hformats(tmpdir):
     output_path = tmpdir.mkdir("output")
     generate_chats_hformats(output_path, size=2, verbose=False)
