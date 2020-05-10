@@ -168,9 +168,13 @@ For other issues/bugs/suggestions, please report it in the [issues section](http
 
 ### Pull Requests
 
-Make sure to test your code before issuing a pull request:
+Make sure to test your code before issuing a pull request (install library in develop mode, `pip install -e .`):
 
 ```
+# Create folder and generate chats for tests 
+mkdir tests/chats/
+whatstk-generate-chats --size 500 tests/chats/
+# Run tests
 py.test --cov-report term --cov=whatstk tests/
 ```
 
