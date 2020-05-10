@@ -170,7 +170,7 @@ def test_interventions_error_1():
         counts = interventions(chat=chat, date_mode='error', msg_length=True)
 
 
-def test_interventions_error_1():
+def test_interventions_error_2():
     chat = WhatsAppChat.from_txt(filename)
     with pytest.raises(ValueError):
         counts = interventions(date_mode='hour', msg_length=False)
