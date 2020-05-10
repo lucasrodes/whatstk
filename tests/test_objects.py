@@ -1,40 +1,33 @@
 from whatstk.objects import WhatsAppChat
+from whatstk.utils.exceptions import HFormatError
 import os
 import pandas as pd
 import pytest
 
 
-filenames_path = "./tests/chats"
-filenames = [os.path.join(filenames_path, f) for f in os.listdir(filenames_path) if f.endswith(".txt")]
+filename = "./tests/chats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+hformat = "[%d.%m.%y %I:%M:%S %p] %name:"
 
 
 def test_object_auto():
-    for filename in filenames:
-        chat = WhatsAppChat.from_txt(filename)
-        assert(isinstance(chat.df, pd.DataFrame))
-
-
-def test_object_hformat():
-    filename = 'tests/chats/example_1.txt'
-    hformat = '%d.%m.%y, %H:%M - %name:'
     chat = WhatsAppChat.from_txt(filename)
     assert(isinstance(chat.df, pd.DataFrame))
 
-    filename = 'tests/chats/example_2.txt'
-    hformat = '[%y/%m/%d %H:%M] %name:'
+
+def test_object_hformat():
+    chat = WhatsAppChat.from_txt(filename)
+    assert(isinstance(chat.df, pd.DataFrame))
+
     chat = WhatsAppChat.from_txt(filename)
     assert(isinstance(chat.df, pd.DataFrame))
 
 
 def test_object_error():
-    for filename in filenames:
-        with pytest.raises(ValueError):
-            chat = WhatsAppChat.from_txt(filename, auto_header=False)
+    with pytest.raises(ValueError):
+        chat = WhatsAppChat.from_txt(filename, auto_header=False)
 
 
 def test_object_len_shape():
-    filename = 'tests/chats/example_1.txt'
-    hformat = '%d.%m.%y, %H:%M - %name:'
     chat = WhatsAppChat.from_txt(filename)
     l = len(chat)
     assert(isinstance(l, int))
@@ -44,23 +37,25 @@ def test_object_len_shape():
 
 
 def test_object_to_csv_1(tmpdir):
-    filename = 'tests/chats/example_1.txt'
     chat = WhatsAppChat.from_txt(filename)
-    filename = tmpdir.join("export.csv")
-    chat.to_csv(filename=str(filename))
+    filename_ = tmpdir.join("export.csv")
+    chat.to_csv(filename=str(filename_))
 
 
 def test_object_to_csv_2(tmpdir):
-    filename = 'tests/chats/example_1.txt'
     chat = WhatsAppChat.from_txt(filename)
-    filename = tmpdir.join("export")
+    filename_ = tmpdir.join("export")
     with pytest.raises(ValueError):
-        chat.to_csv(filename=str(filename))
+        chat.to_csv(filename=str(filename_))
 
 
 def test_object_to_txt(tmpdir):
-    filename = 'tests/chats/example_1.txt'
     chat = WhatsAppChat.from_txt(filename)
-    filename = tmpdir.join("export")
+    filename_ = tmpdir.join("export")
     with pytest.raises(ValueError):
-        chat.to_txt(filename=str(filename))
+        chat.to_txt(filename=str(filename_))
+
+
+def test_object_from_txt_error(tmpdir):
+    with pytest.raises((HFormatError, KeyError)):
+        chat = WhatsAppChat.from_txt(filename, hformat="%y%name")
