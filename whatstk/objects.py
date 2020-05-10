@@ -1,6 +1,6 @@
 from whatstk.utils.parser import generate_regex, parse_chat, remove_alerts_from_df
 from whatstk.utils.auto_header import extract_header_from_text
-
+from whatstk.utils.exceptions import RegexError, HFormatError
 
 
 class WhatsAppChat:
@@ -54,20 +54,21 @@ class WhatsAppChat:
         Args:
             text (str): Loaded chat as plain text.
             hformat (str): Format of the header. Ude the following keywords:
-                            - %Y: for year.
+                            - %y: for year (%Y is equivalent).
                             - %m: for month.
                             - %d: for day.
-                            - %H: for hour.
+                            - %H: for 24h-hour.
+                            - %I: for 12h-hour.
                             - %M: for minutes.
                             - %S: for seconds.
-                            - %P: To denote 12h clock.
-                            - %name: for the username
+                            - %P: for "PM"/"AM" or "p.m."/"a.m." characters.
+                            - %name: for the username.
 
-                            Example 1: To the header '12/08/2016, 16:20 - username:' corresponds the syntax
+                            Example 1: To the header '12/08/2016, 16:20 - username:' corresponds the `hformat`
                             '%d/%m/%y, %H:%M - %name:'.
 
-                            Example 2: To the header '2016-08-12, 4:20 PM - username:' corresponds the syntax
-                            '%y-%m-%d, %H:%M %P - %name:'.
+                            Example 2: To the header '2016-08-12, 4:20 PM - username:' corresponds the `hformat`
+                            '%y-%m-%d, %I:%M %P - %name:'.
         Returns:
             pandas.DataFrame: DataFrame containing the chat.
 
@@ -76,8 +77,10 @@ class WhatsAppChat:
         r, r_x = generate_regex(hformat=hformat)
 
         # Parse chat to DataFrame
-        df = parse_chat(text, r)
-
+        try:
+            df = parse_chat(text, r)
+        except RegexError:
+            raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
         # get rid of wp warning messages
         return remove_alerts_from_df(r_x, df)
 
