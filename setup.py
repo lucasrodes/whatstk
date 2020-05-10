@@ -39,5 +39,10 @@ setup(
         'Documentation': 'https://lcsrg.me/whatstk/docs/index.html',
         'Github': 'http://github.com/lucasrodes/whatstk'
     },
-    python_requires='>=3.5'
+    python_requires='>=3.5',
+    entry_points={
+        'console_scripts': [
+            'whatstk-generate-chats=whatstk.scripts.generate_chats:main'
+        ]
+    }
 )
