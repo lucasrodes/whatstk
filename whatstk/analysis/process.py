@@ -22,7 +22,7 @@ def merge_chats(dfs):
 
     """
     # Sort from oldest
-    dfs_ = sorted(dfs, key=lambda x: x.index.min())
+    dfs = sorted(dfs, key=lambda x: x.index.min())
     # Merge
     df = dfs[0]
     for i in range(1, len(dfs)):
