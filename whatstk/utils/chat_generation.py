@@ -25,6 +25,7 @@ class ChatGenerator:
         Args:
             size (int): Number of messages to generate.
             users (list, optional): List with names of the users. Defaults to module variable USERS.
+            seed (int, optional): Seed for random processes. Defaults to 100.
 
         """
         self.size = size
@@ -93,15 +94,18 @@ class ChatGenerator:
         """
         return np.random.choice(self.users, self.size)
 
-    def generate_df(self):
+    def generate_df(self, last_timestamp=None):
         """Generate random chat as DataFrame.
+
+        Args:
+            last_timestamp (datetime, optional): Datetime of last message. If `None`, defaults to current date.
 
         Returns:
             pandas.DataFrame: DataFrame with random messages.
 
         """
         messages = self.generate_messages()
-        timestamps = self.generate_timestamps()
+        timestamps = self.generate_timestamps(last=last_timestamp)
         users = self.generate_users()
         df = pd.DataFrame.from_dict({
             'date': timestamps,
@@ -110,25 +114,27 @@ class ChatGenerator:
         }).set_index('date')
         return df
     
-    def generate(self, filename=None, hformat=None):
+    def generate(self, filename=None, hformat=None, last_timestamp=None):
         """Generate random chat as WhatsAppChat.
 
         Args:
             filename (str): Set to a string name to export the generated chat. Must have txt format.
             hformat (str): Header format of the text to be generated. If None, defaults to '%y-%m-%d, %H:%M - %name:'.
+            last_timestamp (datetime, optional): Datetime of last message. If `None`, defaults to current date.
 
         Returns:
             WhatsAppChat: Chat with random messages.
 
         """
-        df = self.generate_df()
+        df = self.generate_df(last_timestamp=last_timestamp)
         chat = WhatsAppChat(df)
         if filename:
             chat.to_txt(filename=filename, hformat=hformat)
         return chat
 
 
-def generate_chats_hformats(output_path, size=2000, hformats=None, verbose=False):
+def generate_chats_hformats(output_path, size=2000, hformats=None, filenames=None,
+                            last_timestamp=None, seed=100, verbose=False):
     """Generate a chat and export using given header format.
 
     If no hformat specified, chat is generated & exported using all supported header formats.
@@ -138,14 +144,21 @@ def generate_chats_hformats(output_path, size=2000, hformats=None, verbose=False
         size (int, optional): Number of messages of the chat. Defaults to 2000.
         hformats (list, optional): List of header formats to use when exporting chat. If None, 
                                     defaults to all supported header formats.
+        filenames (list, optional): List with filenames. If None, defaults to 
+                                    `hformat.replace(' ', '_').replace('/', '\\')`.
+        seed (int, optional): Seed for random processes. Defaults to 100.
         verbose (bool): Set to True to print runtime messages.
 
     """
     if not hformats:
         hformats = get_supported_hformats_as_list()
-    chat = ChatGenerator(size=size).generate()
-    for hformat in hformats:
+    chat = ChatGenerator(size=size, seed=seed).generate(last_timestamp=last_timestamp)
+    for i in range(len(hformats)):
+        hformat = hformats[i]
         print("Exporting format: {}".format(hformat)) if verbose else 0
-        filename = '{}.txt'.format(hformat.replace(' ', '_').replace('/', '\\'))
+        if filenames:
+            filename = filenames[i]
+        else:
+            filename = '{}.txt'.format(hformat.replace(' ', '_').replace('/', '\\'))
         filepath = os.path.join(output_path, filename)
         chat.to_txt(filename=filepath, hformat=hformat)

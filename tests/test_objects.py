@@ -5,8 +5,12 @@ import pandas as pd
 import pytest
 
 
-filename = "./tests/chats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 hformat = "[%d.%m.%y %I:%M:%S %p] %name:"
+
+chats_merge_path = 'tests/chats/merge/'
+filename1 = os.path.join(chats_merge_path, 'file1.txt')
+filename2 = os.path.join(chats_merge_path, 'file2.txt')
 
 
 def test_object_auto():
@@ -59,3 +63,33 @@ def test_object_to_txt(tmpdir):
 def test_object_from_txt_error(tmpdir):
     with pytest.raises((HFormatError, KeyError)):
         chat = WhatsAppChat.from_txt(filename, hformat="%y%name")
+
+
+def test_object_from_multiple_txt(tmpdir):
+    chat = WhatsAppChat.from_multiple_txt([filename1, filename2])
+    assert(isinstance(chat.df, pd.DataFrame))
+    chat = WhatsAppChat.from_multiple_txt([filename2, filename1])
+    assert(isinstance(chat.df, pd.DataFrame))
+    chat = WhatsAppChat.from_multiple_txt([filename2, filename1], auto_header=True)
+    assert(isinstance(chat.df, pd.DataFrame))
+
+
+def test_merge():
+    chat1 = WhatsAppChat.from_txt(filename1)
+    chat2 = WhatsAppChat.from_txt(filename2)
+    chat = chat1.merge(chat2)
+    assert(isinstance(chat.df, pd.DataFrame))
+    chat = chat1.merge(chat2, rename_users={'J': ['John']})
+    assert(isinstance(chat.df, pd.DataFrame))
+
+
+def test_rename_users():
+    chat = WhatsAppChat.from_txt(filename)
+    chat = chat.rename_users(mapping={'J': ['John']})
+    assert(isinstance(chat.df, pd.DataFrame))
+
+
+def test_rename_users_error():
+    chat = WhatsAppChat.from_txt(filename)
+    with pytest.raises(ValueError):
+        chat = chat.rename_users(mapping={'J': 'John'})

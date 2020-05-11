@@ -1,6 +1,7 @@
 from whatstk.utils.parser import generate_regex, parse_chat, remove_alerts_from_df
 from whatstk.utils.auto_header import extract_header_from_text
 from whatstk.utils.exceptions import RegexError, HFormatError
+from whatstk.analysis.process import merge_chats
 
 
 class WhatsAppChat:
@@ -47,6 +48,33 @@ class WhatsAppChat:
 
         return cls(df)
 
+    @classmethod
+    def from_multiple_txt(cls, filenames, auto_header=None, hformat=None, encoding='utf-8'):
+        """Load a WhatsAppChat instance from multiple sources.
+
+        Args:
+            filenames (list): List with names of the files, e.g. ['part1.txt', 'part2.txt', ...].
+            auto_header (list, optional): Whether auto_header should be performed (for each file, choose True/False). 
+                                            Defaults to True for all files.
+            hformat (list, optional): List with the hformat to be used per each file. Defaults to None.
+            encoding (str, optional): Encoding to use when loading file. Defaults to 'utf-8'.
+
+        """
+        dfs = []
+        if auto_header is None:
+            auto_header = [True]*len(filenames)
+        elif auto_header:
+            auto_header = [True]*len(filenames)
+        elif not auto_header:
+            auto_header = [False]*len(filenames)
+        if hformat is None:
+            hformat = [None]*len(filenames)
+        for filename, ah, hf in zip(filenames, auto_header, hformat):
+            chat = WhatsAppChat.from_txt(filename, auto_header=ah, hformat=hf, encoding=encoding)
+            dfs.append(chat.df)
+        df = merge_chats(dfs)
+        return cls(df)
+
     @staticmethod
     def _prepare_df(text, hformat):
         """Get a DataFrame-formatted chat.
@@ -83,6 +111,47 @@ class WhatsAppChat:
             raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
         # get rid of wp warning messages
         return remove_alerts_from_df(r_x, df)
+
+    def merge(self, chat, rename_users=None):
+        """Merge current instance with `chat`.
+
+        Args:
+            chat (WhatsAppChat): Another chat.
+            rename_users (dict): Dictionary mapping old names to new names,
+                                    example: {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to 'John', 
+                                    and 'Raymond' to 'Ray'.
+        Returns:
+            WhatsAppChat: Merged chat.
+
+        """
+        df = merge_chats([self.df, chat.df])
+        chat = WhatsAppChat(df)
+        if rename_users:
+            chat = chat.rename_users(mapping=rename_users)
+        return chat
+
+    def rename_users(self, mapping):
+        """Rename users
+
+        Args:
+            mapping (dict): Dictionary mapping old names to new names,
+                            example: {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to 'John', 
+                            and 'Raymond' to 'Ray'.
+
+        Returns:
+            pandas.DataFrame: DataFrame with users renamed according to `mapping`.
+
+        Raises:
+            ValueError: Raised if mapping is not correct.
+
+        """
+        df = self.df.copy()
+        for new_name, old_names in mapping.items():
+            if not isinstance(old_names, list):
+                raise ValueError("New names must come as a list of str.")
+            for old_name in old_names:
+                df.username = df.username.str.replace(old_name, new_name)
+        return WhatsAppChat(df)
 
     def to_txt(self, filename, hformat=None):
         """Export chat as txt file.

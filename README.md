@@ -172,10 +172,16 @@ Make sure to test your code before issuing a pull request (install library in de
 
 ```
 # Create folder and generate chats for tests 
-mkdir tests/chats/
-whatstk-generate-chats --size 500 tests/chats/
+$ mkdir -p tests/chats/hformats tests/chats/merge
+$ whatstk-generate-chats --size 500 --output-path tests/chats/hformats/
+$ whatstk-generate-chats --size 300 --last-timestamp 2019-09-01 \
+                         --hformats '%Y-%m-%d, %H:%M - %name:' \
+                         --output-path tests/chats/merge/ --filenames file1.txt
+$ whatstk-generate-chats --size 300 --last-timestamp 2020-01-01 \
+                         --hformats '%Y-%m-%d, %H:%M - %name:' \
+                         --output-path tests/chats/merge/ --filenames file2.txt
 # Run tests
-py.test --cov-report term --cov=whatstk tests/
+$ py.test --cov-report term --cov=whatstk tests/
 ```
 
 _Note 1: Use `--html=testreport.html --cov-report html` to generate HTML reports._

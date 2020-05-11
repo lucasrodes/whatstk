@@ -4,7 +4,7 @@ from whatstk.analysis import interventions
 import os
 
 
-filename = "./tests/chats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 
 
 def test_vis():
