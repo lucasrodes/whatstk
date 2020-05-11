@@ -10,7 +10,7 @@ class WhatsAppChat:
     def __init__(self, df):
         """Constructor."""
         self.df = df
-        self.users = self.df.username.unique().tolist()
+        self.users = sorted(self.df.username.unique().tolist())
 
     @classmethod
     def from_txt(cls, filename, auto_header=True, hformat=None, encoding='utf-8'):
@@ -150,7 +150,7 @@ class WhatsAppChat:
             if not isinstance(old_names, list):
                 raise ValueError("New names must come as a list of str.")
             for old_name in old_names:
-                df.username = df.username.str.replace(old_name, new_name)
+                df.username[df['username'] == old_name] = new_name
         return WhatsAppChat(df)
 
     def to_txt(self, filename, hformat=None):
