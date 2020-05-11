@@ -61,9 +61,13 @@ class WhatsAppChat:
 
         """
         dfs = []
-        if not auto_header:
+        if auto_header is None:
             auto_header = [True]*len(filenames)
-        if not hformat:
+        elif auto_header:
+            auto_header = [True]*len(filenames)
+        elif not auto_header:
+            auto_header = [False]*len(filenames)
+        if hformat is None:
             hformat = [None]*len(filenames)
         for filename, ah, hf in zip(filenames, auto_header, hformat):
             chat = WhatsAppChat.from_txt(filename, auto_header=ah, hformat=hf, encoding=encoding)

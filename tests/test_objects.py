@@ -70,6 +70,8 @@ def test_object_from_multiple_txt(tmpdir):
     assert(isinstance(chat.df, pd.DataFrame))
     chat = WhatsAppChat.from_multiple_txt([filename2, filename1])
     assert(isinstance(chat.df, pd.DataFrame))
+    chat = WhatsAppChat.from_multiple_txt([filename2, filename1], auto_header=True)
+    assert(isinstance(chat.df, pd.DataFrame))
 
 
 def test_merge():
