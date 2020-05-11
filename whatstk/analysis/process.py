@@ -21,6 +21,9 @@ def merge_chats(dfs):
         pandas.DataFrame: Merged chat.
 
     """
+    # Sort from oldest
+    dfs_ = sorted(dfs, key=lambda x: x.index.min())
+    # Merge
     df = dfs[0]
     for i in range(1, len(dfs)):
         df = _merge_two_chats(df, dfs[i])
