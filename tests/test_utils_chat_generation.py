@@ -71,3 +71,9 @@ def test_generate_3(tmpdir):
 def test_generate_chats_hformats(tmpdir):
     output_path = tmpdir.mkdir("output")
     generate_chats_hformats(output_path, size=2, verbose=False)
+
+
+def test_generate_chats_hformats_2(tmpdir):
+    output_path = tmpdir.mkdir("output")
+    hformat = '%Y-%m-%d, %H:%M - %name:'
+    generate_chats_hformats(output_path, size=2, hformats=[hformat], filenames=['file.txt'], verbose=False)

@@ -6,7 +6,7 @@ from whatstk.utils.hformat import get_supported_hformats_as_dict
 
 
 # Generate chats
-output_folder = "./tests/chats"
+output_folder = "./tests/chats/hformats"
 # generate_chats_hformats(output_folder, 500, verbose=True)
 filenames = [os.path.join(output_folder, f) for f in os.listdir(output_folder) if f.endswith('.txt')]
 
