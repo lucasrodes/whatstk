@@ -22,5 +22,3 @@ py.test --html=testreport.html --cov-report html --cov-report term --cov=whatstk
 
 ## (3) Run flake
 flake8 --max-complexity 10 --format=html --docstring-convention=google --htmldir=flake-report whatstk
-
-flake8 whatstk

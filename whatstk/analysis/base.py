@@ -1,3 +1,6 @@
+"""Base analysis tools."""
+
+
 import pandas as pd
 
 
@@ -6,7 +9,8 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
 
     The unit of time can be chosen by means of argument `date_mode`.
 
-    Example: 
+    Example:
+
         Get counts of sent messages per user. Also cumulative.
 
         ```python
@@ -17,9 +21,9 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
         >>> counts = interventions(df=df, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
         ```
-        
+
     Args:
-        df (pd.DataFrame): Chat as DataFrame.
+        df (pandas.DataFrame): Chat as DataFrame.
         chat (WhatsAppChat): Object containing parsed WhatsApp chat.
         date_mode (str): Choose mode to group interventions by. Available modes are:
                             - 'date': Grouped by particular date (year, month and day).
@@ -28,7 +32,7 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
                             - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
                             - 'hourweekday': Grouped by weekday and hour.
         msg_length (bool): Set to True to count the number of characters instead of number of messages sent.
-    
+
     Returns:
         pandas.DataFrame: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
 
@@ -37,7 +41,7 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
 
     """
     if (df is None) & (chat is None):
-        raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.") 
+        raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.")
     if df is None and chat is not None:
         df = chat.df
 
@@ -54,7 +58,7 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
         n_interventions = _interventions(df, [df.index.month], msg_length)
     else:
         raise ValueError("Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
-                                    "'hourweekday' and 'month".format(date_mode))
+                         "'hourweekday' and 'month".format(date_mode))
 
     if date_mode == 'hourweekday':
         n_interventions.index = n_interventions.index.set_names(['weekday', 'hour'])
@@ -65,12 +69,12 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
 
 
 def _interventions(df, index_date, msg_length):
-    """Get number of interventions per day per user
+    """Get number of interventions per day per user.
 
     Args:
-        df (pd.DataFrame): Chat as DataFrame.
+        df (pandas.DataFrame): Chat as DataFrame.
 
-    Returns: 
+    Returns:
         pandas.DataFrame: Table with interventions per day per user.
 
     """

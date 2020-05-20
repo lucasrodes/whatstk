@@ -1,3 +1,6 @@
+"""Detect header from chat."""
+
+
 import logging
 import re
 import pandas as pd
@@ -29,10 +32,11 @@ def extract_header_from_text(text, encoding='utf-8'):
         logging.info("Format found was %s", hformat)
         # print(hformat)
         return hformat
-    except:
+    except:  # noqa
         logging.info("Format not found.")
     return None
-    
+
+
 # def issep(s):
 #     """Check if `s` is a separator character.
 
@@ -75,7 +79,6 @@ def _extract_elements_template_from_lines(lines):
         tuple: elements_list (list), template_list (list)
     """
     # Obtain header format from list of lines
-    fheaders = []
     elements_list = []
     template_list = []
     for line in lines:
@@ -102,7 +105,7 @@ def _extract_possible_header_from_line(line):
     """
     # Extract possible header from line
     line_split = line.split(': ')
-    if len(line_split)>=2:
+    if len(line_split) >= 2:
         # possible header
         header = line_split[0]
         if not header.isprintable():
@@ -130,7 +133,6 @@ def _extract_header_parts(header):
                 return get_last_idx_digit(v, i+1)
         return i
 
-
     # def get_last_idx_alpha(v, i):
     #     if i+1 < len(v):
     #         if v[i+1].isalpha():
@@ -143,7 +145,7 @@ def _extract_header_parts(header):
     hformat_elements = []
     hformat_template = ''
     i = 0
-    while i<len(header):
+    while i < len(header):
         if header[i].isdigit():
             j = get_last_idx_digit(header, i)
             hformat_elements.append(int(header[i:j+1]))
@@ -155,23 +157,25 @@ def _extract_header_parts(header):
             else:
                 hformat_template += header[i]
         i += 1
-    items = re.findall('[-|\]]\s[^:]*:', hformat_template)
-    if len(items) !=1:
+    items = re.findall(r'[-|\]]\s[^:]*:', hformat_template)
+    if len(items) != 1:
         # print(header)
         # print(hformat_elements)
         # print(hformat_template)
-        raise RegexError("Username match was not possible. Check that header (%s) is of format " \
-                            "'... - %name:' or '[...] %name:'", hformat_template)
+        raise RegexError(
+            "Username match was not possible. Check that header (%s) is of format '... - %name:' or '[...] %name:'",
+            hformat_template)
     hformat_template = hformat_template.replace(items[0][2:-1], '%name')
     code = ' %p'
-    hformat_template = hformat_template.replace(' PM', code)\
-                                        .replace(' AM', code)\
-                                        .replace(' A.M.', code)\
-                                        .replace(' P.M.', code)\
-                                        .replace(' am', code)\
-                                        .replace(' pm', code)\
-                                        .replace(' a.m.', code)\
-                                        .replace(' p.m.', code)
+    hformat_template = hformat_template\
+        .replace(' PM', code)\
+        .replace(' AM', code)\
+        .replace(' A.M.', code)\
+        .replace(' P.M.', code)\
+        .replace(' am', code)\
+        .replace(' pm', code)\
+        .replace(' a.m.', code)\
+        .replace(' p.m.', code)
     return hformat_elements, hformat_template
 
 
@@ -189,12 +193,12 @@ def _extract_header_format_from_components(elements_list, template_list):
     # Remove outliers
     elements_list_ = []
     template_list_ = []
-    l = [len(e) for e in elements_list]
-    x = ["".join([str(type(ee).__name__) for ee in e]) for e in elements_list]
-    len_mode = max(set(l), key=l.count)
-    type_mode = max(set(x), key=x.count)
+    lengths = [len(e) for e in elements_list]
+    types = ["".join([str(type(ee).__name__) for ee in e]) for e in elements_list]
+    len_mode = max(set(lengths), key=lengths.count)
+    type_mode = max(set(types), key=types.count)
     for e, t in zip(elements_list, template_list):
-        if (len(e)==len_mode) and ("".join([str(type(ee).__name__) for ee in e])==type_mode):
+        if (len(e) == len_mode) and ("".join([str(type(ee).__name__) for ee in e]) == type_mode):
             elements_list_.append(e)
             template_list_.append(t)
     # print(elements_list[0])
@@ -203,31 +207,31 @@ def _extract_header_format_from_components(elements_list, template_list):
     dates_df = df.select_dtypes(int)
 
     template = template_list[0]
-    
+
     if '%p' in template:
         hour_code = "%I"
     else:
         hour_code = "%H"
 
     # day
-    day_pos = ((dates_df.max()>27) & (dates_df.max()<32)).idxmax()
+    day_pos = ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax()
     dates_df = dates_df.drop(columns=[day_pos])
     # year
     # year_pos = dates_df.std().idxmin()
-    pos = [0,1,2]
+    pos = [0, 1, 2]
     pos.remove(day_pos)
     year_pos = dates_df[pos].max().idxmax()  # Only consider positions 0,1,2
     dates_df = dates_df.drop(columns=[year_pos])
-    # Month
+    # Month
     month_pos = dates_df.columns.min()
     dates_df = dates_df.drop(columns=[month_pos])
-    # Hour
+    # Hour
     hour_pos = 3
     dates_df = dates_df.drop(columns=[hour_pos])
     # Minute
     minutes_pos = 4
     dates_df = dates_df.drop(columns=[minutes_pos])
-
+    # Dictionary with positions and date element code
     dates_pos = {
         day_pos: '%d',
         year_pos: '%y',
@@ -235,7 +239,6 @@ def _extract_header_format_from_components(elements_list, template_list):
         hour_pos: hour_code,
         minutes_pos: '%M'
     }
-    
     # Seconds
     if dates_df.shape[1] > 0:
         seconds_pos = 5

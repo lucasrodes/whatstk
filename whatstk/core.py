@@ -1,13 +1,12 @@
-"""For backwards compatibility"""
+"""Text to dataframe methods."""
 
 
 from whatstk.objects import WhatsAppChat
-from whatstk.analysis import interventions
 
 
 def df_from_txt(filename, auto_header=True, hformat=None, encoding='utf-8'):
     """Load the chat log text file as a pandas.DataFrame.
-        
+
     Args:
 
         filename (str): Name to the txt chat log file.
@@ -15,7 +14,7 @@ def df_from_txt(filename, auto_header=True, hformat=None, encoding='utf-8'):
                             False, you have to provide a value to `hformat`.
         hformat (str): Format of the header. Check `whatstk.WhatsAppChat.prepare_df` docs.
         encoding (str): Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
-        
+
     Returns:
         pandas.DataFrame: Chat in DataFrame format with following columns: date (index), username, message.
 
@@ -40,17 +39,17 @@ def df_from_txt(filename, auto_header=True, hformat=None, encoding='utf-8'):
 def df_from_multiple_txt(filenames, auto_header=None, hformat=None, encoding='utf-8'):
     """Load the chat log text file as a pandas.DataFrame using multiple txt sources.
 
-    The merge is done time-wise. See method whatstk.utils.chat_merge.merge_chats for more details on the merge 
+    The merge is done time-wise. See method whatstk.utils.chat_merge.merge_chats for more details on the merge
     impementation.
-        
+
     Args:
 
         filenames (list): List with names of the files, e.g. ['part1.txt', 'part2.txt', ...].
-        auto_header (list, optional): Whether auto_header should be performed (for each file, choose True/False). 
+        auto_header (list, optional): Whether auto_header should be performed (for each file, choose True/False).
                                             Defaults to True for all files.
         hformat (list, optional): List with the hformat to be used per each file. Defaults to None.
         encoding (str, optional): Encoding to use when loading file. Defaults to 'utf-8'.
-        
+
     Returns:
         pandas.DataFrame: Chat in DataFrame format with following columns: date (index), username, message.
 

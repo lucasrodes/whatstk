@@ -1,3 +1,6 @@
+"""Parser utils."""
+
+
 import re
 import pandas as pd
 from datetime import datetime
@@ -5,17 +8,17 @@ from whatstk.utils.exceptions import RegexError
 
 
 regex_simplifier = {
-    '%Y': '(?P<year>\d{2,4})',
-    '%y': '(?P<year>\d{2,4})',
-    '%m': '(?P<month>\d{1,2})',
-    '%d': '(?P<day>\d{1,2})',
-    '%H': '(?P<hour>\d{1,2})',
-    '%I': '(?P<hour>\d{1,2})',
-    '%M': '(?P<minutes>\d{2})',
-    '%S': '(?P<seconds>\d{2})',
-    '%P': '(?P<ampm>[AaPp].? ?[Mm].?)',
-    '%p': '(?P<ampm>[AaPp].? ?[Mm].?)',
-    '%name': '(?P<username>[^:]*)'
+    '%Y': r'(?P<year>\d{2,4})',
+    '%y': r'(?P<year>\d{2,4})',
+    '%m': r'(?P<month>\d{1,2})',
+    '%d': r'(?P<day>\d{1,2})',
+    '%H': r'(?P<hour>\d{1,2})',
+    '%I': r'(?P<hour>\d{1,2})',
+    '%M': r'(?P<minutes>\d{2})',
+    '%S': r'(?P<seconds>\d{2})',
+    '%P': r'(?P<ampm>[AaPp].? ?[Mm].?)',
+    '%p': r'(?P<ampm>[AaPp].? ?[Mm].?)',
+    '%name': r'(?P<username>[^:]*)'
 }
 
 
@@ -24,8 +27,8 @@ def generate_regex(hformat):
 
     Args:
         hformat (str): Simplified syntax for the header.
-    
-    Returns: 
+
+    Returns:
         str: Regular expression corresponding to the specified syntax.
 
     """
@@ -39,12 +42,12 @@ def generate_regex(hformat):
 
 
 def parse_chat(text, regex):
-    """
+    """Parse chat using given RegEx.
 
-    Args: 
+    Args:
         text (str) Whole log chat text.
         regex (str): Regular expression
-    
+
     Returns:
         pandas.DataFrame: DataFrame with messages sent by users, index is the date the messages was sent.
 
@@ -71,8 +74,8 @@ def _parse_line(text, headers, i):
         text (str): Whole log chat text.
         headers (list): All headers.
         i (int): Index denoting the message number.
-    
-    Returns: 
+
+    Returns:
         dict: i:th date, username and message.
 
     """
@@ -105,13 +108,13 @@ def _parse_line(text, headers, i):
 
 
 def remove_alerts_from_df(r_x, df):
-    """Tries to get rid of alert/notification messages
+    """Try to get rid of alert/notification messages.
 
     Args:
         r_x (str): Regular expression to detect whatsapp warnings.
         df (pandas.DataFrame): DataFrame with all interventions.
 
-    Returns: 
+    Returns:
         pandas.DataFrame: Fixed version of input dataframe.
 
     """
@@ -121,7 +124,7 @@ def remove_alerts_from_df(r_x, df):
 
 
 def _remove_alerts_from_line(r_x, line_df):
-    """Remove line content that is not desirable (automatic alerts etc.)
+    """Remove line content that is not desirable (automatic alerts etc.).
 
     Args:
         r_x (str): Regula expression to detect WhatsApp warnings.
@@ -144,8 +147,8 @@ def _get_message(text, headers, i):
         text (str): Whole log chat text.
         headers (list): All headers.
         i (int): Index denoting the message number.
-    
-    Returns: 
+
+    Returns:
         str: i:th message.
 
     """

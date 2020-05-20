@@ -5,6 +5,7 @@ python:
   - 3.8
 before_install:
   - pip install -r requirements-test.txt
+  - pip install -r requirements-flake.txt
 install:
   - ls -l
   - pip uninstall whatstk
@@ -16,6 +17,8 @@ install:
 #pip install -r requirements.txt 
 script:
   - pytest --cov-report term --cov=whatstk tests/
+  - flake8 --max-complexity=10 --docstring-convention=google whatstk
+
 after_success:
   - codecov # submit coverage
   # add docs step
