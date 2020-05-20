@@ -40,7 +40,7 @@ def df_from_txt(filename, auto_header=True, hformat=None, encoding='utf-8'):
 def df_from_multiple_txt(filenames, auto_header=None, hformat=None, encoding='utf-8'):
     """Load the chat log text file as a pandas.DataFrame using multiple txt sources.
 
-    The merge is done time-wise. See method whatstk.analysis.process.merge_chats for more details on the merge 
+    The merge is done time-wise. See method whatstk.utils.chat_merge.merge_chats for more details on the merge 
     impementation.
         
     Args:
