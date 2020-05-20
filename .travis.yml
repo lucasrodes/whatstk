@@ -5,6 +5,7 @@ python:
   - 3.8
 before_install:
   - pip install -r requirements-test.txt
+  - pip install -r requirements-flake.txt
 install:
   - ls -l
   - pip uninstall whatstk
@@ -15,6 +16,7 @@ install:
   - whatstk-generate-chats --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
 #pip install -r requirements.txt 
 script:
+  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage

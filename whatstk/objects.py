@@ -1,7 +1,14 @@
+"""Library objects.
+
+Most important one is `WhatsAppChat`.
+
+"""
+
+
 from whatstk.utils.parser import generate_regex, parse_chat, remove_alerts_from_df
 from whatstk.utils.auto_header import extract_header_from_text
 from whatstk.utils.exceptions import RegexError, HFormatError
-from whatstk.analysis.process import merge_chats
+from whatstk.utils.chat_merge import merge_chats
 
 
 class WhatsAppChat:
@@ -15,15 +22,15 @@ class WhatsAppChat:
     @classmethod
     def from_txt(cls, filename, auto_header=True, hformat=None, encoding='utf-8'):
         """Create instance from chat log txt file hosted locally.
-        
+
         Args:
 
             filename (str): Name to the txt chat log file.
-            auto_header (bool): Set to True to detect header automatically, otherwise set to False. Defaults to True. If
-                                False, you have to provide a value to `hformat`.
+            auto_header (bool): Set to True to detect header automatically, otherwise set to False. Defaults to True.
+                                If False, you have to provide a value to `hformat`.
             hformat (str): Format of the header. Check `whatstk.WhatsAppChat.prepare_df` docs.
             encoding (str): Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
-            
+
         Returns:
             WhatsAppChat: Class instance with loaded and parsed chat.
 
@@ -34,7 +41,7 @@ class WhatsAppChat:
 
         if hformat:
             # Bracket is reserved character in RegEx, add backslash before them.
-            hformat = hformat.replace('[', '\[').replace(']', '\]')
+            hformat = hformat.replace('[', r'\[').replace(']', r'\]')
         if not hformat and auto_header:
             hformat = extract_header_from_text(text)
             if not hformat:
@@ -42,7 +49,7 @@ class WhatsAppChat:
                                    " input argument `hformat`.")
         elif not (hformat or auto_header):
             raise ValueError("If auto_header is False, hformat can't be None.")
-        
+
         # Prepare DataFrame
         df = cls._prepare_df(text, hformat)
 
@@ -54,7 +61,7 @@ class WhatsAppChat:
 
         Args:
             filenames (list): List with names of the files, e.g. ['part1.txt', 'part2.txt', ...].
-            auto_header (list, optional): Whether auto_header should be performed (for each file, choose True/False). 
+            auto_header (list, optional): Whether auto_header should be performed (for each file, choose True/False).
                                             Defaults to True for all files.
             hformat (list, optional): List with the hformat to be used per each file. Defaults to None.
             encoding (str, optional): Encoding to use when loading file. Defaults to 'utf-8'.
@@ -77,7 +84,7 @@ class WhatsAppChat:
 
     @staticmethod
     def _prepare_df(text, hformat):
-        """Get a DataFrame-formatted chat.
+        """Get a DataFrame-formatted chat. # noqa
 
         Args:
             text (str): Loaded chat as plain text.
@@ -118,8 +125,9 @@ class WhatsAppChat:
         Args:
             chat (WhatsAppChat): Another chat.
             rename_users (dict): Dictionary mapping old names to new names,
-                                    example: {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to 'John', 
-                                    and 'Raymond' to 'Ray'.
+                                    example: {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to
+                                    'John', and 'Raymond' to 'Ray'.
+
         Returns:
             WhatsAppChat: Merged chat.
 
@@ -131,12 +139,11 @@ class WhatsAppChat:
         return chat
 
     def rename_users(self, mapping):
-        """Rename users
+        """Rename users.
 
         Args:
-            mapping (dict): Dictionary mapping old names to new names,
-                            example: {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to 'John', 
-                            and 'Raymond' to 'Ray'.
+            mapping (dict): Dictionary mapping old names to new names, example: {'John':['Jon', 'J'], 'Ray':
+                            ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'.
 
         Returns:
             pandas.DataFrame: DataFrame with users renamed according to `mapping`.
@@ -191,9 +198,9 @@ class WhatsAppChat:
         self.df.to_csv(filename)
 
     def __len__(self):
-        """Get length of DataFrame
+        """Get length of DataFrame.
 
-        Returns: 
+        Returns:
             int: Instance length, defined as number of samples.
 
         """
@@ -203,7 +210,8 @@ class WhatsAppChat:
     def shape(self):
         """Get shape of DataFrame-formatted chat.
 
-        Returns: 
+        Returns:
             tuple: Shape.
+
         """
         return self.df.shape

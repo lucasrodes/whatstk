@@ -168,23 +168,23 @@ For other issues/bugs/suggestions, please report it in the [issues section](http
 
 ### Pull Requests
 
-Make sure to test your code before issuing a pull request (install library in develop mode, `pip install -e .`):
+Pull requests to branch `develop` are accepted. Please link your forks to specific issues (you may want to open an
+issue). 
 
-```
-# Create folder and generate chats for tests 
-$ mkdir -p tests/chats/hformats tests/chats/merge
-$ whatstk-generate-chats --size 500 --output-path tests/chats/hformats/
-$ whatstk-generate-chats --size 300 --last-timestamp 2019-09-01 \
-                         --hformats '%Y-%m-%d, %H:%M - %name:' \
-                         --output-path tests/chats/merge/ --filenames file1.txt
-$ whatstk-generate-chats --size 300 --last-timestamp 2020-01-01 \
-                         --hformats '%Y-%m-%d, %H:%M - %name:' \
-                         --output-path tests/chats/merge/ --filenames file2.txt
-# Run tests
-$ py.test --cov-report term --cov=whatstk tests/
+
+Make sure to test your code before issuing a pull request:
+
+1. Install library in develop mode, 
+
+```bash
+pip install -e .
 ```
 
-_Note 1: Use `--html=testreport.html --cov-report html` to generate HTML reports._
+2. Run test script
+
+```bash
+sh run-tests.sh
+```
 
 However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
 

@@ -1,3 +1,6 @@
+"""Merge utils."""
+
+
 import pandas as pd
 
 
@@ -10,7 +13,7 @@ def _merge_two_chats(df1, df2):
 
 
 def merge_chats(dfs):
-    """Merge several chats into a single one. 
+    """Merge several chats into a single one.
 
     Can come in handy when you have old exports and new ones, and both have relevant data.
 

@@ -1,3 +1,9 @@
+"""Chat generation utils.
+
+Use this module functions to generate chats.
+"""
+
+
 import os
 from datetime import datetime, timedelta
 import itertools
@@ -18,7 +24,6 @@ USERS = [
 class ChatGenerator:
     """Generate a chat."""
 
-
     def __init__(self, size, users=None, seed=100):
         """Instantiate ChatGenerator class.
 
@@ -32,7 +37,7 @@ class ChatGenerator:
         self.users = USERS if not users else users
         self.seed = seed
         np.random.seed(seed=self.seed)
-    
+
     def generate_messages(self):
         """Generate list of messages.
 
@@ -80,8 +85,7 @@ class ChatGenerator:
         c = 1.0065
         scale = 40.06
         loc = 30
-        ts_ = [0] + lomax.rvs(c=c, loc=loc, scale=scale, size=self.size-1, random_state=self.seed)\
-                .cumsum().tolist()
+        ts_ = [0] + lomax.rvs(c=c, loc=loc, scale=scale, size=self.size-1, random_state=self.seed).cumsum().tolist()
         ts = [last-timedelta(seconds=t*60) for t in ts_]
         return ts[::-1]
 
@@ -113,7 +117,7 @@ class ChatGenerator:
             'message': messages
         }).set_index('date')
         return df
-    
+
     def generate(self, filename=None, hformat=None, last_timestamp=None):
         """Generate random chat as WhatsAppChat.
 
@@ -135,17 +139,18 @@ class ChatGenerator:
 
 def generate_chats_hformats(output_path, size=2000, hformats=None, filenames=None,
                             last_timestamp=None, seed=100, verbose=False):
-    """Generate a chat and export using given header format.
+    r"""Generate a chat and export using given header format.
 
     If no hformat specified, chat is generated & exported using all supported header formats.
 
     Args:
         output_path (str): Path to directory to export all generated chats as txt.
         size (int, optional): Number of messages of the chat. Defaults to 2000.
-        hformats (list, optional): List of header formats to use when exporting chat. If None, 
+        hformats (list, optional): List of header formats to use when exporting chat. If None,
                                     defaults to all supported header formats.
-        filenames (list, optional): List with filenames. If None, defaults to 
+        filenames (list, optional): List with filenames. If None, defaults to
                                     `hformat.replace(' ', '_').replace('/', '\\')`.
+        last_timestamp (datetime, optional): Datetime of last message. If `None`, defaults to current date.
         seed (int, optional): Seed for random processes. Defaults to 100.
         verbose (bool): Set to True to print runtime messages.
 

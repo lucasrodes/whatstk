@@ -1,3 +1,16 @@
+"""Header format utils.
+
+Example: Check if header is available.
+
+    ```python
+    >>> from whatstk.utils.hformat import is_supported
+    >>> is_supported('%y-%m-%d, %H:%M:%S - %name:')
+    (True, True)
+    ```
+
+"""
+
+
 import os
 import json
 
@@ -15,7 +28,7 @@ def is_supported(hformat):
         hformat (str): Header format.
 
     Returns:
-        tuple: 
+        tuple:
             - bool: True if header is supported.
             - bool: True if header is supported with `auto_header` feature.
 
@@ -29,14 +42,15 @@ def is_supported(hformat):
     auto_header_support = 0
     support = 0
     for hh in h:
-        if hformat == hh['format'] :
+        if hformat == hh['format']:
             support = 1
             auto_header_support = hh['auto_header']
-    
+
     return bool(support), bool(auto_header_support)
 
+
 def is_supported_verbose(hformat):
-    """Check if header `hformat` is currently supported, manually and using `auto_header`.
+    """Check if header `hformat` is currently supported (both manually and using `auto_header`).
 
     Result is shown as a string.
 
@@ -74,5 +88,5 @@ def get_supported_hformats_as_dict():
 
     """
     with open(hformat_support_filepath, 'r') as f:
-        h = json.load(f)
-    return h
+        headers = json.load(f)
+    return headers
