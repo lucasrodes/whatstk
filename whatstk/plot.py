@@ -5,7 +5,8 @@ import plotly.graph_objs as go
 import warnings
 
 
-def vis_boxplot(user_data, title):
+def vis_boxplot(user_data, title, ignore_zero=True):
+
     # Create a trace
     data = []
 
@@ -24,7 +25,7 @@ def vis_boxplot(user_data, title):
     return dict(data=data, layout=layout)
 
 
-def vis_scatter_time(user_data, title):
+def vis_scatter_time(user_data, title, xlabel=None):
     """Obtain Figure to plot using plotly.
 
     `user_data` must be a pandas.DataFrame with timestamps as index and a column for each user.
@@ -66,7 +67,7 @@ def vis_scatter_time(user_data, title):
         )
         data.append(trace)
 
-    layout = dict(title=title, xaxis=dict(title='Date'))
+    layout = dict(title=title, xaxis=dict(title=xlabel))
 
     return dict(data=data, layout=layout)
 
