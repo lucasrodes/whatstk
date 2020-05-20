@@ -255,7 +255,6 @@ examples
 #tox stuff
 tox.ini
 #.coveragerc
-requirements-flake.txt
 setup.cfg
 testreport.html
 testreport.xml
@@ -270,3 +269,4 @@ py37
 learn/
 assets/style.css
 tests/chats/*
+flake-report
