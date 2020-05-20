@@ -43,7 +43,7 @@ Load your chat using the object `WhatsAppChat`. Example below we use chat [examp
  
  
 ```python
-from whatstk import WhatsAppChat
+from whatstk.objects import WhatsAppChat
 
 filename = 'chats/example.txt'
 chat = WhatsAppChat.from_txt(filename)
@@ -89,8 +89,8 @@ counts_cumsum = counts.cumsum()
 
 # Plot result
 from plotly.offline import plot
-from whatstk.plot import vis
-plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
+from whatstk.plot import vis_scatter_time
+plot(vis_scatter_time(counts_cumsum, 'cumulative number of messages sent per day'))
 ```
 
 ![](assets/example1.png)

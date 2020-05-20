@@ -18,6 +18,8 @@ class WhatsAppChat:
         """Constructor."""
         self.df = df
         self.users = sorted(self.df.username.unique().tolist())
+        self.start_date = df.index.min()
+        self.end_date = df.index.max()
 
     @classmethod
     def from_txt(cls, filename, auto_header=True, hformat=None, encoding='utf-8'):
