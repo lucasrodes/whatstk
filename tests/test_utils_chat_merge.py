@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from whatstk.analysis.process import _merge_two_chats
+from whatstk.utils.chat_merge import _merge_two_chats
 from whatstk.core import df_from_txt
 
 
