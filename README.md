@@ -168,7 +168,19 @@ For other issues/bugs/suggestions, please report it in the [issues section](http
 
 ### Pull Requests
 
-Make sure to test your code before issuing a pull request (install library in develop mode, `pip install -e .`):
+Make sure to test your code before issuing a pull request:
+
+1. Install library in develop mode, 
+
+```bash
+pip install -e .
+```
+
+2. Run test script
+
+```bash
+sh run-tests.sh
+```
 
 ```
 # Create folder and generate chats for tests 
