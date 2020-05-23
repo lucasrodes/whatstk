@@ -2,12 +2,15 @@
 
 * [whatstk](#.whatstk)
 * [whatstk.plot](#.whatstk.plot)
+  * [vis\_boxplot](#.whatstk.plot.vis_boxplot)
+  * [vis\_scatter\_time](#.whatstk.plot.vis_scatter_time)
   * [vis](#.whatstk.plot.vis)
 * [whatstk.analysis](#.whatstk.analysis)
 * [whatstk.analysis.base](#.whatstk.analysis.base)
   * [interventions](#.whatstk.analysis.base.interventions)
 * [whatstk.core](#.whatstk.core)
   * [df\_from\_txt](#.whatstk.core.df_from_txt)
+  * [df\_from\_multiple\_txt](#.whatstk.core.df_from_multiple_txt)
 * [whatstk.utils](#.whatstk.utils)
 * [whatstk.utils.auto\_header](#.whatstk.utils.auto_header)
   * [extract\_header\_from\_text](#.whatstk.utils.auto_header.extract_header_from_text)
@@ -21,7 +24,8 @@
     * [generate\_users](#.whatstk.utils.chat_generation.ChatGenerator.generate_users)
     * [generate\_df](#.whatstk.utils.chat_generation.ChatGenerator.generate_df)
     * [generate](#.whatstk.utils.chat_generation.ChatGenerator.generate)
-  * [generate\_chats\_hformats](#.whatstk.utils.chat_generation.generate_chats_hformats)
+* [whatstk.utils.chat\_merge](#.whatstk.utils.chat_merge)
+  * [merge\_chats](#.whatstk.utils.chat_merge.merge_chats)
 * [whatstk.utils.hformat](#.whatstk.utils.hformat)
   * [is\_supported](#.whatstk.utils.hformat.is_supported)
   * [is\_supported\_verbose](#.whatstk.utils.hformat.is_supported_verbose)
@@ -38,6 +42,9 @@
   * [WhatsAppChat](#.whatstk.objects.WhatsAppChat)
     * [\_\_init\_\_](#.whatstk.objects.WhatsAppChat.__init__)
     * [from\_txt](#.whatstk.objects.WhatsAppChat.from_txt)
+    * [from\_multiple\_txt](#.whatstk.objects.WhatsAppChat.from_multiple_txt)
+    * [merge](#.whatstk.objects.WhatsAppChat.merge)
+    * [rename\_users](#.whatstk.objects.WhatsAppChat.rename_users)
     * [to\_txt](#.whatstk.objects.WhatsAppChat.to_txt)
     * [to\_csv](#.whatstk.objects.WhatsAppChat.to_csv)
     * [\_\_len\_\_](#.whatstk.objects.WhatsAppChat.__len__)
@@ -46,21 +53,36 @@
 <a name=".whatstk"></a>
 ## whatstk
 
+Python wrapper and analysis tools for WhatsApp chats.
+
+This library provides a powerful wrapper for multiple Languages and OS. In addition, analytics tools are provided.
+
 <a name=".whatstk.plot"></a>
 ## whatstk.plot
 
-This import makes Python use 'print' as in Python 3.x
+Plot utils.
 
-<a name=".whatstk.plot.vis"></a>
-#### vis
+<a name=".whatstk.plot.vis_boxplot"></a>
+#### vis\_boxplot
 
 ```python
-def vis(user_data, title)
+def vis_boxplot(user_data, title, ignore_zero=True)
+```
+
+Create a trace
+
+<a name=".whatstk.plot.vis_scatter_time"></a>
+#### vis\_scatter\_time
+
+```python
+def vis_scatter_time(user_data, title, xlabel=None)
 ```
 
 Obtain Figure to plot using plotly.
 
-Does not work if you use date_mode='hourweekday'.
+`user_data` must be a pandas.DataFrame with timestamps as index and a column for each user.
+
+Note: Does not work with output of `interventions` if date_mode='hourweekday'.
 
 **Arguments**:
 
@@ -84,15 +106,38 @@ Does not work if you use date_mode='hourweekday'.
   >>> counts = interventions(df=df, date_mode='date', msg_length=False)
   >>> counts_cumsum = counts.cumsum()
   >>> from plotly.offline import plot
-  >>> from whatstk.plot import vis
-  >>> plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
+  >>> from whatstk.plot import vis_scatter_time
+  >>> plot(vis_scatter_time(counts_cumsum, 'cumulative number of messages sent per day'))
   ```
+
+<a name=".whatstk.plot.vis"></a>
+#### vis
+
+```python
+def vis(user_data, title)
+```
+
+See method `vis_scatter_time`.
+
+**Arguments**:
+
+- `user_data` _pandas.DataFrame_ - Input data.
+- `title` _str_ - Title of figure.
+  
+
+**Returns**:
+
+- `dict` - Figure.
 
 <a name=".whatstk.analysis"></a>
 ## whatstk.analysis
 
+Analytics tools.
+
 <a name=".whatstk.analysis.base"></a>
 ## whatstk.analysis.base
+
+Base analysis tools.
 
 <a name=".whatstk.analysis.base.interventions"></a>
 #### interventions
@@ -107,6 +152,7 @@ The unit of time can be chosen by means of argument `date_mode`.
 
 **Examples**:
 
+  
   Get counts of sent messages per user. Also cumulative.
   
   ```python
@@ -121,7 +167,7 @@ The unit of time can be chosen by means of argument `date_mode`.
 
 **Arguments**:
 
-- `df` _pd.DataFrame_ - Chat as DataFrame.
+- `df` _pandas.DataFrame_ - Chat as DataFrame.
 - `chat` _WhatsAppChat_ - Object containing parsed WhatsApp chat.
 - `date_mode` _str_ - Choose mode to group interventions by. Available modes are:
   - 'date': Grouped by particular date (year, month and day).
@@ -144,7 +190,7 @@ The unit of time can be chosen by means of argument `date_mode`.
 <a name=".whatstk.core"></a>
 ## whatstk.core
 
-For backwards compatibility
+Text to dataframe methods.
 
 <a name=".whatstk.core.df_from_txt"></a>
 #### df\_from\_txt
@@ -179,13 +225,52 @@ Load the chat log text file as a pandas.DataFrame.
   >>> df = df_from_txt(filename)
   ```
 
+<a name=".whatstk.core.df_from_multiple_txt"></a>
+#### df\_from\_multiple\_txt
+
+```python
+def df_from_multiple_txt(filenames, auto_header=None, hformat=None, encoding='utf-8')
+```
+
+Load the chat log text file as a pandas.DataFrame using multiple txt sources.
+
+The merge is done time-wise. See method whatstk.utils.chat_merge.merge_chats for more details on the merge
+impementation.
+
+**Arguments**:
+
+  
+- `filenames` _list_ - List with names of the files, e.g. ['part1.txt', 'part2.txt', ...].
+- `auto_header` _list, optional_ - Whether auto_header should be performed (for each file, choose True/False).
+  Defaults to True for all files.
+- `hformat` _list, optional_ - List with the hformat to be used per each file. Defaults to None.
+- `encoding` _str, optional_ - Encoding to use when loading file. Defaults to 'utf-8'.
+  
+
+**Returns**:
+
+- `pandas.DataFrame` - Chat in DataFrame format with following columns: date (index), username, message.
+  
+
+**Examples**:
+
+  
+  ```python
+  >>>  from whatstk import df_from_multiple_txt
+  >>> filename1 = 'path/to/chat1.txt'
+  >>> filename2 = 'path/to/chat2.txt'
+  >>> df = df_from_multiple_txt([filename1, filename2])
+  ```
+
 <a name=".whatstk.utils"></a>
 ## whatstk.utils
 
-This module includes features which are in development
+This module includes features which are in development.
 
 <a name=".whatstk.utils.auto_header"></a>
 ## whatstk.utils.auto\_header
+
+Detect header from chat.
 
 <a name=".whatstk.utils.auto_header.extract_header_from_text"></a>
 #### extract\_header\_from\_text
@@ -227,6 +312,10 @@ Extract header from list of lines.
 <a name=".whatstk.utils.chat_generation"></a>
 ## whatstk.utils.chat\_generation
 
+Chat generation utils.
+
+Use this module functions to generate chats.
+
 <a name=".whatstk.utils.chat_generation.ChatGenerator"></a>
 ### ChatGenerator
 
@@ -249,6 +338,7 @@ Instantiate ChatGenerator class.
 
 - `size` _int_ - Number of messages to generate.
 - `users` _list, optional_ - List with names of the users. Defaults to module variable USERS.
+- `seed` _int, optional_ - Seed for random processes. Defaults to 100.
 
 <a name=".whatstk.utils.chat_generation.ChatGenerator.generate_messages"></a>
 #### generate\_messages
@@ -320,10 +410,15 @@ Generate list of users.
 #### generate\_df
 
 ```python
- | def ChatGenerator.generate_df()
+ | def ChatGenerator.generate_df(last_timestamp=None)
 ```
 
 Generate random chat as DataFrame.
+
+**Arguments**:
+
+- `last_timestamp` _datetime, optional_ - Datetime of last message. If `None`, defaults to current date.
+  
 
 **Returns**:
 
@@ -333,7 +428,7 @@ Generate random chat as DataFrame.
 #### generate
 
 ```python
- | def ChatGenerator.generate(filename=None, hformat=None)
+ | def ChatGenerator.generate(filename=None, hformat=None, last_timestamp=None)
 ```
 
 Generate random chat as WhatsAppChat.
@@ -342,33 +437,50 @@ Generate random chat as WhatsAppChat.
 
 - `filename` _str_ - Set to a string name to export the generated chat. Must have txt format.
 - `hformat` _str_ - Header format of the text to be generated. If None, defaults to '%y-%m-%d, %H:%M - %name:'.
+- `last_timestamp` _datetime, optional_ - Datetime of last message. If `None`, defaults to current date.
   
 
 **Returns**:
 
 - `WhatsAppChat` - Chat with random messages.
 
-<a name=".whatstk.utils.chat_generation.generate_chats_hformats"></a>
-#### generate\_chats\_hformats
+<a name=".whatstk.utils.chat_merge"></a>
+## whatstk.utils.chat\_merge
+
+Merge utils.
+
+<a name=".whatstk.utils.chat_merge.merge_chats"></a>
+#### merge\_chats
 
 ```python
-def generate_chats_hformats(output_path, size=2000, hformats=None, verbose=False)
+def merge_chats(dfs)
 ```
 
-Generate a chat and export using given header format.
+Merge several chats into a single one.
 
-If no hformat specified, chat is generated & exported using all supported header formats.
+Can come in handy when you have old exports and new ones, and both have relevant data.
 
 **Arguments**:
 
-- `output_path` _str_ - Path to directory to export all generated chats as txt.
-- `size` _int, optional_ - Number of messages of the chat. Defaults to 2000.
-- `hformats` _list, optional_ - List of header formats to use when exporting chat. If None,
-  defaults to all supported header formats.
-- `verbose` _bool_ - Set to True to print runtime messages.
+- `dfs` _list_ - List with the chats as DataFrames.
+  
+
+**Returns**:
+
+- `pandas.DataFrame` - Merged chat.
 
 <a name=".whatstk.utils.hformat"></a>
 ## whatstk.utils.hformat
+
+Header format utils.
+
+Example: Check if header is available.
+
+```python
+>>> from whatstk.utils.hformat import is_supported
+>>> is_supported('%y-%m-%d, %H:%M:%S - %name:')
+(True, True)
+```
 
 <a name=".whatstk.utils.hformat.is_supported"></a>
 #### is\_supported
@@ -397,7 +509,7 @@ Check if header `hformat` is currently supported.
 def is_supported_verbose(hformat)
 ```
 
-Check if header `hformat` is currently supported, manually and using `auto_header`.
+Check if header `hformat` is currently supported (both manually and using `auto_header`).
 
 Result is shown as a string.
 
@@ -434,6 +546,8 @@ Get dictionary with supported formats and relevant info.
 <a name=".whatstk.utils.parser"></a>
 ## whatstk.utils.parser
 
+Parser utils.
+
 <a name=".whatstk.utils.parser.generate_regex"></a>
 #### generate\_regex
 
@@ -459,6 +573,8 @@ Generate the appropriate regular expression from simplified syntax.
 def parse_chat(text, regex)
 ```
 
+Parse chat using given RegEx.
+
 **Arguments**:
 
   text (str) Whole log chat text.
@@ -481,7 +597,7 @@ def parse_chat(text, regex)
 def remove_alerts_from_df(r_x, df)
 ```
 
-Tries to get rid of alert/notification messages
+Try to get rid of alert/notification messages.
 
 **Arguments**:
 
@@ -519,6 +635,10 @@ To be raised when hformat could not be found.
 <a name=".whatstk.objects"></a>
 ## whatstk.objects
 
+Library objects.
+
+Most important one is `WhatsAppChat`.
+
 <a name=".whatstk.objects.WhatsAppChat"></a>
 ### WhatsAppChat
 
@@ -551,8 +671,8 @@ Create instance from chat log txt file hosted locally.
 
   
 - `filename` _str_ - Name to the txt chat log file.
-- `auto_header` _bool_ - Set to True to detect header automatically, otherwise set to False. Defaults to True. If
-  False, you have to provide a value to `hformat`.
+- `auto_header` _bool_ - Set to True to detect header automatically, otherwise set to False. Defaults to True.
+  If False, you have to provide a value to `hformat`.
 - `hformat` _str_ - Format of the header. Check `whatstk.WhatsAppChat.prepare_df` docs.
 - `encoding` _str_ - Required to load file. Default is 'utf-8'. Should be working. Report any incidence.
   
@@ -560,6 +680,69 @@ Create instance from chat log txt file hosted locally.
 **Returns**:
 
 - `WhatsAppChat` - Class instance with loaded and parsed chat.
+
+<a name=".whatstk.objects.WhatsAppChat.from_multiple_txt"></a>
+#### from\_multiple\_txt
+
+```python
+ | @classmethod
+ | def WhatsAppChat.from_multiple_txt(cls, filenames, auto_header=None, hformat=None, encoding='utf-8')
+```
+
+Load a WhatsAppChat instance from multiple sources.
+
+**Arguments**:
+
+- `filenames` _list_ - List with names of the files, e.g. ['part1.txt', 'part2.txt', ...].
+- `auto_header` _list, optional_ - Whether auto_header should be performed (for each file, choose True/False).
+  Defaults to True for all files.
+- `hformat` _list, optional_ - List with the hformat to be used per each file. Defaults to None.
+- `encoding` _str, optional_ - Encoding to use when loading file. Defaults to 'utf-8'.
+
+<a name=".whatstk.objects.WhatsAppChat.merge"></a>
+#### merge
+
+```python
+ | def WhatsAppChat.merge(chat, rename_users=None)
+```
+
+Merge current instance with `chat`.
+
+**Arguments**:
+
+- `chat` _WhatsAppChat_ - Another chat.
+- `rename_users` _dict_ - Dictionary mapping old names to new names,
+- `example` - {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to
+  'John', and 'Raymond' to 'Ray'.
+  
+
+**Returns**:
+
+- `WhatsAppChat` - Merged chat.
+
+<a name=".whatstk.objects.WhatsAppChat.rename_users"></a>
+#### rename\_users
+
+```python
+ | def WhatsAppChat.rename_users(mapping)
+```
+
+Rename users.
+
+**Arguments**:
+
+- `mapping` _dict_ - Dictionary mapping old names to new names, example: {'John':['Jon', 'J'], 'Ray':
+  ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'.
+  
+
+**Returns**:
+
+- `pandas.DataFrame` - DataFrame with users renamed according to `mapping`.
+  
+
+**Raises**:
+
+- `ValueError` - Raised if mapping is not correct.
 
 <a name=".whatstk.objects.WhatsAppChat.to_txt"></a>
 #### to\_txt
@@ -597,7 +780,7 @@ Save data as csv.
  | def WhatsAppChat.__len__()
 ```
 
-Get length of DataFrame
+Get length of DataFrame.
 
 **Returns**:
 

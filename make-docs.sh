@@ -7,7 +7,7 @@
 mkdir -p docs
 mkdir -p docs/modules
 
-rm -fr docs/*
+rm -fr docs/index.md
 pydoc-markdown pydoc-markdown.yml -m whatstk >> docs/index.md
 
 # mkdir -p docs/modules
