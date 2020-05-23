@@ -6,7 +6,17 @@ import warnings
 
 
 def vis_boxplot(user_data, title, ignore_zero=True):
+    """Visualize boxplot.
 
+    Args:
+        user_data (pandas.DataFrame): User data.
+        title (str): Title for plot.
+        ignore_zero (bool, optional): Ignore zero values. Defaults to True.
+
+    Returns:
+        dict: Figure.
+
+    """
     # Create a trace
     data = []
 
@@ -85,4 +95,3 @@ def vis(user_data, title):
     """
     warnings.warn("Will be deprecated in 0.4.0. Use scatter_vis instead.", FutureWarning)
     return vis_scatter_time(user_data, title)
-
