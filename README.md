@@ -42,8 +42,10 @@ pip install whatstk
 
 
 ## Getting Started
-Make sure to first obtain the chat to be analyzed. Export it as a `txt` file using your phone (more info on this
-[here](https://lcsrg.me/whatstk-gui/#faqs)). Then you can use the library as follows
+#### Export your chat using your phone: 
+Follow this [instructions](https://lcsrg.me/whatstk-gui/#faqs).
+
+#### Load chat
 
 ```python
 from whatstk.objects import WhatsAppChat
@@ -51,8 +53,9 @@ from whatstk.objects import WhatsAppChat
 filename = 'chats/example.txt'
 chat = WhatsAppChat.from_txt(filename)
 ```
+#### More examples
 
-See more examples [here](docs/api.md).
+Find more examples [here](docs/api.md).
 
 ## Documentation
 Check [documentation](docs/index.md).
