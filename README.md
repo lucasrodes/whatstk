@@ -25,7 +25,7 @@ license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?"></a
 **whatstk** is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license. Parse your
 chats to csv with a simple command or read and analyze them using Python and pandas.DataFrame. 
 
-⭐Please **star** our project if you found it interesting to **keep us motivated** 😄!
+⭐ Please **star** our project if you found it interesting to **keep us motivated** 😄!
 
 ### Content
 * [Installation](#installation)
