@@ -52,7 +52,7 @@ filename = 'chats/example.txt'
 chat = WhatsAppChat.from_txt(filename)
 ```
 
-See more examples [here](docs/api.md)
+See more examples [here](docs/api.md).
 
 ## Documentation
 Check [documentation](docs/index.md).
