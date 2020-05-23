@@ -45,7 +45,15 @@ pip install whatstk
 #### Export your chat using your phone: 
 Follow this [instructions](https://lcsrg.me/whatstk-gui/#faqs).
 
-#### Load chat
+#### Convert chat to csv
+Easily convert your txt chat file to csv using command `whatstk-to-csv`.
+
+```bash
+$ whatstk-to-csv [input_filename] [output_filename]
+```
+
+#### Load chat in python
+You can also load the exported txt file with python.
 
 ```python
 from whatstk.objects import WhatsAppChat
