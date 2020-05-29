@@ -25,6 +25,6 @@ sh run-tests.sh
 
 However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
 
-## Chat with us
+## Join the community
 
-Join our [Discord group](https://discord.gg/KUeeJh).
+Join us on [Gitter](https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge).

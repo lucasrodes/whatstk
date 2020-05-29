@@ -1,4 +1,4 @@
-Make sure to first obtain the chat to be analyzed. Export it as a `txt` file using your phone (more info on this [here](https://lcsrg.me/whatstk-gui/#faqs)).
+Make sure to first obtain the chat to be analysed. Export it as a `txt` file using your phone (more info on this [here](https://lcsrg.me/whatstk-gui/#faqs)).
 
 Check more on how-to use it in the [docs](docs/index.md)
 

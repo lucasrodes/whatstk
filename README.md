@@ -1,10 +1,9 @@
-<h1 align="center" style="border-bottom: none;"> <a href="http://lcsrg.me/whatstk">whatstk</a>
+<h1 align="center" style="border-bottom: none;"> whatstk: python whatsapp analysis and parsing toolkit
 </h1>
-<h3 align="center" style="border-bottom: none;">python whatsapp parser and analysis tool</h3>
 
 <p align="center">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/version-0.2.6-blue.svg?&color=25D366&logo=whatsapp">
+    <img alt="Package version" src="https://img.shields.io/badge/version-0.2.6-blue.svg?&color=25D366&logo=whatsapp&style=for-the-badge">
   </a>
 </p>
 <!-- style=for-the-badge -->
@@ -16,16 +15,20 @@
   <a href="docs/index.md"><img alt="Documentation" src="https://img.shields.io/badge/documentation-royalblue.svg"></a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE"><img alt="GitHub
 license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?"></a>
+  <a href="https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg"></a>
 </p>
 
 
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
-**whatstk** is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license. Parse your
-chats to csv with a simple command or read and analyze them using Python and pandas.DataFrame. 
+**whatstk** is a python package providing tools to analyse and parse WhatsApp chats developed under the
+**[sociepy](https://github.com/sociepy)**
+project. Easily convert your chats to csv and analyse them using python and pandas.DataFrame. 
 
-⭐ Please **star** our project if you found it interesting to **keep us motivated** 😄!
+It is distributed under the GPL-3.0 license. 
+
+⭐ Please **star** our project if you found it interesting to **give us some dopamine** 😄!
 
 ### Content
 * [Installation](#installation)
@@ -73,4 +76,4 @@ See [contributing section](CONTRIBUTING.md).
 
 
 ## License
-See [license](LICENSE).
+[GPL-3.0](LICENSE)
