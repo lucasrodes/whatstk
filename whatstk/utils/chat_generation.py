@@ -14,6 +14,7 @@ from lorem import sentence
 from emoji.unicode_codes import EMOJI_UNICODE
 from whatstk.objects import WhatsAppChat
 from whatstk.utils.hformat import get_supported_hformats_as_list
+from whatstk.utils.utils import COLNAMES_DF
 
 
 USERS = [
@@ -112,10 +113,10 @@ class ChatGenerator:
         timestamps = self.generate_timestamps(last=last_timestamp)
         users = self.generate_users()
         df = pd.DataFrame.from_dict({
-            'date': timestamps,
-            'username': users,
-            'message': messages
-        }).set_index('date')
+            COLNAMES_DF.DATE: timestamps,
+            COLNAMES_DF.USERNAME: users,
+            COLNAMES_DF.MESSAGE: messages
+        }).set_index(COLNAMES_DF.DATE)
         return df
 
     def generate(self, filename=None, hformat=None, last_timestamp=None):

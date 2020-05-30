@@ -25,12 +25,9 @@ def extract_header_from_text(text, encoding='utf-8'):
     lines = text.split('\n')
 
     # Get format auto
-    # hformat = extract_header_format_from_lines(lines)
-    # return hformat
     try:
         hformat = extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
-        # print(hformat)
         return hformat
     except:  # noqa
         logging.info("Format not found.")
@@ -159,9 +156,6 @@ def _extract_header_parts(header):
         i += 1
     items = re.findall(r'[-|\]]\s[^:]*:', hformat_template)
     if len(items) != 1:
-        # print(header)
-        # print(hformat_elements)
-        # print(hformat_template)
         raise RegexError(
             "Username match was not possible. Check that header (%s) is of format '... - %name:' or '[...] %name:'",
             hformat_template)
@@ -201,7 +195,6 @@ def _extract_header_format_from_components(elements_list, template_list):
         if (len(e) == len_mode) and ("".join([str(type(ee).__name__) for ee in e]) == type_mode):
             elements_list_.append(e)
             template_list_.append(t)
-    # print(elements_list[0])
     # Get positions
     df = pd.DataFrame(elements_list_)
     dates_df = df.select_dtypes(int)
