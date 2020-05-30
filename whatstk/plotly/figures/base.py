@@ -21,13 +21,22 @@ class FigureBuilder:
             xlabel (str, optional): x-axis label. Defaults to None.
         """
         self.df = self._get_df(df=df, chat=chat)
+        self.users = self._get_users(df=df, chat=chat)
 
     def _get_df(self, df, chat):
         if (df is None) & (chat is None):
             raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.")
-        if df is None and chat is not None:
+        if (df is None) and (chat is not None):
             df = chat.df
         return df
+
+    def _get_users(self, df, chat):
+        if (df is None) & (chat is None):
+            raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.")
+        if (df is None) and (chat is not None):
+            return chat.users
+        else:
+            return df['username'].unique().tolist()
 
     def user_msg_length_boxplot(self, title="User message length", xlabel="User"):
         """Get boxplot of message length of all users.
