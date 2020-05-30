@@ -1,4 +1,4 @@
-<h1 align="center" style="border-bottom: none;"> whatstk: python whatsapp analysis and parsing toolkit
+<h1 align="center" style="border-bottom: none;"> whatstk: analyse WhatsApp chats with python
 </h1>
 
 <p align="center">
