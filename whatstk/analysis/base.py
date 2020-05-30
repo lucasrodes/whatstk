@@ -2,6 +2,7 @@
 
 
 import pandas as pd
+from whatstk.utils.utils import COLNAMES_DF
 
 
 def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False):
@@ -65,7 +66,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         n_interventions.index = n_interventions.index.set_names(['weekday', 'hour'])
     else:
         n_interventions.index.name = date_mode
-    n_interventions.columns = n_interventions.columns.get_level_values('username')
+    n_interventions.columns = n_interventions.columns.get_level_values(COLNAMES_DF.USERNAME)
 
     if cummulative:
         n_interventions = n_interventions.cumsum()
@@ -85,10 +86,12 @@ def _interventions(df, index_date, msg_length):
     """
     if msg_length:
         counts_ = df.copy()
-        counts_['message_length'] = counts_['message'].apply(lambda x: len(x))
-        counts = counts_.groupby(by=index_date + ['username']).agg({'message_length': lambda x: x.sum()})
+        counts_[COLNAMES_DF.MESSAGE_LENGTH] = counts_[COLNAMES_DF.MESSAGE].apply(lambda x: len(x))
+        counts = counts_.groupby(by=index_date + [COLNAMES_DF.USERNAME]).agg({
+            COLNAMES_DF.MESSAGE_LENGTH: lambda x: x.sum()
+        })
     else:
-        counts = df.groupby(by=index_date + ['username']).agg('count')
+        counts = df.groupby(by=index_date + [COLNAMES_DF.USERNAME]).agg('count')
     counts = counts.unstack(fill_value=0)
 
     return counts
