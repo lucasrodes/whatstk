@@ -2,15 +2,15 @@
 
 
 import plotly.graph_objs as go
-import plotly.express as px
 from whatstk.utils.utils import COLNAMES_DF
 
 
-def fig_boxplot_msglen(df, title="", xlabel=None):
+def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
     """Visualize boxplot.
 
     Args:
         df (pandas.DataFrame): Chat data.
+        username_to_color (dictm optional). Dictionary mapping username to color. Defaults to None.
         title (str, optional): Title for plot. Defaults to "".
         xlabel (str, optional): x-axis label title. Defaults to None.
 
@@ -30,6 +30,7 @@ def fig_boxplot_msglen(df, title="", xlabel=None):
         ```
 
     """
+    df = df.copy()
     # Get message lengths
     df[COLNAMES_DF.MESSAGE_LENGTH] = df[COLNAMES_DF.MESSAGE].apply(lambda x: len(x))
     # Sort users by median
@@ -45,14 +46,14 @@ def fig_boxplot_msglen(df, title="", xlabel=None):
             y=x.values,
             showlegend=True,
             name=username,
-            boxpoints='outliers'
+            boxpoints='outliers',
+            marker_color='#9591F4'#username_to_color[username]
         )
         data.append(trace)
 
     layout = dict(
         title=title,
-        xaxis=dict(title=xlabel),
-        colorway=px.colors.cyclical.mygbm
+        xaxis=dict(title=xlabel)
     )
 
     return dict(data=data, layout=layout)

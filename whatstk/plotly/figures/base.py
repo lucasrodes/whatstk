@@ -1,9 +1,11 @@
 """Build plotly-compatible figures."""
 
 
+from whatstk.objects import WhatsAppChat
+from whatstk.analysis import get_interventions_count
 from whatstk.plotly.figures.scatter import fig_scatter_time
 from whatstk.plotly.figures.boxplot import fig_boxplot_msglen
-from whatstk.analysis import get_interventions_count
+from whatstk.plotly.figures.utils import hex_color_palette
 
 
 class FigureBuilder:
@@ -19,9 +21,9 @@ class FigureBuilder:
                                            None.
             title (str, optional): Figure title. Defaults to "".
             xlabel (str, optional): x-axis label. Defaults to None.
+
         """
         self.df = self._get_df(df=df, chat=chat)
-        self.users = self._get_users(df=df, chat=chat)
 
     def _get_df(self, df, chat):
         if (df is None) & (chat is None):
@@ -30,13 +32,27 @@ class FigureBuilder:
             df = chat.df
         return df
 
-    def _get_users(self, df, chat):
-        if (df is None) & (chat is None):
-            raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.")
-        if (df is None) and (chat is not None):
-            return chat.users
-        else:
-            return df['username'].unique().tolist()
+    @property
+    def usernames(self):
+        """Get list with users available in given chat.
+
+        Returns:
+            list: List with usernames available in chat DataFrame.
+
+        """
+        return WhatsAppChat(df=self.df).users
+
+    @property
+    def user_color_mapping(self):
+        """Build mapping between user and color.
+
+        Returns:
+            dict: Mapping username -> color (rgb).
+
+        """
+        colors = hex_color_palette(n_colors=len(self.usernames))
+        mapping = dict(zip(self.usernames, colors))
+        return mapping
 
     def user_msg_length_boxplot(self, title="User message length", xlabel="User"):
         """Get boxplot of message length of all users.
@@ -60,6 +76,7 @@ class FigureBuilder:
         """
         fig = fig_boxplot_msglen(
             df=self.df,
+            username_to_color=self.user_color_mapping,
             title=title,
             xlabel=xlabel
         )
@@ -101,10 +118,11 @@ class FigureBuilder:
             df=self.df,
             date_mode=date_mode,
             msg_length=msg_length,
-            cummulative=cummulative
+            cummulative=cummulative,
         )
         fig = fig_scatter_time(
             user_data=counts,
+            username_to_color=self.user_color_mapping,
             title=title,
             xlabel=xlabel
         )
