@@ -1,4 +1,6 @@
 """Generate chats in all hformats with `size` number of messages and export them to a given `output_path`."""
+
+
 import argparse
 from datetime import datetime
 from whatstk.utils.chat_generation import generate_chats_hformats
