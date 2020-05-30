@@ -17,8 +17,9 @@
 #                         --output-path tests/chats/merge/ --filenames file2.txt
 
 
-## (2) Run tests
+## (2) Run flake
+flake8 --max-complexity 10 --format=html --docstring-convention=google --htmldir=flake-report whatstk
+
+## (3) Run tests
 py.test --html=testreport.html --cov-report html --cov-report term --cov=whatstk tests/
 
-## (3) Run flake
-flake8 --max-complexity 10 --format=html --docstring-convention=google --htmldir=flake-report whatstk

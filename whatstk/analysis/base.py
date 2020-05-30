@@ -4,7 +4,7 @@
 import pandas as pd
 
 
-def interventions(df=None, chat=None, date_mode='date', msg_length=False):
+def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False):
     """Get number of interventions per user per unit of time.
 
     The unit of time can be chosen by means of argument `date_mode`.
@@ -15,29 +15,30 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
 
         ```python
         >>> from whatstk import df_from_txt
-        >>> from whatstk.analysis interventions
+        >>> from whatstk.analysis get_interventions_count
         >>> filename = 'path/to/samplechat.txt'
         >>> df = df_from_txt(filename)
-        >>> counts = interventions(df=df, date_mode='date', msg_length=False)
+        >>> counts = get_interventions_count(df=df, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
         ```
 
     Args:
         df (pandas.DataFrame): Chat as DataFrame.
         chat (WhatsAppChat): Object containing parsed WhatsApp chat.
-        date_mode (str): Choose mode to group interventions by. Available modes are:
+        date_mode (str, optional): Choose mode to group interventions by. Defaults to 'date'. Available modes are:
                             - 'date': Grouped by particular date (year, month and day).
                             - 'hour': Grouped by hours.
                             - 'month': Grouped by months.
                             - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
                             - 'hourweekday': Grouped by weekday and hour.
-        msg_length (bool): Set to True to count the number of characters instead of number of messages sent.
+        msg_length (bool, optional): Set to True to count the number of characters instead of number of messages sent.
+        cummulative (bool, optional): Set to True to obtain commulative counts.
 
     Returns:
         pandas.DataFrame: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
 
     Raises:
-        ValueError: if invalid mode is chosen.
+        ValueError: if `date_mode` value is not supported.
 
     """
     if (df is None) & (chat is None):
@@ -65,6 +66,10 @@ def interventions(df=None, chat=None, date_mode='date', msg_length=False):
     else:
         n_interventions.index.name = date_mode
     n_interventions.columns = n_interventions.columns.get_level_values('username')
+
+    if cummulative:
+        n_interventions = n_interventions.cumsum()
+
     return n_interventions
 
 

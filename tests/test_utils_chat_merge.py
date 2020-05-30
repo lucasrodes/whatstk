@@ -4,7 +4,7 @@ from whatstk.utils.chat_merge import _merge_two_chats
 from whatstk.core import df_from_txt
 
 
-chats_merge_path = 'tests/chats/merge/'
+chats_merge_path = './tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
 
