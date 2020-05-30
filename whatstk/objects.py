@@ -9,6 +9,7 @@ from whatstk.utils.parser import generate_regex, parse_chat, remove_alerts_from_
 from whatstk.utils.auto_header import extract_header_from_text
 from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.chat_merge import merge_chats
+from whatstk.utils.utils import COLNAMES_DF
 
 
 class WhatsAppChat:
@@ -17,7 +18,7 @@ class WhatsAppChat:
     def __init__(self, df):
         """Constructor."""
         self.df = df
-        self.users = sorted(self.df.username.unique().tolist())
+        self.users = sorted(list(self.df[COLNAMES_DF.USERNAME].unique()))
         self.start_date = df.index.min()
         self.end_date = df.index.max()
 
@@ -159,7 +160,7 @@ class WhatsAppChat:
             if not isinstance(old_names, list):
                 raise ValueError("New names must come as a list of str.")
             for old_name in old_names:
-                df.username[df['username'] == old_name] = new_name
+                df[COLNAMES_DF.USERNAME][df[COLNAMES_DF.USERNAME] == old_name] = new_name
         return WhatsAppChat(df)
 
     def to_txt(self, filename, hformat=None):
