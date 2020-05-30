@@ -5,9 +5,7 @@ from whatstk.utils.chat_generation import generate_chats_hformats
 
 
 def _parse_args():
-    parser = argparse.ArgumentParser()
-    # For kubeflow
-    # parser.add_argument("--output_path", help="Output path where the data should be saved.")
+    parser = argparse.ArgumentParser("Generate chat.")
     parser.add_argument("--output-path", help="Path where to store generated chats. Must exist.",
                         required=True, type=str)
     parser.add_argument("--filenames", default=None, help="Filenames. Must be equal length of --hformats.",

@@ -42,7 +42,8 @@ setup(
     python_requires='>=3.5',
     entry_points={
         'console_scripts': [
-            'whatstk-generate-chats=whatstk.scripts.generate_chats:main'
+            'whatstk-generate-chats=whatstk.scripts.generate_chats:main',
+            'whatstk-to-csv=whatstk.scripts.txt_to_csv:main'
         ]
     }
 )

@@ -1,8 +1,8 @@
 """Analytics tools."""
 
 
-from whatstk.analysis.base import interventions
+from whatstk.analysis.base import get_interventions_count
 
 __all__ = [
-    "interventions"
+    "get_interventions_count"
 ]
