@@ -7,10 +7,10 @@ from whatstk.objects import WhatsAppChat
 
 def _parse_args():
     parser = argparse.ArgumentParser(description="Convert a Whatsapp chat from csv to txt.")
-    parser.add_argument("input_filename", help="Input txt file.", type=str)
-    parser.add_argument("output_filename", help="Name of output csv file.", type=str)
-    parser.add_argument("--hformat", help="By default, auto-header detection is attempted. If does not work, you can"
-                        "specify it manually using this argument.", type=str, default=None)
+    parser.add_argument("input_filename", type=str, help="Input txt file.")
+    parser.add_argument("output_filename", type=str, help="Name of output csv file.")
+    parser.add_argument("-f", "--hformat", type=str, default=None, help="By default, auto-header detection is"
+                        "attempted. If does not work, you can specify it manually using this argument.")
     args = parser.parse_args()
     return args
 

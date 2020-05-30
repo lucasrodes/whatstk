@@ -43,7 +43,8 @@ setup(
     entry_points={
         'console_scripts': [
             'whatstk-generate-chats=whatstk.scripts.generate_chats:main',
-            'whatstk-to-csv=whatstk.scripts.txt_to_csv:main'
+            'whatstk-to-csv=whatstk.scripts.txt_to_csv:main',
+            'whatstk-graph=whatstk.scripts.graph:main'
         ]
     }
 )
