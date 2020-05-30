@@ -3,6 +3,7 @@
 
 import plotly.graph_objs as go
 import plotly.express as px
+from whatstk.utils.utils import COLNAMES_DF
 
 
 def fig_boxplot_msglen(df, title="", xlabel=None):
@@ -30,16 +31,16 @@ def fig_boxplot_msglen(df, title="", xlabel=None):
 
     """
     # Get message lengths
-    df['message_length'] = df['message'].apply(lambda x: len(x))
+    df[COLNAMES_DF.MESSAGE_LENGTH] = df[COLNAMES_DF.MESSAGE].apply(lambda x: len(x))
     # Sort users by median
-    user_stats = df.groupby('username')\
-        .aggregate({'message_length': 'median'})['message_length'].sort_values(ascending=False)
+    user_stats = df.groupby(COLNAMES_DF.USERNAME)\
+        .aggregate({COLNAMES_DF.MESSAGE_LENGTH: 'median'})[COLNAMES_DF.MESSAGE_LENGTH].sort_values(ascending=False)
 
     # Create a list of traces
     data = []
 
     for username in user_stats.index:
-        x = df[df['username'] == username]['message_length']
+        x = df[df[COLNAMES_DF.USERNAME] == username][COLNAMES_DF.MESSAGE_LENGTH]
         trace = go.Box(
             y=x.values,
             showlegend=True,
