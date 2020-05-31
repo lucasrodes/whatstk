@@ -21,20 +21,6 @@ def fig_scatter_time(user_data, username_to_color=None, title="", xlabel=None):
     Returns:
         dict: Figure.
 
-    Example:
-
-        ```python
-        >>> from plotly.offline import plot
-        >>> from whatstk import df_from_txt
-        >>> from whatstk.analysis import interventions
-        >>> from whatstk.plot import build_figure_scatter_time
-        >>> filename = 'path/to/samplechat.txt'
-        >>> df = df_from_txt(filename)
-        >>> counts = interventions(df=df, date_mode='date', msg_length=False, cummulative=True)
-        >>> fig = build_figure_scatter_time(counts, 'cumulative number of messages sent per day')
-        >>> plot(fig)
-        ```
-
     """
     # Create a trace
     data = []

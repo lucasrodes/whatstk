@@ -2,7 +2,7 @@
 
 
 import pandas as pd
-from whatstk.utils.utils import COLNAMES_DF
+from whatstk.utils.utils import COLNAMES_DF, _get_df
 
 
 def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False):
@@ -42,10 +42,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         ValueError: if `date_mode` value is not supported.
 
     """
-    if (df is None) & (chat is None):
-        raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.")
-    if df is None and chat is not None:
-        df = chat.df
+    df = _get_df(df=df, chat=chat)
 
     if date_mode == 'date':
         n_interventions = _interventions(df, [df.index.date], msg_length)

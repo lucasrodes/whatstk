@@ -1,7 +1,7 @@
 """Build Plotly compatible Figures."""
 
 
-from whatstk.plotly.figures.base import FigureBuilder
+from whatstk.graph.figures.base import FigureBuilder
 import plotly.io as pio
 
 

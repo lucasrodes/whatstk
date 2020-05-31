@@ -1,5 +1,5 @@
 import pytest
-from whatstk.plotly.figures.base import FigureBuilder
+from whatstk.graph.figures.base import FigureBuilder
 from whatstk.objects import WhatsAppChat
 
 
@@ -35,5 +35,21 @@ def test_user_interventions_count_linechart():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     fig = fb.user_interventions_count_linechart()
+    assert isinstance(fig, dict)
+    assert ('data' in fig and 'layout' in fig)
+
+
+def test_user_message_responses_flow():
+    df = load_chat_as_df()
+    fb = FigureBuilder(df=df)
+    fig = fb.user_message_responses_flow()
+    assert isinstance(fig, dict)
+    assert ('data' in fig and 'layout' in fig)
+
+
+def test_user_message_responses_heatmap():
+    df = load_chat_as_df()
+    fb = FigureBuilder(df=df)
+    fig = fb.user_message_responses_heatmap()
     assert isinstance(fig, dict)
     assert ('data' in fig and 'layout' in fig)
