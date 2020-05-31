@@ -4,7 +4,7 @@
 
 ---
 
-<h1 align="center" style="border-bottom: none;"> whatstk: python whatsapp analysis and parsing toolkit
+<h1 align="center" style="border-bottom: none;"> whatstk: analyze WhatsApp chats with python
 </h1>
 
 <p align="center">
@@ -28,9 +28,10 @@ license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?"></a
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
-**whatstk** is a python package providing tools to analyse and parse WhatsApp chats developed under the
-**[sociepy](https://github.com/sociepy)**
-project. Easily convert your chats to csv and analyse them using python and pandas.DataFrame. 
+**whatstk** is a python package providing tools to parse, analyze and visualise WhatsApp chats developed under the
+**[sociepy](https://github.com/sociepy)** project. Easily convert your chats to csv or simply visualise some stats using
+the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
+the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
 
 It is distributed under the GPL-3.0 license. 
 

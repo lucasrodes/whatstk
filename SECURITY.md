@@ -11,6 +11,6 @@ We release patches for security vulnerabilities for some project version. Check 
 
 ## Reporting a Vulnerability
 
-Please report (suspected) security vulnerabilities to [issues section](https://github.com/lucasrodes/whatstk/issues). We will analyse it and if the issue is confirmed, we will release a patch as soon as possible.
+Please report (suspected) security vulnerabilities to [issues section](https://github.com/lucasrodes/whatstk/issues). We will analyze it and if the issue is confirmed, we will release a patch as soon as possible.
 
 

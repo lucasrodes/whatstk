@@ -2,9 +2,10 @@
 
 
 import re
-import pandas as pd
 from datetime import datetime
+import pandas as pd
 from whatstk.utils.exceptions import RegexError
+from whatstk.utils.utils import COLNAMES_DF
 
 
 regex_simplifier = {
@@ -18,7 +19,7 @@ regex_simplifier = {
     '%S': r'(?P<seconds>\d{2})',
     '%P': r'(?P<ampm>[AaPp].? ?[Mm].?)',
     '%p': r'(?P<ampm>[AaPp].? ?[Mm].?)',
-    '%name': r'(?P<username>[^:]*)'
+    '%name': fr'(?P<{COLNAMES_DF.USERNAME}>[^:]*)'
 }
 
 
@@ -61,10 +62,29 @@ def parse_chat(text, regex):
         line_dict = _parse_line(text, headers, i)
         result.append(line_dict)
     if len(result) > 0:
-        df_chat = pd.DataFrame.from_records(result, index='date')
-        return df_chat[['username', 'message']]
+        df_chat = pd.DataFrame.from_records(result, index=COLNAMES_DF.DATE)
+        df_chat = df_chat[[COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
+        df_chat = add_schema(df_chat)
+        return df_chat
     else:
         raise RegexError("Could not match the provided regex with provided text. Not match was found.")
+
+
+def add_schema(df):
+    """Add default chat schema to df.
+
+    Args:
+        df (pandas.DataFrame): Chat dataframe.
+
+    Returns:
+        pandas.DataFrame: Chat dataframe with correct dtypes.
+
+    """
+    df = df.astype({
+        COLNAMES_DF.USERNAME: pd.StringDtype(),
+        COLNAMES_DF.MESSAGE: pd.StringDtype()
+    })
+    return df
 
 
 def _parse_line(text, headers, i):
@@ -102,9 +122,14 @@ def _parse_line(text, headers, i):
     else:
         date = datetime(year, int(result_['month']), int(result_['day']), hour,
                         int(result_['minutes']), int(result_['seconds']))
-    username = result_['username']
+    username = result_[COLNAMES_DF.USERNAME]
     message = _get_message(text, headers, i)
-    return dict(date=date, username=username, message=message)
+    line_dict = {
+        COLNAMES_DF.DATE: date,
+        COLNAMES_DF.USERNAME: username,
+        COLNAMES_DF.MESSAGE: message
+    }
+    return line_dict
 
 
 def remove_alerts_from_df(r_x, df):
@@ -119,7 +144,8 @@ def remove_alerts_from_df(r_x, df):
 
     """
     df_new = df.copy()
-    df_new.loc[:, 'message'] = df_new['message'].apply(lambda x: _remove_alerts_from_line(r_x, x))
+    df_new.loc[:, COLNAMES_DF.MESSAGE] = df_new[COLNAMES_DF.MESSAGE].apply(lambda x: _remove_alerts_from_line(r_x, x))
+    df_new = add_schema(df_new)
     return df_new
 
 
