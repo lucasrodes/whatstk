@@ -13,7 +13,7 @@ COLNAMES_DF = ColnamesDf(
 )
 
 
-def _get_df(self, df, chat):
+def _get_df(df, chat):
     if (df is None) & (chat is None):
         raise ValueError("Please provide a chat, using either argument `df` or `chat`.")
     if (df is None) and (chat is not None):
