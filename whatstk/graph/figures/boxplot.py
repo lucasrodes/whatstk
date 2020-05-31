@@ -17,18 +17,6 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
     Returns:
         dict: Figure.
 
-    Example:
-
-        ```python
-        >>> from whatstk.graph import plot
-        >>> from whatstk import df_from_txt
-        >>> from whatstk.plot import build_figure_boxplot_msglen
-        >>> filename = 'path/to/samplechat.txt'
-        >>> df = df_from_txt(filename)
-        >>> fig = build_figure_boxplot_msglen(df, 'Message length')
-        >>> plot(fig)
-        ```
-
     """
     df = df.copy()
     # Get message lengths

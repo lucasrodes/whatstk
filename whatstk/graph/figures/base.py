@@ -1,10 +1,12 @@
 """Build plotly-compatible figures."""
 
 
+import numpy as np
 from whatstk.objects import WhatsAppChat
-from whatstk.analysis import get_interventions_count
+from whatstk.analysis import get_interventions_count, response_matrix
 from whatstk.graph.figures.scatter import fig_scatter_time
 from whatstk.graph.figures.boxplot import fig_boxplot_msglen
+from whatstk.graph.figures.sankey import fig_sankey
 from whatstk.graph.figures.utils import hex_color_palette
 from whatstk.utils.utils import _get_df
 
@@ -81,7 +83,7 @@ class FigureBuilder:
         """Plot number of user interventions over time.
 
         Args:
-           date_mode (str, optional): Choose mode to group interventions by. Defaults to 'date'. Available modes are:
+            date_mode (str, optional): Choose mode to group interventions by. Defaults to 'date'. Available modes are:
                             - 'date': Grouped by particular date (year, month and day).
                             - 'hour': Grouped by hours.
                             - 'month': Grouped by months.
@@ -119,5 +121,53 @@ class FigureBuilder:
             username_to_color=self.user_color_mapping,
             title=title,
             xlabel=xlabel
+        )
+        return fig
+
+    def user_message_responses_flow(self, title="Message flow"):
+        """Get the flow of message responses.
+
+        A response is from user X to user Y happens if user X sends a message right after message Y does.
+
+        This method generates a plotly-ready figure (as a dictionary) using Sankey diagram.
+
+        Args:
+            title (str, optional): Title for plot. Defaults to "Message flow".
+
+        Returns:
+            dict: Dictionary with data and layout. Plotly compatible
+
+        Example:
+
+            ```python
+            >>> from whatstk import df_from_txt
+            >>> from whatstk.graph import plot, FigureBuilder
+            >>> filename = 'path/to/samplechat.txt'
+            >>> df = df_from_txt(filename)
+            >>> fig = FigureBuilder(df).user_message_responses_flow()
+            >>> plot(fig)
+            ```
+
+        """
+        # Get response matrix
+        responses = response_matrix(self.df)
+
+        # Node lists
+        label = self.usernames * 2
+        color = list(self.user_color_mapping.values())*2
+        # Link lists
+        n_users = len(self.usernames)
+        source = np.repeat(np.arange(n_users), n_users).tolist()
+        target = np.arange(n_users, 2*n_users).tolist()*n_users
+        value = responses.values.flatten().tolist()
+
+        # Get figure
+        fig = fig_sankey(
+            label=label,
+            color=color,
+            source=source,
+            target=target,
+            value=value,
+            title=title
         )
         return fig
