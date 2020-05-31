@@ -17,4 +17,4 @@ def vis(user_data, title):
 
     """
     warnings.warn("Will be deprecated in 0.4.0. Use whatstk.plotly.FigureBuilder instead.", FutureWarning)
-    return fig_scatter_time(user_data, title)
+    return fig_scatter_time(user_data=user_data, title=title)

@@ -1,3 +1,4 @@
+#  TODO: Assert number of columns equals number of users
 from whatstk.analysis import get_interventions_count
 from whatstk.objects import WhatsAppChat
 import pandas as pd
@@ -15,6 +16,7 @@ def test_interventions_date():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
     assert(chat.df.index.max().date() == counts.index.max().date())
@@ -28,6 +30,7 @@ def test_interventions_date_2():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
     assert(chat.df.index.max().date() == counts.index.max().date())
@@ -41,6 +44,7 @@ def test_interventions_date_msg_length():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
     assert(chat.df.index.max().date() == counts.index.max().date())
@@ -54,6 +58,7 @@ def test_interventions_hour():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
     assert(counts.index.max() == chat.df.index.hour.max())
@@ -67,6 +72,7 @@ def test_interventions_hour_msg_length():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
     assert(counts.index.max() == chat.df.index.hour.max())
@@ -80,6 +86,7 @@ def test_interventions_month():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
     assert(counts.index.max() == chat.df.index.month.max())
@@ -94,6 +101,7 @@ def test_interventions_month_msg_length():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
     assert(counts.index.max() == chat.df.index.month.max())
@@ -107,6 +115,7 @@ def test_interventions_weekday():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
     assert(counts.index.max() == chat.df.index.weekday.max())
@@ -121,6 +130,7 @@ def test_interventions_weekday_msg_length():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
     assert(counts.index.max() == chat.df.index.weekday.max())
@@ -135,6 +145,7 @@ def test_interventions_hourweekday():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range days
     assert(counts.index.levels[0].max() == chat.df.index.weekday.max())
@@ -150,8 +161,9 @@ def test_interventions_hourweekday_msg_length():
     counts = get_interventions_count(chat=chat, date_mode='hourweekday', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
-    # Asswert chat df and counts df have same users
+    # Assert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Check range days
     assert(counts.index.levels[0].max() == chat.df.index.weekday.max())
@@ -161,18 +173,18 @@ def test_interventions_hourweekday_msg_length():
     assert(counts.index.levels[1].max() == chat.df.index.hour.max())
     assert(counts.index.levels[1].min() == chat.df.index.hour.min())
 
+
 def test_interventions_error_1():
     chat = WhatsAppChat.from_txt(filename)
     with pytest.raises(ValueError):
-        counts = get_interventions_count(chat=chat, date_mode='error', msg_length=False)
+        _ = get_interventions_count(chat=chat, date_mode='error', msg_length=False)
     with pytest.raises(ValueError):
-        counts = get_interventions_count(chat=chat, date_mode='error', msg_length=True)
+        _ = get_interventions_count(chat=chat, date_mode='error', msg_length=True)
 
 
 def test_interventions_error_2():
-    chat = WhatsAppChat.from_txt(filename)
     with pytest.raises(ValueError):
-        counts = get_interventions_count(date_mode='hour', msg_length=False)
+        _ = get_interventions_count(date_mode='hour', msg_length=False)
 
 
 def test_interventions_date_cumsum():
@@ -182,6 +194,7 @@ def test_interventions_date_cumsum():
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
     assert(chat.df.index.max().date() == counts.index.max().date())
