@@ -20,7 +20,7 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
     Example:
 
         ```python
-        >>> from whatstk.plotly import plot
+        >>> from whatstk.graph import plot
         >>> from whatstk import df_from_txt
         >>> from whatstk.plot import build_figure_boxplot_msglen
         >>> filename = 'path/to/samplechat.txt'

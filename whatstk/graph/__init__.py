@@ -2,7 +2,7 @@
 
 
 from plotly.offline import plot
-from whatstk.plotly.figures import FigureBuilder
+from whatstk.graph.figures import FigureBuilder
 
 
 __all__ = [

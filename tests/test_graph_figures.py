@@ -1,5 +1,5 @@
 import pytest
-from whatstk.plotly.figures.base import FigureBuilder
+from whatstk.graph.figures.base import FigureBuilder
 from whatstk.objects import WhatsAppChat
 
 

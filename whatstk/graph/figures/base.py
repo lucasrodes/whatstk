@@ -3,9 +3,9 @@
 
 from whatstk.objects import WhatsAppChat
 from whatstk.analysis import get_interventions_count
-from whatstk.plotly.figures.scatter import fig_scatter_time
-from whatstk.plotly.figures.boxplot import fig_boxplot_msglen
-from whatstk.plotly.figures.utils import hex_color_palette
+from whatstk.graph.figures.scatter import fig_scatter_time
+from whatstk.graph.figures.boxplot import fig_boxplot_msglen
+from whatstk.graph.figures.utils import hex_color_palette
 from whatstk.utils.utils import _get_df
 
 
@@ -60,7 +60,7 @@ class FigureBuilder:
 
             ```python
             >>> from whatstk import df_from_txt
-            >>> from whatstk.plotly import plot, FigureBuilder
+            >>> from whatstk.graph import plot, FigureBuilder
             >>> filename = 'path/to/samplechat.txt'
             >>> df = df_from_txt(filename)
             >>> fig = FigureBuilder(df).user_msg_length_boxplot()
@@ -100,7 +100,7 @@ class FigureBuilder:
 
             ```python
             >>> from whatstk import df_from_txt
-            >>> from whatstk.plotly import plot, FigureBuilder
+            >>> from whatstk.graph import plot, FigureBuilder
             >>> filename = 'path/to/samplechat.txt'
             >>> df = df_from_txt(filename)
             >>> fig = FigureBuilder(df).user_interventions_count_linechart(cummulative=True)
