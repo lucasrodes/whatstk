@@ -47,7 +47,7 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
             showlegend=True,
             name=username,
             boxpoints='outliers',
-            marker_color='#9591F4'#username_to_color[username]
+            marker_color=username_to_color[username] if username_to_color else None
         )
         data.append(trace)
 

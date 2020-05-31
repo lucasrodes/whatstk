@@ -46,7 +46,7 @@ def fig_scatter_time(user_data, username_to_color=None, title="", xlabel=None):
             showlegend=True,
             name=username,
             text=user_data.index,
-            line=dict(color=username_to_color[username])
+            line=dict(color=username_to_color[username]) if username_to_color is not None else None
         )
         data.append(trace)
 
