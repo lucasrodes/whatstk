@@ -7,6 +7,7 @@ from whatstk.analysis import get_interventions_count, response_matrix
 from whatstk.graph.figures.scatter import fig_scatter_time
 from whatstk.graph.figures.boxplot import fig_boxplot_msglen
 from whatstk.graph.figures.sankey import fig_sankey
+from whatstk.graph.figures.heatmap import fig_heatmap
 from whatstk.graph.figures.utils import hex_color_palette
 from whatstk.utils.utils import _get_df
 
@@ -168,6 +169,41 @@ class FigureBuilder:
             source=source,
             target=target,
             value=value,
+            title=title
+        )
+        return fig
+
+    def user_message_responses_heatmap(self, title="Response matrix"):
+        """Get the response matrix heatmap.
+
+        A response is from user X to user Y happens if user X sends a message right after message Y does.
+
+        This method generates a plotly-ready figure (as a dictionary) using Heatmaps.
+
+        Args:
+            title (str, optional): Title for plot. Defaults to "Response matrix".
+
+        Returns:
+            dict: Dictionary with data and layout. Plotly compatible
+
+        Example:
+
+            ```python
+            >>> from whatstk import df_from_txt
+            >>> from whatstk.graph import plot, FigureBuilder
+            >>> filename = 'path/to/samplechat.txt'
+            >>> df = df_from_txt(filename)
+            >>> fig = FigureBuilder(df).user_message_responses_heatmap()
+            >>> plot(fig)
+            ```
+
+        """
+        # Get response matrix
+        responses = response_matrix(self.df)
+
+        # Get figure
+        fig = fig_heatmap(
+            df_matrix=responses,
             title=title
         )
         return fig
