@@ -11,6 +11,7 @@ def hex_color_palette(n_colors):
         n_colors (int): Size of the color palette.
 
     """
-    rgb = sns.color_palette(palette="husl", n_colors=n_colors)
+    palette = 'hls'  # ref: https://seaborn.pydata.org/tutorial/color_palettes.html
+    rgb = sns.color_palette(palette=palette, n_colors=n_colors)
     color_codes = ["#"+"".join("%02X" % int(round(i*255)) for i in r) for r in rgb]
     return color_codes
