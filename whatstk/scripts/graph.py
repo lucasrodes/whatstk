@@ -3,7 +3,7 @@
 
 import argparse
 from whatstk.objects import WhatsAppChat
-from whatstk.plotly import plot, FigureBuilder
+from whatstk.graph import plot, FigureBuilder
 
 
 def _parse_args():

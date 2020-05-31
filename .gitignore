@@ -126,8 +126,10 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+cov.xml
 *,cover
 .hypothesis/
+.vscode
 
 # Translations
 *.mo
@@ -270,3 +272,5 @@ learn/
 assets/style.css
 tests/chats/*
 flake-report
+
+notebooks
