@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="assets/logo.svg" width="70%"><br>
+</div>
+
+---
+
 <h1 align="center" style="border-bottom: none;"> whatstk: python whatsapp analysis and parsing toolkit
 </h1>
 
