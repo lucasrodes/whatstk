@@ -11,3 +11,11 @@ COLNAMES_DF = ColnamesDf(
     MESSAGE='message',
     MESSAGE_LENGTH='message_length'
 )
+
+
+def _get_df(self, df, chat):
+    if (df is None) & (chat is None):
+        raise ValueError("Please provide a chat, using either argument `df` or `chat`.")
+    if (df is None) and (chat is not None):
+        df = chat.df
+    return df

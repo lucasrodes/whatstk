@@ -6,6 +6,7 @@ from whatstk.analysis import get_interventions_count
 from whatstk.plotly.figures.scatter import fig_scatter_time
 from whatstk.plotly.figures.boxplot import fig_boxplot_msglen
 from whatstk.plotly.figures.utils import hex_color_palette
+from whatstk.utils.utils import _get_df
 
 
 class FigureBuilder:
@@ -23,14 +24,7 @@ class FigureBuilder:
             xlabel (str, optional): x-axis label. Defaults to None.
 
         """
-        self.df = self._get_df(df=df, chat=chat)
-
-    def _get_df(self, df, chat):
-        if (df is None) & (chat is None):
-            raise ValueError("Please provide a chat, using either argument `df` or argument `chat`.")
-        if (df is None) and (chat is not None):
-            df = chat.df
-        return df
+        self.df = _get_df(df=df, chat=chat)
 
     @property
     def usernames(self):
