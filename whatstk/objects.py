@@ -158,7 +158,7 @@ class WhatsAppChat:
         df = self.df.copy()
         for new_name, old_names in mapping.items():
             if not isinstance(old_names, list):
-                raise ValueError("New names must come as a list of str.")
+                raise ValueError("Old names must come as a list of str (even if there is only one).")
             for old_name in old_names:
                 df[COLNAMES_DF.USERNAME][df[COLNAMES_DF.USERNAME] == old_name] = new_name
         return WhatsAppChat(df)
