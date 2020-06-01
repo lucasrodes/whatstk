@@ -2,12 +2,33 @@
 
 * [whatstk](#.whatstk)
 * [whatstk.plot](#.whatstk.plot)
-  * [vis\_boxplot](#.whatstk.plot.vis_boxplot)
-  * [vis\_scatter\_time](#.whatstk.plot.vis_scatter_time)
   * [vis](#.whatstk.plot.vis)
 * [whatstk.analysis](#.whatstk.analysis)
+* [whatstk.analysis.responses](#.whatstk.analysis.responses)
+  * [response\_matrix](#.whatstk.analysis.responses.response_matrix)
 * [whatstk.analysis.base](#.whatstk.analysis.base)
-  * [interventions](#.whatstk.analysis.base.interventions)
+  * [get\_interventions\_count](#.whatstk.analysis.base.get_interventions_count)
+* [whatstk.graph](#.whatstk.graph)
+* [whatstk.graph.figures](#.whatstk.graph.figures)
+* [whatstk.graph.figures.heatma](#.whatstk.graph.figures.heatma)
+  * [fig\_heatmap](#.whatstk.graph.figures.heatma.fig_heatmap)
+* [whatstk.graph.figures.boxplot](#.whatstk.graph.figures.boxplot)
+  * [fig\_boxplot\_msglen](#.whatstk.graph.figures.boxplot.fig_boxplot_msglen)
+* [whatstk.graph.figures.utils](#.whatstk.graph.figures.utils)
+  * [hex\_color\_palette](#.whatstk.graph.figures.utils.hex_color_palette)
+* [whatstk.graph.figures.scatter](#.whatstk.graph.figures.scatter)
+  * [fig\_scatter\_time](#.whatstk.graph.figures.scatter.fig_scatter_time)
+* [whatstk.graph.figures.base](#.whatstk.graph.figures.base)
+  * [FigureBuilder](#.whatstk.graph.figures.base.FigureBuilder)
+    * [\_\_init\_\_](#.whatstk.graph.figures.base.FigureBuilder.__init__)
+    * [usernames](#.whatstk.graph.figures.base.FigureBuilder.usernames)
+    * [user\_color\_mapping](#.whatstk.graph.figures.base.FigureBuilder.user_color_mapping)
+    * [user\_msg\_length\_boxplot](#.whatstk.graph.figures.base.FigureBuilder.user_msg_length_boxplot)
+    * [user\_interventions\_count\_linechart](#.whatstk.graph.figures.base.FigureBuilder.user_interventions_count_linechart)
+    * [user\_message\_responses\_flow](#.whatstk.graph.figures.base.FigureBuilder.user_message_responses_flow)
+    * [user\_message\_responses\_heatmap](#.whatstk.graph.figures.base.FigureBuilder.user_message_responses_heatmap)
+* [whatstk.graph.figures.sanke](#.whatstk.graph.figures.sanke)
+  * [fig\_sankey](#.whatstk.graph.figures.sanke.fig_sankey)
 * [whatstk.core](#.whatstk.core)
   * [df\_from\_txt](#.whatstk.core.df_from_txt)
   * [df\_from\_multiple\_txt](#.whatstk.core.df_from_multiple_txt)
@@ -34,7 +55,9 @@
 * [whatstk.utils.parser](#.whatstk.utils.parser)
   * [generate\_regex](#.whatstk.utils.parser.generate_regex)
   * [parse\_chat](#.whatstk.utils.parser.parse_chat)
+  * [add\_schema](#.whatstk.utils.parser.add_schema)
   * [remove\_alerts\_from\_df](#.whatstk.utils.parser.remove_alerts_from_df)
+* [whatstk.utils.utils](#.whatstk.utils.utils)
 * [whatstk.utils.exceptions](#.whatstk.utils.exceptions)
   * [RegexError](#.whatstk.utils.exceptions.RegexError)
   * [HFormatError](#.whatstk.utils.exceptions.HFormatError)
@@ -62,54 +85,6 @@ This library provides a powerful wrapper for multiple Languages and OS. In addit
 
 Plot utils.
 
-<a name=".whatstk.plot.vis_boxplot"></a>
-#### vis\_boxplot
-
-```python
-def vis_boxplot(user_data, title, ignore_zero=True)
-```
-
-Create a trace
-
-<a name=".whatstk.plot.vis_scatter_time"></a>
-#### vis\_scatter\_time
-
-```python
-def vis_scatter_time(user_data, title, xlabel=None)
-```
-
-Obtain Figure to plot using plotly.
-
-`user_data` must be a pandas.DataFrame with timestamps as index and a column for each user.
-
-Note: Does not work with output of `interventions` if date_mode='hourweekday'.
-
-**Arguments**:
-
-- `user_data` _pandas.DataFrame_ - Input data.
-- `title` _str_ - Title of figure.
-  
-
-**Returns**:
-
-- `dict` - Figure.
-  
-
-**Examples**:
-
-  
-  ```python
-  >>> from whatstk import df_from_txt
-  >>> from whatstk.analysis import interventions
-  >>> filename = 'path/to/samplechat.txt'
-  >>> df = df_from_txt(filename)
-  >>> counts = interventions(df=df, date_mode='date', msg_length=False)
-  >>> counts_cumsum = counts.cumsum()
-  >>> from plotly.offline import plot
-  >>> from whatstk.plot import vis_scatter_time
-  >>> plot(vis_scatter_time(counts_cumsum, 'cumulative number of messages sent per day'))
-  ```
-
 <a name=".whatstk.plot.vis"></a>
 #### vis
 
@@ -134,16 +109,72 @@ See method `vis_scatter_time`.
 
 Analytics tools.
 
+<a name=".whatstk.analysis.responses"></a>
+## whatstk.analysis.responses
+
+Get infor regarding responses between users.
+
+<a name=".whatstk.analysis.responses.response_matrix"></a>
+#### response\_matrix
+
+```python
+def response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE)
+```
+
+Get response matrix for given chat.
+
+Obtains a DataFrame of shape [n_users, n_users] counting the number of responses between members. Responses can be
+counted in different ways, e.g. using absolute values or normalised values. Responses are counted based solely on
+consecutive messages. That is, if user_i sends a message right after user_j, it will be counted as a response from
+user_i to user_j.
+
+Axis 0 lists senders and axis 1 lists receivers. That is, the value in cell (i, j) denotes the number of times
+user_i responded to a message from user_j.
+
+**Arguments**:
+
+- `df` _pandas.DataFrame, optional_ - Chat. Defaults to None.
+- `chat` _WhatsAppChat, optional_ - Chat. Defaults to None.
+- `zero_own` _bool, optional_ - Set to True to avoid counting own responses. Defaults to True.
+- `norm` _str, optional_ - Specifies the type of normalization used for reponse count.
+  
+
+**Returns**:
+
+- `pandas.DataFrame` - Response matrix.
+  
+
+**Examples**:
+
+  
+  Get absolute count on responses (consecutive messages) between users
+  
+  ```python
+  >>> from whatstk import df_from_txt
+  >>> from whatstk.analysis.responses import response_matrix
+  >>> df = df_from_txt(path)
+  >>> responses = response_matrix(df)
+  ```
+  
+  Get percentage of responses received for each user.
+  
+  ```python
+  >>> from whatstk import df_from_txt
+  >>> from whatstk.analysis.responses import response_matrix
+  >>> df = df_from_txt(path)
+  >>> responses = response_matrix(df, norm='receive)
+  ```
+
 <a name=".whatstk.analysis.base"></a>
 ## whatstk.analysis.base
 
 Base analysis tools.
 
-<a name=".whatstk.analysis.base.interventions"></a>
-#### interventions
+<a name=".whatstk.analysis.base.get_interventions_count"></a>
+#### get\_interventions\_count
 
 ```python
-def interventions(df=None, chat=None, date_mode='date', msg_length=False)
+def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False)
 ```
 
 Get number of interventions per user per unit of time.
@@ -157,10 +188,10 @@ The unit of time can be chosen by means of argument `date_mode`.
   
   ```python
   >>> from whatstk import df_from_txt
-  >>> from whatstk.analysis interventions
+  >>> from whatstk.analysis get_interventions_count
   >>> filename = 'path/to/samplechat.txt'
   >>> df = df_from_txt(filename)
-  >>> counts = interventions(df=df, date_mode='date', msg_length=False)
+  >>> counts = get_interventions_count(df=df, date_mode='date', msg_length=False)
   >>> counts_cumsum = counts.cumsum()
   ```
   
@@ -169,13 +200,14 @@ The unit of time can be chosen by means of argument `date_mode`.
 
 - `df` _pandas.DataFrame_ - Chat as DataFrame.
 - `chat` _WhatsAppChat_ - Object containing parsed WhatsApp chat.
-- `date_mode` _str_ - Choose mode to group interventions by. Available modes are:
+- `date_mode` _str, optional_ - Choose mode to group interventions by. Defaults to 'date'. Available modes are:
   - 'date': Grouped by particular date (year, month and day).
   - 'hour': Grouped by hours.
   - 'month': Grouped by months.
   - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
   - 'hourweekday': Grouped by weekday and hour.
-- `msg_length` _bool_ - Set to True to count the number of characters instead of number of messages sent.
+- `msg_length` _bool, optional_ - Set to True to count the number of characters instead of number of messages sent.
+- `cummulative` _bool, optional_ - Set to True to obtain commulative counts.
   
 
 **Returns**:
@@ -185,7 +217,343 @@ The unit of time can be chosen by means of argument `date_mode`.
 
 **Raises**:
 
-- `ValueError` - if invalid mode is chosen.
+- `ValueError` - if `date_mode` value is not supported.
+
+<a name=".whatstk.graph"></a>
+## whatstk.graph
+
+Plot tools using plotly.
+
+<a name=".whatstk.graph.figures"></a>
+## whatstk.graph.figures
+
+Build Plotly compatible Figures.
+
+<a name=".whatstk.graph.figures.heatma"></a>
+## whatstk.graph.figures.heatma
+
+Heatmap plot figures.
+
+<a name=".whatstk.graph.figures.heatma.fig_heatmap"></a>
+#### fig\_heatmap
+
+```python
+def fig_heatmap(df_matrix, title="")
+```
+
+Generate heatmap figure from NxN matrix.
+
+**Arguments**:
+
+- `df_matrix` _pandas.DataFrame_ - Matrix as DataFrame. Index values and column values must be equal.
+- `title` _str_ - Title of plot. Defaults to "".
+  
+
+**Returns**:
+
+- `[type]` - [description]
+
+<a name=".whatstk.graph.figures.boxplot"></a>
+## whatstk.graph.figures.boxplot
+
+Boxplot figures.
+
+<a name=".whatstk.graph.figures.boxplot.fig_boxplot_msglen"></a>
+#### fig\_boxplot\_msglen
+
+```python
+def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None)
+```
+
+Visualize boxplot.
+
+**Arguments**:
+
+- `df` _pandas.DataFrame_ - Chat data.
+  username_to_color (dictm optional). Dictionary mapping username to color. Defaults to None.
+- `title` _str, optional_ - Title for plot. Defaults to "".
+- `xlabel` _str, optional_ - x-axis label title. Defaults to None.
+  
+
+**Returns**:
+
+- `dict` - Figure.
+
+<a name=".whatstk.graph.figures.utils"></a>
+## whatstk.graph.figures.utils
+
+Utils for library plots.
+
+<a name=".whatstk.graph.figures.utils.hex_color_palette"></a>
+#### hex\_color\_palette
+
+```python
+def hex_color_palette(n_colors)
+```
+
+Get palette of `n_colors` color hexadecimal codes.
+
+**Arguments**:
+
+- `n_colors` _int_ - Size of the color palette.
+
+<a name=".whatstk.graph.figures.scatter"></a>
+## whatstk.graph.figures.scatter
+
+Scatter plot figures.
+
+<a name=".whatstk.graph.figures.scatter.fig_scatter_time"></a>
+#### fig\_scatter\_time
+
+```python
+def fig_scatter_time(user_data, username_to_color=None, title="", xlabel=None)
+```
+
+Obtain Figure to plot using plotly.
+
+`user_data` must be a pandas.DataFrame with timestamps as index and a column for each user.
+
+Note: Does not work with output of `get_interventions_count` if date_mode='hourweekday'.
+
+**Arguments**:
+
+- `user_data` _pandas.DataFrame_ - Input data. Shape nrows x ncols, where nrows = number of timestaps and
+  ncols = number of users.
+  username_to_color (dictm optional). Dictionary mapping username to color. Defaults to None.
+- `title` _str, optional_ - Title of figure. Defaults to "".
+- `xlabel` _str, optional_ - x-axis label title. Defaults to None.
+  
+
+**Returns**:
+
+- `dict` - Figure.
+
+<a name=".whatstk.graph.figures.base"></a>
+## whatstk.graph.figures.base
+
+Build plotly-compatible figures.
+
+<a name=".whatstk.graph.figures.base.FigureBuilder"></a>
+### FigureBuilder
+
+```python
+class FigureBuilder()
+```
+
+Generate a variety of figures from your loaded chat.
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.__init__"></a>
+#### \_\_init\_\_
+
+```python
+ | def FigureBuilder.__init__(df=None, chat=None)
+```
+
+Constructor.
+
+**Arguments**:
+
+- `df` _pandas.DataFrame, optional_ - Chat data. Atribute `df` of a chat loaded using WhatsAppChat. Defaults to
+  None.
+- `chat` _WhatsAppChat, optional_ - Chat data. Object obtained when chat loaded using WhatsAppChat. Defaults to
+  None.
+- `title` _str, optional_ - Figure title. Defaults to "".
+- `xlabel` _str, optional_ - x-axis label. Defaults to None.
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.usernames"></a>
+#### usernames
+
+```python
+ | @property
+ | def FigureBuilder.usernames()
+```
+
+Get list with users available in given chat.
+
+**Returns**:
+
+- `list` - List with usernames available in chat DataFrame.
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.user_color_mapping"></a>
+#### user\_color\_mapping
+
+```python
+ | @property
+ | def FigureBuilder.user_color_mapping()
+```
+
+Build mapping between user and color.
+
+**Returns**:
+
+- `dict` - Mapping username -> color (rgb).
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.user_msg_length_boxplot"></a>
+#### user\_msg\_length\_boxplot
+
+```python
+ | def FigureBuilder.user_msg_length_boxplot(title="User message length", xlabel="User")
+```
+
+Get boxplot of message length of all users.
+
+**Returns**:
+
+- `dict` - Dictionary with data and layout. Plotly compatible
+- `title` _str, optional_ - Title for plot. Defaults to "User message length".
+- `xlabel` _str, optional_ - x-axis label title. Defaults to "User".
+  
+
+**Examples**:
+
+  
+  ```python
+  >>> from whatstk import df_from_txt
+  >>> from whatstk.graph import plot, FigureBuilder
+  >>> filename = 'path/to/samplechat.txt'
+  >>> df = df_from_txt(filename)
+  >>> fig = FigureBuilder(df).user_msg_length_boxplot()
+  >>> plot(fig)
+  ```
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.user_interventions_count_linechart"></a>
+#### user\_interventions\_count\_linechart
+
+```python
+ | def FigureBuilder.user_interventions_count_linechart(date_mode='date', msg_length=False, cummulative=False, title="User interventions count", xlabel="Date/Time")
+```
+
+Plot number of user interventions over time.
+
+**Arguments**:
+
+- `date_mode` _str, optional_ - Choose mode to group interventions by. Defaults to 'date'. Available modes are:
+  - 'date': Grouped by particular date (year, month and day).
+  - 'hour': Grouped by hours.
+  - 'month': Grouped by months.
+  - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
+  - 'hourweekday': Grouped by weekday and hour.
+- `msg_length` _bool, optional_ - Set to True to count the number of characters instead of number of messages
+  sent.
+- `cummulative` _bool, optional_ - Set to True to obtain commulative counts.
+- `title` _str, optional_ - Title for plot. Defaults to "User interventions count".
+- `xlabel` _str, optional_ - x-axis label title. Defaults to "Date/Time".
+  
+
+**Returns**:
+
+- `dict` - Dictionary with data and layout. Plotly compatible
+  
+
+**Examples**:
+
+  
+  ```python
+  >>> from whatstk import df_from_txt
+  >>> from whatstk.graph import plot, FigureBuilder
+  >>> filename = 'path/to/samplechat.txt'
+  >>> df = df_from_txt(filename)
+  >>> fig = FigureBuilder(df).user_interventions_count_linechart(cummulative=True)
+  >>> plot(fig)
+  ```
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.user_message_responses_flow"></a>
+#### user\_message\_responses\_flow
+
+```python
+ | def FigureBuilder.user_message_responses_flow(title="Message flow")
+```
+
+Get the flow of message responses.
+
+A response is from user X to user Y happens if user X sends a message right after message Y does.
+
+This method generates a plotly-ready figure (as a dictionary) using Sankey diagram.
+
+**Arguments**:
+
+- `title` _str, optional_ - Title for plot. Defaults to "Message flow".
+  
+
+**Returns**:
+
+- `dict` - Dictionary with data and layout. Plotly compatible
+  
+
+**Examples**:
+
+  
+  ```python
+  >>> from whatstk import df_from_txt
+  >>> from whatstk.graph import plot, FigureBuilder
+  >>> filename = 'path/to/samplechat.txt'
+  >>> df = df_from_txt(filename)
+  >>> fig = FigureBuilder(df).user_message_responses_flow()
+  >>> plot(fig)
+  ```
+
+<a name=".whatstk.graph.figures.base.FigureBuilder.user_message_responses_heatmap"></a>
+#### user\_message\_responses\_heatmap
+
+```python
+ | def FigureBuilder.user_message_responses_heatmap(title="Response matrix")
+```
+
+Get the response matrix heatmap.
+
+A response is from user X to user Y happens if user X sends a message right after message Y does.
+
+This method generates a plotly-ready figure (as a dictionary) using Heatmaps.
+
+**Arguments**:
+
+- `title` _str, optional_ - Title for plot. Defaults to "Response matrix".
+  
+
+**Returns**:
+
+- `dict` - Dictionary with data and layout. Plotly compatible
+  
+
+**Examples**:
+
+  
+  ```python
+  >>> from whatstk import df_from_txt
+  >>> from whatstk.graph import plot, FigureBuilder
+  >>> filename = 'path/to/samplechat.txt'
+  >>> df = df_from_txt(filename)
+  >>> fig = FigureBuilder(df).user_message_responses_heatmap()
+  >>> plot(fig)
+  ```
+
+<a name=".whatstk.graph.figures.sanke"></a>
+## whatstk.graph.figures.sanke
+
+Sankey plot figures.
+
+<a name=".whatstk.graph.figures.sanke.fig_sankey"></a>
+#### fig\_sankey
+
+```python
+def fig_sankey(label, color, source, target, value, title="")
+```
+
+Generate sankey image.
+
+**Arguments**:
+
+- `label` _list_ - List with node labels.
+- `color` _list_ - List with node colors.
+- `source` _list_ - List with link source id.
+- `target` _list_ - List with linke target id.
+- `value` _list_ - List with link value.
+- `title` _str, optional_ - Title. Defaults to "".
+  
+
+**Returns**:
+
+- `dict` - Figure as dictionary.
 
 <a name=".whatstk.core"></a>
 ## whatstk.core
@@ -590,6 +958,24 @@ Parse chat using given RegEx.
 
 - `RegexError` - When provided regex could not match the text.
 
+<a name=".whatstk.utils.parser.add_schema"></a>
+#### add\_schema
+
+```python
+def add_schema(df)
+```
+
+Add default chat schema to df.
+
+**Arguments**:
+
+- `df` _pandas.DataFrame_ - Chat dataframe.
+  
+
+**Returns**:
+
+- `pandas.DataFrame` - Chat dataframe with correct dtypes.
+
 <a name=".whatstk.utils.parser.remove_alerts_from_df"></a>
 #### remove\_alerts\_from\_df
 
@@ -608,6 +994,11 @@ Try to get rid of alert/notification messages.
 **Returns**:
 
 - `pandas.DataFrame` - Fixed version of input dataframe.
+
+<a name=".whatstk.utils.utils"></a>
+## whatstk.utils.utils
+
+Utils.
 
 <a name=".whatstk.utils.exceptions"></a>
 ## whatstk.utils.exceptions
