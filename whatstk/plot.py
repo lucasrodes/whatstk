@@ -1,7 +1,7 @@
 """Plot utils."""
 
 
-from whatstk.plotly.figures.scatter import fig_scatter_time
+from whatstk.graph.figures.scatter import fig_scatter_time
 import warnings
 
 
