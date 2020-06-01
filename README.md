@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/logo.svg" width="70%"><br>
+  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="70%"><br>
 </div>
 
 ---
