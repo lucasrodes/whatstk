@@ -28,6 +28,7 @@ class FigureBuilder:
 
         """
         self.df = _get_df(df=df, chat=chat)
+        self.__user_color_mapping = None
 
     @property
     def usernames(self):
@@ -47,9 +48,15 @@ class FigureBuilder:
             dict: Mapping username -> color (rgb).
 
         """
-        colors = hex_color_palette(n_colors=len(self.usernames))
-        mapping = dict(zip(self.usernames, colors))
-        return mapping
+        if self.__user_color_mapping is None:
+            colors = hex_color_palette(n_colors=len(self.usernames))
+            mapping = dict(zip(self.usernames, colors))
+            return mapping
+        return self.__user_color_mapping
+
+    @user_color_mapping.setter
+    def user_color_mapping(self, value):
+        self.__user_color_mapping = value
 
     def user_msg_length_boxplot(self, title="User message length", xlabel="User"):
         """Get boxplot of message length of all users.
