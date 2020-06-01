@@ -1,9 +1,15 @@
+<div align="center">
+  <img src="assets/logo.svg" width="70%"><br>
+</div>
+
+---
+
 <h1 align="center" style="border-bottom: none;"> whatstk: analyze WhatsApp chats with python
 </h1>
 
 <p align="center">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/version-0.2.6-blue.svg?&color=25D366&logo=whatsapp&style=for-the-badge">
+    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0dev0-blue.svg?&color=25D366&logo=whatsapp&style=for-the-badge">
   </a>
 </p>
 <!-- style=for-the-badge -->
