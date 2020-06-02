@@ -30,7 +30,6 @@ setup(
     zip_safe=False,
     classifiers=[
         "Development Status :: 3 - Alpha",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -41,7 +40,7 @@ setup(
         'Documentation': 'https://lcsrg.me/whatstk/docs/index.html',
         'Github': 'http://github.com/lucasrodes/whatstk'
     },
-    python_requires='>=3.5',
+    python_requires='>=3.7',
     entry_points={
         'console_scripts': [
             'whatstk-generate-chats=whatstk.scripts.generate_chats:main',
