@@ -23,6 +23,22 @@ def test_init():
         _ = FigureBuilder()
 
 
+def test_init_mapping_dict_1():
+    df = load_chat_as_df()
+    fb = FigureBuilder(df=df)
+    mapping = fb.user_color_mapping
+    assert(isinstance(fb.user_color_mapping, dict))
+    assert(len(mapping) == df['username'].nunique())
+
+
+def test_init_mapping_dict_2():
+    df = load_chat_as_df()
+    fb = FigureBuilder(df=df)
+    value = {'a': 'b'}
+    fb.user_color_mapping = value
+    assert(fb.user_color_mapping == value)
+
+
 def test_user_msg_length_boxplot():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
