@@ -22,7 +22,7 @@ copyright = '2020, lucasrodes'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.0.dev0'
+release = '0.3.0.dev1'
 
 
 # -- General configuration ---------------------------------------------------
