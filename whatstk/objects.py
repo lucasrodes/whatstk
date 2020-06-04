@@ -145,8 +145,9 @@ class WhatsAppChat:
         """Rename users.
 
         Args:
-            mapping (dict): Dictionary mapping old names to new names, example: {'John':['Jon', 'J'], 'Ray':
-                            ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'.
+            mapping (dict): Dictionary mapping old names to new names, example:
+                            {'John':['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond'
+                            to 'Ray'.
 
         Returns:
             pandas.DataFrame: DataFrame with users renamed according to `mapping`.

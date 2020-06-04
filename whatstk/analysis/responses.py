@@ -40,21 +40,21 @@ def response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
 
         Get absolute count on responses (consecutive messages) between users
 
-        ```python
+    ..  code-block: python
+
         >>> from whatstk import df_from_txt
         >>> from whatstk.analysis.responses import response_matrix
         >>> df = df_from_txt(path)
         >>> responses = response_matrix(df)
-        ```
 
         Get percentage of responses received for each user.
 
-        ```python
+    ..  code-block: python
+
         >>> from whatstk import df_from_txt
         >>> from whatstk.analysis.responses import response_matrix
         >>> df = df_from_txt(path)
         >>> responses = response_matrix(df, norm='receive)
-        ```
 
     """
     # Get chat df and users

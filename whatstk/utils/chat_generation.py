@@ -1,6 +1,7 @@
 """Chat generation utils.
 
 Use this module functions to generate chats.
+
 """
 
 
@@ -78,7 +79,8 @@ class ChatGenerator:
             last (datetime, optional): Datetime of last message. If `None`, defaults to current date.
 
         Returns:
-            [type]: [description]
+            list: List with timestamps.
+
         """
         if not last:
             last = datetime.now()

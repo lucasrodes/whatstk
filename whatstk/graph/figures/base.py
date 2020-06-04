@@ -68,14 +68,14 @@ class FigureBuilder:
 
         Example:
 
-            ```python
+        ..  code-block: python
+
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
             >>> filename = 'path/to/samplechat.txt'
             >>> df = df_from_txt(filename)
             >>> fig = FigureBuilder(df).user_msg_length_boxplot()
             >>> plot(fig)
-            ```
 
         """
         fig = fig_boxplot_msglen(
@@ -108,14 +108,14 @@ class FigureBuilder:
 
         Example:
 
-            ```python
+        ..  code-block: python
+
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
             >>> filename = 'path/to/samplechat.txt'
             >>> df = df_from_txt(filename)
             >>> fig = FigureBuilder(df).user_interventions_count_linechart(cummulative=True)
             >>> plot(fig)
-            ```
 
         """
         counts = get_interventions_count(
@@ -147,14 +147,14 @@ class FigureBuilder:
 
         Example:
 
-            ```python
+        ..  code-block: python
+
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
             >>> filename = 'path/to/samplechat.txt'
             >>> df = df_from_txt(filename)
             >>> fig = FigureBuilder(df).user_message_responses_flow()
             >>> plot(fig)
-            ```
 
         """
         # Get response matrix
@@ -195,14 +195,14 @@ class FigureBuilder:
 
         Example:
 
-            ```python
+        ..  code-block: python
+
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
             >>> filename = 'path/to/samplechat.txt'
             >>> df = df_from_txt(filename)
             >>> fig = FigureBuilder(df).user_message_responses_heatmap()
             >>> plot(fig)
-            ```
 
         """
         # Get response matrix

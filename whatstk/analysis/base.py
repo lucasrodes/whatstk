@@ -14,14 +14,14 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
 
         Get counts of sent messages per user. Also cumulative.
 
-        ```python
+    ..  code-block: python
+
         >>> from whatstk import df_from_txt
         >>> from whatstk.analysis get_interventions_count
         >>> filename = 'path/to/samplechat.txt'
         >>> df = df_from_txt(filename)
         >>> counts = get_interventions_count(df=df, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
-        ```
 
     Args:
         df (pandas.DataFrame): Chat as DataFrame.

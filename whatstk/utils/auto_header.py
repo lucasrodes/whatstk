@@ -34,23 +34,6 @@ def extract_header_from_text(text, encoding='utf-8'):
     return None
 
 
-# def issep(s):
-#     """Check if `s` is a separator character.
-
-#     Separator can be one of the following: '.', ',', '-', '/', ':', '[' or ']'.
-
-#     Args:
-#         s (str): Character to be checked.
-
-#     Returns:
-#         bool: True if `s` is a separator, False otherwise.
-
-#     """
-#     if s in separators:
-#         return True
-#     return False
-
-
 def extract_header_format_from_lines(lines):
     """Extract header from list of lines.
 
@@ -74,6 +57,7 @@ def _extract_elements_template_from_lines(lines):
 
     Returns:
         tuple: elements_list (list), template_list (list)
+
     """
     # Obtain header format from list of lines
     elements_list = []
@@ -122,6 +106,7 @@ def _extract_header_parts(header):
     Returns:
         tuple: Contains two elements, (i) list with components and (ii) string template which specifies the formatting
                 of the components.
+
     """
 
     def get_last_idx_digit(v, i):

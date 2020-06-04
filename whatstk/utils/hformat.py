@@ -2,11 +2,11 @@
 
 Example: Check if header is available.
 
-    ```python
-    >>> from whatstk.utils.hformat import is_supported
-    >>> is_supported('%y-%m-%d, %H:%M:%S - %name:')
-    (True, True)
-    ```
+    ..  code-block:: python
+
+        >>> from whatstk.utils.hformat import is_supported
+        >>> is_supported('%y-%m-%d, %H:%M:%S - %name:')
+        (True, True)
 
 """
 
