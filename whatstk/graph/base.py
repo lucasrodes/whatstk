@@ -2,8 +2,8 @@
 
 
 import numpy as np
-from whatstk.objects import WhatsAppChat
-from whatstk.analysis import get_interventions_count, response_matrix
+from whatstk._chat import BaseChat
+from whatstk.analysis import get_interventions_count, get_response_matrix
 from whatstk.graph.figures.scatter import fig_scatter_time
 from whatstk.graph.figures.boxplot import fig_boxplot_msglen
 from whatstk.graph.figures.sankey import fig_sankey
@@ -19,9 +19,9 @@ class FigureBuilder:
         """Constructor.
 
         Args:
-            df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using WhatsAppChat. Defaults to
+            df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. Defaults to
                                              None.
-            chat (WhatsAppChat, optional): Chat data. Object obtained when chat loaded using WhatsAppChat. Defaults to
+            chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Defaults to
                                            None.
             title (str, optional): Figure title. Defaults to "".
             xlabel (str, optional): x-axis label. Defaults to None.
@@ -38,7 +38,7 @@ class FigureBuilder:
             list: List with usernames available in chat DataFrame.
 
         """
-        return WhatsAppChat(df=self.df).users
+        return BaseChat(df=self.df).users
 
     @property
     def user_color_mapping(self):
@@ -158,7 +158,7 @@ class FigureBuilder:
 
         """
         # Get response matrix
-        responses = response_matrix(self.df)
+        responses = get_response_matrix(self.df)
 
         # Node lists
         label = self.usernames * 2
@@ -206,7 +206,7 @@ class FigureBuilder:
 
         """
         # Get response matrix
-        responses = response_matrix(self.df)
+        responses = get_response_matrix(self.df)
 
         # Get figure
         fig = fig_heatmap(

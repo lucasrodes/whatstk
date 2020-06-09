@@ -13,8 +13,8 @@ import pandas as pd
 from scipy.stats import lomax
 from lorem import sentence
 from emoji.unicode_codes import EMOJI_UNICODE
-from whatstk.objects import WhatsAppChat
-from whatstk.utils.hformat import get_supported_hformats_as_list
+from whatstk.whatsapp.objects import WhatsAppChat
+from whatstk.whatsapp.hformat import get_supported_hformats_as_list
 from whatstk.utils.utils import COLNAMES_DF
 
 

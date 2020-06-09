@@ -1,6 +1,6 @@
 import pytest
-from whatstk.graph.figures.base import FigureBuilder
-from whatstk.objects import WhatsAppChat
+from whatstk.graph.base import FigureBuilder
+from whatstk.whatsapp.objects import WhatsAppChat
 
 
 filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"

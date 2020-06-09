@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from datetime import datetime
-from whatstk.objects import WhatsAppChat
+from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.utils.chat_generation import ChatGenerator, generate_chats_hformats
 
 

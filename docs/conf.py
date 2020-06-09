@@ -36,13 +36,16 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
     'sphinx.ext.githubpages',
+    'sphinx.ext.autosummary',
     'sphinx_rtd_theme',
-    'sphinx_copybutton'
+    'sphinx_copybutton',
+    'sphinx.ext.autosectionlabel',
+    'sphinx_git'
 ]
 
 # The name of the entry point, without the ".rst" extension.
 # By convention this will be "index"
-master_doc = "index"
+master_doc = "source/content"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -71,10 +74,30 @@ html_static_path = ['_static']
 copybutton_prompt_text = ">>>"
 
 
-# -- Background color ---------------------------------------------------------
+# -- Theme --------------------------------------------------------------------
 def setup(app):
     app.add_stylesheet('css/custom.css')
 
 
+html_title = "WhatsApp Analysis Toolkit"
+html_logo = "../assets/logo.png"
+html_favicon = "_static/favicon.png"
+
+html_show_sourcelink = False
+html_copy_source = True
+
+# github_url = 'https://github.com/lucasrodes/whatstk'
+
+html_theme_options = {
+    'logo_only': True,
+    'display_version': True,
+    'navigation_depth': 10,
+    'display_version': True,
+    'collapse_navigation': False,
+    'sticky_navigation': False
+}
+
+# -- Args ---------------------------------------------------------------------
 html4_writer = True
 napoleon_use_rtype = False
+autosummary_generate = True

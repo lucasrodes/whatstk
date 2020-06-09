@@ -1,9 +1,8 @@
 #  TODO: Assert number of columns equals number of users
-from whatstk.analysis import get_interventions_count
-from whatstk.objects import WhatsAppChat
+from whatstk.analysis.interventions import get_interventions_count
+from whatstk.whatsapp.objects import WhatsAppChat
 import pandas as pd
 import pytest
-import os
 
 
 filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
@@ -60,7 +59,7 @@ def test_interventions_hour():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.max() == chat.df.index.hour.max())
     assert(counts.index.min() == chat.df.index.hour.min())
 
@@ -74,7 +73,7 @@ def test_interventions_hour_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.max() == chat.df.index.hour.max())
     assert(counts.index.min() == chat.df.index.hour.min())
 
@@ -88,10 +87,9 @@ def test_interventions_month():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.max() == chat.df.index.month.max())
     assert(counts.index.min() == chat.df.index.month.min())
-
 
 
 def test_interventions_month_msg_length():
@@ -103,7 +101,7 @@ def test_interventions_month_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.max() == chat.df.index.month.max())
     assert(counts.index.min() == chat.df.index.month.min())
 
@@ -117,10 +115,9 @@ def test_interventions_weekday():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.max() == chat.df.index.weekday.max())
     assert(counts.index.min() == chat.df.index.weekday.min())
-
 
 
 def test_interventions_weekday_msg_length():
@@ -132,10 +129,9 @@ def test_interventions_weekday_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.max() == chat.df.index.weekday.max())
     assert(counts.index.min() == chat.df.index.weekday.min())
-
 
 
 def test_interventions_hourweekday():
@@ -147,11 +143,11 @@ def test_interventions_hourweekday():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range days
+    # Check range days
     assert(counts.index.levels[0].max() == chat.df.index.weekday.max())
     assert(counts.index.levels[0].min() == chat.df.index.weekday.min())
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.levels[1].max() == chat.df.index.hour.max())
     assert(counts.index.levels[1].min() == chat.df.index.hour.min())
 
@@ -165,11 +161,11 @@ def test_interventions_hourweekday_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range days
+    # Check range days
     assert(counts.index.levels[0].max() == chat.df.index.weekday.max())
     assert(counts.index.levels[0].min() == chat.df.index.weekday.min())
 
-    # Check range hours
+    # Check range hours
     assert(counts.index.levels[1].max() == chat.df.index.hour.max())
     assert(counts.index.levels[1].min() == chat.df.index.hour.min())
 

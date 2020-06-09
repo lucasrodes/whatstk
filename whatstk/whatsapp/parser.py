@@ -4,8 +4,9 @@
 import re
 from datetime import datetime
 import pandas as pd
-from whatstk.utils.exceptions import RegexError
+from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
+from whatstk.whatsapp.auto_header import extract_header_from_text
 
 
 regex_simplifier = {
@@ -21,6 +22,75 @@ regex_simplifier = {
     '%p': r'(?P<ampm>[AaPp].? ?[Mm].?)',
     '%name': fr'(?P<{COLNAMES_DF.USERNAME}>[^:]*)'
 }
+
+
+def df_from_txt_whatsapp(filename, auto_header=True, hformat=None, encoding='utf-8'):
+    """Create instance from chat log txt file hosted locally.
+
+    Args:
+
+        filename (str): Path to chat text file.
+        auto_header (bool): Detect header automatically. If False, ``hformat`` is required.
+        hformat (str): Format of the :ref:`header <The header format>`, e.g. '[%y-%m-%d %H:%M:%S] - %name:'. Use
+                        following keywords:
+
+                            - ``%y``: for year (``%Y`` is equivalent).
+                            - ``%m``: for month.
+                            - ``%d``: for day.
+                            - ``%H``: for 24h-hour.
+                            - ``%I``: for 12h-hour.
+                            - ``%M``: for minutes.
+                            - ``%S``: for seconds.
+                            - ``%P``: for "PM"/"AM" or "p.m."/"a.m." characters.
+                            - ``%name``: for the username.
+
+                            Example 1: To the header '12/08/2016, 16:20 - username:' corresponds the `hformat`
+                            '%d/%m/%y, %H:%M - %name:'.
+
+                            Example 2: To the header '2016-08-12, 4:20 PM - username:' corresponds the `hformat`
+                            '%y-%m-%d, %I:%M %P - %name:'.
+        encoding (str): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                        `List of Python standard encodings <https://docs.python.org/3/library/codecs.
+                        html#standard-encodings>`_.
+
+    Returns:
+        WhatsAppChat: Class instance with loaded and parsed chat.
+
+
+    ..  seealso::
+
+        * :func:`df_from_txt <whatstk.core.df_from_txt>`
+        * :func:`WhatsAppChat.from_multiple_txt <whatstk.whatsapp.WhatsAppChat.from_multiple_txt>`
+        * :func:`extract_header_from_text <extract_header_from_text>`
+    """
+    # Read file
+    with open(filename, encoding=encoding) as f:
+        text = f.read()
+
+    # Get hformat
+    if hformat:
+        # Bracket is reserved character in RegEx, add backslash before them.
+        hformat = hformat.replace('[', r'\[').replace(']', r'\]')
+    if not hformat and auto_header:
+        hformat = extract_header_from_text(text)
+        if not hformat:
+            raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
+                               " input argument `hformat`.")
+    elif not (hformat or auto_header):
+        raise ValueError("If auto_header is False, hformat can't be None.")
+
+    # Generate regex for given hformat
+    r, r_x = generate_regex(hformat=hformat)
+
+    # Parse chat to DataFrame
+    try:
+        df = _parse_chat(text, r)
+    except RegexError:
+        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
+
+    df = _remove_alerts_from_df(r_x, df)
+
+    return df
 
 
 def generate_regex(hformat):
@@ -42,8 +112,8 @@ def generate_regex(hformat):
     return hformat, hformat_x
 
 
-def parse_chat(text, regex):
-    """Parse chat using given RegEx.
+def _parse_chat(text, regex):
+    """Parse chat using given regex.
 
     Args:
         text (str) Whole log chat text.
@@ -64,13 +134,13 @@ def parse_chat(text, regex):
     if len(result) > 0:
         df_chat = pd.DataFrame.from_records(result, index=COLNAMES_DF.DATE)
         df_chat = df_chat[[COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
-        df_chat = add_schema(df_chat)
+        df_chat = _add_schema(df_chat)
         return df_chat
     else:
         raise RegexError("Could not match the provided regex with provided text. Not match was found.")
 
 
-def add_schema(df):
+def _add_schema(df):
     """Add default chat schema to df.
 
     Args:
@@ -132,7 +202,7 @@ def _parse_line(text, headers, i):
     return line_dict
 
 
-def remove_alerts_from_df(r_x, df):
+def _remove_alerts_from_df(r_x, df):
     """Try to get rid of alert/notification messages.
 
     Args:
@@ -145,7 +215,7 @@ def remove_alerts_from_df(r_x, df):
     """
     df_new = df.copy()
     df_new.loc[:, COLNAMES_DF.MESSAGE] = df_new[COLNAMES_DF.MESSAGE].apply(lambda x: _remove_alerts_from_line(r_x, x))
-    df_new = add_schema(df_new)
+    df_new = _add_schema(df_new)
     return df_new
 
 

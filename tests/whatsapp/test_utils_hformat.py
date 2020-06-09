@@ -1,4 +1,4 @@
-from whatstk.utils.hformat import is_supported, is_supported_verbose, get_supported_hformats_as_list
+from whatstk.whatsapp.hformat import is_supported, is_supported_verbose, get_supported_hformats_as_list
 
 
 def test_is_supported_1():

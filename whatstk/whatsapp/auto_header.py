@@ -26,7 +26,7 @@ def extract_header_from_text(text, encoding='utf-8'):
 
     # Get format auto
     try:
-        hformat = extract_header_format_from_lines(lines)
+        hformat = _extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
         return hformat
     except:  # noqa
@@ -34,7 +34,7 @@ def extract_header_from_text(text, encoding='utf-8'):
     return None
 
 
-def extract_header_format_from_lines(lines):
+def _extract_header_format_from_lines(lines):
     """Extract header from list of lines.
 
     Args:
