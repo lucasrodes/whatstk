@@ -2,7 +2,6 @@ import os
 import pandas as pd
 from whatstk.whatsapp.parser import df_from_txt_whatsapp
 from whatstk.whatsapp.hformat import get_supported_hformats_as_dict
-from whatstk.utils.chat_generation import generate_chats_hformats
 
 
 # Generate chats
@@ -43,10 +42,10 @@ def test_df_from_txt_whatsapp():
 
         # Check manual and auto chats are equal
         assert(chats[0].equals(chats[1]))
-        
+
         all_chats.append(chat)
         hformats.append(hformat)
-    
+
     records = []
     for i in range(len(all_chats)):
         record = {'chat': i}

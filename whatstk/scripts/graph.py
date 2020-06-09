@@ -2,7 +2,7 @@
 
 
 import argparse
-from whatstk.objects import WhatsAppChat
+from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.graph import plot, FigureBuilder
 
 

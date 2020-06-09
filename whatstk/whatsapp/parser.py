@@ -33,7 +33,6 @@ def df_from_txt_whatsapp(filename, auto_header=True, hformat=None, encoding='utf
         auto_header (bool): Detect header automatically. If False, ``hformat`` is required.
         hformat (str): Format of the :ref:`header <The header format>`, e.g. '[%y-%m-%d %H:%M:%S] - %name:'. Use
                         following keywords:
-
                             - ``%y``: for year (``%Y`` is equivalent).
                             - ``%m``: for month.
                             - ``%d``: for day.
@@ -59,7 +58,7 @@ def df_from_txt_whatsapp(filename, auto_header=True, hformat=None, encoding='utf
 
     ..  seealso::
 
-        * :func:`df_from_txt <whatstk.core.df_from_txt>`
+        * :func:`WhatsAppChat.from_txt <whatstk.whatsapp.WhatsAppChat.from_txt>`
         * :func:`WhatsAppChat.from_multiple_txt <whatstk.whatsapp.WhatsAppChat.from_multiple_txt>`
         * :func:`extract_header_from_text <extract_header_from_text>`
     """
