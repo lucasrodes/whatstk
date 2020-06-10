@@ -5,3 +5,4 @@ plotly==4.5.0
 python-lorem==1.1.2
 scipy==1.4.1
 seaborn==0.10.1
+certifi==2020.4.5.1
