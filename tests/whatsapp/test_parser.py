@@ -14,6 +14,9 @@ filenames = [os.path.join(output_folder, f) for f in os.listdir(output_folder) i
 chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
+# Chat hosted on repo
+filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
+# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
 
 
 def test_df_from_txt_whatsapp():
@@ -65,6 +68,16 @@ def test_df_from_txt_whatsapp():
 def test_df_from_txt_whatsapp_2():
     with pytest.raises(HFormatError):
         _ = df_from_txt_whatsapp(filename1, hformat='%y')
+
+
+def test_df_from_txt_whatsapp_url():
+    df = df_from_txt_whatsapp(filepath_url)
+    assert(isinstance(df, pd.DataFrame))
+
+
+def test_df_from_txt_whatsapp_error():
+    with pytest.raises(FileNotFoundError):
+        _ = df_from_txt_whatsapp('grger')
 
 # def test_df_from_multiple_txt():
 #     df = df_from_multiple_txt([filename1, filename2])

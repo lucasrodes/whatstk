@@ -1,8 +1,10 @@
 """Parser utils."""
 
 
+import os
 import re
 from datetime import datetime
+from urllib.request import urlopen
 import pandas as pd
 from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
@@ -24,12 +26,12 @@ regex_simplifier = {
 }
 
 
-def df_from_txt_whatsapp(filename, auto_header=True, hformat=None, encoding='utf-8'):
+def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf-8'):
     """Create instance from chat log txt file hosted locally.
 
     Args:
 
-        filename (str): Path to chat text file.
+        filepath (str): Path to chat text file. Can be a local file or an URL.
         auto_header (bool): Detect header automatically. If False, ``hformat`` is required.
         hformat (str): Format of the :ref:`header <The header format>`, e.g. '[%y-%m-%d %H:%M:%S] - %name:'. Use
                         following keywords:
@@ -62,9 +64,17 @@ def df_from_txt_whatsapp(filename, auto_header=True, hformat=None, encoding='utf
         * :func:`WhatsAppChat.from_multiple_txt <whatstk.whatsapp.WhatsAppChat.from_multiple_txt>`
         * :func:`extract_header_from_text <extract_header_from_text>`
     """
-    # Read file
-    with open(filename, encoding=encoding) as f:
-        text = f.read()
+    # Read local file
+    if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
+        with open(filepath, encoding=encoding) as f:
+            text = f.read()
+    # Read file from URL
+    elif filepath.lower().startswith('http'):
+        with urlopen(filepath) as response:  # noqa
+            text = response.read()
+        text = text.decode(encoding)
+    else:
+        raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
 
     # Get hformat
     if hformat:

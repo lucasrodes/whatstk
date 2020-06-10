@@ -24,7 +24,7 @@ class WhatsAppChat(BaseChat):
         super().__init__(df, platform='whatsapp')
 
     @classmethod
-    def from_txt(cls, filename, **kwargs):
+    def from_txt(cls, filepath, **kwargs):
         """Create instance from chat log txt file hosted locally.
 
         Returns:
@@ -35,16 +35,16 @@ class WhatsAppChat(BaseChat):
             * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
         """
         # Prepare DataFrame
-        df = df_from_txt_whatsapp(filename=filename, **kwargs)
+        df = df_from_txt_whatsapp(filepath=filepath, **kwargs)
 
         return cls(df)
 
     @classmethod
-    def from_multiple_txt(cls, filenames, auto_header=None, hformat=None, encoding='utf-8'):
+    def from_multiple_txt(cls, filepaths, auto_header=None, hformat=None, encoding='utf-8'):
         """Load a WhatsAppChat instance from multiple sources.
 
         Args:
-            filenames (list): List with paths to chat text files, e.g. ['part1.txt', 'part2.txt', ...].
+            filepaths (list): List with paths to chat text files, e.g. ['part1.txt', 'part2.txt', ...].
             auto_header (bool, optional): Detect header automatically (applies to all files). If None, attempts to
                                             perform automatic header detection for all files. If False, ``hformat`` is
                                             required.
@@ -70,31 +70,31 @@ class WhatsAppChat(BaseChat):
             ..  code-block:: python
 
                 >>> from whatstk.whatsapp.objects import WhatsAppChat
-                >>> filename1 = 'path/to/chat1.txt'
-                >>> filename2 = 'path/to/chat2.txt'
-                >>> df = WhatsAppChat.from_multiple_txt([filename1, filename2])
+                >>> filepath1 = 'path/to/chat1.txt'
+                >>> filepath2 = 'path/to/chat2.txt'
+                >>> df = WhatsAppChat.from_multiple_txt([filepath1, filepath2])
         """
         dfs = []
         if auto_header is None or auto_header:
-            auto_header = [True]*len(filenames)
+            auto_header = [True]*len(filepaths)
         else:
-            auto_header = [False]*len(filenames)
+            auto_header = [False]*len(filepaths)
         if hformat is None:
-            hformat = [None]*len(filenames)
-        for filename, ah, hf in zip(filenames, auto_header, hformat):
-            chat = WhatsAppChat.from_txt(filename, auto_header=ah, hformat=hf, encoding=encoding)
+            hformat = [None]*len(filepaths)
+        for filepath, ah, hf in zip(filepaths, auto_header, hformat):
+            chat = WhatsAppChat.from_txt(filepath, auto_header=ah, hformat=hf, encoding=encoding)
             dfs.append(chat.df)
         df = merge_chats(dfs)
         return cls(df)
 
     def to_txt(self, filename, hformat=None):
-        """Export chat as txt file.
+        """Export chat to local text file.
 
         Usefull to export the chat to different formats.
 
         Args:
             hformat (str, optional): Header format. Defaults to "%y-%m-%d, %H:%M - %name:".
-            filename (str): Name of the file to export.
+            filename (str): Name of the file to export (must be local).
 
         """
         if not filename.endswith('.txt'):
