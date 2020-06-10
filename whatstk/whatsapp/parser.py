@@ -128,15 +128,15 @@ def _parse_chat(text, regex):
     result = []
     headers = list(re.finditer(regex, text))
     for i in range(len(headers)):
-        line_dict = _parse_line(text, headers, i)
+        try:
+            line_dict = _parse_line(text, headers, i)
+        except KeyError:
+            raise RegexError("Could not match the provided regex with provided text. No match was found.")
         result.append(line_dict)
-    if len(result) > 0:
-        df_chat = pd.DataFrame.from_records(result, index=COLNAMES_DF.DATE)
-        df_chat = df_chat[[COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
-        df_chat = _add_schema(df_chat)
-        return df_chat
-    else:
-        raise RegexError("Could not match the provided regex with provided text. Not match was found.")
+    df_chat = pd.DataFrame.from_records(result, index=COLNAMES_DF.DATE)
+    df_chat = df_chat[[COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
+    df_chat = _add_schema(df_chat)
+    return df_chat
 
 
 def _add_schema(df):
