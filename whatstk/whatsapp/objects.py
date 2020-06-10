@@ -32,7 +32,7 @@ class WhatsAppChat(BaseChat):
 
         ..  seealso::
 
-            * :func:`df_from_txt <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
+            * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
         """
         # Prepare DataFrame
         df = df_from_txt_whatsapp(filename=filename, **kwargs)
@@ -60,8 +60,8 @@ class WhatsAppChat(BaseChat):
 
         ..  seealso::
 
-            * :func:`df_from_txt <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
-            * :func:`WhatsAppChat.from_txt <whatstk.whatsapp.WhatsAppChat.from_multiple_txt>`
+            * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
+            * :func:`WhatsAppChat.from_txt <WhatsAppChat.from_txt>`
             * :func:`merge_chats <whatstk.utils.chat_merge.merge_chats>`
 
         Example:
