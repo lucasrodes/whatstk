@@ -73,6 +73,8 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
         with urlopen(filepath) as response:  # noqa
             text = response.read()
         text = text.decode(encoding)
+    else:
+        raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
 
     # Get hformat
     if hformat:

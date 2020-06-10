@@ -73,6 +73,11 @@ def test_df_from_txt_whatsapp_url():
     df = df_from_txt_whatsapp(filepath_url)
     assert(isinstance(df, pd.DataFrame))
 
+
+def test_df_from_txt_whatsapp_error():
+    with pytest.raises(FileNotFoundError):
+        _ = df_from_txt_whatsapp('grger')
+
 # def test_df_from_multiple_txt():
 #     df = df_from_multiple_txt([filename1, filename2])
 #     assert(isinstance(df, pd.DataFrame))
