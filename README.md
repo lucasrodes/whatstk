@@ -66,7 +66,7 @@ $ whatstk-to-csv [input_filename] [output_filename]
 You can also load the exported txt file with python.
 
 ```python
-from whatstk.objects import WhatsAppChat
+from whatstk.whatsapp.objects import WhatsAppChat
 
 filename = 'chats/example.txt'
 chat = WhatsAppChat.from_txt(filename)

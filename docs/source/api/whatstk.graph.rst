@@ -15,9 +15,4 @@ Module contents
    :undoc-members:
    :show-inheritance:
 
-----
 
-.. automodule:: whatstk.figures
-   :members:
-   :undoc-members:
-   :show-inheritance:

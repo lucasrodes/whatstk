@@ -4,12 +4,11 @@ Api Reference
 .. toctree::
    :maxdepth: 2
 
-   whatstk.core <whatstk.core>
-   whatstk.objects <whatstk.objects>
+   whatstk.whatsapp <whatstk.whatsapp>
    whatstk.analysis <whatstk.analysis> 
    whatstk.graph <whatstk.graph>
    whatstk.utils <whatstk.utils>
-   whatstk.plot <whatstk.plot>
+   whatstk._chat <whatstk._chat>
 
 
 ----

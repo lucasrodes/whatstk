@@ -8,10 +8,10 @@ whatstk.analysis
 
 ----
 
-whatstk.analysis.base
----------------------
+whatstk.analysis.interventions
+------------------------------
 
-.. automodule:: whatstk.analysis.base
+.. automodule:: whatstk.analysis.interventions
    :members:
    :undoc-members:
    :show-inheritance:

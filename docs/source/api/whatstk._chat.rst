@@ -1,8 +1,7 @@
-whatstk.objects
-=============
+whatstk._chat
+================
 
-
-.. automodule:: whatstk.objects
+.. automodule:: whatstk._chat
    :members:
    :undoc-members:
    :show-inheritance:

@@ -5,7 +5,7 @@ This library provides a powerful wrapper for multiple Languages and OS. In addit
 """
 
 
-# from whatstk.core import df_from_txt, df_from_multiple_txt
+# from whatstk.whatsapp.objects import WhatsAppChat
 
 
 name = "whatstk"
@@ -13,6 +13,5 @@ name = "whatstk"
 __version__ = "0.3.0.dev1"
 
 # __all__ = [
-#     'df_from_txt',
-#     'df_from_multiple_txt'
+#     'WhatsAppChat'
 # ]
