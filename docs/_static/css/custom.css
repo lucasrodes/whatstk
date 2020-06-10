@@ -1,0 +1,76 @@
+.wy-side-nav-search { 
+    /* background-color: #25D366; */
+    background-color: white;
+    color: red;
+}
+
+.wy-side-nav-search>a { 
+    color: black;
+}
+
+a {
+    color: #46ba71;
+}
+a:hover {
+    color: #25D366;
+}
+
+.wy-side-nav-search input[type=text] {
+    border-color: #25D366;
+    border-radius: 10px;
+}
+/* a:visited{
+    color: #d32593;
+} */
+
+
+.rst-content dl:not(.docutils) dt {
+    color: #3B9B5E;
+    border-top: solid 3px #3B9B5E;
+    background: #D9FCE6;
+}
+
+.rst-content .viewcode-link {
+    color: #2980B9
+}
+
+.rst-content tt.literal, .rst-content tt.literal, .rst-content code.literal {
+    color: #3B9B5E;
+}
+
+code, .rst-content tt, .rst-content code {
+    white-space: nowrap;
+    max-width: 100%;
+    background: transparent;
+    border-width: 0px;
+    font-size: 85%;
+}
+
+.rst-content dl:not(.docutils) dl dt {
+    border-left: solid 0px white;
+    background: white;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",Courier,monospace;
+    color: #3B9B5E;
+    border-left: solid 3px #3B9B5E;
+}
+
+.wy-alert.wy-alert-info, .rst-content .note, .rst-content .wy-alert-info.attention, .rst-content .wy-alert-info.caution, .rst-content .wy-alert-info.danger, .rst-content .wy-alert-info.error, .rst-content .wy-alert-info.hint, .rst-content .wy-alert-info.important, .rst-content .wy-alert-info.tip, .rst-content .wy-alert-info.warning, .rst-content .seealso, .rst-content .wy-alert-info.admonition-todo, .rst-content .wy-alert-info.admonition {
+    background: white;
+    border-left: solid 3px #007bff;
+}
+
+.wy-alert.wy-alert-info .wy-alert-title, .rst-content .note .wy-alert-title, .rst-content .wy-alert-info.attention .wy-alert-title, .rst-content .wy-alert-info.caution .wy-alert-title, .rst-content .wy-alert-info.danger .wy-alert-title, .rst-content .wy-alert-info.error .wy-alert-title, .rst-content .wy-alert-info.hint .wy-alert-title, .rst-content .wy-alert-info.important .wy-alert-title, .rst-content .wy-alert-info.tip .wy-alert-title, .rst-content .wy-alert-info.warning .wy-alert-title, .rst-content .seealso .wy-alert-title, .rst-content .wy-alert-info.admonition-todo .wy-alert-title, .rst-content .wy-alert-info.admonition .wy-alert-title, .wy-alert.wy-alert-info .rst-content .admonition-title, .rst-content .wy-alert.wy-alert-info .admonition-title, .rst-content .note .admonition-title, .rst-content .wy-alert-info.attention .admonition-title, .rst-content .wy-alert-info.caution .admonition-title, .rst-content .wy-alert-info.danger .admonition-title, .rst-content .wy-alert-info.error .admonition-title, .rst-content .wy-alert-info.hint .admonition-title, .rst-content .wy-alert-info.important .admonition-title, .rst-content .wy-alert-info.tip .admonition-title, .rst-content .wy-alert-info.warning .admonition-title, .rst-content .seealso .admonition-title, .rst-content .wy-alert-info.admonition-todo .admonition-title, .rst-content .wy-alert-info.admonition .admonition-title {
+    background: #E0EDFD;
+}
+
+.admonition .admonition-title::before {
+    color: #007BFF;
+}
+
+.admonition .admonition-title {
+    color: black;
+}
+
+.admonition {
+    box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.25);
+}

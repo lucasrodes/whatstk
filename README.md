@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0dev0-blue.svg?&color=25D366&logo=whatsapp&style=for-the-badge">
+    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0.dev1-blue.svg?&color=25D366&logo=whatsapp&style=for-the-badge">
   </a>
 </p>
 <!-- style=for-the-badge -->
@@ -66,7 +66,7 @@ $ whatstk-to-csv [input_filename] [output_filename]
 You can also load the exported txt file with python.
 
 ```python
-from whatstk.objects import WhatsAppChat
+from whatstk.whatsapp.objects import WhatsAppChat
 
 filename = 'chats/example.txt'
 chat = WhatsAppChat.from_txt(filename)

@@ -3,7 +3,7 @@
 
 from collections import namedtuple
 import pandas as pd
-from whatstk.objects import WhatsAppChat
+from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.utils.utils import _get_df, COLNAMES_DF
 
 
@@ -16,7 +16,7 @@ NORMS = Norms(
 )
 
 
-def response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
+def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
     """Get response matrix for given chat.
 
     Obtains a DataFrame of shape [n_users, n_users] counting the number of responses between members. Responses can be
@@ -40,21 +40,21 @@ def response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
 
         Get absolute count on responses (consecutive messages) between users
 
-        ```python
+    ..  code-block: python
+
         >>> from whatstk import df_from_txt
-        >>> from whatstk.analysis.responses import response_matrix
+        >>> from whatstk.analysis.responses import get_response_matrix
         >>> df = df_from_txt(path)
-        >>> responses = response_matrix(df)
-        ```
+        >>> responses = get_response_matrix(df)
 
         Get percentage of responses received for each user.
 
-        ```python
+    ..  code-block: python
+
         >>> from whatstk import df_from_txt
-        >>> from whatstk.analysis.responses import response_matrix
+        >>> from whatstk.analysis.responses import get_response_matrix
         >>> df = df_from_txt(path)
-        >>> responses = response_matrix(df, norm='receive)
-        ```
+        >>> responses = get_response_matrix(df, norm='receive)
 
     """
     # Get chat df and users

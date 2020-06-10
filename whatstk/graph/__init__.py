@@ -2,7 +2,11 @@
 
 
 from plotly.offline import plot
-from whatstk.graph.figures import FigureBuilder
+import plotly.io as pio
+from whatstk.graph.base import FigureBuilder
+
+
+pio.templates.default = "plotly_white"
 
 
 __all__ = [

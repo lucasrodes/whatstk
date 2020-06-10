@@ -3,7 +3,7 @@
 
 import argparse
 from datetime import datetime
-from whatstk.utils.chat_generation import generate_chats_hformats
+from whatstk.whatsapp.generation import generate_chats_hformats
 
 
 def _parse_args():
