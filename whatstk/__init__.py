@@ -5,13 +5,15 @@ This library provides a powerful wrapper for multiple Languages and OS. In addit
 """
 
 
-# from whatstk.whatsapp.objects import WhatsAppChat
+from whatstk.whatsapp.objects import WhatsAppChat
+from whatstk.graph import FigureBuilder
 
 
 name = "whatstk"
 
 __version__ = "0.3.0.dev1"
 
-# __all__ = [
-#     'WhatsAppChat'
-# ]
+__all__ = [
+    'WhatsAppChat',
+    'FigureBuilder'
+]
