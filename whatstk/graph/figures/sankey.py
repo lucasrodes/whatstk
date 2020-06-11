@@ -16,7 +16,7 @@ def fig_sankey(label, color, source, target, value, title=""):
         title (str, optional): Title. Defaults to "".
 
     Returns:
-        dict: Figure as dictionary.
+        dict: Figure.
 
     """
     trace = go.Sankey(

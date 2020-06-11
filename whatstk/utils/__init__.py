@@ -1,1 +1,1 @@
-"""This module includes features which are in development."""
+"""Library generic utils."""

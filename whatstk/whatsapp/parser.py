@@ -35,18 +35,18 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
         hformat (str, optional): :ref:`Format of the header <The header format>`, e.g.
                                     ``'[%y-%m-%d %H:%M:%S] - %name:'``. Use following keywords:
 
-                                    - ``%y``: for year (``%Y`` is equivalent).
-                                    - ``%m``: for month.
-                                    - ``%d``: for day.
-                                    - ``%H``: for 24h-hour.
-                                    - ``%I``: for 12h-hour.
-                                    - ``%M``: for minutes.
-                                    - ``%S``: for seconds.
-                                    - ``%P``: for "PM"/"AM" or "p.m."/"a.m." characters.
-                                    - ``%name``: for the username.
+                                    - ``'%y'``: for year (``'%Y'`` is equivalent).
+                                    - ``'%m'``: for month.
+                                    - ``'%d'``: for day.
+                                    - ``'%H'``: for 24h-hour.
+                                    - ``'%I'``: for 12h-hour.
+                                    - ``'%M'``: for minutes.
+                                    - ``'%S'``: for seconds.
+                                    - ``'%P'``: for "PM"/"AM" or "p.m."/"a.m." characters.
+                                    - ``'%name'``: for the username.
 
                                     Example 1: For the header '12/08/2016, 16:20 - username:' we have the
-                                    ``hformat='%d/%m/%y, %H:%M - %name:'``.
+                                    ``'hformat='%d/%m/%y, %H:%M - %name:'``.
 
                                     Example 2: For the header '2016-08-12, 4:20 PM - username:' we have
                                     ``hformat='%y-%m-%d, %I:%M %P - %name:'``.

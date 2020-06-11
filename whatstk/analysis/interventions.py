@@ -8,30 +8,18 @@ from whatstk.utils.utils import COLNAMES_DF, _get_df
 def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False):
     """Get number of interventions per user per unit of time.
 
-    The unit of time can be chosen by means of argument `date_mode`.
-
-    Example:
-
-        Get counts of sent messages per user. Also cumulative.
-
-    ..  code-block: python
-
-        >>> from whatstk import df_from_txt
-        >>> from whatstk.analysis get_interventions_count
-        >>> filepath = 'path/to/samplechat.txt'
-        >>> df = df_from_txt(filepath)
-        >>> counts = get_interventions_count(df=df, date_mode='date', msg_length=False)
-        >>> counts_cumsum = counts.cumsum()
+    The unit of time can be chosen by means of argument ``date_mode``.
 
     Args:
         df (pandas.DataFrame): Chat as DataFrame.
         chat (WhatsAppChat): Object containing parsed WhatsApp chat.
-        date_mode (str, optional): Choose mode to group interventions by. Defaults to 'date'. Available modes are:
-                            - 'date': Grouped by particular date (year, month and day).
-                            - 'hour': Grouped by hours.
-                            - 'month': Grouped by months.
-                            - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
-                            - 'hourweekday': Grouped by weekday and hour.
+        date_mode (str, optional): Choose mode to group interventions by.
+                                    Defaults to ``date_mode=date``. Available modes are:
+                                        - ``'date'``: Grouped by particular date (year, month and day).
+                                        - ``'hour'``: Grouped by day hours (24 hours).
+                                        - ``'month'``: Grouped by months (12 months).
+                                        - ``'weekday'``: Grouped by weekday (i.e. monday, tuesday, ..., sunday).
+                                        - ``'hourweekday'``: Grouped by weekday and hour.
         msg_length (bool, optional): Set to True to count the number of characters instead of number of messages sent.
         cummulative (bool, optional): Set to True to obtain commulative counts.
 
@@ -39,7 +27,31 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         pandas.DataFrame: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
 
     Raises:
-        ValueError: if `date_mode` value is not supported.
+        ValueError: if ``date_mode`` value is not supported.
+
+    Example:
+            Get number of interventions per user from `POKEMON chat
+            <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_. The counts are
+            represented as a `NxU` matrix, where `N`: number of time-slots and `U`: number of users.
+
+            ..  code-block:: python
+
+                >>> from whatstk import WhatsAppChat
+                >>> from whatstk.analysis import get_interventions_count
+                >>> from whatstk.data import whatsapp_urls
+                >>> filepath = whatsapp_urls.POKEMON
+                >>> chat = WhatsAppChat.from_txt(filepath)
+                >>> counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False)
+                >>> counts.head(5)
+                username    Ash Ketchum  Brock  Jessie & James  ...  Prof. Oak  Raichu  Wobbuffet
+                date                                            ...
+                2016-08-06            2      2               0  ...          0       0          0
+                2016-08-07            1      1               0  ...          1       0          0
+                2016-08-10            1      0               1  ...          0       2          0
+                2016-08-11            0      0               0  ...          0       0          0
+                2016-09-11            0      0               0  ...          0       0          0
+
+                [5 rows x 8 columns]
 
     """
     df = _get_df(df=df, chat=chat)

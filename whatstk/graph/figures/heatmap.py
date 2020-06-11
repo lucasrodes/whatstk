@@ -12,7 +12,7 @@ def fig_heatmap(df_matrix, title=""):
         title (str): Title of plot. Defaults to "".
 
     Returns:
-        [type]: [description]
+        dict: Figure.
     """
     trace = go.Heatmap(
         z=df_matrix,

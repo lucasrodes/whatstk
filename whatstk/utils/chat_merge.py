@@ -1,4 +1,4 @@
-"""Merge utils."""
+"""Merging chats."""
 
 
 import pandas as pd
@@ -17,8 +17,11 @@ def merge_chats(dfs):
 
     Can come in handy when you have old exports and new ones, and both have relevant data.
 
+    **Note:** The datarames must have an index with the timestamps of the messages, as this is required to correctly
+    sort and merge the chats.
+
     Args:
-        dfs (list): List with the chats as DataFrames.
+        dfs (List[pandas.DataFrame]): List with the chats as DataFrames.
 
     Returns:
         pandas.DataFrame: Merged chat.

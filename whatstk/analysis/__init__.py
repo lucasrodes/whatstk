@@ -1,4 +1,4 @@
-"""Analytics tools."""
+"""Analysis tools."""
 
 
 from whatstk.analysis.interventions import get_interventions_count

@@ -151,7 +151,7 @@ class BaseChat:
         return self_
 
     def to_csv(self, filepath):
-        """Save data as csv.
+        """Save chat as csv.
 
         Args:
             filepath (str): Name of file.

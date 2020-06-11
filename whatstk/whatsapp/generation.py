@@ -1,8 +1,4 @@
-"""Chat generation utils.
-
-Use this module functions to generate chats.
-
-"""
+"""Automatic generation of chat using Lorem Ipsum text and statistics."""
 
 
 import os

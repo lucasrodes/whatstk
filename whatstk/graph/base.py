@@ -13,7 +13,17 @@ from whatstk.utils.utils import _get_df
 
 
 class FigureBuilder:
-    """Generate a variety of figures from your loaded chat."""
+    """Generate a variety of figures from your loaded chat.
+
+    Integrates feature extraction and visualization logic to automate data plots.
+
+    Args:
+        df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. Defaults to
+                                            None.
+        chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Defaults to
+                                        None.
+
+    """
 
     def __init__(self, df=None, chat=None):
         """Constructor.
@@ -23,8 +33,6 @@ class FigureBuilder:
                                              None.
             chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Defaults to
                                            None.
-            title (str, optional): Figure title. Defaults to "".
-            xlabel (str, optional): x-axis label. Defaults to None.
 
         """
         self.df = _get_df(df=df, chat=chat)
@@ -42,7 +50,9 @@ class FigureBuilder:
 
     @property
     def user_color_mapping(self):
-        """Build mapping between user and color.
+        """Get mapping between user and color.
+
+        Each user is assigned a color automatically, so that this color is preserved for that user in all plots.
 
         Returns:
             dict: Mapping username -> color (rgb).
@@ -59,23 +69,28 @@ class FigureBuilder:
         self.__user_color_mapping = value
 
     def user_msg_length_boxplot(self, title="User message length", xlabel="User"):
-        """Get boxplot of message length of all users.
+        """Generate figure with boxplots of message length of all users.
 
-        Returns:
-            dict: Dictionary with data and layout. Plotly compatible
+        Args:
             title (str, optional): Title for plot. Defaults to "User message length".
             xlabel (str, optional): x-axis label title. Defaults to "User".
 
+        Returns:
+            dict: Dictionary with data and layout. Plotly compatible.
+
+        ..  seealso::
+
+            * :func:`fig_boxplot_msglen <whatstk.graph.figures.boxplot.fig_boxplot_msglen>`
+
         Example:
+            ..  code-block:: python
 
-        ..  code-block: python
-
-            >>> from whatstk import df_from_txt
-            >>> from whatstk.graph import plot, FigureBuilder
-            >>> filepath = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filfilepathename)
-            >>> fig = FigureBuilder(df).user_msg_length_boxplot()
-            >>> plot(fig)
+                >>> from whatstk import WhatsAppChat
+                >>> from whatstk.graph import plot, FigureBuilder
+                >>> from whatstk.data import whatsapp_urls
+                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> fig = FigureBuilder(chat=chat).user_msg_length_boxplot()
+                >>> plot(fig)
 
         """
         fig = fig_boxplot_msglen(
@@ -92,11 +107,12 @@ class FigureBuilder:
 
         Args:
             date_mode (str, optional): Choose mode to group interventions by. Defaults to 'date'. Available modes are:
-                            - 'date': Grouped by particular date (year, month and day).
-                            - 'hour': Grouped by hours.
-                            - 'month': Grouped by months.
-                            - 'weekday': Grouped by weekday (i.e. monday, tuesday, ..., sunday).
-                            - 'hourweekday': Grouped by weekday and hour.
+
+                                        - ``'date'``: Grouped by particular date (year, month and day).
+                                        - ``'hour'``: Grouped by hours.
+                                        - ``'month'``: Grouped by months.
+                                        - ``'weekday'``: Grouped by weekday (i.e. monday, tuesday, ..., sunday).
+                                        - ``'hourweekday'``: Grouped by weekday and hour.
             msg_length (bool, optional): Set to True to count the number of characters instead of number of messages
                                          sent.
             cummulative (bool, optional): Set to True to obtain commulative counts.
@@ -106,16 +122,20 @@ class FigureBuilder:
         Returns:
             dict: Dictionary with data and layout. Plotly compatible
 
+        ..  seealso::
+
+            * :func:`get_interventions_count <whatstk.analysis.get_interventions_count>`
+            * :func:`fig_scatter_time <whatstk.graph.figures.scatter.fig_scatter_time>`
+
         Example:
+            ..  code-block:: python
 
-        ..  code-block: python
-
-            >>> from whatstk import df_from_txt
-            >>> from whatstk.graph import plot, FigureBuilder
-            >>> filepath = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filepath)
-            >>> fig = FigureBuilder(df).user_interventions_count_linechart(cummulative=True)
-            >>> plot(fig)
+                >>> from whatstk import WhatsAppChat
+                >>> from whatstk.graph import plot, FigureBuilder
+                >>> from whatstk.data import whatsapp_urls
+                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> fig = FigureBuilder(chat=chat).user_interventions_count_linechart(cummulative=True)
+                >>> plot(fig)
 
         """
         counts = get_interventions_count(
@@ -145,16 +165,20 @@ class FigureBuilder:
         Returns:
             dict: Dictionary with data and layout. Plotly compatible
 
+        ..  seealso::
+
+            * :func:`get_response_matrix <whatstk.analysis.get_response_matrix>`
+            * :func:`fig_sankey <whatstk.graph.figures.sankey.fig_sankey>`
+
         Example:
+            ..  code-block:: python
 
-        ..  code-block: python
-
-            >>> from whatstk import df_from_txt
-            >>> from whatstk.graph import plot, FigureBuilder
-            >>> filepath = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filepath)
-            >>> fig = FigureBuilder(df).user_message_responses_flow()
-            >>> plot(fig)
+                >>> from whatstk import WhatsAppChat
+                >>> from whatstk.graph import plot, FigureBuilder
+                >>> from whatstk.data import whatsapp_urls
+                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> fig = FigureBuilder(chat=chat).user_message_responses_flow()
+                >>> plot(fig)
 
         """
         # Get response matrix
@@ -193,16 +217,20 @@ class FigureBuilder:
         Returns:
             dict: Dictionary with data and layout. Plotly compatible
 
+        ..  seealso::
+
+            * :func:`get_response_matrix <whatstk.analysis.get_response_matrix>`
+            * :func:`fig_heatmap <whatstk.graph.figures.heatmap.fig_heatmap>`
+
         Example:
+            ..  code-block:: python
 
-        ..  code-block: python
-
-            >>> from whatstk import df_from_txt
-            >>> from whatstk.graph import plot, FigureBuilder
-            >>> filepath = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filepath)
-            >>> fig = FigureBuilder(df).user_message_responses_heatmap()
-            >>> plot(fig)
+                >>> from whatstk import WhatsAppChat
+                >>> from whatstk.graph import plot, FigureBuilder
+                >>> from whatstk.data import whatsapp_urls
+                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> fig = FigureBuilder(chat=chat).user_message_responses_heatmap()
+                >>> plot(fig)
 
         """
         # Get response matrix

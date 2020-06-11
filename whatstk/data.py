@@ -1,4 +1,8 @@
-"""Load sample chat."""
+"""Load sample chats.
+
+The objective of this module is to have the links to currently online-available chats. For more details, please refer to
+the source code.
+"""
 # pip install --upgrade certifi
 
 
