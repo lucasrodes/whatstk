@@ -1,16 +1,33 @@
 """Utils."""
 
 
-from collections import namedtuple
+class ColnamesDf:
+    """Access class constants using variable ``whatstk.utils.utils.COLNAMES_DF``.
+
+    Example:
+            Access constant ``COLNAMES_DF.DATE``:
+
+            ..  code-block:: python
+
+                >>> from whatstk.utils.utils import COLNAMES_DF
+                >>> COLNAMES_DF.DATE
+                date
+
+    """
+    DATE = 'date'
+    """Date column"""
+
+    USERNAME = 'username'
+    """Username column"""
+
+    MESSAGE = 'message'
+    """Message column"""
+
+    MESSAGE_LENGTH = 'message_length'
+    """Message length column"""
 
 
-ColnamesDf = namedtuple('Constants', ['DATE', 'USERNAME', 'MESSAGE', 'MESSAGE_LENGTH'])
-COLNAMES_DF = ColnamesDf(
-    DATE='date',
-    USERNAME='username',
-    MESSAGE='message',
-    MESSAGE_LENGTH='message_length'
-)
+COLNAMES_DF = ColnamesDf()
 
 
 def _get_df(df, chat):
