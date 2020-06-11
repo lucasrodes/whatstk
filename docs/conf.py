@@ -46,7 +46,8 @@ extensions = [
     'sphinx_copybutton',
     'sphinx.ext.autosectionlabel',
     'sphinx_git',
-    'autodocsumm'
+    'autodocsumm',
+    'sphinx.ext.mathjax'
 ]
 
 # The name of the entry point, without the ".rst" extension.
@@ -77,7 +78,7 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # -- Copybutton ---------------------------------------------------------------
-copybutton_prompt_text = ">>>"
+copybutton_prompt_text = ">>> "
 
 
 # -- autoautosummary ----------------------------------------------------------
