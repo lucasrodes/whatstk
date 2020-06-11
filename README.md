@@ -69,8 +69,8 @@ You can also load the exported txt file with python.
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.data import whatsapp_urls
 
-filename = whatsapp_urls.pokemon
-chat = WhatsAppChat.from_txt(filename)
+filepath = whatsapp_urls.POKEMON
+chat = WhatsAppChat.from_txt(filepath)
 ```
 #### More examples
 

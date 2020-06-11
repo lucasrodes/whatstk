@@ -8,6 +8,7 @@ Api Reference
    whatstk.analysis <whatstk.analysis> 
    whatstk.graph <whatstk.graph>
    whatstk.utils <whatstk.utils>
+   whatstk.data <whatstk.data>
    whatstk._chat <whatstk._chat>
 
 

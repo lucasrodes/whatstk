@@ -1,1 +1,1 @@
-"""WhatsApp parser and io operations."""
+"""WhatsApp parser."""

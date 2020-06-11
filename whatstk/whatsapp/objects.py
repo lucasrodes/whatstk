@@ -7,13 +7,30 @@ from whatstk.whatsapp.parser import df_from_txt_whatsapp
 
 
 class WhatsAppChat(BaseChat):
-    """Use this class to load and process your chat text file.
+    """Load and process a WhatsApp chat file.
 
-    Attributes:
-        df: Chat as pandas.DataFrame.
+    Args:
+        df (pandas.DataFrame): Chat.
+
+    Examples:
+        This simple example loads a chat using :func:`WhatsAppChat <WhatsAppChat>`. Once loaded, we can access its
+        attribute ``df``, which contains the loaded chat as a DataFrame.
+
+        ..  code-block:: python
+
+            >>> from whatstk.whatsapp.objects import WhatsAppChat
+            >>> from whatstk.data import whatsapp_urls
+            >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.POKEMON)
+            >>> chat.df.head(5)
+                                    username                                            message
+            date
+            2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
+            2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!
+            2016-08-06 13:30:00        Misty  Hey guys! Long time haven't heard anything fro...
+            2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
+            2016-08-06 14:30:00        Misty                                          Definetly
 
     """
-
     def __init__(self, df):
         """Constructor.
 
@@ -25,7 +42,14 @@ class WhatsAppChat(BaseChat):
 
     @classmethod
     def from_txt(cls, filepath, **kwargs):
-        """Create instance from chat log txt file hosted locally.
+        """Create an instance from a chat text file.
+
+        Args:
+            filepath (str): Path to the file. It can be a local file (e.g. 'path/to/file.txt') or an URL to a hosted
+                            file (e.g. 'http://www.url.to/file.txt)
+            **kwargs: Refer to the docs from
+                        :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>` for details on
+                        additional arguments.
 
         Returns:
             WhatsAppChat: Class instance with loaded and parsed chat.
@@ -33,6 +57,7 @@ class WhatsAppChat(BaseChat):
         ..  seealso::
 
             * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
+
         """
         # Prepare DataFrame
         df = df_from_txt_whatsapp(filepath=filepath, **kwargs)
@@ -44,7 +69,7 @@ class WhatsAppChat(BaseChat):
         """Load a WhatsAppChat instance from multiple sources.
 
         Args:
-            filepaths (list): List with paths to chat text files, e.g. ['part1.txt', 'part2.txt', ...].
+            filepaths (list): List with filepaths.
             auto_header (bool, optional): Detect header automatically (applies to all files). If None, attempts to
                                             perform automatic header detection for all files. If False, ``hformat`` is
                                             required.
@@ -60,19 +85,21 @@ class WhatsAppChat(BaseChat):
 
         ..  seealso::
 
-            * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
             * :func:`WhatsAppChat.from_txt <WhatsAppChat.from_txt>`
             * :func:`merge_chats <whatstk.utils.chat_merge.merge_chats>`
 
         Example:
-            Load a chat from two chat text files ('path/to/chat1.txt' and 'path/to/chat2.txt').
+            Load a chat using two text files. In this example, we use sample chats (available online, see urls in
+            source code :mod:`whatstk.data <whatstk.data>`).
 
             ..  code-block:: python
 
                 >>> from whatstk.whatsapp.objects import WhatsAppChat
-                >>> filepath1 = 'path/to/chat1.txt'
-                >>> filepath2 = 'path/to/chat2.txt'
-                >>> df = WhatsAppChat.from_multiple_txt([filepath1, filepath2])
+                >>> from whatstk.data import whatsapp_urls
+                >>> filepath_1 = whatsapp_urls.POKEMON
+                >>> filepath_2 = whatsapp_urls.LOREM
+                >>> chat = WhatsAppChat.from_multiple_txt(filepaths=[filepath_1, filepath_2])
+
         """
         dfs = []
         if auto_header is None or auto_header:
@@ -87,18 +114,18 @@ class WhatsAppChat(BaseChat):
         df = merge_chats(dfs)
         return cls(df)
 
-    def to_txt(self, filename, hformat=None):
-        """Export chat to local text file.
+    def to_txt(self, filepath, hformat=None):
+        """Export chat to a text file.
 
         Usefull to export the chat to different formats.
 
         Args:
+            filepath (str): Name of the file to export (must be a local path).
             hformat (str, optional): Header format. Defaults to "%y-%m-%d, %H:%M - %name:".
-            filename (str): Name of the file to export (must be local).
 
         """
-        if not filename.endswith('.txt'):
-            raise ValueError("filename must end with .txt")
+        if not filepath.endswith('.txt'):
+            raise ValueError("filepath must end with .txt")
         if not hformat:
             hformat = "%y-%m-%d, %H:%M - %name:"
         lines = []
@@ -110,5 +137,5 @@ class WhatsAppChat(BaseChat):
             formatted_line = '{} {}'.format(header, text)
             lines.append(formatted_line)
         text = '\n'.join(lines)
-        with open(filename, 'w') as f:
+        with open(filepath, 'w') as f:
             f.write(text)

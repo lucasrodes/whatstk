@@ -9,6 +9,7 @@ whatstk.whatsapp
 
 ----
 
+
 whatstk.whatsapp.objects
 ------------------------
 
@@ -16,7 +17,6 @@ whatstk.whatsapp.objects
    :members:
    :undoc-members:
    :show-inheritance:
-   :special-members: __init__
    :inherited-members:
 
 ----
@@ -48,7 +48,6 @@ whatstk.whatsapp.generation
    :members:
    :undoc-members:
    :show-inheritance:
-   :special-members: __init__
 
 ----
 

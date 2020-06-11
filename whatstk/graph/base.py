@@ -72,8 +72,8 @@ class FigureBuilder:
 
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
-            >>> filename = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filename)
+            >>> filepath = 'path/to/samplechat.txt'
+            >>> df = df_from_txt(filfilepathename)
             >>> fig = FigureBuilder(df).user_msg_length_boxplot()
             >>> plot(fig)
 
@@ -112,8 +112,8 @@ class FigureBuilder:
 
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
-            >>> filename = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filename)
+            >>> filepath = 'path/to/samplechat.txt'
+            >>> df = df_from_txt(filepath)
             >>> fig = FigureBuilder(df).user_interventions_count_linechart(cummulative=True)
             >>> plot(fig)
 
@@ -151,8 +151,8 @@ class FigureBuilder:
 
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
-            >>> filename = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filename)
+            >>> filepath = 'path/to/samplechat.txt'
+            >>> df = df_from_txt(filepath)
             >>> fig = FigureBuilder(df).user_message_responses_flow()
             >>> plot(fig)
 
@@ -199,8 +199,8 @@ class FigureBuilder:
 
             >>> from whatstk import df_from_txt
             >>> from whatstk.graph import plot, FigureBuilder
-            >>> filename = 'path/to/samplechat.txt'
-            >>> df = df_from_txt(filename)
+            >>> filepath = 'path/to/samplechat.txt'
+            >>> df = df_from_txt(filepath)
             >>> fig = FigureBuilder(df).user_message_responses_heatmap()
             >>> plot(fig)
 

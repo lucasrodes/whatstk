@@ -27,42 +27,41 @@ regex_simplifier = {
 
 
 def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf-8'):
-    """Create instance from chat log txt file hosted locally.
+    """Load chat as a DataFrame.
 
     Args:
-
         filepath (str): Path to chat text file. Can be a local file or an URL.
-        auto_header (bool): Detect header automatically. If False, ``hformat`` is required.
-        hformat (str): Format of the :ref:`header <The header format>`, e.g. '[%y-%m-%d %H:%M:%S] - %name:'. Use
-                        following keywords:
-                            - ``%y``: for year (``%Y`` is equivalent).
-                            - ``%m``: for month.
-                            - ``%d``: for day.
-                            - ``%H``: for 24h-hour.
-                            - ``%I``: for 12h-hour.
-                            - ``%M``: for minutes.
-                            - ``%S``: for seconds.
-                            - ``%P``: for "PM"/"AM" or "p.m."/"a.m." characters.
-                            - ``%name``: for the username.
+        auto_header (bool, optional): Detect header automatically. If False, ``hformat`` is required.
+        hformat (str, optional): :ref:`Format of the header <The header format>`, e.g.
+                                    ``'[%y-%m-%d %H:%M:%S] - %name:'``. Use following keywords:
 
-                            Example 1: To the header '12/08/2016, 16:20 - username:' corresponds the `hformat`
-                            '%d/%m/%y, %H:%M - %name:'.
+                                    - ``%y``: for year (``%Y`` is equivalent).
+                                    - ``%m``: for month.
+                                    - ``%d``: for day.
+                                    - ``%H``: for 24h-hour.
+                                    - ``%I``: for 12h-hour.
+                                    - ``%M``: for minutes.
+                                    - ``%S``: for seconds.
+                                    - ``%P``: for "PM"/"AM" or "p.m."/"a.m." characters.
+                                    - ``%name``: for the username.
 
-                            Example 2: To the header '2016-08-12, 4:20 PM - username:' corresponds the `hformat`
-                            '%y-%m-%d, %I:%M %P - %name:'.
-        encoding (str): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
-                        `List of Python standard encodings <https://docs.python.org/3/library/codecs.
-                        html#standard-encodings>`_.
+                                    Example 1: For the header '12/08/2016, 16:20 - username:' we have the
+                                    ``hformat='%d/%m/%y, %H:%M - %name:'``.
+
+                                    Example 2: For the header '2016-08-12, 4:20 PM - username:' we have
+                                    ``hformat='%y-%m-%d, %I:%M %P - %name:'``.
+        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                                  `List of Python standard encodings <https://docs.python.org/3/library/codecs.
+                                  html#standard-encodings>`_.
 
     Returns:
         WhatsAppChat: Class instance with loaded and parsed chat.
 
-
     ..  seealso::
 
-        * :func:`WhatsAppChat.from_txt <whatstk.whatsapp.WhatsAppChat.from_txt>`
-        * :func:`WhatsAppChat.from_multiple_txt <whatstk.whatsapp.WhatsAppChat.from_multiple_txt>`
-        * :func:`extract_header_from_text <extract_header_from_text>`
+        * :func:`WhatsAppChat.from_txt <whatstk.whatsapp.objects.WhatsAppChat.from_txt>`
+        * :func:`extract_header_from_text <whatstk.whatsapp.auto_header.extract_header_from_text>`
+
     """
     # Read local file
     if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
@@ -103,13 +102,24 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
 
 
 def generate_regex(hformat):
-    """Generate the appropriate regular expression from simplified syntax.
+    r"""Generate regular expression from hformat.
 
     Args:
-        hformat (str): Simplified syntax for the header.
+        hformat (str): Simplified syntax for the header, e.g. ``'%y-%m-%d, %H:%M:%S - %name:'``.
 
     Returns:
         str: Regular expression corresponding to the specified syntax.
+
+    Example:
+        Generate regular expression corresponding to ``hformat=%y-%m-%d, %H:%M:%S - %name:``
+
+        ..  code-block:: python
+
+            >>> from whatstk.whatsapp.parser import generate_regex
+            >>> generate_regex('%y-%m-%d, %H:%M:%S - %name:')
+            ('(?P<year>\\d{2,4})-(?P<month>\\d{1,2})-(?P<day>\\d{1,2}), (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?
+            P<seconds>\\d{2}) - (?P<username>[^:]*): ', '(?P<year>\\d{2,4})-(?P<month>\\d{1,2})-(?P<day>\\d{1,2}), (?
+            P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?P<seconds>\\d{2}) - ')
 
     """
     items = re.findall(r'\%\w*', hformat)

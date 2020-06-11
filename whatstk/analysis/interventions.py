@@ -18,8 +18,8 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
 
         >>> from whatstk import df_from_txt
         >>> from whatstk.analysis get_interventions_count
-        >>> filename = 'path/to/samplechat.txt'
-        >>> df = df_from_txt(filename)
+        >>> filepath = 'path/to/samplechat.txt'
+        >>> df = df_from_txt(filepath)
         >>> counts = get_interventions_count(df=df, date_mode='date', msg_length=False)
         >>> counts_cumsum = counts.cumsum()
 

@@ -48,7 +48,7 @@ code, .rst-content tt, .rst-content code {
 
 .rst-content dl:not(.docutils) dl dt {
     border-left: solid 0px white;
-    background: white;
+    background: transparent;
     font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",Courier,monospace;
     color: #3B9B5E;
     border-left: solid 3px #3B9B5E;
@@ -73,4 +73,16 @@ code, .rst-content tt, .rst-content code {
 
 .admonition {
     box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.25);
+}
+
+.rst-content div[class^='highlight'] {
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+    border-right: 3px solid #e88a50;
+}
+
+.rst-content dl:not(.docutils) dt:first-child {
+    margin-top: 0;
+    width: 100%;
 }
