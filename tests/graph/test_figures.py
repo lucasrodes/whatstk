@@ -7,11 +7,11 @@ filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 
 
 def load_chat_as_df():
-    return WhatsAppChat.from_txt(filename).df
+    return WhatsAppChat.from_source(filename).df
 
 
 def load_chat():
-    return WhatsAppChat.from_txt(filename)
+    return WhatsAppChat.from_source(filename)
 
 
 def test_init():
