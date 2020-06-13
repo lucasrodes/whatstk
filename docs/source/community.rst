@@ -1,4 +1,0 @@
-Community
-==========
-
-Bla bla

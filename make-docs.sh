@@ -1,3 +1,5 @@
+# make documentation script
+
 # 0. Install dependencies: # pip install -r requirements-docs.txt
 # 1. sphinx-quickstart 
 # 1b. select non split between source and html

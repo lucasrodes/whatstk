@@ -1,4 +1,0 @@
-About whatstk
-=============
-
-Bla bla
