@@ -37,6 +37,7 @@ It is distributed under the GPL-3.0 license.
 
 ⭐ Please **star** our project if you found it interesting to **give us some dopamine** 😄!
 
+
 ### Content
 * [Installation](#installation)
 * [Getting Started](#getting-started)
@@ -70,7 +71,7 @@ from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.data import whatsapp_urls
 
 filepath = whatsapp_urls.POKEMON
-chat = WhatsAppChat.from_txt(filepath)
+chat = WhatsAppChat.from_source(filepath)
 ```
 #### More examples
 
