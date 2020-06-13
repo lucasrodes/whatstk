@@ -18,8 +18,17 @@
 
 
 ## (2) Run flake
-flake8 --max-complexity 10 --format=html --docstring-convention=google --htmldir=flake-report whatstk
+flake8 \
+    --max-complexity 10\
+    --docstring-convention=google\
+    --format=html --htmldir=flake-report\
+    --max-line-length=120\
+    whatstk
 
 ## (3) Run tests
-py.test --html=testreport.html --cov-report html --cov-report term --cov-report xml:cov.xml --cov=whatstk tests/
-
+py.test \
+    --html=testreport.html\
+    --cov-report html\
+    --cov-report term\
+    --cov-report xml:cov.xml\
+    --cov=whatstk tests/
