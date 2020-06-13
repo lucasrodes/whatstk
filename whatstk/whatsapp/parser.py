@@ -59,7 +59,7 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
 
     ..  seealso::
 
-        * :func:`WhatsAppChat.from_txt <whatstk.whatsapp.objects.WhatsAppChat.from_txt>`
+        * :func:`WhatsAppChat.from_source <whatstk.whatsapp.objects.WhatsAppChat.from_source>`
         * :func:`extract_header_from_text <whatstk.whatsapp.auto_header.extract_header_from_text>`
 
     """

@@ -67,6 +67,23 @@ class BaseChat:
         """
         return self.df.index.max()
 
+    @classmethod
+    def from_source(cls, **kwargs):
+        """Load chat.
+
+        Args:
+            kwargs: Specific to the child class.
+
+        Raises:
+            NotImplementedError: Must be implemented in children.
+
+        ..  seealso::
+
+            * :func:`WhatsAppChat.from_source <whatstk.WhatsAppChat.from_source>`
+
+        """
+        raise NotImplementedError
+
     def merge(self, chat, rename_users=None):
         """Merge current instance with ``chat``.
 
@@ -95,8 +112,8 @@ class BaseChat:
                 >>> from whatstk.data import whatsapp_urls
                 >>> filepath_1 = whatsapp_urls.POKEMON
                 >>> filepath_2 = whatsapp_urls.LOREM
-                >>> chat_1 = WhatsAppChat.from_txt(filepath=filepath_1)
-                >>> chat_2 = WhatsAppChat.from_txt(filepath=filepath_2)
+                >>> chat_1 = WhatsAppChat.from_source(filepath=filepath_1)
+                >>> chat_2 = WhatsAppChat.from_source(filepath=filepath_2)
                 >>> chat = chat_1.merge(chat_2)
 
         """
@@ -134,7 +151,7 @@ class BaseChat:
 
                 >>> from whatstk.whatsapp.objects import WhatsAppChat
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.POKEMON)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
                 >>> chat.users
                 ['Ash Ketchum', 'Brock', 'Jessie & James', 'Meowth', 'Misty', 'Prof. Oak', 'Raichu', 'Wobbuffet']
                 >>> chat = chat.rename_users(mapping={'Mr. X': ['Ash Ketchum', 'Brock']})

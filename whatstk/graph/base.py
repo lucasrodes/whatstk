@@ -88,7 +88,7 @@ class FigureBuilder:
                 >>> from whatstk import WhatsAppChat
                 >>> from whatstk.graph import plot, FigureBuilder
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
                 >>> fig = FigureBuilder(chat=chat).user_msg_length_boxplot()
                 >>> plot(fig)
 
@@ -133,7 +133,7 @@ class FigureBuilder:
                 >>> from whatstk import WhatsAppChat
                 >>> from whatstk.graph import plot, FigureBuilder
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
                 >>> fig = FigureBuilder(chat=chat).user_interventions_count_linechart(cummulative=True)
                 >>> plot(fig)
 
@@ -176,7 +176,7 @@ class FigureBuilder:
                 >>> from whatstk import WhatsAppChat
                 >>> from whatstk.graph import plot, FigureBuilder
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
                 >>> fig = FigureBuilder(chat=chat).user_message_responses_flow()
                 >>> plot(fig)
 
@@ -228,7 +228,7 @@ class FigureBuilder:
                 >>> from whatstk import WhatsAppChat
                 >>> from whatstk.graph import plot, FigureBuilder
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.LOREM)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
                 >>> fig = FigureBuilder(chat=chat).user_message_responses_heatmap()
                 >>> plot(fig)
 

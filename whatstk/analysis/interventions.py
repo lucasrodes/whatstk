@@ -40,7 +40,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
                 >>> from whatstk.analysis import get_interventions_count
                 >>> from whatstk.data import whatsapp_urls
                 >>> filepath = whatsapp_urls.POKEMON
-                >>> chat = WhatsAppChat.from_txt(filepath)
+                >>> chat = WhatsAppChat.from_source(filepath)
                 >>> counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False)
                 >>> counts.head(5)
                 username    Ash Ketchum  Brock  Jessie & James  ...  Prof. Oak  Raichu  Wobbuffet

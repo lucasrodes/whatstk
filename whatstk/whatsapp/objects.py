@@ -12,7 +12,7 @@ class WhatsAppChat(BaseChat):
     Args:
         df (pandas.DataFrame): Chat.
 
-    Examples:
+    Example:
         This simple example loads a chat using :func:`WhatsAppChat <WhatsAppChat>`. Once loaded, we can access its
         attribute ``df``, which contains the loaded chat as a DataFrame.
 
@@ -20,7 +20,7 @@ class WhatsAppChat(BaseChat):
 
             >>> from whatstk.whatsapp.objects import WhatsAppChat
             >>> from whatstk.data import whatsapp_urls
-            >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.POKEMON)
+            >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
             >>> chat.df.head(5)
                                     username                                            message
             date
@@ -41,12 +41,12 @@ class WhatsAppChat(BaseChat):
         super().__init__(df, platform='whatsapp')
 
     @classmethod
-    def from_txt(cls, filepath, **kwargs):
+    def from_source(cls, filepath, **kwargs):
         """Create an instance from a chat text file.
 
         Args:
             filepath (str): Path to the file. It can be a local file (e.g. 'path/to/file.txt') or an URL to a hosted
-                            file (e.g. 'http://www.url.to/file.txt)
+                            file (e.g. 'http://www.url.to/file.txt')
             **kwargs: Refer to the docs from
                         :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>` for details on
                         additional arguments.
@@ -57,6 +57,7 @@ class WhatsAppChat(BaseChat):
         ..  seealso::
 
             * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
+            * :func:`WhatsAppChat.from_sources <whatstk.WhatsAppChat.from_sources>`
 
         """
         # Prepare DataFrame
@@ -65,7 +66,7 @@ class WhatsAppChat(BaseChat):
         return cls(df)
 
     @classmethod
-    def from_multiple_txt(cls, filepaths, auto_header=None, hformat=None, encoding='utf-8'):
+    def from_sources(cls, filepaths, auto_header=None, hformat=None, encoding='utf-8'):
         """Load a WhatsAppChat instance from multiple sources.
 
         Args:
@@ -85,7 +86,7 @@ class WhatsAppChat(BaseChat):
 
         ..  seealso::
 
-            * :func:`WhatsAppChat.from_txt <WhatsAppChat.from_txt>`
+            * :func:`WhatsAppChat.from_source <WhatsAppChat.from_source>`
             * :func:`merge_chats <whatstk.utils.chat_merge.merge_chats>`
 
         Example:
@@ -98,7 +99,7 @@ class WhatsAppChat(BaseChat):
                 >>> from whatstk.data import whatsapp_urls
                 >>> filepath_1 = whatsapp_urls.POKEMON
                 >>> filepath_2 = whatsapp_urls.LOREM
-                >>> chat = WhatsAppChat.from_multiple_txt(filepaths=[filepath_1, filepath_2])
+                >>> chat = WhatsAppChat.from_sources(filepaths=[filepath_1, filepath_2])
 
         """
         dfs = []
@@ -109,7 +110,7 @@ class WhatsAppChat(BaseChat):
         if hformat is None:
             hformat = [None]*len(filepaths)
         for filepath, ah, hf in zip(filepaths, auto_header, hformat):
-            chat = WhatsAppChat.from_txt(filepath, auto_header=ah, hformat=hf, encoding=encoding)
+            chat = WhatsAppChat.from_source(filepath, auto_header=ah, hformat=hf, encoding=encoding)
             dfs.append(chat.df)
         df = merge_chats(dfs)
         return cls(df)

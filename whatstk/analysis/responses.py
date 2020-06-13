@@ -44,7 +44,7 @@ def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
                 >>> from whatstk import WhatsAppChat
                 >>> from whatstk.analysis import get_response_matrix
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_txt(filepath=whatsapp_urls.POKEMON)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
                 >>> responses = get_response_matrix(chat=chat)
                                 Ash Ketchum  Brock  ...  Raichu  Wobbuffet
                 Ash Ketchum               0      0  ...       1          0
