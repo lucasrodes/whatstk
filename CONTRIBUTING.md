@@ -27,4 +27,4 @@ However, pull requests will trigger the Travis CI pipeline, which will run the t
 
 ## Join the community
 
-Join us on [Gitter](https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge).
+Join us on [Gitter](https://gitter.im/sociepy/whatstk).
