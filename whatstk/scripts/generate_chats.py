@@ -43,5 +43,5 @@ def main():
     args = _parse_args()
     generate_chats_hformats(
         output_path=args.output_path, size=args.size, hformats=args.hformats, last_timestamp=args.last_timestamp,
-        filenames=args.filenames
+        filepaths=args.filenames
     )
