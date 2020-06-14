@@ -15,7 +15,8 @@ Urls = namedtuple('Urls', [
     'POKEMON',
     'LOREM',
     'LOREM1',
-    'LOREM2'
+    'LOREM2',
+    'LOREM_2000'
 ])
 
 branch = 'feature/documentation'
@@ -25,5 +26,6 @@ whatsapp_urls = Urls(
     POKEMON=os.path.join(chats_folder, 'whatsapp', 'pokemon.txt'),
     LOREM=os.path.join(chats_folder, 'whatsapp', 'lorem.txt'),
     LOREM1=os.path.join(chats_folder, 'whatsapp', 'lorem-merge-part1.txt'),
-    LOREM2=os.path.join(chats_folder, 'whatsapp', 'lorem-merge-part2.txt')
+    LOREM2=os.path.join(chats_folder, 'whatsapp', 'lorem-merge-part2.txt'),
+    LOREM_2000=os.path.join(chats_folder, 'whatsapp', 'lorem-2000.txt')
 )
