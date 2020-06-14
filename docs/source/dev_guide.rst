@@ -1,4 +1,0 @@
-Developer Guide
-===============
-
-Bla bla

@@ -15,11 +15,11 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         chat (WhatsAppChat): Object containing parsed WhatsApp chat.
         date_mode (str, optional): Choose mode to group interventions by.
                                     Defaults to ``date_mode=date``. Available modes are:
-                                        - ``'date'``: Grouped by particular date (year, month and day).
-                                        - ``'hour'``: Grouped by day hours (24 hours).
-                                        - ``'month'``: Grouped by months (12 months).
-                                        - ``'weekday'``: Grouped by weekday (i.e. monday, tuesday, ..., sunday).
-                                        - ``'hourweekday'``: Grouped by weekday and hour.
+                                    - ``'date'``: Grouped by particular date (year, month and day).
+                                    - ``'hour'``: Grouped by day hours (24 hours).
+                                    - ``'month'``: Grouped by months (12 months).
+                                    - ``'weekday'``: Grouped by weekday (i.e. monday, tuesday, ..., sunday).
+                                    - ``'hourweekday'``: Grouped by weekday and hour.
         msg_length (bool, optional): Set to True to count the number of characters instead of number of messages sent.
         cummulative (bool, optional): Set to True to obtain commulative counts.
 

@@ -90,7 +90,7 @@ class BaseChat:
         Args:
             chat (WhatsAppChat): Another chat.
             rename_users (dict): Dictionary mapping old names to new names. Example: {'John':['Jon', 'J'], 'Ray':
-                                    ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'.
+                                 ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'.
 
         Returns:
             WhatsAppChat: Merged chat.
