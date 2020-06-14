@@ -22,7 +22,7 @@ whatstk.whatsapp.objects
 ----
 
 whatstk.whatsapp.parser
----------------------
+-----------------------
 
 .. automodule:: whatstk.whatsapp.parser
    :members:

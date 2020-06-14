@@ -6,9 +6,13 @@ About whatstk
 using the python library. The package uses `pandas <https://github.com/pandas-dev/pandas>`_ to
 process the data and `plotly <https://github.com/plotly/plotly.py>`_ to visualise it.
 
+The project is distributed under the GPL-3.0 license and is available on `GitHub <http://github.com/lucasrodes/
+whatstk>`_
+
+
 First contact with whatstk
 --------------------------
-``whatstk`` is built around :class:`BaseChat <whatstk._chat.BaseChat>` object interface, which requires class method
+``whatstk`` is built around :func:`BaseChat <whatstk._chat.BaseChat>` object interface, which requires class method
 ``from_source`` to be implemented. This method loads and parses the source chat file into a pandas.DataFrame.
 
 Below, we use the implementation or WhatsApp platform, i.e. class :class:`WhatsAppChat <whatstk.WhatsAppChat>`, to load a chat text file (we use `LOREM chat <http://raw.githubusercontent.com/lucasrodes/whatstk/

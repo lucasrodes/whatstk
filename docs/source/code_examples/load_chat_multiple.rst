@@ -1,7 +1,11 @@
 Load chat from multiple sources
 ===============================
 
-You can also load a chat
+You can also load a chat using multiple source files. You might want to use this when several files have been exported
+from the same chat over time. 
+
+In the example below, we load chats
+`LOREM1 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_ and `LOREM2 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part2.txt>`_.
 
 .. code-block:: python
 
