@@ -1,10 +1,10 @@
 Getting started
 ===============
 
-TOC
+Getting started with the library is fairly easy.
 
-.. toctree::
-   :maxdepth: 2
+.. toctree:: Contents
+   :maxdepth: 1
 
    Export a chat <export_chat>
    The Header format <hformat>

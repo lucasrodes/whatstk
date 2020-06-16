@@ -16,10 +16,8 @@ First contact with whatstk
 ``from_source`` to be implemented. This method loads and parses the source chat file into a pandas.DataFrame.
 
 Below, we use the WhatsApp implementation, i.e. :class:`WhatsAppChat <whatstk.WhatsAppChat>`, to load `LOREM chat
-<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_.
-
-To test it with your own chat, simply :ref:`export it <Export chat>` to your computer and then use
-class argument ``filepath``.
+<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own 
+chat, simply :ref:`export it <Export chat>` to your computer and then use class argument ``filepath``.
 
 
 .. code-block:: python

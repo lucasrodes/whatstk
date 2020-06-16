@@ -47,7 +47,8 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx_git',
     'autodocsumm',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    # 'sphinx_gallery.gen_gallery'
 ]
 
 # The name of the entry point, without the ".rst" extension.
@@ -155,3 +156,15 @@ autosummary_generate = True
 autodoc_default_options = {
     'autosummary': True,
 }
+
+# Sphinx gallery
+# from plotly.io._sg_scraper import plotly_sg_scraper
+# image_scrapers = ('matplotlib', plotly_sg_scraper,)
+
+# sphinx_gallery_conf = {
+#      'examples_dirs': '_static/examples_py',   # path to your example scripts
+#      'gallery_dirs': 'source/gallery',  # path to where to save gallery generated output
+#      'reference_url': {'plotly': None,
+#       },
+#      'image_scrapers': image_scrapers,
+# }

@@ -1,7 +1,13 @@
-Message length
-==============
+Message length boxplot
+======================
 
-Hello
+Different users send different sort of messages. In particular, the length of the messages (number of characters) can
+substatially vary depending on the user sending the message.
+
+In this example, we explore the statistics behind the length of user messages. To this end, we can use method
+:func:`user_msg_length_boxplot <whatstk.FigureBuilder.user_msg_length_boxplot>`, which illustrates the length of each
+user's messages by means of `box plots <https://en.wikipedia.org/wiki/Box_plot>`_.
+
 
 .. code-block:: python
 
