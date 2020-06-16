@@ -13,6 +13,5 @@ def test_properties():
     assert(isinstance(chat.end_date, datetime))
 
 def test_from_source():
-    chat = WhatsAppChat.from_source(filepath)
     with pytest.raises(NotImplementedError):
-        _ = chat.from_source()
+        _ = WhatsAppChat.from_source(filepath)
