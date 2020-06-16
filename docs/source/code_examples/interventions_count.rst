@@ -49,7 +49,7 @@ Count of characters sent per user
 ---------------------------------
 
 Now, instead of counting the number of interventions we might want to explore the number of characters sent. Note that a
-user might send tons of messages with few words whereas another user might send few messages with tons of words.
+user might send tons of messages with few words, whereas another user might send few messages with tons of words.
 Depending on your analysis you might prefer exploring interventions or number of characters.
 
 
@@ -67,9 +67,57 @@ in a cummulative manner, which tends to be more readable.
 
 .. code-block:: python
 
-    >>> fig = fb.user_interventions_count_linechart(msg_len=True, cummulative=True)
+    >>> fig = fb.user_interventions_count_linechart(msg_len=True, cummulative=True, title='Characters sent by user (cummulative)')
     >>> plot(fig)
 
 
 .. raw:: html
     :file: ../../_static/html/interventions_count_date_length_cum.html
+
+
+
+Other insights
+--------------
+
+Method :func:`user_interventions_count_linechart <whatstk.FigureBuilder.user_interventions_count_linechart>` has the
+argument ``date_mode``, which allows for several types of count-grouping methods. By default, the method obtains the
+counts per date (what has been used in previous examples).
+
+
+Using ``date_mode=hour`` illustres the distribution of user interventions over the 24 hours in a day. In this example,
+for instance, Giuseppe has their interventions peak in hour ranges [01:00, 02:00] and [20:00, 21:00], with 21
+interventions in each. 
+
+.. code-block:: python
+
+    >>> fig = fb.user_interventions_count_linechart(date_mode='hour', title='User interventions count (hour)',
+    xlabel='Hour')
+    >>> plot(fig)
+
+.. raw:: html
+    :file: ../../_static/html/interventions_count_hours.html
+
+Using ``date_mode=weekday`` illustres the distribution of user interventions over the 7 days of the week. In this
+example, for instance, we see that Monday and Sunday are the days with the most interventions.
+
+.. code-block:: python
+
+    >>> fig = fb.user_interventions_count_linechart(date_mode='weekday', title='User interventions count (weekly)',
+    xlabel='Week day')
+    >>> plot(fig)
+
+.. raw:: html
+    :file: ../../_static/html/interventions_count_weekday.html
+
+
+Using ``date_mode=month`` illustres the distribution of user interventions over the 12 months of the year. In this
+example, for instance, we observe that all users have their interventions peak in June (except for Giuseppe, which has
+their peak in July). Maybe summer calling?
+
+.. code-block:: python
+
+    >>> fig = fb.user_interventions_count_linechart(date_mode='month', title='User interventions count (yearly)', xlabel='Month')
+    >>> plot(fig)
+
+.. raw:: html
+    :file: ../../_static/html/interventions_count_months.html
