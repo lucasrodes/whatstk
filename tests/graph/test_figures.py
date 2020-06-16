@@ -55,6 +55,13 @@ def test_user_interventions_count_linechart():
     assert isinstance(fig, go.Figure)
     assert ('data' in fig and 'layout' in fig)
 
+def test_user_interventions_count_linechart_2():
+    df = load_chat_as_df()
+    fb = FigureBuilder(df=df)
+    fig = fb.user_interventions_count_linechart(all_users=True)
+    assert isinstance(fig, go.Figure)
+    assert ('data' in fig and 'layout' in fig)
+
 
 def test_user_message_responses_flow():
     df = load_chat_as_df()

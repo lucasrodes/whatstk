@@ -101,7 +101,7 @@ class FigureBuilder:
         )
         return fig
 
-    def user_interventions_count_linechart(self, date_mode='date', msg_length=False, cummulative=False,
+    def user_interventions_count_linechart(self, date_mode='date', msg_length=False, cummulative=False, all_users=False,
                                            title="User interventions count", xlabel="Date/Time"):
         """Plot number of user interventions over time.
 
@@ -116,6 +116,7 @@ class FigureBuilder:
             msg_length (bool, optional): Set to True to count the number of characters instead of number of messages
                                          sent.
             cummulative (bool, optional): Set to True to obtain commulative counts.
+            all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.
             title (str, optional): Title for plot. Defaults to "User interventions count".
             xlabel (str, optional): x-axis label title. Defaults to "Date/Time".
 
@@ -143,13 +144,21 @@ class FigureBuilder:
             date_mode=date_mode,
             msg_length=msg_length,
             cummulative=cummulative,
+            all_users=all_users
         )
-        fig = fig_scatter_time(
-            user_data=counts,
-            username_to_color=self.user_color_mapping,
-            title=title,
-            xlabel=xlabel
-        )
+        if all_users:
+            fig = fig_scatter_time(
+                user_data=counts,
+                title=title,
+                xlabel=xlabel
+            )
+        else:
+            fig = fig_scatter_time(
+                user_data=counts,
+                username_to_color=self.user_color_mapping,
+                title=title,
+                xlabel=xlabel
+            )
         return fig
 
     def user_message_responses_flow(self, title="Message flow"):

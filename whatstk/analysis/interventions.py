@@ -5,7 +5,7 @@ import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
 
 
-def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False):
+def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False, all_users=False):
     """Get number of interventions per user per unit of time.
 
     The unit of time can be chosen by means of argument ``date_mode``.
@@ -22,6 +22,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
                                     - ``'hourweekday'``: Grouped by weekday and hour.
         msg_length (bool, optional): Set to True to count the number of characters instead of number of messages sent.
         cummulative (bool, optional): Set to True to obtain commulative counts.
+        all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.
 
     Returns:
         pandas.DataFrame: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
@@ -69,7 +70,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         n_interventions = _interventions(df, [df.index.month], msg_length)
     else:
         raise ValueError("Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
-                         "'hourweekday' and 'month".format(date_mode))
+                         "'hourweekday' and 'month'.".format(date_mode))
 
     if date_mode == 'hourweekday':
         n_interventions.index = n_interventions.index.set_names(['weekday', 'hour'])
@@ -77,6 +78,8 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         n_interventions.index.name = date_mode
     n_interventions.columns = n_interventions.columns.get_level_values(COLNAMES_DF.USERNAME)
 
+    if all_users:
+        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=['interventions count'])
     if cummulative:
         n_interventions = n_interventions.cumsum()
 

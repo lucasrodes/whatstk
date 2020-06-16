@@ -8,6 +8,20 @@ import pytest
 filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 
 
+def test_interventions_date_all():
+    chat = WhatsAppChat.from_source(filename)
+    counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, all_users=True)
+
+    assert(isinstance(counts, pd.DataFrame))
+    # Asswert chat df and counts df have same users
+    assert(len(counts.columns) == 1)
+    assert(counts.columns == ['interventions count'])
+
+    # Assert chat df and counts df have same date window
+    assert(chat.df.index.max().date() == counts.index.max().date())
+    assert(chat.df.index.min().date() == counts.index.min().date())
+    
+
 def test_interventions_date():
     chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False)

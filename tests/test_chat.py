@@ -1,3 +1,4 @@
+import pytest
 from datetime import datetime
 from whatstk.whatsapp.objects import WhatsAppChat
 
@@ -10,3 +11,8 @@ def test_properties():
 
     assert(isinstance(chat.start_date, datetime))
     assert(isinstance(chat.end_date, datetime))
+
+def test_from_source():
+    chat = WhatsAppChat.from_source(filepath)
+    with pytest.raises(NotImplementedError):
+        _ = chat.from_source()
