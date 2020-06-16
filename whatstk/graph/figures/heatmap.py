@@ -12,7 +12,8 @@ def fig_heatmap(df_matrix, title=""):
         title (str): Title of plot. Defaults to "".
 
     Returns:
-        dict: Figure.
+        plotly.graph_objs.Figure
+
     """
     trace = go.Heatmap(
         z=df_matrix,
@@ -27,5 +28,6 @@ def fig_heatmap(df_matrix, title=""):
         'xaxis': {'title': "Receiver"},
         'yaxis': {'title': "Sender"}
     }
-    fig = dict(data=data, layout=layout)
+
+    fig = go.Figure(data=data, layout=layout)
     return fig

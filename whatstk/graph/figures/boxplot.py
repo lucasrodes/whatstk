@@ -15,7 +15,7 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
         xlabel (str, optional): x-axis label title. Defaults to None.
 
     Returns:
-        dict: Figure.
+        plotly.graph_objs.Figure
 
     """
     df = df.copy()
@@ -44,4 +44,6 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
         xaxis=dict(title=xlabel)
     )
 
-    return dict(data=data, layout=layout)
+    fig = go.Figure(data=data, layout=layout)
+
+    return fig

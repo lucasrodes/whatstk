@@ -1,6 +1,7 @@
 import pytest
 from whatstk.graph.base import FigureBuilder
 from whatstk.whatsapp.objects import WhatsAppChat
+import plotly.graph_objs as go
 
 
 filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
@@ -43,7 +44,7 @@ def test_user_msg_length_boxplot():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     fig = fb.user_msg_length_boxplot()
-    assert isinstance(fig, dict)
+    assert isinstance(fig, go.Figure)
     assert ('data' in fig and 'layout' in fig)
 
 
@@ -51,7 +52,7 @@ def test_user_interventions_count_linechart():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     fig = fb.user_interventions_count_linechart()
-    assert isinstance(fig, dict)
+    assert isinstance(fig, go.Figure)
     assert ('data' in fig and 'layout' in fig)
 
 
@@ -59,7 +60,7 @@ def test_user_message_responses_flow():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     fig = fb.user_message_responses_flow()
-    assert isinstance(fig, dict)
+    assert isinstance(fig, go.Figure)
     assert ('data' in fig and 'layout' in fig)
 
 
@@ -67,5 +68,5 @@ def test_user_message_responses_heatmap():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     fig = fb.user_message_responses_heatmap()
-    assert isinstance(fig, dict)
+    assert isinstance(fig, go.Figure)
     assert ('data' in fig and 'layout' in fig)
