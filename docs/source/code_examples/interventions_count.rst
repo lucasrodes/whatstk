@@ -45,6 +45,18 @@ illustrate the cummulative count of interventions instead.
     :file: ../../_static/html/interventions_count_date_cum.html
 
 
+Additionally, we can obtain the counts for all users combined using ``all_users=True``:
+
+.. code-block:: python
+
+    >>> fig = fb.user_interventions_count_linechart(cummulative=True, all_users=True, title='Inteventions count (cummulative)')
+    >>> plot(fig)
+
+
+.. raw:: html
+    :file: ../../_static/html/interventions_count_date_all.html
+
+
 Count of characters sent per user
 ---------------------------------
 
@@ -52,18 +64,7 @@ Now, instead of counting the number of interventions we might want to explore th
 user might send tons of messages with few words, whereas another user might send few messages with tons of words.
 Depending on your analysis you might prefer exploring interventions or number of characters.
 
-
-.. code-block:: python
-
-    >>> fig = fb.user_interventions_count_linechart(msg_len=True, title='Characters sent by user')
-    >>> plot(fig)
-
-
-.. raw:: html
-    :file: ../../_static/html/interventions_count_date_length.html
-
-Similar to the previous :ref:`section <Count of user interventions>`, we can also visualize the number of characer sent
-in a cummulative manner, which tends to be more readable.
+In the following we explore the cummulative number of characters sent per user.
 
 .. code-block:: python
 
