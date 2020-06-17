@@ -3,7 +3,8 @@
 
 import numpy as np
 from whatstk._chat import BaseChat
-from whatstk.analysis import get_interventions_count, get_response_matrix
+from whatstk.analysis.interventions import get_interventions_count
+from whatstk.analysis.responses import get_response_matrix, NORMS
 from whatstk.graph.figures.scatter import fig_scatter_time
 from whatstk.graph.figures.boxplot import fig_boxplot_msglen
 from whatstk.graph.figures.sankey import fig_sankey
@@ -213,7 +214,7 @@ class FigureBuilder:
         )
         return fig
 
-    def user_message_responses_heatmap(self, title="Response matrix"):
+    def user_message_responses_heatmap(self, norm=NORMS.ABSOLUTE, title="Response matrix"):
         """Get the response matrix heatmap.
 
         A response is from user X to user Y happens if user X sends a message right after message Y does.
@@ -221,6 +222,12 @@ class FigureBuilder:
         This method generates a plotly-ready figure (as a dictionary) using Heatmaps.
 
         Args:
+            norm (str, optional): Specifies the type of normalization used for reponse count. Can be:
+
+                                - ``'absolute'``: Absolute count of messages.
+                                - ``'joint'``: Normalized by total number of messages sent by all users.
+                                - ``'sender'``: Normalized per sender by total number of messages sent by user.
+                                - ``'receiver'``: Normalized per receiver by total number of messages sent by user.
             title (str, optional): Title for plot. Defaults to "Response matrix".
 
         Returns:
@@ -243,7 +250,7 @@ class FigureBuilder:
 
         """
         # Get response matrix
-        responses = get_response_matrix(self.df)
+        responses = get_response_matrix(self.df, norm=norm)
 
         # Get figure
         fig = fig_heatmap(
