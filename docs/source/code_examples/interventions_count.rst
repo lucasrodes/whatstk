@@ -62,7 +62,9 @@ Count of characters sent per user
 
 Now, instead of counting the number of interventions we might want to explore the number of characters sent. Note that a
 user might send tons of messages with few words, whereas another user might send few messages with tons of words.
-Depending on your analysis you might prefer exploring interventions or number of characters.
+Depending on your analysis you might prefer exploring interventions or number of characters. Getting the number of
+characters sent per user can be done using ``msg_len=True`` when calling function
+:func:`user_interventions_count_linechart <whatstk.FigureBuilder.user_interventions_count_linechart>`.
 
 In the following we explore the cummulative number of characters sent per user.
 

@@ -9,6 +9,7 @@ Basic examples
 
    Load chat <load_chat>
    Load chat from multiple sources <load_chat_multiple>
+   Load chat with specific hformat  <load_chat_hformat>
 
 Visualisations
 --------------
