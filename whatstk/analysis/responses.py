@@ -31,7 +31,11 @@ def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
         df (pandas.DataFrame, optional): Chat. Defaults to None.
         chat (WhatsAppChat, optional): Chat. Defaults to None.
         zero_own (bool, optional): Set to True to avoid counting own responses. Defaults to True.
-        norm (str, optional): Specifies the type of normalization used for reponse count.
+        norm (str, optional): Specifies the type of normalization used for reponse count. Can be:
+                                - ``'absolute'``: Absolute count of messages.
+                                - ``'joint'``: Normalized by total number of messages sent by all users.
+                                - ``'sender'``: Normalized per sender by total number of messages sent by user.
+                                - ``'receiver'``: Normalized per receiver by total number of messages sent by user.
 
     Returns:
         pandas.DataFrame: Response matrix.
