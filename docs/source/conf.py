@@ -48,7 +48,8 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx_git',
     'autodocsumm',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    # 'sphinx_multiversion'
     # 'sphinx_gallery.gen_gallery'
 ]
 
