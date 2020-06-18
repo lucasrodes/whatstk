@@ -12,5 +12,7 @@ Content:
    Getting started <getting_started/index>
    Code examples <code_examples/index>
    API Reference <api/index>
-   Community <community>
+   Why choose whatstk? <why_whatstk>
+   Community & Governance <community>
    Contribute <contribute>
+   Changelog <changelog>

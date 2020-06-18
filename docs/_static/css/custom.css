@@ -38,6 +38,11 @@ a:hover {
     color: #3B9B5E;
 }
 
+code.py-func:hover, code.py-class:hover, code.py-obj:hover{
+    background-color: #3B9B5E;
+    color: white;
+}
+
 code, .rst-content tt, .rst-content code {
     white-space: nowrap;
     max-width: 100%;

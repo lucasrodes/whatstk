@@ -14,7 +14,7 @@ class WhatsAppChat(BaseChat):
 
     Example:
         This simple example loads a chat using :func:`WhatsAppChat <WhatsAppChat>`. Once loaded, we can access its
-        attribute ``df``, which contains the loaded chat as a DataFrame.
+        attribute :func:`df <WhatsAppChat.df>`, which contains the loaded chat as a DataFrame.
 
         ..  code-block:: python
 

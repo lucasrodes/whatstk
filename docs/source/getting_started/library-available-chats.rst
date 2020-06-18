@@ -2,7 +2,8 @@ Library available chats
 =======================
 
 For the purpose of showcasing code examples and benchmarking different implementations, we have created a pool of chats,
-hosted in the `official repository page <https://github.com/lucasrodes/whatstk/tree/master/chats>`_.
+hosted in the `official repository page <https://github.com/lucasrodes/whatstk/tree/master/chats>`_. If you want to test
+the library with one of your own tests, check the :ref:`code examples <Code examples>`.
 
 The chats are available via their corresponding URLs, which are listed in source code :mod:`whatstk.data`.
 

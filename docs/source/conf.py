@@ -54,7 +54,7 @@ extensions = [
 
 # The name of the entry point, without the ".rst" extension.
 # By convention this will be "index"
-master_doc = "source/content"
+master_doc = "content"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -62,8 +62,8 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '../../setup.py']
-EXCLUDE_PATTERN = ['../setup.py']
+exclude_patterns = ['../_build', '../Thumbs.db', '../.DS_Store', '../../../setup.py']
+EXCLUDE_PATTERN = ['../../setup.py']
 
 # -- Options for HTML output -------------------------------------------------
 
