@@ -140,7 +140,7 @@ html_copy_source = True
 # github_url = 'https://github.com/lucasrodes/whatstk'
 
 html_theme_options = {
-    'logo_only': False,
+    'logo_only': True,
     'display_version': True,
     'navigation_depth': 3,
     'display_version': True,

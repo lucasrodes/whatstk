@@ -1,19 +1,25 @@
 Contribute
 ==========
 
-Bla bla
+We are really open to your thoughts and feedback!
 
 Bug reporting
 -------------
+Please report any bug that you may found to the `issues <https://github.com/lucasrodes/whatstk/issues>`_ section.
 
 Requesting a Feature
 --------------------
-
-Proposing a design for a new API
---------------------------------
+If you find a new feature could be useful for the community, please try to add it in the
+`issues <https://github.com/lucasrodes/whatstk/issues>`_ section with a clear description.
 
 Submitting a Pull Request
 -------------------------
+After forking and editing the code, make sure that your code passes all the tests:
+
+.. code-block:: bash
+
+    sh ./run-tests.sh
 
 Adding new examples
 -------------------
+To add new examples, consider editing yourself a ``rst`` file in ``docs/source/`` directory in the repository.
