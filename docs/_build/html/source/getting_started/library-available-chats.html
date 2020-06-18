@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Library available chats &mdash; WhatsApp Analysis Toolkit</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Code examples" href="../code_examples/index.html" />
+    <link rel="prev" title="The header format" href="hformat.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../content.html" class="icon icon-home"> whatstk
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About whatstk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#first-contact-with-whatstk">First contact with whatstk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#installation-compatibility">Installation &amp; compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../about.html#from-source">From source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../about.html#develop">Develop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#why-this-name-whatstk">Why this name, whatstk?</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="export_chat.html">Export a chat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="export_chat.html#android">Android</a></li>
+<li class="toctree-l3"><a class="reference internal" href="export_chat.html#ios">iOS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hformat.html">The Header format</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Library available chats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#whatsapp">WhatsApp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code_examples/index.html">Code examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../code_examples/index.html#basic-examples">Basic examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/load_chat.html">Load chat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/load_chat_multiple.html">Load chat from multiple sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/load_chat_hformat.html">Load chat with specific hformat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code_examples/index.html#visualisations">Visualisations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/interventions_count.html">Count of user interventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/message_length_boxplot.html">Message length boxplot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/user_interaction.html">User interaction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html#main-objects">Main objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.WhatsAppChat.html">WhatsAppChat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.FigureBuilder.html">FigureBuilder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/index.html#core-api">Core API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.whatsapp.html">whatstk.whatsapp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.analysis.html">whatstk.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.graph.html">whatstk.graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.utils.html">whatstk.utils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk.data.html">whatstk.data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/whatstk._chat.html">whatstk._chat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../why_whatstk.html">Why choose whatstk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../why_whatstk.html#automatic-parser">Automatic parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../why_whatstk.html#the-power-of-pandas-and-plotly">The power of pandas and plotly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../why_whatstk.html#open-source-and-community-oriented">Open source and Community oriented</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community &amp; Governance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../community.html#leadership">Leadership</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../community.html#bdfl">BDFL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../community.html#community-contributors">Community Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#bug-reporting">Bug reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#requesting-a-feature">Requesting a Feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#adding-new-examples">Adding new examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-2-0">v0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-6">v0.2.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-5">v0.2.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-4">v0.2.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-3">v0.2.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-2">v0.2.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id1">v0.2.0</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-1-0">v0.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-11">v0.1.11</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-10">v0.1.10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-9">v0.1.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-8">v0.1.8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-7">v0.1.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-6">v0.1.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-1">v0.1.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id2">v0.1.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../content.html">whatstk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../content.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Getting started</a> &raquo;</li>
+        
+      <li>Library available chats</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="library-available-chats">
+<h1><a class="toc-backref" href="#id8">Library available chats</a><a class="headerlink" href="#library-available-chats" title="Permalink to this headline">¶</a></h1>
+<p>For the purpose of showcasing code examples and benchmarking different implementations, we have created a pool of chats,
+hosted in the <a class="reference external" href="https://github.com/lucasrodes/whatstk/tree/master/chats">official repository page</a>. If you want to test
+the library with one of your own tests, check the <a class="reference internal" href="../code_examples/index.html#code-examples"><span class="std std-ref">code examples</span></a>.</p>
+<p>The chats are available via their corresponding URLs, which are listed in source code <a class="reference internal" href="../api/whatstk.data.html#module-whatstk.data" title="whatstk.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">whatstk.data</span></code></a>.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#library-available-chats" id="id8">Library available chats</a><ul>
+<li><a class="reference internal" href="#whatsapp" id="id9">WhatsApp</a><ul>
+<li><a class="reference internal" href="#pokemon" id="id10">POKEMON</a></li>
+<li><a class="reference internal" href="#lorem" id="id11">LOREM</a></li>
+<li><a class="reference internal" href="#lorem1" id="id12">LOREM1</a></li>
+<li><a class="reference internal" href="#lorem2" id="id13">LOREM2</a></li>
+<li><a class="reference internal" href="#lorem-2000" id="id14">LOREM_2000</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="whatsapp">
+<h2><a class="toc-backref" href="#id9">WhatsApp</a><a class="headerlink" href="#whatsapp" title="Permalink to this headline">¶</a></h2>
+<p>Object <code class="docutils literal notranslate"><span class="pre">whatsapp_urls</span></code> contains all URLs for WhatsApp chats.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.data</span> <span class="kn">import</span> <span class="n">whatsapp_urls</span>
+</pre></div>
+</div>
+<div class="section" id="pokemon">
+<h3><a class="toc-backref" href="#id10">POKEMON</a><a class="headerlink" href="#pokemon" title="Permalink to this headline">¶</a></h3>
+<p>Brief chat with Pokemon characters, which was manually designed by  <a class="reference external" href="https://github.com/lucasrodes">&#64;lucasrodes</a> in
+<a class="reference external" href="https://github.com/lucasrodes/whatstk/commit/666d6ea9cc030c4322fbe44ae64b8f1a0fdb5169">commit 666d6ea9cc030c4322fbe44ae64b8f1a0fdb5169</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.data</span> <span class="kn">import</span> <span class="n">whatsapp_urls</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk</span> <span class="kn">import</span> <span class="n">WhatsAppChat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span> <span class="o">=</span> <span class="n">WhatsAppChat</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">whatsapp_urls</span><span class="o">.</span><span class="n">POKEMON</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">                        username                                            message</span>
+<span class="go">date</span>
+<span class="go">2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!</span>
+<span class="go">2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!</span>
+<span class="go">2016-08-06 13:30:00        Misty  Hey guys! Long time haven&#39;t heard anything fro...</span>
+<span class="go">2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...</span>
+<span class="go">2016-08-06 14:30:00        Misty                                          Definetly</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt">Chat file</a></p>
+</div>
+</div>
+<div class="section" id="lorem">
+<h3><a class="toc-backref" href="#id11">LOREM</a><a class="headerlink" href="#lorem" title="Permalink to this headline">¶</a></h3>
+<p>Chat with 500 interventions of fictional users, generated using <a class="reference external" href="https://lorem.jarryshaw.me/en/latest/">python-lorem</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.data</span> <span class="kn">import</span> <span class="n">whatsapp_urls</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk</span> <span class="kn">import</span> <span class="n">WhatsAppChat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span> <span class="o">=</span> <span class="n">WhatsAppChat</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">whatsapp_urls</span><span class="o">.</span><span class="n">LOREM</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">                           username                                            message</span>
+<span class="go">date</span>
+<span class="go">2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.</span>
+<span class="go">2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰</span>
+<span class="go">2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...</span>
+<span class="go">2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...</span>
+<span class="go">2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt">Chat file</a></p>
+</div>
+</div>
+<div class="section" id="lorem1">
+<h3><a class="toc-backref" href="#id12">LOREM1</a><a class="headerlink" href="#lorem1" title="Permalink to this headline">¶</a></h3>
+<p>Chat with 300 interventions of fictional users, generated using <a class="reference external" href="https://lorem.jarryshaw.me/en/latest/">python-lorem</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.data</span> <span class="kn">import</span> <span class="n">whatsapp_urls</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk</span> <span class="kn">import</span> <span class="n">WhatsAppChat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span> <span class="o">=</span> <span class="n">WhatsAppChat</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">whatsapp_urls</span><span class="o">.</span><span class="n">LOREM1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">                           username                                            message</span>
+<span class="go">date</span>
+<span class="go">2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.</span>
+<span class="go">2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...</span>
+<span class="go">2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...</span>
+<span class="go">2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...</span>
+<span class="go">2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt">Chat file</a></p>
+</div>
+</div>
+<div class="section" id="lorem2">
+<h3><a class="toc-backref" href="#id13">LOREM2</a><a class="headerlink" href="#lorem2" title="Permalink to this headline">¶</a></h3>
+<p>Chat with 300 interventions of fictional users, generated using <a class="reference external" href="https://lorem.jarryshaw.me/en/latest/">python-lorem</a>.</p>
+<p>Can be used along with <strong>LOREM1</strong> to test chat merging functionalities.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.data</span> <span class="kn">import</span> <span class="n">whatsapp_urls</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk</span> <span class="kn">import</span> <span class="n">WhatsAppChat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span> <span class="o">=</span> <span class="n">WhatsAppChat</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">whatsapp_urls</span><span class="o">.</span><span class="n">LOREM2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">                           username                                            message</span>
+<span class="go">date</span>
+<span class="go">2020-06-20 10:16:00            John                 Elit incididunt lorem sed nostrud.</span>
+<span class="go">2020-06-20 11:15:00           Maria        Esse do irure dolor tempor ipsum fugiat. 🇩🇰</span>
+<span class="go">2020-06-20 12:16:00  +1 123 456 789  Cillum anim non eu deserunt consectetur dolor ...</span>
+<span class="go">2020-06-20 12:57:00  +1 123 456 789                  Non ipsum proident veniam est. 🏊🏻</span>
+<span class="go">2020-06-20 17:28:00            John                      Dolore in cupidatat proident.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt">Chat file</a></p>
+</div>
+</div>
+<div class="section" id="lorem-2000">
+<h3><a class="toc-backref" href="#id14">LOREM_2000</a><a class="headerlink" href="#lorem-2000" title="Permalink to this headline">¶</a></h3>
+<p>Chat with 2000 interventions of fictional users, generated using <a class="reference external" href="https://lorem.jarryshaw.me/en/latest/">python-lorem</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.data</span> <span class="kn">import</span> <span class="n">whatsapp_urls</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk</span> <span class="kn">import</span> <span class="n">WhatsAppChat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span> <span class="o">=</span> <span class="n">WhatsAppChat</span><span class="o">.</span><span class="n">from_source</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">whatsapp_urls</span><span class="o">.</span><span class="n">LOREM_2000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chat</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">                           username                                            message</span>
+<span class="go">date</span>
+<span class="go">2019-04-16 02:09:00  +1 123 456 789           Et labore proident laboris do labore ex.</span>
+<span class="go">2019-04-16 03:01:00            Mary  Reprehenderit id aute consectetur aliquip nost...</span>
+<span class="go">2019-04-17 12:56:00            John  Amet magna officia ullamco pariatur ipsum cupi...</span>
+<span class="go">2019-04-17 13:30:00            Mary  Cillum aute et cupidatat ipsum, occaecat lorem...</span>
+<span class="go">2019-04-17 15:09:00            John  Eiusmod irure laboris dolore anim, velit velit...</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt">Chat file</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../code_examples/index.html" class="btn btn-neutral float-right" title="Code examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hformat.html" class="btn btn-neutral float-left" title="The header format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, lucasrodes
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

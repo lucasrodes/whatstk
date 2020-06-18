@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whatstk.data &mdash; WhatsApp Analysis Toolkit</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="whatstk._chat" href="whatstk._chat.html" />
+    <link rel="prev" title="whatstk.utils" href="whatstk.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../content.html" class="icon icon-home"> whatstk
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About whatstk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#first-contact-with-whatstk">First contact with whatstk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#installation-compatibility">Installation &amp; compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../about.html#from-source">From source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../about.html#develop">Develop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#why-this-name-whatstk">Why this name, whatstk?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/export_chat.html">Export a chat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/export_chat.html#android">Android</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/export_chat.html#ios">iOS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/hformat.html">The Header format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/library-available-chats.html">Library available chats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting_started/library-available-chats.html#whatsapp">WhatsApp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code_examples/index.html">Code examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../code_examples/index.html#basic-examples">Basic examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/load_chat.html">Load chat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/load_chat_multiple.html">Load chat from multiple sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/load_chat_hformat.html">Load chat with specific hformat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code_examples/index.html#visualisations">Visualisations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/interventions_count.html">Count of user interventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/message_length_boxplot.html">Message length boxplot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_examples/user_interaction.html">User interaction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#main-objects">Main objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="whatstk.WhatsAppChat.html">WhatsAppChat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatstk.FigureBuilder.html">FigureBuilder</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#core-api">Core API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="whatstk.whatsapp.html">whatstk.whatsapp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatstk.analysis.html">whatstk.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatstk.graph.html">whatstk.graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatstk.utils.html">whatstk.utils</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">whatstk.data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whatstk._chat.html">whatstk._chat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../why_whatstk.html">Why choose whatstk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../why_whatstk.html#automatic-parser">Automatic parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../why_whatstk.html#the-power-of-pandas-and-plotly">The power of pandas and plotly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../why_whatstk.html#open-source-and-community-oriented">Open source and Community oriented</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community &amp; Governance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../community.html#leadership">Leadership</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../community.html#bdfl">BDFL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../community.html#community-contributors">Community Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#bug-reporting">Bug reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#requesting-a-feature">Requesting a Feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contribute.html#adding-new-examples">Adding new examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-2-0">v0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-6">v0.2.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-5">v0.2.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-4">v0.2.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-3">v0.2.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-2-2">v0.2.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id1">v0.2.0</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-1-0">v0.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-11">v0.1.11</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-10">v0.1.10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-9">v0.1.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-8">v0.1.8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-7">v0.1.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-6">v0.1.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#v0-1-1">v0.1.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../changelog.html#id2">v0.1.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../content.html">whatstk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../content.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Reference</a> &raquo;</li>
+        
+      <li>whatstk.data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-whatstk.data">
+<span id="whatstk-data"></span><h1>whatstk.data<a class="headerlink" href="#module-whatstk.data" title="Permalink to this headline">¶</a></h1>
+<p>Load sample chats.</p>
+<p>Tthis module contains the links to currently online-available chats. For more details, please refer
+to the source code.</p>
+<p><strong>Classes</strong></p>
+<table border="1" class="longtable docutils align-default">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#whatstk.data.Urls" title="whatstk.data.Urls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Urls</span></code></a>(POKEMON,&nbsp;LOREM,&nbsp;LOREM1,&nbsp;LOREM2,&nbsp;LOREM_2000)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="whatstk.data.Urls">
+<em class="property">class </em><code class="descclassname">whatstk.data.</code><code class="descname">Urls</code><span class="sig-paren">(</span><em><span class="n">POKEMON</span></em>, <em><span class="n">LOREM</span></em>, <em><span class="n">LOREM1</span></em>, <em><span class="n">LOREM2</span></em>, <em><span class="n">LOREM_2000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#whatstk.data.Urls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p><strong>Attributes</strong></p>
+<table border="1" class="longtable docutils align-default">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#whatstk.data.Urls.LOREM" title="whatstk.data.Urls.LOREM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOREM</span></code></a></td>
+<td>Alias for field number 1</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#whatstk.data.Urls.LOREM1" title="whatstk.data.Urls.LOREM1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOREM1</span></code></a></td>
+<td>Alias for field number 2</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#whatstk.data.Urls.LOREM2" title="whatstk.data.Urls.LOREM2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOREM2</span></code></a></td>
+<td>Alias for field number 3</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#whatstk.data.Urls.LOREM_2000" title="whatstk.data.Urls.LOREM_2000"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LOREM_2000</span></code></a></td>
+<td>Alias for field number 4</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#whatstk.data.Urls.POKEMON" title="whatstk.data.Urls.POKEMON"><code class="xref py py-obj docutils literal notranslate"><span class="pre">POKEMON</span></code></a></td>
+<td>Alias for field number 0</td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="whatstk.data.Urls.LOREM">
+<em class="property">property </em><code class="descname">LOREM</code><a class="headerlink" href="#whatstk.data.Urls.LOREM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whatstk.data.Urls.LOREM1">
+<em class="property">property </em><code class="descname">LOREM1</code><a class="headerlink" href="#whatstk.data.Urls.LOREM1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whatstk.data.Urls.LOREM2">
+<em class="property">property </em><code class="descname">LOREM2</code><a class="headerlink" href="#whatstk.data.Urls.LOREM2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whatstk.data.Urls.LOREM_2000">
+<em class="property">property </em><code class="descname">LOREM_2000</code><a class="headerlink" href="#whatstk.data.Urls.LOREM_2000" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="whatstk.data.Urls.POKEMON">
+<em class="property">property </em><code class="descname">POKEMON</code><a class="headerlink" href="#whatstk.data.Urls.POKEMON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="whatstk._chat.html" class="btn btn-neutral float-right" title="whatstk._chat" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="whatstk.utils.html" class="btn btn-neutral float-left" title="whatstk.utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, lucasrodes
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
