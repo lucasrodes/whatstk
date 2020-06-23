@@ -5,11 +5,12 @@ Basic examples
 --------------
 
 .. toctree:: 
-   :maxdepth: 2
+   :maxdepth: 1
 
    Load chat <load_chat>
    Load chat from multiple sources <load_chat_multiple>
    Load chat with specific hformat  <load_chat_hformat>
+   Rename usernames <load_chat_multiple>
 
 Visualisations
 --------------
@@ -25,3 +26,4 @@ plotly.py>`_.
    Count of user interventions <interventions_count>
    Message length boxplot <message_length_boxplot>
    User interaction <user_interaction>
+   Custom plot example <custom>

@@ -22,4 +22,9 @@ After forking and editing the code, make sure that your code passes all the test
 
 Adding new examples
 -------------------
-To add new examples, consider editing yourself a ``rst`` file in ``docs/source/`` directory in the repository.
+To add new examples, consider editing yourself a ``rst`` file in ``docs/source/`` directory in the repository. For
+questions or doubts, join the `gitter group <https://gitter.im/whatstk/>`_.
+
+API discussions
+---------------
+Consider joining the `gitter group <https://gitter.im/whatstk/>`_.

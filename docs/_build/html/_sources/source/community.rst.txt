@@ -2,8 +2,9 @@ Community &  Governance
 =======================
 
 **whatstk** is a fully open-source project done for and by the community. It is primarily developed at sociepy by the 
-`whatstk team <https://gitter.im/whatstk/>`_, with the help of open-source developers.
+whatstk team, with the help of open-source developers.
 
+For library discussions, consider joining `gitter group <https://gitter.im/whatstk/>`_.
 
 ----
 

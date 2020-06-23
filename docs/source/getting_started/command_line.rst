@@ -11,4 +11,4 @@ You can convert a WhatsApp text file to a CSV file using
     whatstk-to-csv [input_filename] [output_filename]
 
 
-For more details, check the :ref:`documentation <Command line tools>`.
+For more details, check the :ref:`command line tools documentation <Command line tools>`.

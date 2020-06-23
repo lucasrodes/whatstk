@@ -41,7 +41,7 @@ Brief chat with Pokemon characters, which was manually designed by  `@lucasrodes
     2016-08-06 14:30:00        Misty                                          Definetly
 
 
-.. note:: 
+.. seealso:: 
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_
 
 
@@ -64,7 +64,7 @@ Chat with 500 interventions of fictional users, generated using `python-lorem <h
     2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
     2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
-.. note::
+.. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_
 
 LOREM1
@@ -85,7 +85,7 @@ Chat with 300 interventions of fictional users, generated using `python-lorem <h
     2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...
     2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
 
-.. note::
+.. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
 
 LOREM2
@@ -108,7 +108,7 @@ Can be used along with **LOREM1** to test chat merging functionalities.
     2020-06-20 12:57:00  +1 123 456 789                  Non ipsum proident veniam est. 🏊🏻
     2020-06-20 17:28:00            John                      Dolore in cupidatat proident.
 
-.. note::
+.. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
 
 LOREM_2000
@@ -129,5 +129,5 @@ Chat with 2000 interventions of fictional users, generated using `python-lorem <
     2019-04-17 13:30:00            Mary  Cillum aute et cupidatat ipsum, occaecat lorem...
     2019-04-17 15:09:00            John  Eiusmod irure laboris dolore anim, velit velit...
 
-.. note::
+.. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt>`_

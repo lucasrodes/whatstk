@@ -39,4 +39,4 @@ each header unit:
     ``'%name'``,	Name of user
 
 .. note::
-    :ref:`Loading chat using hformat <Load chat>`
+    :ref:`Loading chat using hformat <Load a chat with specific hformat>`

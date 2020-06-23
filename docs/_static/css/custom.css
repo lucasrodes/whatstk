@@ -1,7 +1,11 @@
 .wy-side-nav-search { 
     /* background-color: #25D366; */
     background-color: white;
-    color: red;
+    /* color: red; */
+}
+
+.wy-side-nav-search>div.version{
+    color: black;
 }
 
 .wy-side-nav-search>a { 
@@ -38,7 +42,7 @@ a:hover {
     color: #3B9B5E;
 }
 
-code.py-func:hover, code.py-class:hover, code.py-obj:hover{
+code.py-func:hover, code.py-class:hover, code.py-obj:hover, code.py-mod:hover{
     background-color: #3B9B5E;
     color: white;
 }

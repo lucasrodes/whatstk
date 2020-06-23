@@ -24,11 +24,12 @@ from sphinx.util.inspect import safe_getattr
 # -- Project information -----------------------------------------------------
 
 project = 'whatstk'
-copyright = '2020, lucasrodes'
+copyright = '2020, sociepy'
+copy_right = '2020, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.0.dev1'
+version = 'v0.3.0.dev1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -48,7 +49,8 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx_git',
     'autodocsumm',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    "sphinx_multiversion",
     # 'sphinx_gallery.gen_gallery'
 ]
 
@@ -125,7 +127,7 @@ class AutoAutoSummary(Autosummary):
 
 # -- Theme --------------------------------------------------------------------
 def setup(app):
-    app.add_stylesheet('css/custom.css')
+    app.add_css_file('css/custom.css')
     app.add_directive('autoautosummary', AutoAutoSummary)
 
 
@@ -136,11 +138,10 @@ html_favicon = "_static/favicon.png"
 html_show_sourcelink = False
 html_copy_source = True
 
-# github_url = 'https://github.com/lucasrodes/whatstk'
+github_url = 'https://github.com/lucasrodes/whatstk'
 
 html_theme_options = {
-    'logo_only': False,
-    'display_version': True,
+    'logo_only': True,
     'navigation_depth': 3,
     'display_version': True,
     'collapse_navigation': False,
@@ -170,6 +171,10 @@ autodoc_default_options = {
 #      'image_scrapers': image_scrapers,
 # }
 
-# Github edit
-edit_on_github_project = 'lucasrodes/whatstk'
-edit_on_github_branch = 'master'
+# html_sidebars = {'**': ['versioning.html']}
+# smv_tag_whitelist = r'^(3.0.0.dev0)'
+# smv_branch_whitelist = 'feature/documentation'
+# smv_tag_whitelist = r'^.*$'
+# smv_remote_whitelist = '^.*$'
+# smv_branch_whitelist = r'^(feature/documentation)$'
+# smv_released_pattern = r'^tags/.*$'

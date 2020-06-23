@@ -7,7 +7,7 @@ Getting started with the library is fairly easy.
    :maxdepth: 1
 
    Export a chat <export_chat>
-   Commands <command_line>
+   Command line tools <command_line>
    The Header format <hformat>
    Library available chats <library-available-chats>
 
