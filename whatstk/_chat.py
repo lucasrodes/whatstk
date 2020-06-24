@@ -90,7 +90,8 @@ class BaseChat:
         Args:
             chat (WhatsAppChat): Another chat.
             rename_users (dict): Dictionary mapping old names to new names. Example: {'John':['Jon', 'J'], 'Ray':
-                                 ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'.
+                                 ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond' to 'Ray'. Note that old
+                                 names must come as list (even if there is only one).
 
         Returns:
             WhatsAppChat: Merged chat.
@@ -110,8 +111,8 @@ class BaseChat:
 
                 >>> from whatstk.whatsapp.objects import WhatsAppChat
                 >>> from whatstk.data import whatsapp_urls
-                >>> filepath_1 = whatsapp_urls.POKEMON
-                >>> filepath_2 = whatsapp_urls.LOREM
+                >>> filepath_1 = whatsapp_urls.LOREM1
+                >>> filepath_2 = whatsapp_urls.LOREM2
                 >>> chat_1 = WhatsAppChat.from_source(filepath=filepath_1)
                 >>> chat_2 = WhatsAppChat.from_source(filepath=filepath_2)
                 >>> chat = chat_1.merge(chat_2)
@@ -129,13 +130,13 @@ class BaseChat:
         This might be needed in multiple occations:
 
             - Change typos in user names stored in phone.
-            - If a user appears multiple times with different usernames, group these under the same name. This might
-            happen when multiple chats are merged.
+            - If a user appears multiple times with different usernames, group these under the same name (this might
+                happen when multiple chats are merged).
 
         Args:
             mapping (dict): Dictionary mapping old names to new names, example:
                             {'John': ['Jon', 'J'], 'Ray': ['Raymond']} will map 'Jon' and 'J' to 'John', and 'Raymond'
-                            to 'Ray'.
+                            to 'Ray'. Note that old names must come as list (even if there is only one).
 
         Returns:
             pandas.DataFrame: DataFrame with users renamed according to `mapping`.
@@ -144,19 +145,18 @@ class BaseChat:
             ValueError: Raised if mapping is not correct.
 
         Examples:
-            Load POKEMON chat and rename users `Ash Ketchum` and `Brock` to `Mr. X` (suppose we suddenly discover they
-            were actually the same person).
+            Load LOREM2 chat and rename users `Maria` and `Maria2` to `Mary`.
 
             ..  code-block:: python
 
                 >>> from whatstk.whatsapp.objects import WhatsAppChat
                 >>> from whatstk.data import whatsapp_urls
-                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
+                >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM2)
                 >>> chat.users
-                ['Ash Ketchum', 'Brock', 'Jessie & James', 'Meowth', 'Misty', 'Prof. Oak', 'Raichu', 'Wobbuffet']
-                >>> chat = chat.rename_users(mapping={'Mr. X': ['Ash Ketchum', 'Brock']})
+                ['+1 123 456 789', 'Giuseppe', 'John', 'Maria', 'Maria2']
+                >>> chat = chat.rename_users(mapping={'Mary': ['Maria', 'Maria2']})
                 >>> chat.users
-                ['Jessie & James', 'Meowth', 'Misty', 'Mr. X', 'Prof. Oak', 'Raichu', 'Wobbuffet']
+                ['+1 123 456 789', 'Giuseppe', 'John', 'Mary']
 
         """
         self_ = deepcopy(self)

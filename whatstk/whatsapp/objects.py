@@ -1,4 +1,4 @@
-"""Library objects."""
+"""Library WhatsApp objects."""
 
 
 from whatstk._chat import BaseChat
@@ -97,9 +97,17 @@ class WhatsAppChat(BaseChat):
 
                 >>> from whatstk.whatsapp.objects import WhatsAppChat
                 >>> from whatstk.data import whatsapp_urls
-                >>> filepath_1 = whatsapp_urls.POKEMON
-                >>> filepath_2 = whatsapp_urls.LOREM
+                >>> filepath_1 = whatsapp_urls.LOREM1
+                >>> filepath_2 = whatsapp_urls.LOREM2
                 >>> chat = WhatsAppChat.from_sources(filepaths=[filepath_1, filepath_2])
+                >>> chat.df.head(5)
+                                           username                                            message
+                date                                                                                  
+                2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.
+                2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...
+                2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...
+                2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...
+                2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
 
         """
         dfs = []
@@ -118,11 +126,11 @@ class WhatsAppChat(BaseChat):
     def to_txt(self, filepath, hformat=None):
         """Export chat to a text file.
 
-        Usefull to export the chat to different formats.
+        Usefull to export the chat to different formats (i.e. using different hformats).
 
         Args:
             filepath (str): Name of the file to export (must be a local path).
-            hformat (str, optional): Header format. Defaults to "%y-%m-%d, %H:%M - %name:".
+            hformat (str, optional): Header format. Defaults to '%y-%m-%d, %H:%M - %name:'.
 
         """
         if not filepath.endswith('.txt'):
