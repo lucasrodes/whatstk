@@ -8,11 +8,11 @@
 
 ## (1.3) Generate chats for test
 # mkdir -p tests/chats/hformats tests/chats/merge
-# whatstk-generate-chats --size 500 --output-path tests/chats/hformats/
-# whatstk-generate-chats --size 300 --last-timestamp 2019-09-01 \
+# whatstk-generate-chat --size 500 --output-path tests/chats/hformats/
+# whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 \
 #                         --hformats '%Y-%m-%d, %H:%M - %name:' \
 #                         --output-path tests/chats/merge/ --filenames file1.txt
-# whatstk-generate-chats --size 300 --last-timestamp 2020-01-01 \
+# whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 \
 #                         --hformats '%Y-%m-%d, %H:%M - %name:' \
 #                         --output-path tests/chats/merge/ --filenames file2.txt
 
