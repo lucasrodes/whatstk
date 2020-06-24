@@ -14,8 +14,8 @@ develop/chats/whatsapp/lorem.txt>`_, which is available online, using library cl
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 Once loaded, we can check some of the chat messages by accessing its attribute :func:`df <whatstk.WhatsAppChat.df>`,
-which is a pandas.DataFrame with columns username (name of user sending the message), message (message sent) and
-timestamp index.
+which is a pandas.DataFrame with columns `username` (name of user sending the message), `message` (message sent) and
+`date` index (timestamp of message).
 
 .. code-block:: python
 
@@ -36,7 +36,7 @@ Getting the start and end date of the chat can give us a good overview of the ch
     Start date: 2020-01-15 02:22:56
     End date: 2020-05-11 22:32:48
 
-Also, getting a list with the chat members is farely easy
+Also, getting a list with the chat members is simple
 
 .. code-block:: python
 

@@ -31,4 +31,4 @@ Command line tools
 
    whatst-to-csv <cmd/cmd_to_csv>
    whatstk-graph <cmd/cmd_graph> 
-   whatstk-generate-chats <cmd/cmd_chat_gen>
+   whatstk-generate-chat <cmd/cmd_chat_gen>

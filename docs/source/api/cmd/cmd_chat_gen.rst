@@ -1,10 +1,11 @@
-``whatstk-generate-chats``
+``whatstk-generate-chat``
 =========================
 
 Generate random WhatsApp chat.
 
 .. code-block:: bash
 
+    whatstk-generate-chat --help
     usage: Generate chat. [-h] -o OUTPUT_PATH
                           [--filenames FILENAMES [FILENAMES ...]] [-s SIZE]
                           [-f HFORMATS [HFORMATS ...]]

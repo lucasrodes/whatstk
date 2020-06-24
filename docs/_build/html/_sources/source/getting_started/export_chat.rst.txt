@@ -1,5 +1,5 @@
-Export chat
-===========
+Export a WhatsApp chat
+======================
 
 Exporting a WhatsApp chat can be easily done from your Android or iOS device. It is done on a chat basis, so if you want
 to export several chats you will have to export them individually. **When exporting, make sure to select the chats Without Media option**. Once generated, you can send it via mail, so you

@@ -1,10 +1,10 @@
 Command line
 ============
 
-**whatstk** provides a set of command line tools to obtain results in a fast way. Make sure you have 
-`installed <Installation & compatibility>`_ the library before.
+**whatstk** provides a set of command line tools to obtain quick results using the command line. To use these, make sure
+that you have previously :ref:`installed the library <Installation & compatibility>`.
 
-You can convert a WhatsApp text file to a CSV file using 
+For instance, convert a WhatsApp text file to a CSV file using 
 
 .. code-block::
 

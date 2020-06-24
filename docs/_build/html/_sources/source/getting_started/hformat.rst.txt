@@ -1,11 +1,12 @@
 The header format
 =================
 
-In WhatsApp, a chat file syntax can differ between devices, OS and language settings, which makes it hard some times to correctly parse the data and make WhatsTK work correctly.
+In WhatsApp, a chat file syntax can differ between devices, OS and language settings, which makes it hard to correctly
+parse the data for all formats.
 
 The header appears for each message sent in the chat and contains the timestamp and name of the user that sent the message.
 
-See it for yourself and open the :ref:`exported chat file <Export chat>`. You will find that the messages have a similar format like the one below:
+See it for yourself and open :ref:`an exported chat file <Export a WhatsApp chat>`. You will find that the messages have a similar format like the one below:
 
 .. code-block::
 
@@ -20,11 +21,13 @@ See it for yourself and open the :ref:`exported chat file <Export chat>`. You wi
     07.08.2016, 11:45 - Prof. Oak: Kids, shall I design a smart poke-ball?
 
 In this example, the header is **day.month.year, hour:minutes - username:** which corresponds to the header format
-``'%d.%m.%y, %H:%M - %name:'``. However, in your case it may be something else. Check table below to see the codes for
-each header unit:
+(a.k.a. **hformat**) ``'%d.%m.%y, %H:%M - %name:'``. However, in your case it may be slightly different depending on you
+phone settings. 
+
+Check the table below to see the codes for each header format unit:
 
 
-.. csv-table:: hformat legend
+.. csv-table:: header format units
    :header: "Date unit code", "Description"
    :widths: 50, 50
    :align: center
@@ -38,5 +41,5 @@ each header unit:
     ``'%S'``,	Seconds (0-60)
     ``'%name'``,	Name of user
 
-.. note::
+.. seealso::
     :ref:`Loading chat using hformat <Load a chat with specific hformat>`

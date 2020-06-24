@@ -3,7 +3,7 @@ Library available chats
 
 For the purpose of showcasing code examples and benchmarking different implementations, we have created a pool of chats,
 hosted in the `official repository page <https://github.com/lucasrodes/whatstk/tree/master/chats>`_. If you want to test
-the library with one of your own tests, check the :ref:`code examples <Code examples>`.
+the library with one of your own tests, check in the :ref:`code examples <Load chat>`.
 
 The chats are available via their corresponding URLs, which are listed in source code :mod:`whatstk.data`.
 
@@ -22,8 +22,8 @@ Object ``whatsapp_urls`` contains all URLs for WhatsApp chats.
 POKEMON
 ^^^^^^^
 
-Brief chat with Pokemon characters, which was manually designed by  `@lucasrodes <https://github.com/lucasrodes>`_ in
-`commit 666d6ea9cc030c4322fbe44ae64b8f1a0fdb5169
+Brief fictional chat with Pokemon characters, which was manually designed by  `@lucasrodes
+<https://github.com/lucasrodes>`_ in `commit 666d6ea9cc030c4322fbe44ae64b8f1a0fdb5169
 <https://github.com/lucasrodes/whatstk/commit/666d6ea9cc030c4322fbe44ae64b8f1a0fdb5169>`_.
 
 .. code-block:: python
@@ -31,7 +31,7 @@ Brief chat with Pokemon characters, which was manually designed by  `@lucasrodes
     >>> from whatstk.data import whatsapp_urls
     >>> from whatstk import WhatsAppChat
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
-    >>> chat.head(5)
+    >>> chat.df.head(5)
                             username                                            message
     date                                                                               
     2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
@@ -47,7 +47,8 @@ Brief chat with Pokemon characters, which was manually designed by  `@lucasrodes
 
 LOREM
 ^^^^^
-Chat with 500 interventions of fictional users, generated using `python-lorem <https://lorem.jarryshaw.me/en/latest/>`_.
+Chat with 500 interventions of fictional users, generated using `python-lorem <https://lorem.jarryshaw.me/en/latest/>`_
+library.
 
 
 .. code-block:: python
@@ -92,7 +93,7 @@ LOREM2
 ^^^^^^
 Chat with 300 interventions of fictional users, generated using `python-lorem <https://lorem.jarryshaw.me/en/latest/>`_.
 
-Can be used along with **LOREM1** to test chat merging functionalities.
+Can be used along with **LOREM1** to test :func:`chat merging functionalities <whatstk.WhatsAppChat.merge>` or :ref:`multiple-source loading <Load chat from multiple sources>`.
 
 .. code-block:: python
 

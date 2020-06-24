@@ -27,3 +27,7 @@ plotly.py>`_.
    Message length boxplot <message_length_boxplot>
    User interaction <user_interaction>
    Custom plot example <custom>
+
+----
+
+If you think that something is missing please `raise an issue <https://github.com/lucasrodes/whatstk/issues>`_.
