@@ -102,7 +102,7 @@ class WhatsAppChat(BaseChat):
                 >>> chat = WhatsAppChat.from_sources(filepaths=[filepath_1, filepath_2])
                 >>> chat.df.head(5)
                                            username                                            message
-                date                                                                                  
+                date
                 2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.
                 2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...
                 2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...

@@ -57,13 +57,15 @@ def is_supported_verbose(hformat):
     Args:
         hformat (str): Information message.
 
+
     Example:
+            Check if format ``'%y-%m-%d, %H:%M - %name:'`` is supported.
 
-    .. code-block:: python
+            .. code-block:: python
 
-        >>> from whatstk.whatsapp.hformat import is_supported_verbose
-        >>> is_supported_verbose('%y-%m-%d, %H:%M - %name:')
-        "The header '%y-%m-%d, %H:%M - %name:' is supported. `auto_header` for this header is supported."
+                >>> from whatstk.whatsapp.hformat import is_supported_verbose
+                >>> is_supported_verbose('%y-%m-%d, %H:%M - %name:')
+                "The header '%y-%m-%d, %H:%M - %name:' is supported. `auto_header` for this header is supported."
 
     """
     support, auto_header_support = is_supported(hformat)
