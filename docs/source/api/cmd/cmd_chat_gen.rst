@@ -25,7 +25,3 @@ Generate random WhatsApp chat.
     --last-timestamp LAST_TIMESTAMP
                             Timestamp of last message. Format YYYY-mm-dd
     -v, --verbose         Verbosity.
-
-.. warning::
-
-    In future versions, this command will be renamed to ``whatstk-generate-chat``.
