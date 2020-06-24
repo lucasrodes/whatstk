@@ -29,8 +29,8 @@ def is_supported(hformat):
 
     Returns:
         tuple:
-            - bool: True if header is supported.
-            - bool: True if header is supported with `auto_header` feature.
+                * bool: True if header is supported.
+                * bool: True if header is supported with `auto_header` feature.
 
     """
     with open(hformat_support_filepath, 'r') as f:
@@ -56,6 +56,14 @@ def is_supported_verbose(hformat):
 
     Args:
         hformat (str): Information message.
+
+    Example:
+
+    .. code-block:: python
+
+        >>> from whatstk.whatsapp.hformat import is_supported_verbose
+        >>> is_supported_verbose('%y-%m-%d, %H:%M - %name:')
+        "The header '%y-%m-%d, %H:%M - %name:' is supported. `auto_header` for this header is supported."
 
     """
     support, auto_header_support = is_supported(hformat)
@@ -84,7 +92,9 @@ def get_supported_hformats_as_dict():
     """Get dictionary with supported formats and relevant info.
 
     Returns:
-        dict: Dict with two elements, `format` (header format) and `auto_header` (if auto_header is supported).
+        dict: Dict with two elements:
+                * ``format``: Header format. All formats appearing are supported.
+                * ``auto_header``: 1 if auto_header is supported), 0 otherwise.
 
     """
     with open(hformat_support_filepath, 'r') as f:

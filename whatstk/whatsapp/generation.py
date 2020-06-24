@@ -1,4 +1,4 @@
-"""Automatic generation of chat using Lorem Ipsum text and statistics."""
+"""Automatic generation of chat using Lorem Ipsum text and time series statistics."""
 
 
 import os
@@ -187,7 +187,7 @@ def generate_chats_hformats(output_path, size=2000, hformats=None, filepaths=Non
     ..  seealso::
 
             * :func:`ChatGenerator <ChatGenerator>`
-            * :func:`generate <ChatGenerator.generate>`
+            * :func:`ChatGenerator.generate <ChatGenerator.generate>`
 
     """
     if not hformats:

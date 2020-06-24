@@ -18,11 +18,12 @@ class FigureBuilder:
 
     Integrates feature extraction and visualization logic to automate data plots.
 
+    **Note**: Either ``df`` or ``chat`` must be provided.
+
     Args:
-        df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. Defaults to
-                                            None.
-        chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Defaults to
-                                        None.
+        df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. If a value is given,
+                                            ``chat`` is ignored.
+        chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Required if ``df`` is None.
 
     """
 
@@ -30,10 +31,9 @@ class FigureBuilder:
         """Constructor.
 
         Args:
-            df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. Defaults to
-                                             None.
-            chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Defaults to
-                                           None.
+            df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. If a value is given,
+                                            ``chat`` is ignored.
+            chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Required if ``df`` is None.
 
         """
         self.df = _get_df(df=df, chat=chat)
@@ -53,10 +53,11 @@ class FigureBuilder:
     def user_color_mapping(self):
         """Get mapping between user and color.
 
-        Each user is assigned a color automatically, so that this color is preserved for that user in all plots.
+        Each user is assigned a color automatically, so that this color is preserved for that user in all
+        to-be-generated plots.
 
         Returns:
-            dict: Mapping username -> color (rgb).
+            dict: Mapping from username to color (rgb).
 
         """
         if self.__user_color_mapping is None:
@@ -70,7 +71,7 @@ class FigureBuilder:
         self.__user_color_mapping = value
 
     def user_msg_length_boxplot(self, title="User message length", xlabel="User"):
-        """Generate figure with boxplots of message length of all users.
+        """Generate figure with boxplots of each user's message length.
 
         Args:
             title (str, optional): Title for plot. Defaults to "User message length".
@@ -107,7 +108,8 @@ class FigureBuilder:
         """Plot number of user interventions over time.
 
         Args:
-            date_mode (str, optional): Choose mode to group interventions by. Defaults to 'date'. Available modes are:
+            date_mode (str, optional): Choose mode to group interventions by. Defaults to ``'date'``. Available modes
+                                        are:
 
                                         - ``'date'``: Grouped by particular date (year, month and day).
                                         - ``'hour'``: Grouped by hours.
@@ -122,7 +124,7 @@ class FigureBuilder:
             xlabel (str, optional): x-axis label title. Defaults to "Date/Time".
 
         Returns:
-            dict: Dictionary with data and layout. Plotly compatible
+            plotly.graph_objs.Figure: Plotly Figure.
 
         ..  seealso::
 
@@ -165,15 +167,15 @@ class FigureBuilder:
     def user_message_responses_flow(self, title="Message flow"):
         """Get the flow of message responses.
 
-        A response is from user X to user Y happens if user X sends a message right after message Y does.
+        A response from user X to user Y happens if user X sends a message right after a message from user Y.
 
-        This method generates a plotly-ready figure (as a dictionary) using Sankey diagram.
+        Uses a Sankey diagram.
 
         Args:
             title (str, optional): Title for plot. Defaults to "Message flow".
 
         Returns:
-            dict: Dictionary with data and layout. Plotly compatible
+            plotly.graph_objs.Figure: Plotly Figure.
 
         ..  seealso::
 
@@ -217,9 +219,7 @@ class FigureBuilder:
     def user_message_responses_heatmap(self, norm=NORMS.ABSOLUTE, title="Response matrix"):
         """Get the response matrix heatmap.
 
-        A response is from user X to user Y happens if user X sends a message right after message Y does.
-
-        This method generates a plotly-ready figure (as a dictionary) using Heatmaps.
+        A response from user X to user Y happens if user X sends a message right after a message from user Y.
 
         Args:
             norm (str, optional): Specifies the type of normalization used for reponse count. Can be:
@@ -231,7 +231,7 @@ class FigureBuilder:
             title (str, optional): Title for plot. Defaults to "Response matrix".
 
         Returns:
-            dict: Dictionary with data and layout. Plotly compatible
+            plotly.graph_objs.Figure: Plotly Figure.
 
         ..  seealso::
 

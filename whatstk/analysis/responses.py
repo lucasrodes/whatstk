@@ -27,11 +27,15 @@ def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
     Axis 0 lists senders and axis 1 lists receivers. That is, the value in cell (i, j) denotes the number of times
     :math:`user_i` responded to a message from :math:`user_j`.
 
+    **Note**: Either ``df`` or ``chat`` must be provided.
+
     Args:
-        df (pandas.DataFrame, optional): Chat. Defaults to None.
-        chat (WhatsAppChat, optional): Chat. Defaults to None.
+        df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. If a value is given,
+                                            ``chat`` is ignored.
+        chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Required if ``df`` is None.
         zero_own (bool, optional): Set to True to avoid counting own responses. Defaults to True.
         norm (str, optional): Specifies the type of normalization used for reponse count. Can be:
+
                                 - ``'absolute'``: Absolute count of messages.
                                 - ``'joint'``: Normalized by total number of messages sent by all users.
                                 - ``'sender'``: Normalized per sender by total number of messages sent by user.
@@ -50,6 +54,7 @@ def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
                 >>> from whatstk.data import whatsapp_urls
                 >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
                 >>> responses = get_response_matrix(chat=chat)
+                >>> responses
                                 Ash Ketchum  Brock  ...  Raichu  Wobbuffet
                 Ash Ketchum               0      0  ...       1          0
                 Brock                     1      0  ...       0          0

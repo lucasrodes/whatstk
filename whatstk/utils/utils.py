@@ -11,7 +11,7 @@ class ColnamesDf:
 
                 >>> from whatstk.utils.utils import COLNAMES_DF
                 >>> COLNAMES_DF.DATE
-                date
+                'date'
 
     """
     DATE = 'date'

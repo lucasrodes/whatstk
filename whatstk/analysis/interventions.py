@@ -10,11 +10,15 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
 
     The unit of time can be chosen by means of argument ``date_mode``.
 
+    **Note**: Either ``df`` or ``chat`` must be provided.
+
     Args:
-        df (pandas.DataFrame): Chat as DataFrame.
-        chat (WhatsAppChat): Object containing parsed WhatsApp chat.
+        df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. If a value is given,
+                                            ``chat`` is ignored.
+        chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Required if ``df`` is None.
         date_mode (str, optional): Choose mode to group interventions by.
                                     Defaults to ``date_mode=date``. Available modes are:
+
                                     - ``'date'``: Grouped by particular date (year, month and day).
                                     - ``'hour'``: Grouped by day hours (24 hours).
                                     - ``'month'``: Grouped by months (12 months).
@@ -25,7 +29,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
         all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.
 
     Returns:
-        pandas.DataFrame: DataFrame with shape NxU, where N: number of time-slots and U: number of users.
+        pandas.DataFrame: DataFrame with shape *NxU*, where *N*: number of time-slots and *U*: number of users.
 
     Raises:
         ValueError: if ``date_mode`` value is not supported.

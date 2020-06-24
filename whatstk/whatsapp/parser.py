@@ -30,7 +30,8 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
     """Load chat as a DataFrame.
 
     Args:
-        filepath (str): Path to chat text file. Can be a local file or an URL.
+        filepath (str): Path to the file. It can be a local file (e.g. 'path/to/file.txt') or an URL to a hosted
+                            file (e.g. 'http://www.url.to/file.txt')
         auto_header (bool, optional): Detect header automatically. If False, ``hformat`` is required.
         hformat (str, optional): :ref:`Format of the header <The header format>`, e.g.
                                     ``'[%y-%m-%d %H:%M:%S] - %name:'``. Use following keywords:
@@ -111,7 +112,7 @@ def generate_regex(hformat):
         str: Regular expression corresponding to the specified syntax.
 
     Example:
-        Generate regular expression corresponding to ``hformat=%y-%m-%d, %H:%M:%S - %name:``
+        Generate regular expression corresponding to ``'hformat=%y-%m-%d, %H:%M:%S - %name:'``.
 
         ..  code-block:: python
 

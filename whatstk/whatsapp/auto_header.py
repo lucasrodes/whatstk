@@ -15,7 +15,9 @@ def extract_header_from_text(text, encoding='utf-8'):
 
     Args:
         text (str): Loaded chat as string (whole text).
-        encoding (str, optional): Encoding to be used. Defaults to 'utf-8'.
+        encoding (str): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
 
     Returns:
         str: Format extracted. None if no header was extracted.
