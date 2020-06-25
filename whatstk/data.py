@@ -19,7 +19,7 @@ Urls = namedtuple('Urls', [
     'LOREM_2000'
 ])
 
-branch = 'feature/documentation'
+branch = 'develop'
 chats_folder = f'http://raw.githubusercontent.com/lucasrodes/whatstk/{branch}/chats'
 
 whatsapp_urls = Urls(
