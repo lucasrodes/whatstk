@@ -49,6 +49,6 @@ jobs:
         - provider: pages
           cleanup: true
           github_token: $GITHUB_TOKEN
-          local_dir: docs/_build/html/
+          local_dir: docs/
           on:
             tags: true
