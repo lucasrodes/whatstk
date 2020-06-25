@@ -41,7 +41,7 @@ It is distributed under the GPL-3.0 license.
 ### Content
 * [Installation](#installation)
 * [Getting Started](#getting-started)
-* [Documentation](docs/index.md)
+* [Documentation](https://lcsrg.me/whatstk)
 * [Contributing](#contributing)
 
 
