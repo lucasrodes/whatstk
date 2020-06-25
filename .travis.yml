@@ -39,7 +39,6 @@ jobs:
         - cd docs
         - make clean && make html # generate documentation
         - cd ..
-      after_sucess: skip
       deploy:
         - provider: pypi
           user: $USER_PYPI
@@ -47,8 +46,9 @@ jobs:
           on:
             tags: true
         - provider: pages
-          cleanup: true
+          skip_cleanup: true
           github_token: $GITHUB_TOKEN
-          local_dir: docs/_build/html/
+          keep-history: true
           on:
             tags: true
+          local_dir: docs/_build/html/
