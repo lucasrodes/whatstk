@@ -22,3 +22,4 @@ Community Contributors
 
 - `Albert Aparicio Isarn <https://github.com/albertaparicio>`_
 - `Kolmar Kafran <https://github.com/kafran>`_
+- `Clara Sáez Calabuig <https://www.linkedin.com/in/clara-saez-calabuig-6a59351a1>`_ (project logo)
