@@ -50,7 +50,7 @@ extensions = [
     'sphinx_git',
     'autodocsumm',
     'sphinx.ext.mathjax',
-    # "sphinx_smultiversion",
+    # "sphinx_multiversion",
     # 'sphinx_gallery.gen_gallery'
 ]
 
