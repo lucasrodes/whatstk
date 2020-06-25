@@ -20,10 +20,19 @@ script:
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage
+  - cd docs
+  - make clean && make html # generate documentation
+  - cd ..
   # add docs step
 deploy:
-  provider: pypi
-  user: $USER_PYPI
-  password: $PWD_PYPI
-  on:
-    tags: true
+  - provider: pypi
+    user: $USER_PYPI
+    password: $PWD_PYPI
+    on:
+      tags: true
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: docs/_build/html/
+    on:
+      tags: true

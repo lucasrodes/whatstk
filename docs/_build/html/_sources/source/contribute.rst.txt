@@ -26,6 +26,12 @@ After forking and editing the code, make sure that your code passes all the test
 
     sh ./run-tests.sh
 
+This includes flake8 and pytest.
+
+.. todo::
+
+    Use `tox <https://tox.readthedocs.io/en/latest/>`_
+
 ----
 
 Adding new examples

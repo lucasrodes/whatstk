@@ -368,13 +368,15 @@
 <span class="sd">    Args:</span>
 <span class="sd">        hformat (str): Information message.</span>
 
+
 <span class="sd">    Example:</span>
+<span class="sd">            Check if format ``&#39;%y-%m-%d, %H:%M - %name:&#39;`` is supported.</span>
 
-<span class="sd">    .. code-block:: python</span>
+<span class="sd">            .. code-block:: python</span>
 
-<span class="sd">        &gt;&gt;&gt; from whatstk.whatsapp.hformat import is_supported_verbose</span>
-<span class="sd">        &gt;&gt;&gt; is_supported_verbose(&#39;%y-%m-%d, %H:%M - %name:&#39;)</span>
-<span class="sd">        &quot;The header &#39;%y-%m-%d, %H:%M - %name:&#39; is supported. `auto_header` for this header is supported.&quot;</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.whatsapp.hformat import is_supported_verbose</span>
+<span class="sd">                &gt;&gt;&gt; is_supported_verbose(&#39;%y-%m-%d, %H:%M - %name:&#39;)</span>
+<span class="sd">                &quot;The header &#39;%y-%m-%d, %H:%M - %name:&#39; is supported. `auto_header` for this header is supported.&quot;</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">support</span><span class="p">,</span> <span class="n">auto_header_support</span> <span class="o">=</span> <span class="n">is_supported</span><span class="p">(</span><span class="n">hformat</span><span class="p">)</span>

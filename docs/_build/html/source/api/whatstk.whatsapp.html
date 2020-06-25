@@ -1055,7 +1055,8 @@ defaults to all supported header formats.</li>
 </tr>
 </tbody>
 </table>
-<p>Example:</p>
+<p class="rubric">Example</p>
+<p>Check if format <code class="docutils literal notranslate"><span class="pre">'%y-%m-%d,</span> <span class="pre">%H:%M</span> <span class="pre">-</span> <span class="pre">%name:'</span></code> is supported.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">whatstk.whatsapp.hformat</span> <span class="kn">import</span> <span class="n">is_supported_verbose</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">is_supported_verbose</span><span class="p">(</span><span class="s1">&#39;%y-%m-</span><span class="si">%d</span><span class="s1">, %H:%M - %name:&#39;</span><span class="p">)</span>
 <span class="go">&quot;The header &#39;%y-%m-%d, %H:%M - %name:&#39; is supported. `auto_header` for this header is supported.&quot;</span>
