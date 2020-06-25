@@ -22,6 +22,8 @@ script:
 after_success:
   - codecov # submit coverage
   - cd docs
+  - git branch
+  - git tag
   - git rev-list v0.2.5..v0.2.6 --
   - make clean && make html # generate documentation
   - cd ..
