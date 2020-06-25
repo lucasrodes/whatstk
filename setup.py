@@ -14,7 +14,7 @@ with open(os.path.join(this_directory, 'requirements.txt')) as f:
 
 setup(
     name='whatstk',
-    version="0.3.0.dev1",
+    version="0.3.0.a0",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -43,7 +43,7 @@ setup(
     python_requires='>=3.7',
     entry_points={
         'console_scripts': [
-            'whatstk-generate-chats=whatstk.scripts.generate_chats:main',
+            'whatstk-generate-chat=whatstk.scripts.generate_chats:main',
             'whatstk-to-csv=whatstk.scripts.txt_to_csv:main',
             'whatstk-graph=whatstk.scripts.graph:main'
         ]

@@ -1,0 +1,1217 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Changelog &mdash; WhatsApp Analysis Toolkit</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Contribute" href="contribute.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="content.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.3.0.a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About whatstk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#first-contact-with-whatstk">First contact with whatstk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#installation-compatibility">Installation &amp; compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="about.html#from-source">From source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="about.html#develop">Develop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#why-this-name-whatstk">Why this name, whatstk?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/export_chat.html">Export a WhatsApp chat from your phone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting_started/export_chat.html#android">Android</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting_started/export_chat.html#ios">iOS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/load_chat.html">Load a WhatsApp chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/command_line.html">Command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/hformat.html">The Header format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started/library-available-chats.html">Library available chats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting_started/library-available-chats.html#whatsapp">WhatsApp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="getting_started/library-available-chats.html#pokemon">POKEMON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting_started/library-available-chats.html#lorem">LOREM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting_started/library-available-chats.html#lorem1">LOREM1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting_started/library-available-chats.html#lorem2">LOREM2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting_started/library-available-chats.html#lorem-2000">LOREM_2000</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_examples/index.html">Code examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="code_examples/index.html#basic-examples">Basic examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/load_chat.html">Load chat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/load_chat_multiple.html">Load chat from multiple sources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/load_chat_multiple.html#rename-usernames">Rename usernames</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/load_chat_hformat.html">Load chat with specific hformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/load_chat_multiple.html">Rename usernames</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/load_chat_multiple.html#rename-usernames">Rename usernames</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_examples/index.html#visualisations">Visualisations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/interventions_count.html">Count of user interventions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/interventions_count.html#count-of-user-interventions">Count of user interventions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/interventions_count.html#count-of-characters-sent-per-user">Count of characters sent per user</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/interventions_count.html#other-insights">Other insights</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/message_length_boxplot.html">Message length boxplot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/user_interaction.html">User interaction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/user_interaction.html#user-interaction-heatmap">User interaction heatmap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/user_interaction.html#user-interaction-flow">User interaction flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="code_examples/custom.html">Custom plot example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="code_examples/custom.html#number-of-messages-vs-number-of-characters-sent">Number of messages vs. Number of characters sent</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#main-objects">Main objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.WhatsAppChat.html">WhatsAppChat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.FigureBuilder.html">FigureBuilder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#core-api">Core API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.whatsapp.html">whatstk.whatsapp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.whatsapp.html#module-whatstk.whatsapp.objects">whatstk.whatsapp.objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.whatsapp.html#module-whatstk.whatsapp.parser">whatstk.whatsapp.parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.whatsapp.html#module-whatstk.whatsapp.auto_header">whatstk.whatsapp.auto_header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.whatsapp.html#module-whatstk.whatsapp.generation">whatstk.whatsapp.generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.whatsapp.html#module-whatstk.whatsapp.hformat">whatstk.whatsapp.hformat</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.analysis.html">whatstk.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.graph.html">whatstk.graph</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.graph.html#module-whatstk.graph.base">whatstk.graph.base</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.graph.html#module-whatstk.graph.figures">whatstk.graph.figures</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.utils.html">whatstk.utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.utils.html#module-whatstk.utils.chat_merge">whatstk.utils.chat_merge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.utils.html#module-whatstk.utils.exceptions">whatstk.utils.exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/whatstk.utils.html#module-whatstk.utils.utils">whatstk.utils.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk.data.html">whatstk.data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/whatstk._chat.html">whatstk._chat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/index.html#command-line-tools">Command line tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/cmd/cmd_to_csv.html">whatst-to-csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/cmd/cmd_graph.html">whatstk-graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/cmd/cmd_chat_gen.html">whatstk-generate-chat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="why_whatstk.html">Why choose whatstk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="why_whatstk.html#automatic-parser">Automatic parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="why_whatstk.html#the-power-of-pandas-and-plotly">The power of pandas and plotly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="why_whatstk.html#open-source-and-community-oriented">Open source and Community oriented</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community &amp; Governance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community.html#leadership">Leadership</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="community.html#bdfl">BDFL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="community.html#community-contributors">Community Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#bug-reporting">Bug reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#requesting-a-feature">Requesting a Feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#adding-new-examples">Adding new examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html#api-discussions">API discussions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-2-x">v0.2.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#v0-2-6">v0.2.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-2-5">v0.2.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-2-4">v0.2.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-2-3">v0.2.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-2-2">v0.2.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-2-0">v0.2.0</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v0-1-x">v0.1.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-11">v0.1.11</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-10">v0.1.10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-9">v0.1.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-8">v0.1.8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-7">v0.1.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-6">v0.1.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-1">v0.1.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v0-1-0">v0.1.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="content.html">whatstk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="content.html">Docs</a> &raquo;</li>
+        
+      <li>Changelog</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-2-x">
+<h2>v0.2.X<a class="headerlink" href="#v0-2-x" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="v0-2-6">
+<h3>v0.2.6<a class="headerlink" href="#v0-2-6" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>Merge pull request #49 from lucasrodes/release/0.2.6</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-07 01:14:04</em></p>
+<p>Release/0.2.6</p>
+</li>
+<li><p class="first"><strong>v0.2.6</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-07 01:10:18</em></p>
+</li>
+<li><p class="first"><strong>removed known issues as 12h header chats are now supported. fixed travis link in badge. Some related to #46</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-07 01:09:54</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #48 from lucasrodes/feature/12h-clock-header</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-07 01:06:02</em></p>
+<p>Feature/12h clock header</p>
+</li>
+<li><p class="first"><strong>add tests</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-07 00:55:23</em></p>
+</li>
+<li><p class="first"><strong>new chat examples</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-07 00:45:23</em></p>
+</li>
+<li><p class="first"><strong>auto detect of 12h format works when format is</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-07 00:44:27</em></p>
+</li>
+<li><p class="first"><strong>created new branch to fix 12h header format detection. Added text example file. Issue #40</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-04 10:40:53</em></p>
+</li>
+<li><p class="first"><strong>redundancy in “tested in python 3.7” statement</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-02 19:03:26</em></p>
+<p>Badges make it already clear, and actually it is also tested in python 3.8.</p>
+</li>
+<li><p class="first"><strong>Merge pull request #43 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-02 18:51:53</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>readme refactor</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-02 18:49:33</em></p>
+</li>
+<li><p class="first"><strong>readme refactor</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-02 18:49:00</em></p>
+</li>
+<li><p class="first"><strong>readme refactor</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-02 18:46:00</em></p>
+</li>
+<li><p class="first"><strong>new title</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-02 18:44:32</em></p>
+</li>
+<li><p class="first"><strong>Create SECURITY.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-02 18:38:51</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #42 from lucasrodes/hotfix/unlink-desktop-app</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-02 18:19:08</em></p>
+<p>unlink desktop app link from README</p>
+</li>
+<li><p class="first"><strong>unlink link</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-02 18:15:04</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="v0-2-5">
+<h3>v0.2.5<a class="headerlink" href="#v0-2-5" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>Merge pull request #39 from lucasrodes/release/v0.2.5</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-01 23:11:21</em></p>
+<p>Release/v0.2.5</p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 23:08:50</em></p>
+</li>
+<li><p class="first"><strong>v0.2.5</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 23:01:57</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #38 from lucasrodes/feature/tests</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-01 23:00:53</em></p>
+<p>Feature/tests</p>
+</li>
+<li><p class="first"><strong>generated new docs</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 22:43:43</em></p>
+</li>
+<li><p class="first"><strong>add badge and known issues</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 22:32:49</em></p>
+</li>
+<li><p class="first"><strong>fixed shape method</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 21:19:53</em></p>
+</li>
+<li><p class="first"><strong>travis test</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 20:16:22</em></p>
+</li>
+<li><p class="first"><strong>interventions method now returns correct index naming for option ‘hourweekday’</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 19:34:03</em></p>
+</li>
+<li><p class="first"><strong>comments on pull requests</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:56:34</em></p>
+</li>
+<li><p class="first"><strong>travis test</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:25:14</em></p>
+</li>
+<li><p class="first"><strong>travis test</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:23:22</em></p>
+</li>
+<li><p class="first"><strong>requirements test</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:15:25</em></p>
+</li>
+<li><p class="first"><strong>merge</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:15:01</em></p>
+</li>
+<li><p class="first"><strong>testing travis</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:08:39</em></p>
+</li>
+<li><p class="first"><strong>travis test</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:06:27</em></p>
+</li>
+<li><p class="first"><strong>test requirements libs</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:02:33</em></p>
+</li>
+<li><p class="first"><strong>tests scripts</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:02:23</em></p>
+</li>
+<li><p class="first"><strong>integrating codecov in travis</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 18:01:41</em></p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 16:22:40</em></p>
+</li>
+<li><p class="first"><strong>badges and others</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-30 20:17:21</em></p>
+</li>
+<li><p class="first"><strong>yaml to yml</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-30 19:47:48</em></p>
+</li>
+<li><p class="first"><strong>yaml to yml</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-30 19:47:41</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="v0-2-4">
+<h3>v0.2.4<a class="headerlink" href="#v0-2-4" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>Merge pull request #37 from lucasrodes/hotfix/argmax-to-idxmax</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-01 02:12:08</em></p>
+<p>Fixed travis issues, updating to patch v0.2.4</p>
+</li>
+<li><p class="first"><strong>v.0.2.4</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 02:09:56</em></p>
+</li>
+<li><p class="first"><strong>v0.2.3</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 02:08:45</em></p>
+</li>
+<li><p class="first"><strong>v0.2.2</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 02:08:29</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="v0-2-3">
+<h3>v0.2.3<a class="headerlink" href="#v0-2-3" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>Merge pull request #36 from lucasrodes/hotfix/argmax-to-idxmax</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-01 01:59:55</em></p>
+<p>travis issues, deployment not working</p>
+</li>
+<li><p class="first"><strong>travis issues</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 01:56:17</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="v0-2-2">
+<h3>v0.2.2<a class="headerlink" href="#v0-2-2" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>Merge pull request #35 from lucasrodes/hotfix/argmax-to-idxmax</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-01 01:12:59</em></p>
+<p>changed travis token</p>
+</li>
+<li><p class="first"><strong>changed travis token</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 01:10:43</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #34 from lucasrodes/hotfix/argmax-to-idxmax</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-05-01 00:48:29</em></p>
+<p>Hotfix/argmax to idxmax</p>
+</li>
+<li><p class="first"><strong>version patch updated</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 00:44:04</em></p>
+</li>
+<li><p class="first"><strong>removed 3.5 badge in readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 00:40:23</em></p>
+</li>
+<li><p class="first"><strong>versions set in requirements</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 00:39:44</em></p>
+</li>
+<li><p class="first"><strong>fixed compatibility with pandas, argmax/argmin to idxmax/idxmin</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-05-01 00:37:00</em></p>
+</li>
+</ul>
+</div>
+<div class="section" id="v0-2-0">
+<h3>v0.2.0<a class="headerlink" href="#v0-2-0" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>Merge pull request #33 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-04-30 00:05:06</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>update minor 0.2.0</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 23:59:55</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #32 from lucasrodes/feature/tests</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-04-29 23:54:57</em></p>
+<p>Feature/tests</p>
+</li>
+<li><p class="first"><strong>readme badges python versio update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 23:49:26</em></p>
+</li>
+<li><p class="first"><strong>travis update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 23:46:02</em></p>
+</li>
+<li><p class="first"><strong>travis</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 23:41:51</em></p>
+</li>
+<li><p class="first"><strong>wip travis</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 23:38:55</em></p>
+</li>
+<li><p class="first"><strong>tests integrated</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 23:28:49</em></p>
+</li>
+<li><p class="first"><strong>small fix in coloring badges</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:44:55</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #31 from lucasrodes/feature/docs</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-04-29 22:32:52</em></p>
+<p>Feature/docs</p>
+</li>
+<li><p class="first"><strong>finished docs</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:18:34</em></p>
+</li>
+<li><p class="first"><strong>doc making script</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:12:45</em></p>
+</li>
+<li><p class="first"><strong>script for docs</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:12:06</em></p>
+</li>
+<li><p class="first"><strong>script for docs</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:09:03</em></p>
+</li>
+<li><p class="first"><strong>pydoc markdown</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:07:06</em></p>
+</li>
+<li><p class="first"><strong>plot module</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 22:06:52</em></p>
+</li>
+<li><p class="first"><strong>refactor, new hierarchy and documentation passed to Google style</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 20:50:44</em></p>
+</li>
+<li><p class="first"><strong>merge</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 19:34:04</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #30 from lucasrodes/feature/header-auto-detect</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-04-29 19:31:03</em></p>
+<p>Feature/header auto detect</p>
+</li>
+<li><p class="first"><strong>readme links</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 19:28:53</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 19:27:16</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 19:21:27</em></p>
+</li>
+<li><p class="first"><strong>wip readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 18:44:19</em></p>
+</li>
+<li><p class="first"><strong>ignore file update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 18:27:56</em></p>
+</li>
+<li><p class="first"><strong>smodule comment</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 18:26:30</em></p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:30:16</em></p>
+</li>
+<li><p class="first"><strong>removed useless space</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:29:16</em></p>
+</li>
+<li><p class="first"><strong>backwards compatibility</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:28:59</em></p>
+</li>
+<li><p class="first"><strong>small typo in imports</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:28:49</em></p>
+</li>
+<li><p class="first"><strong>interventions and WhatsAppChat objects moved to __init__</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:28:21</em></p>
+</li>
+<li><p class="first"><strong>readme instructions update, notes added</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:27:58</em></p>
+</li>
+<li><p class="first"><strong>changed print to log</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:27:39</em></p>
+</li>
+<li><p class="first"><strong>renamed whatstk.alpha to whatstk.utils</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 13:13:21</em></p>
+</li>
+<li><p class="first"><strong>change for backwards compatibility</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 12:59:25</em></p>
+</li>
+<li><p class="first"><strong>added header auto extraction when from_txt in WhatsAppChat object</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-29 12:35:02</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #29 from lucasrodes/hotfix/link-to-gui-app</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2020-04-25 19:58:49</em></p>
+<p>changed header levels, add link to app</p>
+</li>
+<li><p class="first"><strong>changed header levels, add link to app</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-25 19:53:41</em></p>
+</li>
+<li><p class="first"><strong>import syntax changed</strong><span> by </span><em>lucas rg</em><span> at </span><em>2020-04-25 19:50:22</em></p>
+</li>
+<li><p class="first"><strong>merge</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-21 21:26:23</em></p>
+</li>
+<li><p class="first"><strong>regex update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-21 21:24:58</em></p>
+</li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="v0-1-x">
+<h2>v0.1.X<a class="headerlink" href="#v0-1-x" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="v0-1-11">
+<h3>v0.1.11<a class="headerlink" href="#v0-1-11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>version 0.1.10 -&gt; 0.1.11</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-19 13:04:34</em></li>
+<li><strong>readme with more examples</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-19 13:03:58</em></li>
+<li><strong>update to version 0.1.10</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-18 13:23:28</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-10">
+<h3>v0.1.10<a class="headerlink" href="#v0-1-10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>removed verbosity when creating a WhatsAppChat object</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-18 13:21:59</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-9">
+<h3>v0.1.9<a class="headerlink" href="#v0-1-9" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>update version</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-17 12:07:47</em></li>
+<li><strong>hotfix, now library compatible with 2-digit formatted years</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-17 12:06:55</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-8">
+<h3>v0.1.8<a class="headerlink" href="#v0-1-8" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>update to version 0.1.8</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-17 11:25:00</em></li>
+<li><strong>added manifest-in file, required to install requirements.txt</strong><span> by </span><em>Lucas Rodes Guirao</em><span> at </span><em>2019-06-17 11:23:18</em></li>
+<li><strong>docstring</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 01:04:40</em></li>
+<li><strong>readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 01:02:16</em></li>
+<li><strong>added python version</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:45:28</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-7">
+<h3>v0.1.7<a class="headerlink" href="#v0-1-7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>version</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:33:37</em></li>
+<li><strong>updated versions</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:31:04</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-6">
+<h3>v0.1.6<a class="headerlink" href="#v0-1-6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>versioning, installation via pypi available agian</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:21:18</em></li>
+<li><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:15:00</em></li>
+<li><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:14:53</em></li>
+<li><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:06:12</em></li>
+<li><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-16 00:05:00</em></li>
+<li><strong>source installation only available</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 23:32:47</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-1">
+<h3>v0.1.1<a class="headerlink" href="#v0-1-1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>setup</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 23:19:55</em></li>
+</ul>
+</div>
+<div class="section" id="v0-1-0">
+<h3>v0.1.0<a class="headerlink" href="#v0-1-0" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 23:03:42</em></p>
+</li>
+<li><p class="first"><strong>testing CI</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:46:08</em></p>
+</li>
+<li><p class="first"><strong>testing CI</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:41:55</em></p>
+</li>
+<li><p class="first"><strong>removed unnecessary files</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:35:32</em></p>
+</li>
+<li><p class="first"><strong>merge develop to master</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:33:08</em></p>
+</li>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:31:20</em></p>
+</li>
+<li><p class="first"><strong>gitignore</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:27:54</em></p>
+</li>
+<li><p class="first"><strong>versioning bumpversion cfg file</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:27:41</em></p>
+</li>
+<li><p class="first"><strong>gitignore</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:27:13</em></p>
+</li>
+<li><p class="first"><strong>image example readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:23:09</em></p>
+</li>
+<li><p class="first"><strong>image example readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:22:30</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:21:21</em></p>
+</li>
+<li><p class="first"><strong>lib docs</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 22:20:02</em></p>
+</li>
+<li><p class="first"><strong>versioning files</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 21:13:50</em></p>
+</li>
+<li><p class="first"><strong>travis update. integration with pypi</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 21:09:12</em></p>
+</li>
+<li><p class="first"><strong>travis</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 20:23:48</em></p>
+</li>
+<li><p class="first"><strong>travis</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 20:18:56</em></p>
+</li>
+<li><p class="first"><strong>readme badge build</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 20:14:49</em></p>
+</li>
+<li><p class="first"><strong>readme badge build</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 20:13:51</em></p>
+</li>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 20:08:50</em></p>
+</li>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:50:47</em></p>
+</li>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:49:43</em></p>
+</li>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:49:27</em></p>
+</li>
+<li><p class="first"><strong>setup.py update classifiers</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:41:59</em></p>
+</li>
+<li><p class="first"><strong>gitignore</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:36:00</em></p>
+</li>
+<li><p class="first"><strong>badge formatting</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:33:35</em></p>
+</li>
+<li><p class="first"><strong>versioning</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:33:06</em></p>
+</li>
+<li><p class="first"><strong>delete useless file</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:32:38</em></p>
+</li>
+<li><p class="first"><strong>versioning first steps</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:31:56</em></p>
+</li>
+<li><p class="first"><strong>readme update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:20:35</em></p>
+</li>
+<li><p class="first"><strong>readme update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:18:33</em></p>
+</li>
+<li><p class="first"><strong>readme n stuff</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 19:16:06</em></p>
+</li>
+<li><p class="first"><strong>general refactor</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 18:25:41</em></p>
+</li>
+<li><p class="first"><strong>lib</strong><span> by </span><em>lucas rg</em><span> at </span><em>2019-06-15 18:22:41</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-10-10 15:38:55</em></p>
+</li>
+<li><p class="first"><strong>m</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-06-01 23:02:57</em></p>
+</li>
+<li><p class="first"><strong>merge</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-06-01 23:01:34</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #28 from lucasrodes/revert-22-install_pip</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-06-01 21:50:03</em></p>
+<p>Revert “Prepare repository to be installed as a package via pip”</p>
+</li>
+<li><p class="first"><strong>Revert “Prepare repository to be installed as a package via pip”</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-06-01 21:49:33</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #25 from kafran/develop</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-06-01 21:49:01</em></p>
+<p>Fix regular expression</p>
+</li>
+<li><p class="first"><strong>Merge pull request #22 from lucasrodes/install_pip</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-06-01 21:47:59</em></p>
+<p>Prepare repository to be installed as a package via pip</p>
+</li>
+<li><p class="first"><strong>Add copyright comments to vis.py</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-21 20:25:06</em></p>
+</li>
+<li><p class="first"><strong>Adds Pandas’s to_csv arg index.</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-21 20:10:52</em></p>
+</li>
+<li><p class="first"><strong>Change the regexp config. Adds an internal regexp dictionary</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-21 20:01:34</em></p>
+</li>
+<li><p class="first"><strong>Cleanup code</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-20 21:54:55</em></p>
+</li>
+<li><p class="first"><strong>Fix regular expression</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-20 15:59:49</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #23 from kafran/hotfix</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-19 13:16:02</em></p>
+<p>Hotfix - Restore the lost methods and imports</p>
+</li>
+<li><p class="first"><strong>Restore lost methods</strong><span> by </span><em>Kolmar Kafran</em><span> at </span><em>2018-04-18 16:08:35</em></p>
+</li>
+<li><p class="first"><strong>WIP Prepare repository to be installed as a package via pip</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2018-04-15 21:22:34</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-04-11 16:59:08</em></p>
+</li>
+<li><p class="first"><strong>update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-03-22 12:39:11</em></p>
+</li>
+<li><p class="first"><strong>Merge branch ‘develop’ of https://github.com/lucasrodes/whatstk into develop</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-03-22 12:35:39</em></p>
+</li>
+<li><p class="first"><strong>updates</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-03-22 12:35:31</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-03-20 18:51:57</em></p>
+</li>
+<li><p class="first"><strong>merge</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-03-20 18:18:25</em></p>
+</li>
+<li><p class="first"><strong>fixed installation script</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-03-16 07:55:49</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 18:32:30</em></p>
+</li>
+<li><p class="first"><strong>update files</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-29 18:26:17</em></p>
+</li>
+<li><p class="first"><strong>mergin</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-29 18:24:21</em></p>
+</li>
+<li><p class="first"><strong>update to support more formats</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-29 18:23:45</em></p>
+</li>
+<li><p class="first"><strong>readme update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-29 18:23:17</em></p>
+</li>
+<li><p class="first"><strong>update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-29 18:22:07</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:31:37</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:31:02</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:29:55</em></p>
+</li>
+<li><p class="first"><strong>Update supported_headers.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:27:14</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:26:56</em></p>
+</li>
+<li><p class="first"><strong>Update README.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:26:14</em></p>
+</li>
+<li><p class="first"><strong>Update supported_headers.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:25:09</em></p>
+</li>
+<li><p class="first"><strong>Rename supported_headers to supported_headers.md</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:22:01</em></p>
+</li>
+<li><p class="first"><strong>Create supported_headers</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-29 16:21:47</em></p>
+</li>
+<li><p class="first"><strong>Delete Wordclouds.ipynb</strong><span> by </span><em>Lucas Rodés-Guirao</em><span> at </span><em>2018-01-22 18:56:59</em></p>
+</li>
+<li><p class="first"><strong>update license</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:29:24</em></p>
+</li>
+<li><p class="first"><strong>update notebooks and installation script</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:28:10</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:19:46</em></p>
+</li>
+<li><p class="first"><strong>modify instal ldependencies script</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:19:15</em></p>
+</li>
+<li><p class="first"><strong>update requirements</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:19:03</em></p>
+</li>
+<li><p class="first"><strong>add readme notebook</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:18:51</em></p>
+</li>
+<li><p class="first"><strong>notebook updates</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 15:16:20</em></p>
+</li>
+<li><p class="first"><strong>reformat</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 14:12:04</em></p>
+</li>
+<li><p class="first"><strong>requirements update</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 14:11:55</em></p>
+</li>
+<li><p class="first"><strong>changed cmap coloring</strong><span> by </span><em>lucas rg</em><span> at </span><em>2018-01-17 14:11:40</em></p>
+</li>
+<li><p class="first"><strong>update libraries</strong><span> by </span><em>Lucas Rodes</em><span> at </span><em>2017-08-27 19:35:50</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-08-10 22:50:46</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-08-10 22:50:18</em></p>
+</li>
+<li><p class="first"><strong>changed regex expression to accept YYYY-MM-DD format</strong><span> by </span><em>Lucas Rodes</em><span> at </span><em>2017-08-07 19:52:28</em></p>
+</li>
+<li><p class="first"><strong>update notebook</strong><span> by </span><em>Lucas Rodes</em><span> at </span><em>2017-08-07 19:52:07</em></p>
+</li>
+<li><p class="first"><strong>minor changes</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-08-07 13:17:53</em></p>
+</li>
+<li><p class="first"><strong>Merge branch ‘develop’ of https://github.com/lucasrodes/whatstk into develop</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-08-07 13:16:06</em></p>
+</li>
+<li><p class="first"><strong>notebook showing user analytics regarding #interventions along time</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-08-07 13:15:47</em></p>
+</li>
+<li><p class="first"><strong>create code of conduct</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-07-24 02:19:35</em></p>
+</li>
+<li><p class="first"><strong>update</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 02:18:40</em></p>
+</li>
+<li><p class="first"><strong>notebooks update</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 02:06:42</em></p>
+</li>
+<li><p class="first"><strong>readme update</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 02:00:47</em></p>
+</li>
+<li><p class="first"><strong>removed files</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:59:54</em></p>
+</li>
+<li><p class="first"><strong>readme update</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:50:29</em></p>
+</li>
+<li><p class="first"><strong>parser</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:48:11</em></p>
+</li>
+<li><p class="first"><strong>.gitignore</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:47:50</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:47:03</em></p>
+</li>
+<li><p class="first"><strong>refactored notebooks</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:40:00</em></p>
+</li>
+<li><p class="first"><strong>new submodule utils</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:39:44</em></p>
+</li>
+<li><p class="first"><strong>readme update</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:39:19</em></p>
+</li>
+<li><p class="first"><strong>updated dependencies</strong><span> by </span><em>lucasrodes</em><span> at </span><em>2017-07-24 01:39:07</em></p>
+</li>
+<li><p class="first"><strong>README</strong><span> by </span><em>Lucas Rodes</em><span> at </span><em>2017-07-24 00:28:49</em></p>
+</li>
+<li><p class="first"><strong>restructured dependencies installation</strong><span> by </span><em>Lucas Rodes</em><span> at </span><em>2017-07-24 00:28:12</em></p>
+</li>
+<li><p class="first"><strong>notebook to use RNN to learn style from user</strong><span> by </span><em>Lucas RG</em><span> at </span><em>2017-07-16 19:06:24</em></p>
+</li>
+<li><p class="first"><strong>RNN class to train an rnn</strong><span> by </span><em>Lucas RG</em><span> at </span><em>2017-07-16 18:50:15</em></p>
+</li>
+<li><p class="first"><strong>rename + refactoring</strong><span> by </span><em>Lucas RG</em><span> at </span><em>2017-07-16 18:40:42</em></p>
+</li>
+<li><p class="first"><strong>added requirement file to install the libraries required for the notebook tutorials</strong><span> by </span><em>¨lucasrodes&#64;users.noreply.github.com¨</em><span> at </span><em>2017-04-25 23:52:23</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #16 from lucasrodes/feature/weekly-activity</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-04-25 21:46:22</em></p>
+<p>Feature/weekly activity</p>
+</li>
+<li><p class="first"><strong>update</strong><span> by </span><em>¨lucasrodes&#64;users.noreply.github.com¨</em><span> at </span><em>2017-04-25 21:45:25</em></p>
+</li>
+<li><p class="first"><strong>readme notebook</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-22 20:23:21</em></p>
+</li>
+<li><p class="first"><strong>New functionality: weekhour grid of the activity of the chat. Added a tutorial</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-22 20:22:23</em></p>
+</li>
+<li><p class="first"><strong>gitignore</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-22 18:17:18</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #15 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-21 01:40:15</em></p>
+<p>delete web content</p>
+</li>
+<li><p class="first"><strong>delete web content</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-21 01:38:46</em></p>
+</li>
+<li><p class="first"><strong>ordering</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-21 01:38:07</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #14 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-21 01:35:13</em></p>
+<p>web</p>
+</li>
+<li><p class="first"><strong>web</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-21 01:34:00</em></p>
+</li>
+<li><p class="first"><strong>Set theme jekyll-theme-cayman</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-21 01:31:49</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #13 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-21 01:30:41</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>remove</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-21 01:29:47</em></p>
+</li>
+<li><p class="first"><strong>ugeneral formatting update</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-21 01:27:37</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-21 01:26:27</em></p>
+</li>
+<li><p class="first"><strong>Set theme jekyll-theme-cayman</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-21 01:19:19</em></p>
+</li>
+<li><p class="first"><strong>bug fixed similarity map</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-20 19:52:58</em></p>
+</li>
+<li><p class="first"><strong>organization, readme update</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-20 00:39:01</em></p>
+</li>
+<li><p class="first"><strong>merge with feature/visualization</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 01:34:15</em></p>
+</li>
+<li><p class="first"><strong>visualization module</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 01:31:41</em></p>
+</li>
+<li><p class="first"><strong>modified matrix response method</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 01:31:29</em></p>
+</li>
+<li><p class="first"><strong>updated tutorial with visualization tools</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 01:31:00</em></p>
+</li>
+<li><p class="first"><strong>user response matrix functionality + tutorial how-to use it</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 00:33:43</em></p>
+</li>
+<li><p class="first"><strong>readme of notebooks</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 00:32:12</em></p>
+</li>
+<li><p class="first"><strong>added response matrix functionality, added tutorial showing how-to use it</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-17 00:31:11</em></p>
+</li>
+<li><p class="first"><strong>merging</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 20:34:32</em></p>
+</li>
+<li><p class="first"><strong>time efficiency</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 20:32:21</em></p>
+</li>
+<li><p class="first"><strong>updated tutorial</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 20:32:06</em></p>
+</li>
+<li><p class="first"><strong>time efficiency</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 19:45:01</em></p>
+</li>
+<li><p class="first"><strong>working on time efficiency</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 19:04:43</em></p>
+</li>
+<li><p class="first"><strong>added csv parser and pandas parser</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 18:39:09</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #12 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-16 02:49:07</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>readme, removed unnecessary prints from wparser.py, slightly modified notebook on SOM</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:47:59</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:42:21</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #8 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-16 02:25:00</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-16 02:24:52</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:23:42</em></p>
+</li>
+<li><p class="first"><strong>Updated regex to function with other chat formats + added function to externally set the regex of a WhatsAppChat object</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:22:46</em></p>
+</li>
+<li><p class="first"><strong>removed setup file</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:21:52</em></p>
+</li>
+<li><p class="first"><strong>Added some basic guideline to run the notebooks and install jupyter</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:21:38</em></p>
+</li>
+<li><p class="first"><strong>updated gitignore</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 02:21:11</em></p>
+</li>
+<li><p class="first"><strong>prepared sections to be finished</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 01:22:16</em></p>
+</li>
+<li><p class="first"><strong>organization readmes</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 01:19:24</em></p>
+</li>
+<li><p class="first"><strong>organization</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 01:09:34</em></p>
+</li>
+<li><p class="first"><strong>added instruction files</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 01:05:14</em></p>
+</li>
+<li><p class="first"><strong>unnecessary library imported removed</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 00:23:12</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 00:22:53</em></p>
+</li>
+<li><p class="first"><strong>modified requirements to minimum requirements</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-16 00:22:45</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-15 23:47:52</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-15 23:45:31</em></p>
+</li>
+<li><p class="first"><strong>Readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:46:46</em></p>
+</li>
+<li><p class="first"><strong>Readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:46:11</em></p>
+</li>
+<li><p class="first"><strong>Readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:45:41</em></p>
+</li>
+<li><p class="first"><strong>Readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:45:03</em></p>
+</li>
+<li><p class="first"><strong>Readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:44:37</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #6 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:38:05</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-14 03:37:27</em></p>
+</li>
+<li><p class="first"><strong>update setup venv for jupyter</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:33:17</em></p>
+</li>
+<li><p class="first"><strong>remove trash files</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:31:08</em></p>
+</li>
+<li><p class="first"><strong>fixed bug in tutorial SOM</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:14:44</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:14:29</em></p>
+</li>
+<li><p class="first"><strong>Sample chat added</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:14:02</em></p>
+</li>
+<li><p class="first"><strong>tutorial for SOM</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:13:07</em></p>
+</li>
+<li><p class="first"><strong>Modified main, added tutorial for SOM</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 21:11:03</em></p>
+</li>
+<li><p class="first"><strong>setup venv in jupyter</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:15:49</em></p>
+</li>
+<li><p class="first"><strong>setup venv in jupyter</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:14:54</em></p>
+</li>
+<li><p class="first"><strong>kernel setup in jupyter guide</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:14:10</em></p>
+</li>
+<li><p class="first"><strong>kernel setup in jupyter guide</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:13:01</em></p>
+</li>
+<li><p class="first"><strong>kernel setup in jupyter guide</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:12:38</em></p>
+</li>
+<li><p class="first"><strong>kernel setup in jupyter guide</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:09:43</em></p>
+</li>
+<li><p class="first"><strong>kernel setup in jupyter guide</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 20:09:01</em></p>
+</li>
+<li><p class="first"><strong>updated SOM</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-13 16:51:53</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 23:53:31</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 23:52:43</em></p>
+</li>
+<li><p class="first"><strong>some minimum updated to test the script</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 23:51:51</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 23:51:17</em></p>
+</li>
+<li><p class="first"><strong>brief bug</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 22:29:03</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 22:27:51</em></p>
+</li>
+<li><p class="first"><strong>first version of SOM implemented using line, circle and 2d Grid</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 22:25:18</em></p>
+</li>
+<li><p class="first"><strong>First tests with self-organizing-map to detect similar users based on #interactions per day</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 05:52:49</em></p>
+</li>
+<li><p class="first"><strong>improved performance</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 02:14:16</em></p>
+</li>
+<li><p class="first"><strong>improved performance</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-12 02:13:47</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-11 16:33:02</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-11 16:32:20</em></p>
+</li>
+<li><p class="first"><strong>organization</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 17:21:11</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #5 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-08 17:19:30</em></p>
+<p>readme</p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 17:18:13</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 17:17:51</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #4 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-08 17:06:07</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-08 17:05:59</em></p>
+</li>
+<li><p class="first"><strong>reformat main</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 17:02:43</em></p>
+</li>
+<li><p class="first"><strong>renamed files, reorganized modules in library fashion</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 17:00:55</em></p>
+</li>
+<li><p class="first"><strong>deleted duplkicated files</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:56:26</em></p>
+</li>
+<li><p class="first"><strong>reorganized</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:55:31</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:34:57</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:32:58</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:32:32</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:31:21</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:28:53</em></p>
+</li>
+<li><p class="first"><strong>added some information in brief summary section</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:13:04</em></p>
+</li>
+<li><p class="first"><strong>removed some non used command lines</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:05:10</em></p>
+</li>
+<li><p class="first"><strong>commented non-used commands</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:04:34</em></p>
+</li>
+<li><p class="first"><strong>added brief summary information section</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:02:22</em></p>
+</li>
+<li><p class="first"><strong>update main</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 16:01:50</em></p>
+</li>
+<li><p class="first"><strong>‘Merge’ README from develop</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 15:59:45</em></p>
+</li>
+<li><p class="first"><strong>updated readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 15:57:53</em></p>
+</li>
+<li><p class="first"><strong>update format</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 15:55:04</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-08 15:53:21</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-08 15:53:02</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #3 from lucasrodes/develop</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2017-03-08 04:08:21</em></p>
+<p>Develop</p>
+</li>
+<li><p class="first"><strong>Added some documentation to the functions</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 04:06:02</em></p>
+</li>
+<li><p class="first"><strong>Re-organized the readme file</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 04:05:47</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:25:14</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:24:49</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:24:27</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:23:52</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:19:27</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:18:15</em></p>
+</li>
+<li><p class="first"><strong>updated README</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:16:13</em></p>
+</li>
+<li><p class="first"><strong>Date is now a list of integers instead of list of strings. Parser works for 12h clock and for dates also showing the seconds</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 03:13:32</em></p>
+</li>
+<li><p class="first"><strong>update readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-03-08 00:05:48</em></p>
+</li>
+<li><p class="first"><strong>added names to copyright</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-01-14 17:15:13</em></p>
+</li>
+<li><p class="first"><strong>updated README, fixed some bugs in chatformat</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-01-14 17:14:18</em></p>
+</li>
+<li><p class="first"><strong>updated README, fixed some bugs in chatformat</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-01-14 17:13:27</em></p>
+</li>
+<li><p class="first"><strong>Update License notice in README to 2017</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2017-01-09 08:56:00</em></p>
+</li>
+<li><p class="first"><strong>Further specify dependencies in README. Add some TODO’s</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2017-01-09 08:53:44</em></p>
+</li>
+<li><p class="first"><strong>todo: rawformat is very unstable</strong><span> by </span><em>LilKdl</em><span> at </span><em>2017-01-05 21:44:52</em></p>
+</li>
+<li><p class="first"><strong>added try/catch to LaTeX mode plotting</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-16 15:10:08</em></p>
+</li>
+<li><p class="first"><strong>Merge branch ‘migrate_python3’ into develop</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 14:37:54</em></p>
+</li>
+<li><p class="first"><strong>Adapt chatformat to Python3</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 14:36:50</em></p>
+<p>The code is now compatible with both v2.7 and v3.5</p>
+</li>
+<li><p class="first"><strong>Reformat chatplot.py</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 11:01:28</em></p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 10:50:53</em></p>
+</li>
+<li><p class="first"><strong>Add license text and virtualenv recommendation to README</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 10:50:32</em></p>
+</li>
+<li><p class="first"><strong>Reformat code and adapt print statements to Python 3.x</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 10:48:44</em></p>
+<p>The reformat has been done by PyCharm’s function “Reformat code”. Mostly
+the changes have been a substitution of tabs by sets of spaces</p>
+</li>
+<li><p class="first"><strong>Merge branch ‘master’ into develop</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 10:29:59</em></p>
+</li>
+<li><p class="first"><strong>Add .gitignore file to the project</strong><span> by </span><em>Albert Aparicio</em><span> at </span><em>2016-12-06 10:29:18</em></p>
+</li>
+<li><p class="first"><strong>minnor issues</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-06 03:54:18</em></p>
+</li>
+<li><p class="first"><strong>added violin plot</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-06 03:16:15</em></p>
+</li>
+<li><p class="first"><strong>removed chatanalytics.py</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-06 02:18:41</em></p>
+</li>
+<li><p class="first"><strong>chatanalytics.py</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-06 02:17:13</em></p>
+</li>
+<li><p class="first"><strong>update structure</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-06 01:59:05</em></p>
+</li>
+<li><p class="first"><strong>Merge pull request #1 from lucasrodes/aapa_dev</strong><span> by </span><em>Lucas Rodés</em><span> at </span><em>2016-12-06 00:09:54</em></p>
+<p>Create a license file</p>
+</li>
+<li><p class="first"><strong>Create a license file</strong><span> by </span><em>Albert Aparicio Isarn</em><span> at </span><em>2016-12-06 00:04:34</em></p>
+<p>I have chosen the GNU GPL v3 license because it ensures this project’s freedom and of all its derivatives</p>
+</li>
+<li><p class="first"><strong>update</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 23:23:52</em></p>
+</li>
+<li><p class="first"><strong>readme and main updated</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 22:08:52</em></p>
+</li>
+<li><p class="first"><strong>Fixed a bug for different date formats</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 20:03:26</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 19:08:04</em></p>
+</li>
+<li><p class="first"><strong>Plots a scatter matrix with number of interventions per day of all users withing a chat</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 19:07:21</em></p>
+</li>
+<li><p class="first"><strong>added dependencies</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 18:06:24</em></p>
+</li>
+<li><p class="first"><strong>instructions on file.in</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 17:46:13</em></p>
+</li>
+<li><p class="first"><strong>Correctly giving the number of interventions per day</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 17:37:44</em></p>
+</li>
+<li><p class="first"><strong>update</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 17:01:44</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 14:48:31</em></p>
+</li>
+<li><p class="first"><strong>obtention of the usernames in the group</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 14:46:34</em></p>
+</li>
+<li><p class="first"><strong>first draft</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 12:45:14</em></p>
+</li>
+<li><p class="first"><strong>readme</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 01:46:22</em></p>
+</li>
+<li><p class="first"><strong>first commit</strong><span> by </span><em>LilKdl</em><span> at </span><em>2016-12-05 01:44:51</em></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+    <a href="https://github.com/lucasrodes/whatstk">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="contribute.html" class="btn btn-neutral float-left" title="Contribute" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, sociepy
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

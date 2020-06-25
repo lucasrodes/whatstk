@@ -16,7 +16,7 @@ def fig_sankey(label, color, source, target, value, title=""):
         title (str, optional): Title. Defaults to "".
 
     Returns:
-        dict: Figure as dictionary.
+        plotly.graph_objs.Figure
 
     """
     trace = go.Sankey(
@@ -77,6 +77,6 @@ def fig_sankey(label, color, source, target, value, title=""):
         ]
     }
 
-    fig = dict(data=data, layout=layout)
+    fig = go.Figure(data=data, layout=layout)
 
     return fig

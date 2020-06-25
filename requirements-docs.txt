@@ -3,3 +3,5 @@ Sphinx==3.0.4
 sphinx-rtd-theme==0.4.3
 sphinx-copybutton==0.2.11
 sphinx-git==11.0.0
+autodocsumm==0.1.13
+# pillow, psutil, sphinx-gallery

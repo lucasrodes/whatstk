@@ -11,19 +11,28 @@ install:
   - pip uninstall whatstk
   - pip install -e .
   - mkdir -p tests/chats/hformats tests/chats/merge
-  - whatstk-generate-chats --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
-  - whatstk-generate-chats --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
-  - whatstk-generate-chats --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
+  - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
+  - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
+  - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
 #pip install -r requirements.txt 
 script:
   - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage
+  - cd docs
+  - make clean && make html # generate documentation
+  - cd ..
   # add docs step
 deploy:
-  provider: pypi
-  user: $USER_PYPI
-  password: $PWD_PYPI
-  on:
-    tags: true
+  - provider: pypi
+    user: $USER_PYPI
+    password: $PWD_PYPI
+    on:
+      tags: true
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: docs/_build/html/
+    on:
+      tags: true

@@ -18,5 +18,5 @@ def _parse_args():
 def main():
     """Main script."""
     args = _parse_args()
-    chat = WhatsAppChat.from_txt(filename=args.input_filename, hformat=args.hformat)
+    chat = WhatsAppChat.from_source(filepath=args.input_filename, hformat=args.hformat)
     chat.to_csv(args.output_filename)

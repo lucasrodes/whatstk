@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whatstk.graph.base &mdash; WhatsApp Analysis Toolkit</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../source/content.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.3.0.a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/about.html">About whatstk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#first-contact-with-whatstk">First contact with whatstk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#installation-compatibility">Installation &amp; compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/about.html#from-source">From source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/about.html#develop">Develop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#why-this-name-whatstk">Why this name, whatstk?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/getting_started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/export_chat.html">Export a WhatsApp chat from your phone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/getting_started/export_chat.html#android">Android</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/getting_started/export_chat.html#ios">iOS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/load_chat.html">Load a WhatsApp chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/command_line.html">Command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/hformat.html">The Header format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html">Library available chats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#whatsapp">WhatsApp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#pokemon">POKEMON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem">LOREM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem1">LOREM1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem2">LOREM2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem-2000">LOREM_2000</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/code_examples/index.html">Code examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/code_examples/index.html#basic-examples">Basic examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat.html">Load chat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html">Load chat from multiple sources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html#rename-usernames">Rename usernames</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat_hformat.html">Load chat with specific hformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html">Rename usernames</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html#rename-usernames">Rename usernames</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/code_examples/index.html#visualisations">Visualisations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/interventions_count.html">Count of user interventions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/interventions_count.html#count-of-user-interventions">Count of user interventions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/interventions_count.html#count-of-characters-sent-per-user">Count of characters sent per user</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/interventions_count.html#other-insights">Other insights</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/message_length_boxplot.html">Message length boxplot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/user_interaction.html">User interaction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/user_interaction.html#user-interaction-heatmap">User interaction heatmap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/user_interaction.html#user-interaction-flow">User interaction flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/custom.html">Custom plot example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/custom.html#number-of-messages-vs-number-of-characters-sent">Number of messages vs. Number of characters sent</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/index.html#main-objects">Main objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.WhatsAppChat.html">WhatsAppChat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.FigureBuilder.html">FigureBuilder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/index.html#core-api">Core API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html">whatstk.whatsapp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.objects">whatstk.whatsapp.objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.parser">whatstk.whatsapp.parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.auto_header">whatstk.whatsapp.auto_header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.generation">whatstk.whatsapp.generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.hformat">whatstk.whatsapp.hformat</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.analysis.html">whatstk.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.graph.html">whatstk.graph</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.graph.html#module-whatstk.graph.base">whatstk.graph.base</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.graph.html#module-whatstk.graph.figures">whatstk.graph.figures</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.utils.html">whatstk.utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.utils.html#module-whatstk.utils.chat_merge">whatstk.utils.chat_merge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.utils.html#module-whatstk.utils.exceptions">whatstk.utils.exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.utils.html#module-whatstk.utils.utils">whatstk.utils.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.data.html">whatstk.data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk._chat.html">whatstk._chat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/index.html#command-line-tools">Command line tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/cmd/cmd_to_csv.html">whatst-to-csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/cmd/cmd_graph.html">whatstk-graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/cmd/cmd_chat_gen.html">whatstk-generate-chat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/why_whatstk.html">Why choose whatstk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/why_whatstk.html#automatic-parser">Automatic parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/why_whatstk.html#the-power-of-pandas-and-plotly">The power of pandas and plotly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/why_whatstk.html#open-source-and-community-oriented">Open source and Community oriented</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/community.html">Community &amp; Governance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/community.html#leadership">Leadership</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/community.html#bdfl">BDFL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/community.html#community-contributors">Community Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#bug-reporting">Bug reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#requesting-a-feature">Requesting a Feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#adding-new-examples">Adding new examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#api-discussions">API discussions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/changelog.html#v0-2-x">v0.2.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-6">v0.2.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-5">v0.2.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-4">v0.2.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-3">v0.2.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-2">v0.2.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-0">v0.2.0</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/changelog.html#v0-1-x">v0.1.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-11">v0.1.11</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-10">v0.1.10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-9">v0.1.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-8">v0.1.8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-7">v0.1.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-6">v0.1.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-1">v0.1.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-0">v0.1.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../source/content.html">whatstk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../source/content.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whatstk.graph.base</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whatstk.graph.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Build plotly-compatible figures.&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">whatstk._chat</span> <span class="kn">import</span> <span class="n">BaseChat</span>
+<span class="kn">from</span> <span class="nn">whatstk.analysis.interventions</span> <span class="kn">import</span> <span class="n">get_interventions_count</span>
+<span class="kn">from</span> <span class="nn">whatstk.analysis.responses</span> <span class="kn">import</span> <span class="n">get_response_matrix</span><span class="p">,</span> <span class="n">NORMS</span>
+<span class="kn">from</span> <span class="nn">whatstk.graph.figures.scatter</span> <span class="kn">import</span> <span class="n">fig_scatter_time</span>
+<span class="kn">from</span> <span class="nn">whatstk.graph.figures.boxplot</span> <span class="kn">import</span> <span class="n">fig_boxplot_msglen</span>
+<span class="kn">from</span> <span class="nn">whatstk.graph.figures.sankey</span> <span class="kn">import</span> <span class="n">fig_sankey</span>
+<span class="kn">from</span> <span class="nn">whatstk.graph.figures.heatmap</span> <span class="kn">import</span> <span class="n">fig_heatmap</span>
+<span class="kn">from</span> <span class="nn">whatstk.graph.figures.utils</span> <span class="kn">import</span> <span class="n">hex_color_palette</span>
+<span class="kn">from</span> <span class="nn">whatstk.utils.utils</span> <span class="kn">import</span> <span class="n">_get_df</span>
+
+
+<div class="viewcode-block" id="FigureBuilder"><a class="viewcode-back" href="../../../source/api/whatstk.graph.html#whatstk.FigureBuilder">[docs]</a><span class="k">class</span> <span class="nc">FigureBuilder</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generate a variety of figures from your loaded chat.</span>
+
+<span class="sd">    Integrates feature extraction and visualization logic to automate data plots.</span>
+
+<span class="sd">    **Note**: Either ``df`` or ``chat`` must be provided.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. If a value is given,</span>
+<span class="sd">                                            ``chat`` is ignored.</span>
+<span class="sd">        chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Required if ``df`` is None.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pandas.DataFrame, optional): Chat data. Atribute `df` of a chat loaded using Chat. If a value is given,</span>
+<span class="sd">                                            ``chat`` is ignored.</span>
+<span class="sd">            chat (Chat, optional): Chat data. Object obtained when chat loaded using Chat. Required if ``df`` is None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">_get_df</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">chat</span><span class="o">=</span><span class="n">chat</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__user_color_mapping</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">usernames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get list with users available in given chat.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List with usernames available in chat DataFrame.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BaseChat</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">users</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">user_color_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get mapping between user and color.</span>
+
+<span class="sd">        Each user is assigned a color automatically, so that this color is preserved for that user in all</span>
+<span class="sd">        to-be-generated plots.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Mapping from username to color (rgb).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user_color_mapping</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">hex_color_palette</span><span class="p">(</span><span class="n">n_colors</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usernames</span><span class="p">))</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usernames</span><span class="p">,</span> <span class="n">colors</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">mapping</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user_color_mapping</span>
+
+    <span class="nd">@user_color_mapping</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">user_color_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__user_color_mapping</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="FigureBuilder.user_msg_length_boxplot"><a class="viewcode-back" href="../../../source/api/whatstk.graph.html#whatstk.FigureBuilder.user_msg_length_boxplot">[docs]</a>    <span class="k">def</span> <span class="nf">user_msg_length_boxplot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;User message length&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;User&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate figure with boxplots of each user&#39;s message length.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            title (str, optional): Title for plot. Defaults to &quot;User message length&quot;.</span>
+<span class="sd">            xlabel (str, optional): x-axis label title. Defaults to &quot;User&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Dictionary with data and layout. Plotly compatible.</span>
+
+<span class="sd">        ..  seealso::</span>
+
+<span class="sd">            * :func:`fig_boxplot_msglen &lt;whatstk.graph.figures.boxplot.fig_boxplot_msglen&gt;`</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ..  code-block:: python</span>
+
+<span class="sd">                &gt;&gt;&gt; from whatstk import WhatsAppChat</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.graph import plot, FigureBuilder</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.data import whatsapp_urls</span>
+<span class="sd">                &gt;&gt;&gt; chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)</span>
+<span class="sd">                &gt;&gt;&gt; fig = FigureBuilder(chat=chat).user_msg_length_boxplot()</span>
+<span class="sd">                &gt;&gt;&gt; plot(fig)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">fig_boxplot_msglen</span><span class="p">(</span>
+            <span class="n">df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span>
+            <span class="n">username_to_color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_color_mapping</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+<div class="viewcode-block" id="FigureBuilder.user_interventions_count_linechart"><a class="viewcode-back" href="../../../source/api/whatstk.graph.html#whatstk.FigureBuilder.user_interventions_count_linechart">[docs]</a>    <span class="k">def</span> <span class="nf">user_interventions_count_linechart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_mode</span><span class="o">=</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">msg_length</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">cummulative</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">all_users</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                           <span class="n">title</span><span class="o">=</span><span class="s2">&quot;User interventions count&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Date/Time&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot number of user interventions over time.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            date_mode (str, optional): Choose mode to group interventions by. Defaults to ``&#39;date&#39;``. Available modes</span>
+<span class="sd">                                        are:</span>
+
+<span class="sd">                                        - ``&#39;date&#39;``: Grouped by particular date (year, month and day).</span>
+<span class="sd">                                        - ``&#39;hour&#39;``: Grouped by hours.</span>
+<span class="sd">                                        - ``&#39;month&#39;``: Grouped by months.</span>
+<span class="sd">                                        - ``&#39;weekday&#39;``: Grouped by weekday (i.e. monday, tuesday, ..., sunday).</span>
+<span class="sd">                                        - ``&#39;hourweekday&#39;``: Grouped by weekday and hour.</span>
+<span class="sd">            msg_length (bool, optional): Set to True to count the number of characters instead of number of messages</span>
+<span class="sd">                                         sent.</span>
+<span class="sd">            cummulative (bool, optional): Set to True to obtain commulative counts.</span>
+<span class="sd">            all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.</span>
+<span class="sd">            title (str, optional): Title for plot. Defaults to &quot;User interventions count&quot;.</span>
+<span class="sd">            xlabel (str, optional): x-axis label title. Defaults to &quot;Date/Time&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            plotly.graph_objs.Figure: Plotly Figure.</span>
+
+<span class="sd">        ..  seealso::</span>
+
+<span class="sd">            * :func:`get_interventions_count &lt;whatstk.analysis.get_interventions_count&gt;`</span>
+<span class="sd">            * :func:`fig_scatter_time &lt;whatstk.graph.figures.scatter.fig_scatter_time&gt;`</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ..  code-block:: python</span>
+
+<span class="sd">                &gt;&gt;&gt; from whatstk import WhatsAppChat</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.graph import plot, FigureBuilder</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.data import whatsapp_urls</span>
+<span class="sd">                &gt;&gt;&gt; chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)</span>
+<span class="sd">                &gt;&gt;&gt; fig = FigureBuilder(chat=chat).user_interventions_count_linechart(cummulative=True)</span>
+<span class="sd">                &gt;&gt;&gt; plot(fig)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">get_interventions_count</span><span class="p">(</span>
+            <span class="n">df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span>
+            <span class="n">date_mode</span><span class="o">=</span><span class="n">date_mode</span><span class="p">,</span>
+            <span class="n">msg_length</span><span class="o">=</span><span class="n">msg_length</span><span class="p">,</span>
+            <span class="n">cummulative</span><span class="o">=</span><span class="n">cummulative</span><span class="p">,</span>
+            <span class="n">all_users</span><span class="o">=</span><span class="n">all_users</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">all_users</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">fig_scatter_time</span><span class="p">(</span>
+                <span class="n">user_data</span><span class="o">=</span><span class="n">counts</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">fig_scatter_time</span><span class="p">(</span>
+                <span class="n">user_data</span><span class="o">=</span><span class="n">counts</span><span class="p">,</span>
+                <span class="n">username_to_color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user_color_mapping</span><span class="p">,</span>
+                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+                <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+<div class="viewcode-block" id="FigureBuilder.user_message_responses_flow"><a class="viewcode-back" href="../../../source/api/whatstk.graph.html#whatstk.FigureBuilder.user_message_responses_flow">[docs]</a>    <span class="k">def</span> <span class="nf">user_message_responses_flow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Message flow&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the flow of message responses.</span>
+
+<span class="sd">        A response from user X to user Y happens if user X sends a message right after a message from user Y.</span>
+
+<span class="sd">        Uses a Sankey diagram.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            title (str, optional): Title for plot. Defaults to &quot;Message flow&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            plotly.graph_objs.Figure: Plotly Figure.</span>
+
+<span class="sd">        ..  seealso::</span>
+
+<span class="sd">            * :func:`get_response_matrix &lt;whatstk.analysis.get_response_matrix&gt;`</span>
+<span class="sd">            * :func:`fig_sankey &lt;whatstk.graph.figures.sankey.fig_sankey&gt;`</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ..  code-block:: python</span>
+
+<span class="sd">                &gt;&gt;&gt; from whatstk import WhatsAppChat</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.graph import plot, FigureBuilder</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.data import whatsapp_urls</span>
+<span class="sd">                &gt;&gt;&gt; chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)</span>
+<span class="sd">                &gt;&gt;&gt; fig = FigureBuilder(chat=chat).user_message_responses_flow()</span>
+<span class="sd">                &gt;&gt;&gt; plot(fig)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get response matrix</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">get_response_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># Node lists</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">usernames</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_color_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">*</span><span class="mi">2</span>
+        <span class="c1"># Link lists</span>
+        <span class="n">n_users</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usernames</span><span class="p">)</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_users</span><span class="p">),</span> <span class="n">n_users</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_users</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n_users</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="o">*</span><span class="n">n_users</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">responses</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="c1"># Get figure</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">fig_sankey</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+<div class="viewcode-block" id="FigureBuilder.user_message_responses_heatmap"><a class="viewcode-back" href="../../../source/api/whatstk.graph.html#whatstk.FigureBuilder.user_message_responses_heatmap">[docs]</a>    <span class="k">def</span> <span class="nf">user_message_responses_heatmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">NORMS</span><span class="o">.</span><span class="n">ABSOLUTE</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Response matrix&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the response matrix heatmap.</span>
+
+<span class="sd">        A response from user X to user Y happens if user X sends a message right after a message from user Y.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            norm (str, optional): Specifies the type of normalization used for reponse count. Can be:</span>
+
+<span class="sd">                                - ``&#39;absolute&#39;``: Absolute count of messages.</span>
+<span class="sd">                                - ``&#39;joint&#39;``: Normalized by total number of messages sent by all users.</span>
+<span class="sd">                                - ``&#39;sender&#39;``: Normalized per sender by total number of messages sent by user.</span>
+<span class="sd">                                - ``&#39;receiver&#39;``: Normalized per receiver by total number of messages sent by user.</span>
+<span class="sd">            title (str, optional): Title for plot. Defaults to &quot;Response matrix&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            plotly.graph_objs.Figure: Plotly Figure.</span>
+
+<span class="sd">        ..  seealso::</span>
+
+<span class="sd">            * :func:`get_response_matrix &lt;whatstk.analysis.get_response_matrix&gt;`</span>
+<span class="sd">            * :func:`fig_heatmap &lt;whatstk.graph.figures.heatmap.fig_heatmap&gt;`</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ..  code-block:: python</span>
+
+<span class="sd">                &gt;&gt;&gt; from whatstk import WhatsAppChat</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.graph import plot, FigureBuilder</span>
+<span class="sd">                &gt;&gt;&gt; from whatstk.data import whatsapp_urls</span>
+<span class="sd">                &gt;&gt;&gt; chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)</span>
+<span class="sd">                &gt;&gt;&gt; fig = FigureBuilder(chat=chat).user_message_responses_heatmap()</span>
+<span class="sd">                &gt;&gt;&gt; plot(fig)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get response matrix</span>
+        <span class="n">responses</span> <span class="o">=</span> <span class="n">get_response_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+
+        <span class="c1"># Get figure</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">fig_heatmap</span><span class="p">(</span>
+            <span class="n">df_matrix</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+    <a href="https://github.com/lucasrodes/whatstk">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, sociepy
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

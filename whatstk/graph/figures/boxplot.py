@@ -10,12 +10,12 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
 
     Args:
         df (pandas.DataFrame): Chat data.
-        username_to_color (dictm optional). Dictionary mapping username to color. Defaults to None.
+        username_to_color (dict, optional). Dictionary mapping username to color. Defaults to None.
         title (str, optional): Title for plot. Defaults to "".
         xlabel (str, optional): x-axis label title. Defaults to None.
 
     Returns:
-        dict: Figure.
+        plotly.graph_objs.Figure
 
     """
     df = df.copy()
@@ -44,4 +44,6 @@ def fig_boxplot_msglen(df, username_to_color=None, title="", xlabel=None):
         xaxis=dict(title=xlabel)
     )
 
-    return dict(data=data, layout=layout)
+    fig = go.Figure(data=data, layout=layout)
+
+    return fig

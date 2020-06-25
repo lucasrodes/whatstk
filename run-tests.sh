@@ -8,18 +8,27 @@
 
 ## (1.3) Generate chats for test
 # mkdir -p tests/chats/hformats tests/chats/merge
-# whatstk-generate-chats --size 500 --output-path tests/chats/hformats/
-# whatstk-generate-chats --size 300 --last-timestamp 2019-09-01 \
+# whatstk-generate-chat --size 500 --output-path tests/chats/hformats/
+# whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 \
 #                         --hformats '%Y-%m-%d, %H:%M - %name:' \
 #                         --output-path tests/chats/merge/ --filenames file1.txt
-# whatstk-generate-chats --size 300 --last-timestamp 2020-01-01 \
+# whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 \
 #                         --hformats '%Y-%m-%d, %H:%M - %name:' \
 #                         --output-path tests/chats/merge/ --filenames file2.txt
 
 
 ## (2) Run flake
-flake8 --max-complexity 10 --format=html --docstring-convention=google --htmldir=flake-report whatstk
+flake8 \
+    --max-complexity 10\
+    --docstring-convention=google\
+    --format=html --htmldir=reports/flake-report\
+    --max-line-length=120\
+    whatstk
 
 ## (3) Run tests
-py.test --html=testreport.html --cov-report html --cov-report term --cov-report xml:cov.xml --cov=whatstk tests/
-
+py.test \
+    --html=reports/testreport.html\
+    --cov-report html:reports/htmlcov\
+    --cov-report term\
+    --cov-report xml:reports/cov.xml\
+    --cov=whatstk tests/

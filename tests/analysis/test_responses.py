@@ -8,7 +8,7 @@ filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 
 
 def test_get_response_matrix_1():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     df_resp = get_response_matrix(chat=chat, zero_own=True)
 
     # Check shape and colnames of returned dataframe
@@ -21,7 +21,7 @@ def test_get_response_matrix_1():
 
 
 def test_get_response_matrix_2():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     df_resp = get_response_matrix(chat=chat, zero_own=False)
 
     # Check shape and colnames of returned dataframe
@@ -31,7 +31,7 @@ def test_get_response_matrix_2():
 
 
 def test_get_response_matrix_3():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     df_resp = get_response_matrix(chat=chat, norm='joint')
 
     # Check shape and colnames of returned dataframe
@@ -44,7 +44,7 @@ def test_get_response_matrix_3():
 
 
 def test_get_response_matrix_4():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     df_resp = get_response_matrix(chat=chat, norm='sender')
 
     # Check shape and colnames of returned dataframe
@@ -57,7 +57,7 @@ def test_get_response_matrix_4():
 
 
 def test_get_response_matrix_5():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     df_resp = get_response_matrix(chat=chat, norm='receiver')
 
     # Check shape and colnames of returned dataframe
@@ -70,6 +70,6 @@ def test_get_response_matrix_5():
 
 
 def test_get_response_matrix_error():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     with pytest.raises(ValueError):
         _ = get_response_matrix(chat=chat, norm='error')

@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>whatstk.whatsapp.hformat &mdash; WhatsApp Analysis Toolkit</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../source/content.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.3.0.a0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/about.html">About whatstk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#first-contact-with-whatstk">First contact with whatstk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#installation-compatibility">Installation &amp; compatibility</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/about.html#from-source">From source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/about.html#develop">Develop</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/about.html#why-this-name-whatstk">Why this name, whatstk?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/getting_started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/export_chat.html">Export a WhatsApp chat from your phone</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/getting_started/export_chat.html#android">Android</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/getting_started/export_chat.html#ios">iOS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/load_chat.html">Load a WhatsApp chat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/command_line.html">Command line tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/hformat.html">The Header format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html">Library available chats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#whatsapp">WhatsApp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#pokemon">POKEMON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem">LOREM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem1">LOREM1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem2">LOREM2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/getting_started/library-available-chats.html#lorem-2000">LOREM_2000</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/code_examples/index.html">Code examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/code_examples/index.html#basic-examples">Basic examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat.html">Load chat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html">Load chat from multiple sources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html#rename-usernames">Rename usernames</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat_hformat.html">Load chat with specific hformat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html">Rename usernames</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/load_chat_multiple.html#rename-usernames">Rename usernames</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/code_examples/index.html#visualisations">Visualisations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/interventions_count.html">Count of user interventions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/interventions_count.html#count-of-user-interventions">Count of user interventions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/interventions_count.html#count-of-characters-sent-per-user">Count of characters sent per user</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/interventions_count.html#other-insights">Other insights</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/message_length_boxplot.html">Message length boxplot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/user_interaction.html">User interaction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/user_interaction.html#user-interaction-heatmap">User interaction heatmap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/user_interaction.html#user-interaction-flow">User interaction flow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/code_examples/custom.html">Custom plot example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/code_examples/custom.html#number-of-messages-vs-number-of-characters-sent">Number of messages vs. Number of characters sent</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/index.html#main-objects">Main objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.WhatsAppChat.html">WhatsAppChat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.FigureBuilder.html">FigureBuilder</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/index.html#core-api">Core API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html">whatstk.whatsapp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.objects">whatstk.whatsapp.objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.parser">whatstk.whatsapp.parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.auto_header">whatstk.whatsapp.auto_header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.generation">whatstk.whatsapp.generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.whatsapp.html#module-whatstk.whatsapp.hformat">whatstk.whatsapp.hformat</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.analysis.html">whatstk.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.graph.html">whatstk.graph</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.graph.html#module-whatstk.graph.base">whatstk.graph.base</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.graph.html#module-whatstk.graph.figures">whatstk.graph.figures</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.utils.html">whatstk.utils</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.utils.html#module-whatstk.utils.chat_merge">whatstk.utils.chat_merge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.utils.html#module-whatstk.utils.exceptions">whatstk.utils.exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/whatstk.utils.html#module-whatstk.utils.utils">whatstk.utils.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk.data.html">whatstk.data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/whatstk._chat.html">whatstk._chat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/index.html#command-line-tools">Command line tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/cmd/cmd_to_csv.html">whatst-to-csv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/cmd/cmd_graph.html">whatstk-graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/cmd/cmd_chat_gen.html">whatstk-generate-chat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/why_whatstk.html">Why choose whatstk?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/why_whatstk.html#automatic-parser">Automatic parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/why_whatstk.html#the-power-of-pandas-and-plotly">The power of pandas and plotly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/why_whatstk.html#open-source-and-community-oriented">Open source and Community oriented</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/community.html">Community &amp; Governance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/community.html#leadership">Leadership</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/community.html#bdfl">BDFL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/community.html#community-contributors">Community Contributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/contribute.html">Contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#bug-reporting">Bug reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#requesting-a-feature">Requesting a Feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#submitting-a-pull-request">Submitting a Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#adding-new-examples">Adding new examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/contribute.html#api-discussions">API discussions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/changelog.html#v0-2-x">v0.2.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-6">v0.2.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-5">v0.2.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-4">v0.2.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-3">v0.2.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-2">v0.2.2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-2-0">v0.2.0</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/changelog.html#v0-1-x">v0.1.X</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-11">v0.1.11</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-10">v0.1.10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-9">v0.1.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-8">v0.1.8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-7">v0.1.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-6">v0.1.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-1">v0.1.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/changelog.html#v0-1-0">v0.1.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../source/content.html">whatstk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../source/content.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>whatstk.whatsapp.hformat</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+            
+  <h1>Source code for whatstk.whatsapp.hformat</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Header format utils.</span>
+
+<span class="sd">Example: Check if header is available.</span>
+
+<span class="sd">    ..  code-block:: python</span>
+
+<span class="sd">        &gt;&gt;&gt; from whatstk.utils.hformat import is_supported</span>
+<span class="sd">        &gt;&gt;&gt; is_supported(&#39;%y-%m-%d, %H:%M:%S - %name:&#39;)</span>
+<span class="sd">        (True, True)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="n">this_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">assets_folder</span> <span class="o">=</span> <span class="s1">&#39;assets&#39;</span>
+<span class="n">hformat_support_filename</span> <span class="o">=</span> <span class="s1">&#39;header_format_support.json&#39;</span>
+<span class="n">hformat_support_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_directory</span><span class="p">,</span> <span class="n">assets_folder</span><span class="p">,</span> <span class="n">hformat_support_filename</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="is_supported"><a class="viewcode-back" href="../../../source/api/whatstk.whatsapp.html#whatstk.whatsapp.hformat.is_supported">[docs]</a><span class="k">def</span> <span class="nf">is_supported</span><span class="p">(</span><span class="n">hformat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check if header `hformat` is currently supported.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hformat (str): Header format.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple:</span>
+<span class="sd">                * bool: True if header is supported.</span>
+<span class="sd">                * bool: True if header is supported with `auto_header` feature.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">hformat_support_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;%P&#39;</span> <span class="ow">in</span> <span class="n">hformat</span> <span class="ow">or</span> <span class="s2">&quot;%p&quot;</span> <span class="ow">in</span> <span class="n">hformat</span><span class="p">):</span>
+        <span class="n">hformat</span> <span class="o">=</span> <span class="n">hformat</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%P&quot;</span><span class="p">,</span> <span class="s2">&quot;%p&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%H&quot;</span><span class="p">,</span> <span class="s2">&quot;%I&quot;</span><span class="p">)</span>
+    <span class="n">hformat</span> <span class="o">=</span> <span class="n">hformat</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;%Y&#39;</span><span class="p">,</span> <span class="s1">&#39;%y&#39;</span><span class="p">)</span>
+    <span class="n">auto_header_support</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">support</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">hh</span> <span class="ow">in</span> <span class="n">h</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">hformat</span> <span class="o">==</span> <span class="n">hh</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]:</span>
+            <span class="n">support</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">auto_header_support</span> <span class="o">=</span> <span class="n">hh</span><span class="p">[</span><span class="s1">&#39;auto_header&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">support</span><span class="p">),</span> <span class="nb">bool</span><span class="p">(</span><span class="n">auto_header_support</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_supported_verbose"><a class="viewcode-back" href="../../../source/api/whatstk.whatsapp.html#whatstk.whatsapp.hformat.is_supported_verbose">[docs]</a><span class="k">def</span> <span class="nf">is_supported_verbose</span><span class="p">(</span><span class="n">hformat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check if header `hformat` is currently supported (both manually and using `auto_header`).</span>
+
+<span class="sd">    Result is shown as a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hformat (str): Information message.</span>
+
+
+<span class="sd">    Example:</span>
+<span class="sd">            Check if format ``&#39;%y-%m-%d, %H:%M - %name:&#39;`` is supported.</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                &gt;&gt;&gt; from whatstk.whatsapp.hformat import is_supported_verbose</span>
+<span class="sd">                &gt;&gt;&gt; is_supported_verbose(&#39;%y-%m-%d, %H:%M - %name:&#39;)</span>
+<span class="sd">                &quot;The header &#39;%y-%m-%d, %H:%M - %name:&#39; is supported. `auto_header` for this header is supported.&quot;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">support</span><span class="p">,</span> <span class="n">auto_header_support</span> <span class="o">=</span> <span class="n">is_supported</span><span class="p">(</span><span class="n">hformat</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;The header &#39;</span><span class="si">{}</span><span class="s2">&#39; is </span><span class="si">{}</span><span class="s2">supported. `auto_header` for this header is </span><span class="si">{}</span><span class="s2">supported.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">hformat</span><span class="p">,</span>
+        <span class="s1">&#39;not &#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">support</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;not &#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">auto_header_support</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<div class="viewcode-block" id="get_supported_hformats_as_list"><a class="viewcode-back" href="../../../source/api/whatstk.whatsapp.html#whatstk.whatsapp.hformat.get_supported_hformats_as_list">[docs]</a><span class="k">def</span> <span class="nf">get_supported_hformats_as_list</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get list of supported formats.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: List with supported formats (as str).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">hformat_support_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">hh</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">hh</span> <span class="ow">in</span> <span class="n">h</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_supported_hformats_as_dict"><a class="viewcode-back" href="../../../source/api/whatstk.whatsapp.html#whatstk.whatsapp.hformat.get_supported_hformats_as_dict">[docs]</a><span class="k">def</span> <span class="nf">get_supported_hformats_as_dict</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get dictionary with supported formats and relevant info.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dict with two elements:</span>
+<span class="sd">                * ``format``: Header format. All formats appearing are supported.</span>
+<span class="sd">                * ``auto_header``: 1 if auto_header is supported), 0 otherwise.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">hformat_support_filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">headers</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+    <a href="https://github.com/lucasrodes/whatstk">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, sociepy
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

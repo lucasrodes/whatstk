@@ -14,16 +14,16 @@ def _parse_args():
     )
     parser.add_argument(
         "-o", "--output_filename", type=str, default="output.html", help="Graph generated can be stored as an HTML"
-        "file."
+        " file. Defaults to 'output.html'."
     )
     parser.add_argument(
         "-t", "--type", type=str, default="interventions_count",
         choices=['interventions_count', 'msg_length'],
-        help="Type of graph."
+        help="Type of graph. Defualts to 'interventions_count'."
     )
     parser.add_argument(
         "-id", "--icount-date-mode", type=str, default="date", choices=["date", "hour", "weekday", "month"],
-        help="Select date mode. Only valid for --type=interventions_count."
+        help="Select date mode. Only valid for --type=interventions_count. Defaults to 'date'."
     )
     parser.add_argument(
         "-ic", "--icount-cummulative", action="store_true",
@@ -45,7 +45,7 @@ def _parse_args():
 def main():
     """Main script."""
     args = _parse_args()
-    chat = WhatsAppChat.from_txt(filename=args.input_filename, hformat=args.hformat)
+    chat = WhatsAppChat.from_source(filepath=args.input_filename, hformat=args.hformat)
 
     if args.type == "interventions_count":
         fig = FigureBuilder(

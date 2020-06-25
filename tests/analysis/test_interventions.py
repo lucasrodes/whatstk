@@ -8,8 +8,22 @@ import pytest
 filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
 
 
+def test_interventions_date_all():
+    chat = WhatsAppChat.from_source(filename)
+    counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, all_users=True)
+
+    assert(isinstance(counts, pd.DataFrame))
+    # Asswert chat df and counts df have same users
+    assert(len(counts.columns) == 1)
+    assert(counts.columns == ['interventions count'])
+
+    # Assert chat df and counts df have same date window
+    assert(chat.df.index.max().date() == counts.index.max().date())
+    assert(chat.df.index.min().date() == counts.index.min().date())
+    
+
 def test_interventions_date():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -23,7 +37,7 @@ def test_interventions_date():
 
 
 def test_interventions_date_2():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(df=chat.df, date_mode='date', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -37,7 +51,7 @@ def test_interventions_date_2():
 
 
 def test_interventions_date_msg_length():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='date', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -51,7 +65,7 @@ def test_interventions_date_msg_length():
 
 
 def test_interventions_hour():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='hour', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -65,7 +79,7 @@ def test_interventions_hour():
 
 
 def test_interventions_hour_msg_length():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='hour', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -79,7 +93,7 @@ def test_interventions_hour_msg_length():
 
 
 def test_interventions_month():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='month', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -93,7 +107,7 @@ def test_interventions_month():
 
 
 def test_interventions_month_msg_length():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='month', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -107,7 +121,7 @@ def test_interventions_month_msg_length():
 
 
 def test_interventions_weekday():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='weekday', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -121,7 +135,7 @@ def test_interventions_weekday():
 
 
 def test_interventions_weekday_msg_length():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='weekday', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -135,7 +149,7 @@ def test_interventions_weekday_msg_length():
 
 
 def test_interventions_hourweekday():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='hourweekday', msg_length=False)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -153,7 +167,7 @@ def test_interventions_hourweekday():
 
 
 def test_interventions_hourweekday_msg_length():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='hourweekday', msg_length=True)
 
     assert(isinstance(counts, pd.DataFrame))
@@ -171,7 +185,7 @@ def test_interventions_hourweekday_msg_length():
 
 
 def test_interventions_error_1():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     with pytest.raises(ValueError):
         _ = get_interventions_count(chat=chat, date_mode='error', msg_length=False)
     with pytest.raises(ValueError):
@@ -184,7 +198,7 @@ def test_interventions_error_2():
 
 
 def test_interventions_date_cumsum():
-    chat = WhatsAppChat.from_txt(filename)
+    chat = WhatsAppChat.from_source(filename)
     counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cummulative=True)
 
     assert(isinstance(counts, pd.DataFrame))

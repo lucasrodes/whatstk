@@ -11,15 +11,31 @@ separators = {'.', ',', '-', '/', ':', '[', ']'}
 
 
 def extract_header_from_text(text, encoding='utf-8'):
-    """Extract header from filename.
+    """Extract header from text.
 
     Args:
         text (str): Loaded chat as string (whole text).
-        encoding (str, optional): Encoding to be used. Defaults to 'utf-8'.
+        encoding (str): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
 
     Returns:
         str: Format extracted. None if no header was extracted.
 
+    Example:
+            Load a chat using two text files. In this example, we use sample chats (available online, see urls in
+            source code :mod:`whatstk.data <whatstk.data>`).
+
+            ..  code-block:: python
+
+                >>> from whatstk.whatsapp.parser import extract_header_from_text
+                >>> from urllib.request import urlopen
+                >>> from whatstk.data import whatsapp_urls
+                >>> filepath_1 = whatsapp_urls.POKEMON
+                >>> with urlopen(filepath_1) as f:
+                ...     text = f.read().decode('utf-8')
+                >>> extract_header_from_text(text)
+                '%d.%m.%y, %H:%M - %name:
     """
     # Split lines
     lines = text.split('\n')

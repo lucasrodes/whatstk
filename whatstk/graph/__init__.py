@@ -1,4 +1,11 @@
-"""Plot tools using plotly."""
+"""Plot tools using plotly.
+
+Import :func:`plot <whatstk.graph.plot>` to plot figures.
+
+..  code-block:: python
+        >>> from whatstk.graph import plot
+
+"""
 
 
 from plotly.offline import plot
