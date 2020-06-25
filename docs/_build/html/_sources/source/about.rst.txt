@@ -1,17 +1,6 @@
 About whatstk
 =============
 
-.. raw:: html
-
-    <iframe src="https://ghbtns.com/github-btn.html?user=lucasrodes&repo=whatstk&type=star&count=true"
-    frameborder="0" scrolling="0" title="GitHub"></iframe>
-    <br>
-    <iframe src="https://ghbtns.com/github-btn.html?user=lucasrodes&repo=whatstk&type=fork&count=true" frameborder="0"
-    scrolling="0" title="GitHub"></iframe>
-
-
-:Version: |version|
-
 **whatstk**  is a python package providing tools to parse, analyze and visualize WhatsApp chats developed under the
 `sociepy <https://github.com/sociepy>`_ project. Easily convert your chats to csv or simply visualize statistics
 using the python library. The package uses `pandas <https://github.com/pandas-dev/pandas>`_ to
