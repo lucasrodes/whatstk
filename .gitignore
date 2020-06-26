@@ -266,6 +266,7 @@ version-info.cfg
 docs2
 version-info.cfg
 py37
+py38
 *.ipynb
 
 .pypirc
