@@ -54,7 +54,7 @@ pip install whatstk
 
 ## Getting Started
 #### Export your chat using your phone: 
-Follow these [instructions](https://lcsrg.me/whatstk/docs/_build/html/source/getting_started/export_chat.html).
+Follow these [instructions](https://lcsrg.me/source/getting_started/export_chat.html).
 
 #### Convert chat to csv
 Easily convert your txt chat file to csv using command `whatstk-to-csv`.
@@ -74,13 +74,13 @@ chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 #### More examples
 
-Find more examples [here](https://lcsrg.me/whatstk/docs/_build/html/source/code_examples/index.html).
+Find more examples [here](https://lcsrg.me/whatstk/source/code_examples/index.html).
 
 ## Documentation
 See [official documentation](https://lcsrg.me/whatstk).
 
 ## Contributing
-See [contributing section](https://lcsrg.me/whatstk/docs/_build/html/source/contribute.html).
+See [contributing section](https://lcsrg.me/whatstk/source/contribute.html).
 
 ## License
 [GPL-3.0](LICENSE)

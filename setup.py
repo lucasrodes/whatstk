@@ -38,7 +38,7 @@ setup(
     ],
     keywords='whatsapp analysis parser chat',
     project_urls={
-        'Documentation': 'https://lcsrg.me/whatstk/docs/index.html',
+        'Documentation': 'https://lcsrg.me/whatstk',
         'Github': 'http://github.com/lucasrodes/whatstk'
     },
     python_requires='>=3.6',
