@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0.b2-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0.b3-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
