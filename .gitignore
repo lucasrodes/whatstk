@@ -277,3 +277,6 @@ flake-report
 
 notebooks
 reports
+
+
+docs/_build/
