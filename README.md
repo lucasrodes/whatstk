@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0.b0-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0.b3-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
@@ -54,7 +54,7 @@ pip install whatstk
 
 ## Getting Started
 #### Export your chat using your phone: 
-Follow these [instructions](https://lcsrg.me/source/getting_started/export_chat.html).
+Follow these [instructions](https://lcsrg.me/whatstk/source/getting_started/export_chat.html).
 
 #### Convert chat to csv
 Easily convert your txt chat file to csv using command `whatstk-to-csv`.
@@ -74,13 +74,14 @@ chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 #### More examples
 
-Find more examples [here](https://lcsrg.me/whatstk/source/code_examples/index.html).
+Find more examples in the [getting started](https://lcsrg.me/whatstk/source/getting_started/index.html) and 
+[examples](https://lcsrg.me/whatstk/source/code_examples/index.html) sections.
 
 ## Documentation
 See [official documentation](https://lcsrg.me/whatstk).
 
-## Contributing
-See [contributing section](https://lcsrg.me/whatstk/source/contribute.html).
+## Contribute
+See [contribute section](https://lcsrg.me/whatstk/source/contribute.html).
 
 ## License
 [GPL-3.0](LICENSE)

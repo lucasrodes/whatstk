@@ -44,11 +44,11 @@ jobs:
         - head -n 12 README.md
         - head -n 2 .bumpversion.cfg
       deploy:
-        # - provider: pypi
-        #   user: $USER_PYPI
-        #   password: $PWD_PYPI
-        #   on:
-        #     tags: true
+        - provider: pypi
+          user: $USER_PYPI
+          password: $PWD_PYPI
+          on:
+            tags: true
         - provider: pages
           skip_cleanup: true
           github_token: $GITHUB_TOKEN

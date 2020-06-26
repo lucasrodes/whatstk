@@ -14,7 +14,7 @@ with open(os.path.join(this_directory, 'requirements.txt')) as f:
 
 setup(
     name='whatstk',
-    version="0.3.0.b0",
+    version="0.3.0.b3",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -29,7 +29,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 3 - Beta",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
@@ -39,7 +41,8 @@ setup(
     keywords='whatsapp analysis parser chat',
     project_urls={
         'Documentation': 'https://lcsrg.me/whatstk',
-        'Github': 'http://github.com/lucasrodes/whatstk'
+        'Github': 'http://github.com/lucasrodes/whatstk',
+        'Bug Tracker': 'https://github.com/lucasrodes/whatstk/issues',
     },
     python_requires='>=3.6',
     entry_points={

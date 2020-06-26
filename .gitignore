@@ -266,6 +266,7 @@ version-info.cfg
 docs2
 version-info.cfg
 py37
+py38
 *.ipynb
 
 .pypirc
@@ -276,3 +277,7 @@ flake-report
 
 notebooks
 reports
+
+
+docs/_build/
+package-lock.json
