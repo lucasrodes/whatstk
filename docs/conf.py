@@ -56,7 +56,7 @@ extensions = [
 
 # The name of the entry point, without the ".rst" extension.
 # By convention this will be "index"
-master_doc = "source/content"
+master_doc = "index"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
