@@ -1,23 +1,58 @@
 dist: xenial
 language: python
 python:
-  - 3.7.2
+  - 3.6
+  - 3.7
   - 3.8
+git:
+  depth: false
 before_install:
+  # - git fetch --tags
   - pip install -r requirements-test.txt
+  - pip install -r requirements-flake.txt
+  - pip install -r requirements-docs.txt
 install:
   - ls -l
   - pip uninstall whatstk
   - pip install -e .
+  - mkdir -p tests/chats/hformats tests/chats/merge
+  - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
+  - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
+  - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
 #pip install -r requirements.txt 
 script:
-  - pip freeze | grep whatstk
+  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage
-deploy:
-  provider: pypi
-  user: $USER_PYPI
-  password: $PWD_PYPI
-  on:
-    tags: true
+  - cd docs
+  - make clean && make html # generate documentation
+  - cd ..
+
+jobs:
+  include:
+    - stage: deploy
+      python: 3.8
+      before_install: pip install -r requirements-docs.txt
+      install: pip install -e .
+      script:
+        - cd docs
+        - make clean && make html # generate documentation
+        - cd ..
+      after_success:
+        - head -n 34 docs/conf.py
+        - head -n 12 README.md
+        - head -n 2 .bumpversion.cfg
+      deploy:
+        - provider: pypi
+          user: $USER_PYPI
+          password: $PWD_PYPI
+          on:
+            tags: true
+        - provider: pages
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN
+          keep-history: true
+          on:
+            tags: true
+          local_dir: docs/_build/html/

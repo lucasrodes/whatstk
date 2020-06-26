@@ -1,4 +1,6 @@
-"""setup script"""
+"""setup script."""
+
+
 from setuptools import setup, find_packages
 import os
 import glob
@@ -12,7 +14,7 @@ with open(os.path.join(this_directory, 'requirements.txt')) as f:
 
 setup(
     name='whatstk',
-    version="0.2.6",
+    version="0.3.0",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -27,8 +29,10 @@ setup(
     include_package_data=True,
     zip_safe=False,
     classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Programming Language :: Python :: 3.5",
+        "Development Status :: 4 - Beta",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -36,8 +40,16 @@ setup(
     ],
     keywords='whatsapp analysis parser chat',
     project_urls={
-        'Documentation': 'https://lcsrg.me/whatstk/docs/index.html',
-        'Github': 'http://github.com/lucasrodes/whatstk'
+        'Documentation': 'https://lcsrg.me/whatstk',
+        'Github': 'http://github.com/lucasrodes/whatstk',
+        'Bug Tracker': 'https://github.com/lucasrodes/whatstk/issues',
     },
-    python_requires='>=3.5'
+    python_requires='>=3.6',
+    entry_points={
+        'console_scripts': [
+            'whatstk-generate-chat=whatstk.scripts.generate_chats:main',
+            'whatstk-to-csv=whatstk.scripts.txt_to_csv:main',
+            'whatstk-graph=whatstk.scripts.graph:main'
+        ]
+    }
 )

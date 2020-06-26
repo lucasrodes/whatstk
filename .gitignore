@@ -55,7 +55,6 @@ Temporary Items
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
-[Ss]cripts
 pyvenv.cfg
 .venv
 pip-selfcheck.json
@@ -127,8 +126,10 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+cov.xml
 *,cover
 .hypothesis/
+.vscode
 
 # Translations
 *.mo
@@ -146,7 +147,8 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+#docs/_build/
+docs/_build/doctrees
 
 # PyBuilder
 target/
@@ -256,7 +258,6 @@ examples
 #tox stuff
 tox.ini
 #.coveragerc
-requirements-flake.txt
 setup.cfg
 testreport.html
 testreport.xml
@@ -265,8 +266,18 @@ version-info.cfg
 docs2
 version-info.cfg
 py37
+py38
 *.ipynb
 
 .pypirc
 learn/
 assets/style.css
+tests/chats/*
+flake-report
+
+notebooks
+reports
+
+
+docs/_build/
+package-lock.json

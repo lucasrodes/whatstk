@@ -1,183 +1,87 @@
-# whatstk: python whatsapp parser and analysis tool
+<div align="center">
+  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="70%"><br>
+</div>
 
-![Package version](https://img.shields.io/badge/whatstk-v0.2.6-teal.svg?style=for-the-badge&color=25D366&logo=whatsapp)
+---
 
-[![Build Status](https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop)](https://travis-ci.org/lucasrodes/whatstk)
-[![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
-[![Python 3.6](https://img.shields.io/badge/python-3.7|3.8-blue.svg)](https://www.python.org/downloads/release/python-3/)
-[![Documentation](https://img.shields.io/badge/documentation-royalblue.svg)](docs/index.md)
-[![GitHub
-license](https://img.shields.io/github/license/lucasrodes/whatstk.svg)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
+<h1 align="center" style="border-bottom: none;"> whatstk: analyze WhatsApp chats with python
+</h1>
+
+<p align="center">
+  <a href="#">
+    <img alt="Package version" src="https://img.shields.io/badge/version-0.3.0-blue.svg?&color=25D366&logo=whatsapp&">
+  </a>
+</p>
+<!-- style=for-the-badge -->
+
+<p align="center">
+  <a href="https://travis-ci.org/lucasrodes/whatstk"><img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop"></a>
+  <a href="https://codecov.io/gh/lucasrodes/whatstk"><img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg"></a>
+  <a href="https://www.python.org/downloads/release/python-3/"><img alt="Python 3" src="https://img.shields.io/badge/python-3.6|3.7|3.8-blue.svg?&logo=python&logoColor=yellow"></a>
+  <a href="https://lcsrg.me/whatstk"><img alt="Documentation" src="https://img.shields.io/badge/whatstk-docs-royalblue.svg"></a>
+  <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE"><img alt="GitHub
+license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?"></a>
+  <a href="https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg"></a>
+</p>
 
 
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
-whatstk is a Python module for WhatsApp chat group analysis and distributed under the GPL-3.0 license. 
+**whatstk** is a python package providing tools to parse, analyze and visualise WhatsApp chats developed under the
+**[sociepy](https://github.com/sociepy)** project. Easily convert your chats to csv or simply visualise some stats using
+the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
+the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
 
-:star: Please **star** our project if you found it interesting to **keep us motivated** :smiley:!
+It is distributed under the GPL-3.0 license. 
+
+⭐ Please **star** our project if you found it interesting to **give us some dopamine** 😄!
+
 
 ### Content
 * [Installation](#installation)
 * [Getting Started](#getting-started)
-* [What's the header?](#whats-the-header)
+* [Documentation](https://lcsrg.me/whatstk)
 * [Contributing](#contributing)
----
+
+
 ## Installation
 
 ```
 pip install whatstk
 ```
 
----
 
 ## Getting Started
+#### Export your chat using your phone: 
+Follow these [instructions](https://lcsrg.me/whatstk/source/getting_started/export_chat.html).
 
-Make sure to first obtain the chat to be analyzed. Export it as a `txt` file using your phone (more info on this [here](https://lcsrg.me/whatstk-gui/#faqs)).
+#### Convert chat to csv
+Easily convert your txt chat file to csv using command `whatstk-to-csv`.
 
-Check more on how-to use it in the [docs](docs/index.md)
+```bash
+$ whatstk-to-csv [input_filename] [output_filename]
+```
 
-### Obtain a dataframe from your chat log file
+#### Load chat in python
+You can also load the exported txt file with python.
 
-Load your chat using the object `WhatsAppChat`. Example below we use chat [example.txt](chats/example.txt)
- 
- 
 ```python
 from whatstk import WhatsAppChat
-
-filename = 'chats/example.txt'
-chat = WhatsAppChat.from_txt(filename)
+from whatstk.data import whatsapp_urls
+chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 ```
 
-Once you have your `WhatsAppChat` object, you can access the loaded data using the class attribute `df`, i.e. `chat.df`.
+#### More examples
 
-```python
-chat.df.info()
-```
-> <details><summary>See results</summary>
-> <p>
-> 
-> ```
-> <class 'pandas.core.frame.DataFrame'>
-> DatetimeIndex: 18 entries, 2016-08-06 13:23:00 to 2016-10-31 12:23:00
-> Data columns (total 2 columns):
->  #   Column    Non-Null Count  Dtype 
-> ---  ------    --------------  ----- 
->  0   username  18 non-null     object
->  1   message   18 non-null     object
-> dtypes: object(2)
-> memory usage: 432.0+ bytes
-> ```
-</p>
-</details>
+Find more examples in the [getting started](https://lcsrg.me/whatstk/source/getting_started/index.html) and 
+[examples](https://lcsrg.me/whatstk/source/code_examples/index.html) sections.
 
-_Note 1: By default, header auto-detect feature is used. If it does not work, use hformat variable to specify your
-header format. In our example, it would be: `hformat = '%d.%m.%y, %H:%M - %name:'`. More on this [here](#whats-the-header)_.
+## Documentation
+See [official documentation](https://lcsrg.me/whatstk).
 
-_Note 2: If your chat uses 12h clock, it may not work as expected. If it is your case, please report it in the issues section._
+## Contribute
+See [contribute section](https://lcsrg.me/whatstk/source/contribute.html).
 
-
-### Plot the cumulative messages sent by day
-Once you have your `WhatsAppChat` object, you can easily get the number of interventions per user per, say, `day` using 
-the method `interventions()` with `date_mode` argument set to `'day'`. With this, some minor processing, `plotly` and `vis` method from `whatstk.plot` you can get really insightful plots.
-
-
-```python
-from whatstk.analysis import interventions
-counts = interventions(chat=chat, date_mode='date', msg_length=False)
-counts_cumsum = counts.cumsum()
-
-# Plot result
-from plotly.offline import plot
-from whatstk.plot import vis
-plot(vis(counts_cumsum, 'cumulative number of messages sent per day'))
-```
-
-![](assets/example1.png)
-
----
-## What's the header?
-The chat file syntax can differ between devices, OS and language settings, which makes it hard some times to correctly parse the data and make WhatsTK work correctly.
-
-The header appears for each message sent in the chat. It contains a timestamp and the name of the user that sent the message.
-
-See it for yourself and open the exported chat file. You will find that the messages have a similar format like the one
-below:
-
-```
-15.04.2016, 15:04 - You created group “Sample Group”
-06.08.2016, 13:18 - Messages you send to this group are now secured with end-to-end encryption. Tap for more info.
-06.08.2016, 13:23 - Ash Ketchum: Hey guys!
-06.08.2016, 13:25 - Brock: Hey Ash, good to have a common group!
-06.08.2016, 13:30 - Misty: Hey guys! Long time haven't heard anything from you
-06.08.2016, 13:45 - Ash Ketchum: Indeed. I think having a whatsapp group nowadays is a good idea
-06.08.2016, 14:30 - Misty: Definetly
-06.08.2016, 17:25 - Brock: I totally agree
-07.08.2016, 11:45 - Prof. Oak: Kids, shall I design a smart poke-ball?
-```
-
-In this example, the header is `day.month.year, hour:minutes - username:` which corresponds to the header format
-`%d.%m.%y, %H:%M - %name:`. However, in your case it may be something else. Check table below to see the codes for each
-header unit.
-
-<table class="tg" style="display: flex; justify-content: center;">
-  <tr>
-    <th class="tg-7btt">Date Unit Code</th>
-    <th class="tg-7btt">Definition</th>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%y</td>
-    <td class="tg-0pky">Year</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%m</td>
-    <td class="tg-0pky">Month of the year (1-12)</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%d</td>
-    <td class="tg-0pky">Day of the month (0-31)</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%H</td>
-    <td class="tg-0pky">Hour 24h-clock (0-23)</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%P</td>
-    <td class="tg-0pky">Hour 12h-clock (1-12)</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%M</td>
-    <td class="tg-0pky">Minutes (0-60)</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%S</td>
-    <td class="tg-0pky">Seconds (0-60)</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">%name</td>
-    <td class="tg-0pky">Name of user</td>
-  </tr>
-</table>
-
----
-
-## Contributing
-
-We are very open to have collaborators. You can freely fork and issue a pull request with your updates!
-For other issues/bugs/suggestions, please report it in the [issues section](https://github.com/lucasrodes/whatstk/issues).
-
-### Pull Requests
-
-Make sure to test your code before issuing a pull request:
-
-```
-py.test --cov-report term --cov=whatstk tests/
-```
-
-_Note 1: Use `--html=testreport.html --cov-report html` to generate HTML reports._
-
-However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
-
-### Chat with us
-
-Join our [Discord group](https://discord.gg/KUeeJh).
+## License
+[GPL-3.0](LICENSE)
