@@ -16,5 +16,10 @@ help:
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+# gitchangelog > source/changelog.rst
+
 %: Makefile
+	# gitchangelog > source/changelog.rst
+	# auto-changelog --output source/changelog.md -u
+	auto-changelog --repo .. --output source/changelog.md -u
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
