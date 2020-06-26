@@ -15,8 +15,8 @@ chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
 # Chat hosted on repo
-filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
-# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
+# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
+filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
 
 
 def test_df_from_txt_whatsapp():
