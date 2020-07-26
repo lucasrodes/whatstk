@@ -25,8 +25,8 @@ Get graph from your WhatsApp txt file.
     -id {date,hour,weekday,month}, --icount-date-mode {date,hour,weekday,month}
                             Select date mode. Only valid for
                             --type=interventions_count.
-    -ic, --icount-cummulative
-                            Show values in a cummulative fashion. Only valid for
+    -ic, --icount-cumulative
+                            Show values in a cumulative fashion. Only valid for
                             --type=interventions_count.
     -il, --icount-msg-length
                             Count an intervention with its number of characters.

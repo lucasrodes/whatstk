@@ -1,11 +1,13 @@
 """Base analysis tools."""
 
 
+import warnings
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
 
 
-def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cummulative=False, all_users=False):
+def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cumulative=False, all_users=False,
+                            cummulative=None):
     """Get number of interventions per user per unit of time.
 
     The unit of time can be chosen by means of argument ``date_mode``.
@@ -25,8 +27,9 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
                                     - ``'weekday'``: Grouped by weekday (i.e. monday, tuesday, ..., sunday).
                                     - ``'hourweekday'``: Grouped by weekday and hour.
         msg_length (bool, optional): Set to True to count the number of characters instead of number of messages sent.
-        cummulative (bool, optional): Set to True to obtain commulative counts.
+        cumulative (bool, optional): Set to True to obtain commulative counts.
         all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.
+        cummulative (bool, optional): Deprecated, use cumulative.
 
     Returns:
         pandas.DataFrame: DataFrame with shape *NxU*, where *N*: number of time-slots and *U*: number of users.
@@ -59,6 +62,10 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
                 [5 rows x 8 columns]
 
     """
+    if cummulative is not None:
+        cumulative = cummulative
+        warnings.warn("cummulative is deprecated and will be removed in v0.4.0; use cumulative", DeprecationWarning)
+
     df = _get_df(df=df, chat=chat)
 
     if date_mode == 'date':
@@ -84,7 +91,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
 
     if all_users:
         n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=['interventions count'])
-    if cummulative:
+    if cumulative:
         n_interventions = n_interventions.cumsum()
 
     return n_interventions

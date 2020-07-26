@@ -199,6 +199,18 @@ def test_interventions_error_2():
 
 def test_interventions_date_cumsum():
     chat = WhatsAppChat.from_source(filename)
+    counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cumulative=True)
+
+    assert(isinstance(counts, pd.DataFrame))
+    # Asswert chat df and counts df have same users
+    assert(set(chat.users) == set(counts.columns))
+    assert(len(chat.users) == counts.shape[1])
+
+    # Assert chat df and counts df have same date window
+    assert(chat.df.index.max().date() == counts.index.max().date())
+    assert(chat.df.index.min().date() == counts.index.min().date())
+
+    # TO BE DEPRECATED
     counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cummulative=True)
 
     assert(isinstance(counts, pd.DataFrame))

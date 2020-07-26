@@ -29,8 +29,8 @@ Next, we obtain the number of messages and number of characters sent per user pe
 .. code-block:: python
 
     >>> from whatstk.analysis import get_interventions_count
-    >>> counts_interv = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cummulative=False)
-    >>> counts_len = get_interventions_count(chat=chat, date_mode='date', msg_length=True, cummulative=False)
+    >>> counts_interv = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cumulative=False)
+    >>> counts_len = get_interventions_count(chat=chat, date_mode='date', msg_length=True, cumulative=False)
 
 Time to process a bit the data. We obtain a DataFrame with five columns: *username*, *date*, *num_characters*,
 *num_interventions* and *avg_characters*.
