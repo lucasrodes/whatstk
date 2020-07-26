@@ -103,8 +103,8 @@ class FigureBuilder:
         )
         return fig
 
-    def user_interventions_count_linechart(self, date_mode='date', msg_length=False, cummulative=False, all_users=False,
-                                           title="User interventions count", xlabel="Date/Time"):
+    def user_interventions_count_linechart(self, date_mode='date', msg_length=False, cumulative=False, all_users=False,
+                                           title="User interventions count", xlabel="Date/Time", cummulative=None):
         """Plot number of user interventions over time.
 
         Args:
@@ -118,10 +118,11 @@ class FigureBuilder:
                                         - ``'hourweekday'``: Grouped by weekday and hour.
             msg_length (bool, optional): Set to True to count the number of characters instead of number of messages
                                          sent.
-            cummulative (bool, optional): Set to True to obtain commulative counts.
+            cumulative (bool, optional): Set to True to obtain commulative counts.
             all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.
             title (str, optional): Title for plot. Defaults to "User interventions count".
             xlabel (str, optional): x-axis label title. Defaults to "Date/Time".
+            cummulative (bool, optional): Deprecated, use cumulative.
 
         Returns:
             plotly.graph_objs.Figure: Plotly Figure.
@@ -138,7 +139,7 @@ class FigureBuilder:
                 >>> from whatstk.graph import plot, FigureBuilder
                 >>> from whatstk.data import whatsapp_urls
                 >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
-                >>> fig = FigureBuilder(chat=chat).user_interventions_count_linechart(cummulative=True)
+                >>> fig = FigureBuilder(chat=chat).user_interventions_count_linechart(cumulative=True)
                 >>> plot(fig)
 
         """
@@ -146,8 +147,9 @@ class FigureBuilder:
             df=self.df,
             date_mode=date_mode,
             msg_length=msg_length,
-            cummulative=cummulative,
-            all_users=all_users
+            cumulative=cumulative,
+            all_users=all_users,
+            cummulative=cummulative
         )
         if all_users:
             fig = fig_scatter_time(

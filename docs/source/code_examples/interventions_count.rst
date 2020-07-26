@@ -32,12 +32,12 @@ Default call of the aforementioned method displays the number of interventions s
 
 
 As seen in previous plot, the number of messages sent per user in a day tends to oscilate quite a lot
-from day to day, which might difficult a good visualisation of the data. Hence, we can use ``cummulative=True`` to
-illustrate the cummulative count of interventions instead.
+from day to day, which might difficult a good visualisation of the data. Hence, we can use ``cumulative=True`` to
+illustrate the cumulative count of interventions instead.
 
 .. code-block:: python
 
-    >>> fig = fb.user_interventions_count_linechart(cummulative=True, title='User inteventions count (cummulative)')
+    >>> fig = fb.user_interventions_count_linechart(cumulative=True, title='User inteventions count (cumulative)')
     >>> plot(fig)
 
 
@@ -49,7 +49,7 @@ Additionally, we can obtain the counts for all users combined using ``all_users=
 
 .. code-block:: python
 
-    >>> fig = fb.user_interventions_count_linechart(cummulative=True, all_users=True, title='Inteventions count (cummulative)')
+    >>> fig = fb.user_interventions_count_linechart(cumulative=True, all_users=True, title='Inteventions count (cumulative)')
     >>> plot(fig)
 
 
@@ -66,11 +66,11 @@ Depending on your analysis you might prefer exploring interventions or number of
 characters sent per user can be done using ``msg_len=True`` when calling function
 :func:`user_interventions_count_linechart <whatstk.FigureBuilder.user_interventions_count_linechart>`.
 
-In the following we explore the cummulative number of characters sent per user.
+In the following we explore the cumulative number of characters sent per user.
 
 .. code-block:: python
 
-    >>> fig = fb.user_interventions_count_linechart(msg_len=True, cummulative=True, title='Characters sent by user (cummulative)')
+    >>> fig = fb.user_interventions_count_linechart(msg_len=True, cumulative=True, title='Characters sent by user (cumulative)')
     >>> plot(fig)
 
 

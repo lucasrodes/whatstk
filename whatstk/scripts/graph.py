@@ -26,8 +26,8 @@ def _parse_args():
         help="Select date mode. Only valid for --type=interventions_count. Defaults to 'date'."
     )
     parser.add_argument(
-        "-ic", "--icount-cummulative", action="store_true",
-        help="Show values in a cummulative fashion. Only valid for --type=interventions_count."
+        "-ic", "--icount-cumulative", action="store_true",
+        help="Show values in a cumulative fashion. Only valid for --type=interventions_count."
     )
     parser.add_argument(
         "-il", "--icount-msg-length", action="store_true",
@@ -53,7 +53,7 @@ def main():
         ).user_interventions_count_linechart(
             date_mode=args.icount_date_mode,
             msg_length=False,
-            cummulative=args.icount_cummulative
+            cumulative=args.icount_cumulative
         )
     elif args.type == "msg_length":
         fig = FigureBuilder(
