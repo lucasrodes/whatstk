@@ -84,7 +84,8 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
         hformat = extract_header_from_text(text)
         if not hformat:
             raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
-                               " input argument `hformat`.")
+                               " input argument `hformat`. Report this issue so that automatic header detection support"
+                               " for your header format is added: https://github.com/lucasrodes/whatstk/issues.")
     elif not (hformat or auto_header):
         raise ValueError("If auto_header is False, hformat can't be None.")
 
