@@ -144,16 +144,13 @@ class FigureBuilder:
                 >>> plot(fig)
 
         """
-        if cummulative is not None:
-            cumulative = cummulative
-            warnings.warn("cummulative is deprecated and will be removed in v0.4.0; use cumulative", DeprecationWarning)
-
         counts = get_interventions_count(
             df=self.df,
             date_mode=date_mode,
             msg_length=msg_length,
             cumulative=cumulative,
-            all_users=all_users
+            all_users=all_users,
+            cummulative=cummulative
         )
         if all_users:
             fig = fig_scatter_time(
