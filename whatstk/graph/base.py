@@ -1,7 +1,6 @@
 """Build plotly-compatible figures."""
 
 
-import warnings
 import numpy as np
 from whatstk._chat import BaseChat
 from whatstk.analysis.interventions import get_interventions_count
