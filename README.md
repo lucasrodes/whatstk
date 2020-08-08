@@ -19,11 +19,12 @@
   <a href="https://codecov.io/gh/lucasrodes/whatstk"><img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg"></a>
   <a href="https://www.python.org/downloads/release/python-3/"><img alt="Python 3" src="https://img.shields.io/badge/python-3.6|3.7|3.8-blue.svg?&logo=python&logoColor=yellow"></a>
   <a href="https://lcsrg.me/whatstk"><img alt="Documentation" src="https://img.shields.io/badge/whatstk-docs-royalblue.svg"></a>
+  <a href="https://pepy.tech/badge/whatstk"><img alt="Number of downloads" src="https://pepy.tech/badge/whatstk"></a>
+  <a href="http://hits.dwyl.com/lucasrodes/whatstk"><img alt="HitCount" src="http://hits.dwyl.com/lucasrodes/whatstk.svg"></a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE"><img alt="GitHub
 license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?"></a>
   <a href="https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg"></a>
 </p>
-
 
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
