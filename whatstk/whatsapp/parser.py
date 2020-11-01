@@ -97,9 +97,9 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
         df = _parse_chat(text, r)
     except RegexError:
         raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
-
     df = _remove_alerts_from_df(r_x, df)
 
+    df = _add_schema(df)
     return df
 
 
@@ -157,7 +157,6 @@ def _parse_chat(text, regex):
         result.append(line_dict)
     df_chat = pd.DataFrame.from_records(result, index=COLNAMES_DF.DATE)
     df_chat = df_chat[[COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
-    df_chat = _add_schema(df_chat)
     return df_chat
 
 
@@ -236,7 +235,6 @@ def _remove_alerts_from_df(r_x, df):
     """
     df_new = df.copy()
     df_new.loc[:, COLNAMES_DF.MESSAGE] = df_new[COLNAMES_DF.MESSAGE].apply(lambda x: _remove_alerts_from_line(r_x, x))
-    df_new = _add_schema(df_new)
     return df_new
 
 
