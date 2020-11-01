@@ -1,6 +1,7 @@
 #  TODO: Assert number of columns equals number of users
 from whatstk.analysis.interventions import get_interventions_count
 from whatstk.whatsapp.objects import WhatsAppChat
+from whatstk.utils.utils import COLNAMES_DF
 import pandas as pd
 import pytest
 
@@ -18,8 +19,8 @@ def test_interventions_date_all():
     assert(counts.columns == ['interventions count'])
 
     # Assert chat df and counts df have same date window
-    assert(chat.df.index.max().date() == counts.index.max().date())
-    assert(chat.df.index.min().date() == counts.index.min().date())
+    assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
+    assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())
     
 
 def test_interventions_date():
@@ -32,8 +33,8 @@ def test_interventions_date():
     assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
-    assert(chat.df.index.max().date() == counts.index.max().date())
-    assert(chat.df.index.min().date() == counts.index.min().date())
+    assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
+    assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())
 
 
 def test_interventions_date_2():
@@ -46,8 +47,8 @@ def test_interventions_date_2():
     assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
-    assert(chat.df.index.max().date() == counts.index.max().date())
-    assert(chat.df.index.min().date() == counts.index.min().date())
+    assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
+    assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())
 
 
 def test_interventions_date_msg_length():
@@ -60,8 +61,8 @@ def test_interventions_date_msg_length():
     assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
-    assert(chat.df.index.max().date() == counts.index.max().date())
-    assert(chat.df.index.min().date() == counts.index.min().date())
+    assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
+    assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())
 
 
 def test_interventions_hour():
@@ -74,8 +75,8 @@ def test_interventions_hour():
     assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
-    assert(counts.index.max() == chat.df.index.hour.max())
-    assert(counts.index.min() == chat.df.index.hour.min())
+    assert(counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.hour.max())
+    assert(counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.hour.min())
 
 
 def test_interventions_hour_msg_length():
@@ -88,8 +89,8 @@ def test_interventions_hour_msg_length():
     assert(len(chat.users) == counts.shape[1])
 
     # Check range hours
-    assert(counts.index.max() == chat.df.index.hour.max())
-    assert(counts.index.min() == chat.df.index.hour.min())
+    assert(counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.hour.max())
+    assert(counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.hour.min())
 
 
 def test_interventions_month():
@@ -101,9 +102,9 @@ def test_interventions_month():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
-    assert(counts.index.max() == chat.df.index.month.max())
-    assert(counts.index.min() == chat.df.index.month.min())
+    # Check range months
+    assert(counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.month.max())
+    assert(counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.month.min())
 
 
 def test_interventions_month_msg_length():
@@ -115,9 +116,9 @@ def test_interventions_month_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
-    assert(counts.index.max() == chat.df.index.month.max())
-    assert(counts.index.min() == chat.df.index.month.min())
+    # Check range months
+    assert(counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.month.max())
+    assert(counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.month.min())
 
 
 def test_interventions_weekday():
@@ -129,9 +130,9 @@ def test_interventions_weekday():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
-    assert(counts.index.max() == chat.df.index.weekday.max())
-    assert(counts.index.min() == chat.df.index.weekday.min())
+    # Check range weekdays
+    assert(counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max())
+    assert(counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min())
 
 
 def test_interventions_weekday_msg_length():
@@ -143,9 +144,9 @@ def test_interventions_weekday_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range hours
-    assert(counts.index.max() == chat.df.index.weekday.max())
-    assert(counts.index.min() == chat.df.index.weekday.min())
+    # Check range weekdays
+    assert(counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max())
+    assert(counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min())
 
 
 def test_interventions_hourweekday():
@@ -157,13 +158,13 @@ def test_interventions_hourweekday():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range days
-    assert(counts.index.levels[0].max() == chat.df.index.weekday.max())
-    assert(counts.index.levels[0].min() == chat.df.index.weekday.min())
+    # Check range weekdays
+    assert(counts.index.levels[0].max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max())
+    assert(counts.index.levels[0].min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min())
 
     # Check range hours
-    assert(counts.index.levels[1].max() == chat.df.index.hour.max())
-    assert(counts.index.levels[1].min() == chat.df.index.hour.min())
+    assert(counts.index.levels[1].max() == chat.df[COLNAMES_DF.DATE].dt.hour.max())
+    assert(counts.index.levels[1].min() == chat.df[COLNAMES_DF.DATE].dt.hour.min())
 
 
 def test_interventions_hourweekday_msg_length():
@@ -175,13 +176,13 @@ def test_interventions_hourweekday_msg_length():
     assert(set(chat.users) == set(counts.columns))
     assert(len(chat.users) == counts.shape[1])
 
-    # Check range days
-    assert(counts.index.levels[0].max() == chat.df.index.weekday.max())
-    assert(counts.index.levels[0].min() == chat.df.index.weekday.min())
+    # Check range weekdays
+    assert(counts.index.levels[0].max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max())
+    assert(counts.index.levels[0].min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min())
 
     # Check range hours
-    assert(counts.index.levels[1].max() == chat.df.index.hour.max())
-    assert(counts.index.levels[1].min() == chat.df.index.hour.min())
+    assert(counts.index.levels[1].max() == chat.df[COLNAMES_DF.DATE].dt.hour.max())
+    assert(counts.index.levels[1].min() == chat.df[COLNAMES_DF.DATE].dt.hour.min())
 
 
 def test_interventions_error_1():
@@ -207,8 +208,8 @@ def test_interventions_date_cumsum():
     assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
-    assert(chat.df.index.max().date() == counts.index.max().date())
-    assert(chat.df.index.min().date() == counts.index.min().date())
+    assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
+    assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())
 
     # TO BE DEPRECATED
     counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cummulative=True)
@@ -219,5 +220,5 @@ def test_interventions_date_cumsum():
     assert(len(chat.users) == counts.shape[1])
 
     # Assert chat df and counts df have same date window
-    assert(chat.df.index.max().date() == counts.index.max().date())
-    assert(chat.df.index.min().date() == counts.index.min().date())
+    assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
+    assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())

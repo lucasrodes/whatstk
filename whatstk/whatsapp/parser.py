@@ -155,8 +155,8 @@ def _parse_chat(text, regex):
         except KeyError:
             raise RegexError("Could not match the provided regex with provided text. No match was found.")
         result.append(line_dict)
-    df_chat = pd.DataFrame.from_records(result, index=COLNAMES_DF.DATE)
-    df_chat = df_chat[[COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
+    df_chat = pd.DataFrame.from_records(result)
+    df_chat = df_chat[[COLNAMES_DF.DATE, COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
     return df_chat
 
 
@@ -171,6 +171,7 @@ def _add_schema(df):
 
     """
     df = df.astype({
+        COLNAMES_DF.DATE: 'datetime64[ns]',
         COLNAMES_DF.USERNAME: pd.StringDtype(),
         COLNAMES_DF.MESSAGE: pd.StringDtype()
     })
