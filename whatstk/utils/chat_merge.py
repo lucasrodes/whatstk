@@ -2,13 +2,14 @@
 
 
 import pandas as pd
+from whatstk.utils.utils import COLNAMES_DF
 
 
 def _merge_two_chats(df1, df2):
-    if df1.index.min() <= df2.index.min():
-        df = pd.concat([df1, df2[df2.index > df1.index.max()]])
+    if df1[COLNAMES_DF.DATE].min() <= df2[COLNAMES_DF.DATE].min():
+        df = pd.concat([df1, df2[df2[COLNAMES_DF.DATE] > df1[COLNAMES_DF.DATE].max()]])
     else:
-        df = pd.concat([df2, df1[df1.index > df2.index.max()]])
+        df = pd.concat([df2, df1[df1[COLNAMES_DF.DATE] > df2[COLNAMES_DF.DATE].max()]])
     return df
 
 
