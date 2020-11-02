@@ -20,13 +20,12 @@ which is a pandas.DataFrame with columns `username` (name of user sending the me
 .. code-block:: python
 
     >>> chat.df.head(5)
-                                   username                                            message
-        date
-        2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
-        2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
-        2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...
-        2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
-        2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
+                         date        username                                            message
+        0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
+        1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
+        2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...
+        3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
+        4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
 Getting the start and end date of the chat can give us a good overview of the chat content.
 
