@@ -39,8 +39,8 @@ class ChatGenerator:
             >>> chat = ChatGenerator(size=10).generate(last_timestamp=datetime(2020, 1, 1, 0, 0))
             >>> chat.df.head(5)
                                     date  username                                            message
-            0 2019-12-31 09:43:04.000525  Giuseppe                              Nisi ad esse cillum. 
-            1 2019-12-31 10:19:21.980039  Giuseppe     Tempor dolore sint in eu lorem veniam veniam. 
+            0 2019-12-31 09:43:04.000525  Giuseppe                               Nisi ad esse cillum.
+            1 2019-12-31 10:19:21.980039  Giuseppe      Tempor dolore sint in eu lorem veniam veniam.
             2 2019-12-31 13:56:45.575426  Giuseppe  Do quis fugiat sint ut ut, do anim eu est qui ...
             3 2019-12-31 15:47:29.995420  Giuseppe  Do qui qui elit ea in sed culpa, aliqua magna ...
             4 2019-12-31 16:23:00.348542      Mary  Sunt excepteur mollit voluptate dolor sint occ...

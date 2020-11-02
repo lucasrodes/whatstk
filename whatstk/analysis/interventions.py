@@ -77,7 +77,8 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
     elif date_mode == 'weekday':
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday], msg_length)
     elif date_mode == 'hourweekday':
-        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour],
+                                         msg_length)
     elif date_mode == 'month':
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.month], msg_length)
     else:
