@@ -69,16 +69,18 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
     df = _get_df(df=df, chat=chat)
 
     if date_mode == 'date':
-        n_interventions = _interventions(df, [df.index.date], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.date], msg_length)
         n_interventions.index = pd.to_datetime(n_interventions.index)
+        print(n_interventions.shape)
     elif date_mode == 'hour':
-        n_interventions = _interventions(df, [df.index.hour], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.hour], msg_length)
     elif date_mode == 'weekday':
-        n_interventions = _interventions(df, [df.index.weekday], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday], msg_length)
     elif date_mode == 'hourweekday':
-        n_interventions = _interventions(df, [df.index.weekday, df.index.hour], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour],
+                                         msg_length)
     elif date_mode == 'month':
-        n_interventions = _interventions(df, [df.index.month], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.month], msg_length)
     else:
         raise ValueError("Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
                          "'hourweekday' and 'month'.".format(date_mode))
@@ -97,11 +99,13 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
     return n_interventions
 
 
-def _interventions(df, index_date, msg_length):
-    """Get number of interventions per day per user.
+def _interventions(df, series_tf, msg_length):
+    """Get number of interventions per date per user.
 
     Args:
         df (pandas.DataFrame): Chat as DataFrame.
+        series_tf (list): List of pandas series with the date transformations applied, so we can group by, e.g., month.
+        msg_length (bool, optional): Set to True to count the number of characters instead of number of messages sent.
 
     Returns:
         pandas.DataFrame: Table with interventions per day per user.
@@ -110,11 +114,11 @@ def _interventions(df, index_date, msg_length):
     if msg_length:
         counts_ = df.copy()
         counts_[COLNAMES_DF.MESSAGE_LENGTH] = counts_[COLNAMES_DF.MESSAGE].apply(lambda x: len(x))
-        counts = counts_.groupby(by=index_date + [COLNAMES_DF.USERNAME]).agg({
+        counts = counts_.groupby(by=series_tf+[COLNAMES_DF.USERNAME]).agg({
             COLNAMES_DF.MESSAGE_LENGTH: lambda x: x.sum()
         })
     else:
-        counts = df.groupby(by=index_date + [COLNAMES_DF.USERNAME]).agg('count')
+        counts = df.groupby(by=series_tf + [COLNAMES_DF.USERNAME]).agg({'message': 'count'})
     counts = counts.unstack(fill_value=0)
 
     return counts

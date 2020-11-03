@@ -32,13 +32,12 @@ Brief fictional chat with Pokemon characters, which was manually designed by  `@
     >>> from whatstk import WhatsAppChat
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
     >>> chat.df.head(5)
-                            username                                            message
-    date                                                                               
-    2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
-    2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!
-    2016-08-06 13:30:00        Misty  Hey guys! Long time haven't heard anything fro...
-    2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
-    2016-08-06 14:30:00        Misty                                          Definetly
+                     date     username                                            message
+    0 2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
+    1 2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!
+    2 2016-08-06 13:30:00        Misty  Hey guys! Long time haven't heard anything fro...
+    3 2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
+    4 2016-08-06 14:30:00        Misty                                          Definetly
 
 
 .. seealso:: 
@@ -57,13 +56,12 @@ library.
     >>> from whatstk import WhatsAppChat
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
     >>> chat.df.head(5)
-                               username                                            message
-    date                                                                                  
-    2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
-    2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
-    2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...
-    2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
-    2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
+                     date        username                                            message
+    0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
+    1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
+    2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...
+    3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
+    4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
 .. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_
@@ -78,13 +76,12 @@ Chat with 300 interventions of fictional users, generated using `python-lorem <h
     >>> from whatstk import WhatsAppChat
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM1)
     >>> chat.df.head(5)
-                               username                                            message
-    date                                                                                  
-    2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.
-    2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...
-    2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...
-    2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...
-    2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
+                     date        username                                            message
+    0 2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.
+    1 2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...
+    2 2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...
+    3 2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...
+    4 2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
 
 .. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
@@ -101,13 +98,12 @@ Can be used along with **LOREM1** to test :func:`chat merging functionalities <w
     >>> from whatstk import WhatsAppChat
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM2)
     >>> chat.df.head(5)
-                               username                                            message
-    date                                                                                  
-    2020-06-20 10:16:00            John                 Elit incididunt lorem sed nostrud.
-    2020-06-20 11:15:00           Maria        Esse do irure dolor tempor ipsum fugiat. 🇩🇰
-    2020-06-20 12:16:00  +1 123 456 789  Cillum anim non eu deserunt consectetur dolor ...
-    2020-06-20 12:57:00  +1 123 456 789                  Non ipsum proident veniam est. 🏊🏻
-    2020-06-20 17:28:00            John                      Dolore in cupidatat proident.
+                     date        username                                            message
+    0 2020-06-20 10:16:00            John                 Elit incididunt lorem sed nostrud.
+    1 2020-06-20 11:15:00           Maria        Esse do irure dolor tempor ipsum fugiat. 🇩🇰
+    2 2020-06-20 12:16:00  +1 123 456 789  Cillum anim non eu deserunt consectetur dolor ...
+    3 2020-06-20 12:57:00  +1 123 456 789                  Non ipsum proident veniam est. 🏊🏻
+    4 2020-06-20 17:28:00            John                      Dolore in cupidatat proident.
 
 .. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
@@ -122,13 +118,12 @@ Chat with 2000 interventions of fictional users, generated using `python-lorem <
     >>> from whatstk import WhatsAppChat
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM_2000)
     >>> chat.df.head(5)
-                               username                                            message
-    date                                                                                  
-    2019-04-16 02:09:00  +1 123 456 789           Et labore proident laboris do labore ex.
-    2019-04-16 03:01:00            Mary  Reprehenderit id aute consectetur aliquip nost...
-    2019-04-17 12:56:00            John  Amet magna officia ullamco pariatur ipsum cupi...
-    2019-04-17 13:30:00            Mary  Cillum aute et cupidatat ipsum, occaecat lorem...
-    2019-04-17 15:09:00            John  Eiusmod irure laboris dolore anim, velit velit...
+                     date        username                                            message
+    0 2019-04-16 02:09:00  +1 123 456 789           Et labore proident laboris do labore ex.
+    1 2019-04-16 03:01:00            Mary  Reprehenderit id aute consectetur aliquip nost...
+    2 2019-04-17 12:56:00            John  Amet magna officia ullamco pariatur ipsum cupi...
+    3 2019-04-17 13:30:00            Mary  Cillum aute et cupidatat ipsum, occaecat lorem...
+    4 2019-04-17 15:09:00            John  Eiusmod irure laboris dolore anim, velit velit...
 
 .. seealso::
     `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt>`_

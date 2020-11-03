@@ -38,13 +38,12 @@ class ChatGenerator:
             >>> from whatstk.data import whatsapp_urls
             >>> chat = ChatGenerator(size=10).generate(last_timestamp=datetime(2020, 1, 1, 0, 0))
             >>> chat.df.head(5)
-                                              username                                            message
-            date
-            2019-12-31 09:43:04.000525            John         Quis labore laboris proident et deserunt.
-            2019-12-31 10:19:21.980039  +1 123 456 789               Non ullamco esse nulla voluptate. 🇩🇰
-            2019-12-31 13:56:45.575426            John  Duis non ut officia, enim enim qui cupidatat a...
-            2019-12-31 15:47:29.995420        Giuseppe              Non ut nulla laboris nostrud aute. 🏊🏻
-            2019-12-31 16:23:00.348542            John                     Tempor irure in velit tempor.
+                                    date  username                                            message
+            0 2019-12-31 09:43:04.000525  Giuseppe                               Nisi ad esse cillum.
+            1 2019-12-31 10:19:21.980039  Giuseppe      Tempor dolore sint in eu lorem veniam veniam.
+            2 2019-12-31 13:56:45.575426  Giuseppe  Do quis fugiat sint ut ut, do anim eu est qui ...
+            3 2019-12-31 15:47:29.995420  Giuseppe  Do qui qui elit ea in sed culpa, aliqua magna ...
+            4 2019-12-31 16:23:00.348542      Mary  Sunt excepteur mollit voluptate dolor sint occ...
 
     """
 
@@ -140,7 +139,7 @@ class ChatGenerator:
             COLNAMES_DF.DATE: timestamps,
             COLNAMES_DF.USERNAME: users,
             COLNAMES_DF.MESSAGE: messages
-        }).set_index(COLNAMES_DF.DATE)
+        })
         return df
 
     def generate(self, filepath=None, hformat=None, last_timestamp=None):

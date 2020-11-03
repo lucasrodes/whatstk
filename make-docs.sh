@@ -8,7 +8,7 @@
 #     'sphinx.ext.autodoc'
 # ]
 # 3. use `$ make clean`
-sphinx-apidoc -f -o source/ ../whatstk/ ['setup.py', 'tests/']
+sphinx-apidoc -f -o source/ ../whatstk/ #['setup.py', 'tests/']
 make html
 
 

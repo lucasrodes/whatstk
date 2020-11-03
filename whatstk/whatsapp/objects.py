@@ -22,13 +22,12 @@ class WhatsAppChat(BaseChat):
             >>> from whatstk.data import whatsapp_urls
             >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON)
             >>> chat.df.head(5)
-                                    username                                            message
-            date
-            2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
-            2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!
-            2016-08-06 13:30:00        Misty  Hey guys! Long time haven't heard anything fro...
-            2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
-            2016-08-06 14:30:00        Misty                                          Definetly
+                             date     username                                            message
+            0 2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
+            1 2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!
+            2 2016-08-06 13:30:00        Misty  Hey guys! Long time haven't heard anything fro...
+            3 2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
+            4 2016-08-06 14:30:00        Misty                                          Definetly
 
     """
     def __init__(self, df):
@@ -101,13 +100,12 @@ class WhatsAppChat(BaseChat):
                 >>> filepath_2 = whatsapp_urls.LOREM2
                 >>> chat = WhatsAppChat.from_sources(filepaths=[filepath_1, filepath_2])
                 >>> chat.df.head(5)
-                                           username                                            message
-                date
-                2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.
-                2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...
-                2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...
-                2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...
-                2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
+                                 date        username                                            message
+                0 2019-10-20 10:16:00            John        Laborum sed excepteur id eu cillum sunt ut.
+                1 2019-10-20 11:15:00            Mary  Ad aliquip reprehenderit proident est irure mo...
+                2 2019-10-20 12:16:00  +1 123 456 789  Nostrud adipiscing ex enim reprehenderit minim...
+                3 2019-10-20 12:57:00  +1 123 456 789  Deserunt proident laborum exercitation ex temp...
+                4 2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
 
         """
         dfs = []
@@ -138,7 +136,7 @@ class WhatsAppChat(BaseChat):
         if not hformat:
             hformat = "%y-%m-%d, %H:%M - %name:"
         lines = []
-        raw_lines = self.df.reset_index().values.tolist()
+        raw_lines = self.df.values.tolist()
         for line in raw_lines:
             date, user, text = line
             hformat = hformat.replace('%name', '{name}')

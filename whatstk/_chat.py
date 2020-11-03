@@ -55,7 +55,7 @@ class BaseChat:
             datetime
 
         """
-        return self.df.index.min()
+        return self.df[COLNAMES_DF.DATE].min()
 
     @property
     def end_date(self):
@@ -65,7 +65,7 @@ class BaseChat:
             datetime
 
         """
-        return self.df.index.max()
+        return self.df[COLNAMES_DF.DATE].max()
 
     @classmethod
     def from_source(cls, **kwargs):
