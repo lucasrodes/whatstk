@@ -1,8 +1,8 @@
 emoji==0.6.0
-numpy==1.19.3
-pandas==1.1.4
-plotly==4.12.0
+numpy==1.19.5
+pandas==1.2.0
+plotly==4.14.3
 python-lorem==1.1.2
-scipy==1.5.3
-seaborn==0.11.0
-certifi==2020.6.20
+scipy==1.6.0
+seaborn==0.11.1
+certifi==2020.12.5
