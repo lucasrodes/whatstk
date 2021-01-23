@@ -44,7 +44,7 @@ setup(
         'Github': 'http://github.com/lucasrodes/whatstk',
         'Bug Tracker': 'https://github.com/lucasrodes/whatstk/issues',
     },
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     entry_points={
         'console_scripts': [
             'whatstk-generate-chat=whatstk.scripts.generate_chats:main',
