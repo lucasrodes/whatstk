@@ -18,7 +18,9 @@ install:
   - mkdir -p tests/chats/hformats tests/chats/merge
   - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
   - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
-  - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
+  - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path
+  tests/chats/merge/ --filenames file2.txt
+  - python3 -m pip install cibuildwheel==1.8.0
 #pip install -r requirements.txt 
 script:
   - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
