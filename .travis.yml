@@ -1,5 +1,4 @@
 dist: xenial
-os: linux
 language: python
 python:
   - 3.7
@@ -19,8 +18,7 @@ install:
   - mkdir -p tests/chats/hformats tests/chats/merge
   - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
   - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
-  - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path
-  tests/chats/merge/ --filenames file2.txt
+  - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
 #pip install -r requirements.txt 
 script:
   - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
@@ -28,7 +26,7 @@ script:
 after_success:
   - codecov # submit coverage
   - cd docs
-  - make clean && make html # generate documentation
+  - make clean && make html # generate documentation
   - cd ..
 
 jobs:
@@ -39,7 +37,7 @@ jobs:
       install: pip install -e .
       script:
         - cd docs
-        - make clean && make html # generate documentation
+        - make clean && make html # generate documentation
         - cd ..
       after_success:
         - head -n 34 docs/conf.py
@@ -52,7 +50,7 @@ jobs:
           on:
             tags: true
         - provider: pages
-          cleanup: true
+          skip_cleanup: true
           github_token: $GITHUB_TOKEN
           keep-history: true
           on:
