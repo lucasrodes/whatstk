@@ -12,7 +12,6 @@ before_install:
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
   - pip install -r requirements-docs.txt
-  - pip install cibuildwheel==1.8.0
 install:
   - ls -l
   - pip uninstall whatstk
