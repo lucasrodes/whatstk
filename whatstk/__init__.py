@@ -11,7 +11,7 @@ from whatstk.graph import FigureBuilder
 
 name = "whatstk"
 
-__version__ = "0.3.1"
+__version__ = "0.4.0.dev0"
 
 __all__ = [
     'WhatsAppChat',
