@@ -11,6 +11,7 @@ before_install:
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
   - pip install -r requirements-docs.txt
+  - pip install cibuildwheel==1.8.0
 install:
   - ls -l
   - pip uninstall whatstk
@@ -20,7 +21,6 @@ install:
   - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
   - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path
   tests/chats/merge/ --filenames file2.txt
-  - python3 -m pip install cibuildwheel==1.8.0
 #pip install -r requirements.txt 
 script:
   - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
