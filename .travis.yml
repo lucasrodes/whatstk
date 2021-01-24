@@ -29,16 +29,6 @@ jobs:
   include:
     - stage: deploy
       python: 3.8
-      before_install: pip install -r requirements-docs.txt
-      install: pip install -e .
-      script:
-        - cd docs
-        - make clean && make html # generate documentation
-        - cd ..
-      after_success:
-        - head -n 34 docs/conf.py
-        - head -n 12 README.md
-        - head -n 2 .bumpversion.cfg
       deploy:
         - provider: pypi
           user: $USER_PYPI
