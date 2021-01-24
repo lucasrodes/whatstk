@@ -4,6 +4,7 @@ import pytest
 from whatstk.whatsapp.parser import df_from_txt_whatsapp
 from whatstk.whatsapp.hformat import get_supported_hformats_as_dict
 from whatstk.utils.exceptions import HFormatError
+from whatstk.utils.utils import COLNAMES_DF
 
 
 # Generate chats
@@ -46,7 +47,7 @@ def test_df_from_txt_whatsapp():
         chats.append(chat)
 
         # Check manual and auto chats are equal
-        assert(chats[0].equals(chats[1]))
+        assert(chats[0].equals(chats[1]))  # TODO: Assumes there are always two elements in list chats!
 
         all_chats.append(chat)
         hformats.append(hformat)
@@ -55,10 +56,10 @@ def test_df_from_txt_whatsapp():
     for i in range(len(all_chats)):
         record = {'chat': i}
         for j in range(i, len(all_chats)):
-            if (all_chats[i].index.second.nunique() == 1) & (all_chats[j].index.second.nunique() != 1):
-                all_chats[j].index = all_chats[j].index.map(lambda x: x.replace(second=0))
-            elif (all_chats[j].index.second.nunique() == 1) & (all_chats[i].index.second.nunique() != 1):
-                all_chats[i].index = all_chats[i].index.map(lambda x: x.replace(second=0))
+            if (all_chats[i][COLNAMES_DF.DATE].dt.second.nunique() == 1) & (all_chats[j][COLNAMES_DF.DATE].dt.second.nunique() != 1):
+                all_chats[j][COLNAMES_DF.DATE] = all_chats[j][COLNAMES_DF.DATE].map(lambda x: x.replace(second=0))
+            elif (all_chats[j][COLNAMES_DF.DATE].dt.second.nunique() == 1) & (all_chats[i][COLNAMES_DF.DATE].dt.second.nunique() != 1):
+                all_chats[i][COLNAMES_DF.DATE] = all_chats[i][COLNAMES_DF.DATE].map(lambda x: x.replace(second=0))
             record[j] = all_chats[i].equals(all_chats[j])
         records.append(record)
     df = pd.DataFrame.from_records(records, index="chat")

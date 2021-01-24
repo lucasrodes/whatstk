@@ -267,6 +267,7 @@ docs2
 version-info.cfg
 py37
 py38
+py39
 *.ipynb
 
 .pypirc
@@ -281,3 +282,4 @@ reports
 
 docs/_build/
 package-lock.json
+version-changes

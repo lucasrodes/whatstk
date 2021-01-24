@@ -14,7 +14,7 @@ with open(os.path.join(this_directory, 'requirements.txt')) as f:
 
 setup(
     name='whatstk',
-    version="0.3.1",
+    version="0.4.0",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -32,9 +32,9 @@ setup(
         "Development Status :: 4 - Beta",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
@@ -44,7 +44,7 @@ setup(
         'Github': 'http://github.com/lucasrodes/whatstk',
         'Bug Tracker': 'https://github.com/lucasrodes/whatstk/issues',
     },
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     entry_points={
         'console_scripts': [
             'whatstk-generate-chat=whatstk.scripts.generate_chats:main',
