@@ -10,7 +10,6 @@ before_install:
   # - git fetch --tags
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
-  - pip install -r requirements-docs.txt
 install:
   - ls -l
   - pip uninstall whatstk
@@ -25,9 +24,6 @@ script:
   - pytest --cov-report term --cov=whatstk tests/
 after_success:
   - codecov # submit coverage
-  - cd docs
-  - make clean && make html # generate documentation
-  - cd ..
 
 jobs:
   include:
@@ -49,10 +45,3 @@ jobs:
           password: $PWD_PYPI
           on:
             tags: true
-        - provider: pages
-          skip_cleanup: true
-          github_token: $GITHUB_TOKEN
-          keep-history: true
-          on:
-            tags: true
-          local_dir: docs/_build/html/
