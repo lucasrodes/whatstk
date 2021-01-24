@@ -29,7 +29,7 @@ copy_right = '2020, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.4.0.b0'
+version = 'v0.4.0.rc0'
 
 
 # -- General configuration ---------------------------------------------------
