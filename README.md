@@ -18,7 +18,7 @@
   <a href="https://travis-ci.org/lucasrodes/whatstk"><img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop"></a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk"><img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg"></a>
   <a href="https://www.python.org/downloads/release/python-3/"><img alt="Python 3" src="https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg?&logo=python&logoColor=yellow"></a>
-  <a href="https://lcsrg.me/whatstk"><img alt="Documentation" src="https://img.shields.io/badge/whatstk-docs-royalblue.svg"></a>
+  <a href="https://whatstk.lcsrg.me/"><img alt="Documentation" src="https://img.shields.io/badge/whatstk-docs-royalblue.svg"></a>
   <a href="https://pepy.tech/badge/whatstk"><img alt="Number of downloads" src="https://pepy.tech/badge/whatstk"></a>
   <a href="http://github.com/lucasrodes/whatstk"><img alt="HitCount" src="https://views.whatilearened.today/views/github/lucasrodes/whatstk.svg"></a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE"><img alt="GitHub
@@ -42,7 +42,7 @@ It is distributed under the GPL-3.0 license.
 ### Content
 * [Installation](#installation)
 * [Getting Started](#getting-started)
-* [Documentation](https://lcsrg.me/whatstk)
+* [Documentation](https://whatstk.lcsrg.me/)
 * [Contributing](#contributing)
 
 
@@ -55,7 +55,7 @@ pip install whatstk
 
 ## Getting Started
 #### Export your chat using your phone: 
-Follow these [instructions](https://lcsrg.me/whatstk/source/getting_started/export_chat.html).
+Follow these [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html).
 
 #### Convert chat to csv
 Easily convert your txt chat file to csv using command `whatstk-to-csv`.
@@ -75,14 +75,14 @@ chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 #### More examples
 
-Find more examples in the [getting started](https://lcsrg.me/whatstk/source/getting_started/index.html) and 
-[examples](https://lcsrg.me/whatstk/source/code_examples/index.html) sections.
+Find more examples in the [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started) and 
+[examples](https://whatstk.readthedocs.io/en/stable/source/code_examples) sections.
 
 ## Documentation
-See [official documentation](https://lcsrg.me/whatstk).
+See [official documentation](https://whatstk.lcsrg.me/).
 
 ## Contribute
-See [contribute section](https://lcsrg.me/whatstk/source/contribute.html).
+See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contribute.html).
 
 ## License
 [GPL-3.0](LICENSE)
