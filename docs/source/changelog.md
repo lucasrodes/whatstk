@@ -1,4 +1,5 @@
 # Changelog
+> This section needs to be reviewed. Please refer to the repository commit messages for more information.
 
 ## Unreleased (2020-11-02)
 
