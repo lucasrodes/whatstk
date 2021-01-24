@@ -40,7 +40,7 @@ setup(
     ],
     keywords='whatsapp analysis parser chat',
     project_urls={
-        'Documentation': 'https://lcsrg.me/whatstk',
+        'Documentation': 'https://whatstk.lcsrg.me/',
         'Github': 'http://github.com/lucasrodes/whatstk',
         'Bug Tracker': 'https://github.com/lucasrodes/whatstk/issues',
     },
