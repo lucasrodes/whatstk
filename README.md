@@ -59,7 +59,7 @@ It is distributed under the GPL-3.0 license.
 * [Getting Started](#getting-started)
 * [Documentation](https://lcsrg.me/whatstk)
 * [Contributing](#contributing)
-* [Cite](#cite)
+* [Citation](#citation)
 
 ## Installation
 
@@ -102,7 +102,5 @@ See [contribute section](https://lcsrg.me/whatstk/source/contribute.html).
 ## License
 [GPL-3.0](LICENSE)
 
-## Cite
-```
+## Citation
 Lucas Rodés-Guirao. "whatstk, WhatsApp analysis and parsing toolkit", https://github.com/lucasrodes/whatstk
-```
