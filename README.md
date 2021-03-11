@@ -45,7 +45,7 @@
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
 **whatstk** is a python package providing tools to parse, analyze and visualise WhatsApp chats developed under the
-**[sociepy](https://github.com/sociepy)** project. Easily convert your chats to csv or simply visualise some stats using
+**[sociepy](https://sociepy.org)** project. Easily convert your chats to csv or simply visualise some stats using
 the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
 the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
 
@@ -57,7 +57,7 @@ It is distributed under the GPL-3.0 license.
 ### Content
 * [Installation](#installation)
 * [Getting Started](#getting-started)
-* [Documentation](https://whatstk.lcsrg.me/)
+* [Documentation](https://whatstk.readthedocs.io/en/stable/)
 * [Contributing](#contributing)
 * [Citation](#citation)
 
@@ -90,11 +90,11 @@ chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 #### More examples
 
-Find more examples in the [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started) and 
-[examples](https://whatstk.readthedocs.io/en/stable/source/code_examples) sections.
+Find more examples in the [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and 
+[examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html) sections.
 
 ## Documentation
-See [official documentation](https://whatstk.lcsrg.me/).
+See [official documentation](https://whatstk.readthedocs.io/en/stable/).
 
 ## Contribute
 See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contribute.html).
