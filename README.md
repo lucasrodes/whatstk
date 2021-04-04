@@ -3,10 +3,6 @@
 </div>
 <h1 align="left" style="border-bottom: none;"> whatstk: analyze WhatsApp chats with python
 </h1>
-
----
-
-<br>
 <p align="left">
   <a href="#">
     <img alt="Package version" src="https://img.shields.io/badge/pypi-0.4.0-blue.svg?&color=25D366&logo=whatsapp&">
@@ -41,6 +37,7 @@
   </a>
 </p>
 
+----
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
@@ -58,7 +55,7 @@ It is distributed under the GPL-3.0 license.
 * [Installation](#installation)
 * [Getting Started](#getting-started)
 * [Documentation](https://whatstk.readthedocs.io/en/stable/)
-* [Contributing](#contributing)
+* [Contribute](#contribute)
 * [Citation](#citation)
 
 ## Installation
@@ -67,10 +64,12 @@ It is distributed under the GPL-3.0 license.
 pip install whatstk
 ```
 
+_More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
 
 ## Getting Started
+
 #### Export your chat using your phone: 
-Follow these [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html).
+_See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html)._
 
 #### Convert chat to csv
 Easily convert your txt chat file to csv using command `whatstk-to-csv`.
@@ -90,14 +89,14 @@ chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 #### More examples
 
-Find more examples in the [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and 
-[examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html) sections.
+_See more in sections [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and 
+[examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html)._
 
 ## Documentation
-See [official documentation](https://whatstk.readthedocs.io/en/stable/).
+_See [official documentation](https://whatstk.readthedocs.io/en/stable/)._
 
 ## Contribute
-See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contribute.html).
+_See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contribute.html)._
 
 ## License
 [GPL-3.0](LICENSE)
