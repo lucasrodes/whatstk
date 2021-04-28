@@ -176,7 +176,7 @@ class BaseChat:
         """
         if not filepath.endswith('.csv'):
             raise ValueError("filepath must end with .csv")
-        self.df.to_csv(filepath, index_col=False)
+        self.df.to_csv(filepath, index=False)
 
     def __len__(self):
         """Number of messages.
