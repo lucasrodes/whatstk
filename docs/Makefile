@@ -21,5 +21,5 @@ help:
 %: Makefile
 	# gitchangelog > source/changelog.rst
 	# auto-changelog --output source/changelog.md -u
-	auto-changelog --repo .. --output source/changelog.md -u
+	# auto-changelog --repo .. --output source/changelog.md -u
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
