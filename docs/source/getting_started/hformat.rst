@@ -21,8 +21,8 @@ See it for yourself and open :ref:`an exported chat file <Export a WhatsApp chat
     07.08.2016, 11:45 - Prof. Oak: Kids, shall I design a smart poke-ball?
 
 In this example, the header is **day.month.year, hour:minutes - username:** which corresponds to the header format
-(a.k.a. **hformat**) ``'%d.%m.%y, %H:%M - %name:'``. However, in your case it may be slightly different depending on you
-phone settings. 
+(a.k.a. **hformat**) ``'%d.%m.%y, %H:%M - %name:'``. However, in your case it may be slightly different depending on 
+your phone settings. 
 
 Check the table below to see the codes for each header format unit:
 
@@ -34,7 +34,7 @@ Check the table below to see the codes for each header format unit:
 
    ``'%y'``, Year
     ``'%m'``,	Month of the year (1-12)
-    ``'%d'``,	Day of the month (0-31)
+    ``'%d'``,	Day of the month (1-31)
     ``'%H'``,	Hour 24h-clock (0-23)
     ``'%P'``,	Hour 12h-clock (1-12)
     ``'%M'``,	Minutes (0-60)
