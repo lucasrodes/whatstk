@@ -87,7 +87,7 @@ argument ``date_mode``, which allows for several types of count-grouping methods
 counts per date (what has been used in previous examples).
 
 
-Using ``date_mode=hour`` illustres the distribution of user interventions over the 24 hours in a day. In this example,
+Using ``date_mode=hour`` illustrates the distribution of user interventions over the 24 hours in a day. In this example,
 for instance, Giuseppe has their interventions peak in hour ranges [01:00, 02:00] and [20:00, 21:00], with 21
 interventions in each. 
 
@@ -100,7 +100,7 @@ interventions in each.
 .. raw:: html
     :file: ../../_static/html/interventions_count_hours.html
 
-Using ``date_mode=weekday`` illustres the distribution of user interventions over the 7 days of the week. In this
+Using ``date_mode=weekday`` illustrates the distribution of user interventions over the 7 days of the week. In this
 example, for instance, we see that Monday and Sunday are the days with the most interventions.
 
 .. code-block:: python
@@ -113,7 +113,7 @@ example, for instance, we see that Monday and Sunday are the days with the most 
     :file: ../../_static/html/interventions_count_weekday.html
 
 
-Using ``date_mode=month`` illustres the distribution of user interventions over the 12 months of the year. In this
+Using ``date_mode=month`` illustrates the distribution of user interventions over the 12 months of the year. In this
 example, for instance, we observe that all users have their interventions peak in June (except for Giuseppe, which has
 their peak in July). Maybe summer calling?
 
