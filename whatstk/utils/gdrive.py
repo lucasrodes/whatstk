@@ -1,9 +1,13 @@
+"""Google Drive utils."""
+
+
 import yaml
 from shutil import copyfile
 import os
 
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
+from pydrive2.files import ApiRequestError
 
 
 # Create .config/whatstk/gdrive if it does not exist
@@ -16,14 +20,13 @@ CREDENTIALS_PATH = os.path.join(CONFIG_PATH, "credentials.json")
 def gdrive_init(client_secret_file):
     """Initialize GDrive credentials.
 
-    This should only run once before reading a file from Google Drive the first time. Subsequent executions should run seamlessly.
+    This should only run once before reading a file from Google Drive the first time. Subsequent executions should run
+    seamlessly.
 
     To obtain `client_secret_file`, follow the instructions from:
-    
     https://medium.com/analytics-vidhya/how-to-connect-google-drive-to-python-using-pydrive-9681b2a14f20
 
     Notes:
-
     - Additionally, make sure to add yourself in Test users, as noted in:
     https://stackoverflow.com/questions/65980758/pydrive-quickstart-and-error-403-access-denied
     - Select Desktop App instead of Web Application as the application type.
@@ -74,8 +77,13 @@ def _load_str_from_file_id(file_id):
     gauth = GoogleAuth(settings_file=SETTINGS_PATH)
     drive = GoogleDrive(gauth)
     # Load file using id
-    file_obj = drive.CreateFile({'id': file_id})
-    file_obj.FetchMetadata()
+    try:
+        file_obj = drive.CreateFile({'id': file_id})
+        file_obj.FetchMetadata()
+    except ApiRequestError:
+        raise ValueError(
+            f"File ID {file_id} not valid. Please use a valid File ID. You can find it in the shareable file link."
+        )
     # Get raw file content as str
     txt = file_obj.GetContentString()
     return txt

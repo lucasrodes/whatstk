@@ -135,7 +135,7 @@ def _str_from_txt(filepath: str, encoding='utf-8'):
             text = response.read()
         text = text.decode(encoding)
     elif filepath.startswith("gdrive"):
-        file_id = filepath.lstrip("gdrive://")
+        file_id = filepath.replace("gdrive://", "")
         text = _load_str_from_file_id(file_id)
     else:
         raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
