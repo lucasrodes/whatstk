@@ -15,8 +15,9 @@ important  additions to previous tutorials are:
 - Make sure to add yourself in Test users, as noted in `this thread <https://stackoverflow.com/questions/65980758/pydrive-quickstart-and-error-403-access-denied>`_
 - Select Desktop App instead of Web Application as the application type when creating the OAuth Client ID.
 
-Once you have downloaded the clients secrets, run :func:`gdrive_init <whatstk.utils.gdrive_init>`, which will guide you
-through the Authentification process. You will need to access a link via your browser and copy paste a verification code.
+Once you have downloaded the clients secrets, run :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`, which will
+guide you through the Authentification process. You will need to access a link via your browser and copy paste a
+verification code.
 
 .. code-block:: python
 
@@ -38,11 +39,11 @@ You can pass a file reference to :class:`WhatsAppChat <whatstk.WhatsAppChat>` by
 Drive have a unique ID. To obtain it, create a `shareable link
 <https://support.google.com/drive/answer/7166529?co=GENIE.Platform%3DDesktop&hl=en>`_, which will have the following format:
 
-```
-https://drive.google.com/file/d/[FILE-ID]/view?usp=sharing
-```
+.. code-block::
+    https://drive.google.com/file/d/[FILE-ID]/view?usp=sharing
 
-Now, simply copy `[FILE-ID]` and run:
+
+Now, simply copy ``[FILE-ID]`` and run:
 
 .. code-block:: python
 
