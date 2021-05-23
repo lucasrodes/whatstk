@@ -34,11 +34,10 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
 
     Args:
         filepath (str): Path to the file. Accepted sources are:
+
                             - Local file, e.g. 'path/to/file.txt'.
                             - URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
-                            - Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format
-                              is expected to be gdrive://[FILE-ID]. Note that in order to load a file from Google
-                              Drive you first need to run :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
+                            - Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected to be gdrive://[FILE-ID]. Note that in order to load a file from Google Drive you first need to run :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
         auto_header (bool, optional): Detect header automatically. If False, ``hformat`` is required.
         hformat (str, optional): :ref:`Format of the header <The header format>`, e.g.
                                     ``'[%y-%m-%d %H:%M:%S] - %name:'``. Use following keywords:
