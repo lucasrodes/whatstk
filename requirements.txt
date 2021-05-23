@@ -6,3 +6,4 @@ python-lorem==1.1.2
 scipy~=1.6.0
 seaborn==0.11.1
 certifi==2020.12.5
+PyDrive2~=1.8.2
