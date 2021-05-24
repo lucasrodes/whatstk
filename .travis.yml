@@ -25,6 +25,27 @@ script:
 after_success:
   - codecov # submit coverage
 
+# Deplpoy
+jobs:
+  include:
+    # perform a linux build
+    - services: docker
+    # and a windows build
+    - os: windows
+      language: shell
+      before_install:
+        - choco upgrade python -y --version 3.8.6
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        # make sure it's on PATH as 'python3'
+        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+
+install:
+  - python3 -m pip install cibuildwheel==1.11.0
+
+script:
+  # build the wheels, put them into './wheelhouse'
+  - python3 -m cibuildwheel --output-dir wheelhouse
+
 jobs:
   include:
     - stage: deploy
