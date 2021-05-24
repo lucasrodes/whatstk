@@ -8,6 +8,7 @@ git:
   depth: false
 before_install:
   # - git fetch --tags
+  - pip install --upgrade pip
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
 install:
