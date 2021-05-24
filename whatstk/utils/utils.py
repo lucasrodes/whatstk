@@ -36,3 +36,12 @@ def _get_df(df, chat):
     if (df is None) and (chat is not None):
         df = chat.df
     return df
+
+
+def map_hformat_filename(filename):
+    filename = (
+        filename
+        .replace(' ', '_')
+        .replace('/', '--')
+        .replace(':', ';')
+    )

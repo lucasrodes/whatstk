@@ -4,7 +4,7 @@ import pytest
 from whatstk.whatsapp.parser import df_from_txt_whatsapp
 from whatstk.whatsapp.hformat import get_supported_hformats_as_dict
 from whatstk.utils.exceptions import HFormatError
-from whatstk.utils.utils import COLNAMES_DF
+from whatstk.utils.utils import COLNAMES_DF, map_hformat_filename
 
 
 # Generate chats
@@ -35,7 +35,7 @@ def test_df_from_txt_whatsapp():
         chats = []
         hformat = elem['format']
         auto_header = bool(elem['auto_header'])
-        filename = hformat.replace(' ', '_').replace('/', '\\')
+        filename = map_hformat_filename(hformat)
         filename = os.path.join(output_folder, '{}.txt'.format(filename))
 
         # Auto
