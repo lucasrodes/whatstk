@@ -25,7 +25,6 @@ script:
 after_success:
   - codecov # submit coverage
 
-# Deplpoy
 jobs:
   include:
     # perform a linux build
@@ -38,18 +37,11 @@ jobs:
         - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
-
-install:
-  - python3 -m pip install cibuildwheel==1.11.0
-
-script:
-  # build the wheels, put them into './wheelhouse'
-  - python3 -m cibuildwheel --output-dir wheelhouse
-
-jobs:
-  include:
     - stage: deploy
       python: 3.8
+      before_deploy:
+        - python3 -m pip install cibuildwheel==1.11.0
+        - python3 -m cibuildwheel --output-dir wheelhouse
       deploy:
         - provider: pypi
           user: $USER_PYPI
