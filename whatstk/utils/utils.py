@@ -45,3 +45,4 @@ def map_hformat_filename(filename):
         .replace('/', '--')
         .replace(':', ';')
     )
+    return filename
