@@ -88,6 +88,7 @@ def test_df_from_txt_whatsapp_gdrive(mocker):
     # mocker.patch('whatstk.utils.gdrive._load_str_from_file_id', return_value="bla bla")
     mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)
     mocker.patch("pydrive2.files.GoogleDriveFile.GetContentString", return_value=mock_text)
+    mocker.patch("whatstk.utils.gdrive._check_gdrive_config", return_value=None)
     df = df_from_txt_whatsapp(gdrive_url)
     assert(isinstance(df, pd.DataFrame))
 
