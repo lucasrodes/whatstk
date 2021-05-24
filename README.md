@@ -11,7 +11,7 @@
 <!-- style=for-the-badge -->
 
 <p align="left">
-  <a href="https://travis-ci.org/lucasrodes/whatstk">
+  <a href="https://travis-ci.com/lucasrodes/whatstk">
     <img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
