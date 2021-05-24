@@ -6,11 +6,9 @@ python:
   - 3.9
 git:
   depth: false
-before_install:
-  # - git fetch --tags
+install:
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
-install:
   - ls -l
   - pip uninstall whatstk
   - pip install -e .
