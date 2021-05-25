@@ -215,6 +215,8 @@ def _extract_header_format_from_components(elements_list, template_list):
         logging.error(len(elements_list), exc_info=True)
         logging.error(len(elements_list_), exc_info=True)
         logging.error(df.shape, exc_info=True)
+        logging.error(df.dtypes, exc_info=True)
+        logging.error(df.iloc[:2], exc_info=True)
         logging.error("----------------------------------")
         logging.error(dates_df.shape, exc_info=True)
         logging.error(err, exc_info=True)
