@@ -20,14 +20,14 @@
   <a href='https://whatstk.readthedocs.io/en/stable/?badge=stable'>
     <img src='https://readthedocs.org/projects/whatstk/badge/?version=stable' alt='Documentation Status' />
   </a>
+  <a href="https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d">
+    <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
+  </a>
   <a href="https://www.python.org/downloads/release/python-3/">
     <img alt="Python 3" src="https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
-  </a>
-  <a href="http://github.com/lucasrodes/whatstk">
-    <img alt="HitCount" src="https://views.whatilearened.today/views/github/lucasrodes/whatstk.svg">
   </a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
@@ -45,6 +45,9 @@
 **[sociepy](https://sociepy.org)** project. Easily convert your chats to csv or simply visualise some stats using
 the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
 the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
+
+Find a short guide [here](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d).
+
 
 It is distributed under the GPL-3.0 license. 
 
