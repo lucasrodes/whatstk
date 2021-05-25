@@ -45,7 +45,8 @@ def extract_header_from_text(text, encoding='utf-8'):
         hformat = _extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
         return hformat
-    except:  # noqa
+    except Exception as err:  # noqa
+        logging.error(f"❌ {err}", exc_info=True)
         logging.info("Format not found.")
     return None
 

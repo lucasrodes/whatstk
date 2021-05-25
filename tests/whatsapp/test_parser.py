@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import pytest
-from whatstk.whatsapp.parser import df_from_txt_whatsapp
+from whatstk.whatsapp.parser import df_from_txt_whatsapp, _str_from_txt
 from whatstk.whatsapp.hformat import get_supported_hformats_as_dict
 from whatstk.utils.exceptions import HFormatError
 from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
