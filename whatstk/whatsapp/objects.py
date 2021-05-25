@@ -126,7 +126,7 @@ class WhatsAppChat(BaseChat):
         df = merge_chats(dfs)
         return cls(df)
 
-    def to_txt(self, filepath, hformat=None):
+    def to_txt(self, filepath, hformat=None, encoding='utf8'):
         """Export chat to a text file.
 
         Usefull to export the chat to different formats (i.e. using different hformats).
@@ -134,6 +134,9 @@ class WhatsAppChat(BaseChat):
         Args:
             filepath (str): Name of the file to export (must be a local path).
             hformat (str, optional): Header format. Defaults to '%y-%m-%d, %H:%M - %name:'.
+            encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
 
         """
         if not filepath.endswith('.txt'):
@@ -149,5 +152,5 @@ class WhatsAppChat(BaseChat):
             formatted_line = '{} {}'.format(header, text)
             lines.append(formatted_line)
         text = '\n'.join(lines)
-        with open(r"{}".format(filepath), 'w', encoding="utf8") as f:
+        with open(r"{}".format(filepath), 'w', encoding=encoding) as f:
             f.write(text)

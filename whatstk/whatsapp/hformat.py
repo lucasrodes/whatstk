@@ -21,11 +21,14 @@ hformat_support_filename = 'header_format_support.json'
 hformat_support_filepath = os.path.join(this_directory, assets_folder, hformat_support_filename)
 
 
-def is_supported(hformat):
+def is_supported(hformat, encoding='utf8'):
     """Check if header `hformat` is currently supported.
 
     Args:
         hformat (str): Header format.
+        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
 
     Returns:
         tuple:
@@ -33,7 +36,7 @@ def is_supported(hformat):
                 * bool: True if header is supported with `auto_header` feature.
 
     """
-    with open(hformat_support_filepath, 'r') as f:
+    with open(hformat_support_filepath, 'r', encoding=encoding) as f:
         h = json.load(f)
 
     if ('%P' in hformat or "%p" in hformat):
@@ -78,27 +81,33 @@ def is_supported_verbose(hformat):
     return msg
 
 
-def get_supported_hformats_as_list():
+def get_supported_hformats_as_list(encoding='utf8'):
     """Get list of supported formats.
 
     Returns:
         list: List with supported formats (as str).
-
+        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
     """
-    with open(hformat_support_filepath, 'r') as f:
+    with open(hformat_support_filepath, 'r', encoding=encoding) as f:
         h = json.load(f)
     return [hh['format'] for hh in h]
 
 
-def get_supported_hformats_as_dict():
+def get_supported_hformats_as_dict(encoding='utf8'):
     """Get dictionary with supported formats and relevant info.
 
+    Args:
+        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
     Returns:
         dict: Dict with two elements:
                 * ``format``: Header format. All formats appearing are supported.
                 * ``auto_header``: 1 if auto_header is supported), 0 otherwise.
 
     """
-    with open(hformat_support_filepath, 'r') as f:
+    with open(hformat_support_filepath, 'r', encoding=encoding) as f:
         headers = json.load(f)
     return headers

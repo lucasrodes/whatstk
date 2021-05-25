@@ -83,7 +83,7 @@ def test_df_from_txt_whatsapp_url():
 
 def test_df_from_txt_whatsapp_gdrive(mocker):
     gdrive_url = "gdrive://456456456-ewgwegegw"
-    with open(filename1, "r") as f:
+    with open(filename1, "r", encoding='utf8') as f:
         mock_text = f.read()
     # mocker.patch('whatstk.utils.gdrive._load_str_from_file_id', return_value="bla bla")
     mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)

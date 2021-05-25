@@ -128,7 +128,7 @@ def _str_from_txt(filepath: str, encoding='utf-8'):
     """
     # Read local file
     if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
-        with open(filepath, encoding=encoding) as f:
+        with open(filepath, 'r', encoding=encoding) as f:
             text = f.read()
     # Read file from URL
     elif filepath.lower().startswith('http'):
