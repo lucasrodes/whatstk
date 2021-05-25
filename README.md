@@ -46,9 +46,6 @@
 the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
 the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
 
-Find a short guide [here](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d).
-
-
 It is distributed under the GPL-3.0 license. 
 
 ⭐ Please **star** our project if you found it interesting to **give us some dopamine** 😄!
@@ -76,6 +73,7 @@ pip install git+https://github.com/lucasrodes/whatstk.git@develop
 _More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
 
 ## Getting Started
+For a rapid introduction, check this [tutorial on Medium](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d).
 
 #### Export your chat using your phone: 
 _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html)._
