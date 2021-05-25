@@ -149,5 +149,5 @@ class WhatsAppChat(BaseChat):
             formatted_line = '{} {}'.format(header, text)
             lines.append(formatted_line)
         text = '\n'.join(lines)
-        with open(r"{}".format(filepath), 'w') as f:
+        with open(r"{}".format(filepath), 'w', encoding="utf8") as f:
             f.write(text)
