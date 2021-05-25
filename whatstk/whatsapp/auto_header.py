@@ -212,6 +212,7 @@ def _extract_header_format_from_components(elements_list, template_list):
     try:
         day_pos = ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax()
     except Exception as err:
+        logging.error(dates_df, exc_info=True)
         logging.error(err, exc_info=True)
     dates_df = dates_df.drop(columns=[day_pos])
     # year
