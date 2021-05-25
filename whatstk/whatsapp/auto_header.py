@@ -199,8 +199,8 @@ def _extract_header_format_from_components(elements_list, template_list):
             template_list_.append(t)
     # Get positions
     df = pd.DataFrame(elements_list_)
-    dates_df = df.select_dtypes(int)
-
+    # dates_df = df.select_dtypes(int)
+    dates_df = df.select_dtypes('number')
     template = template_list[0]
 
     if '%p' in template:
