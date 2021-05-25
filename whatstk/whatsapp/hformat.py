@@ -102,6 +102,7 @@ def get_supported_hformats_as_dict(encoding='utf8'):
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
                              `List of Python standard encodings
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
+
     Returns:
         dict: Dict with two elements:
                 * ``format``: Header format. All formats appearing are supported.
