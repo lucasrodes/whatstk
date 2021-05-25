@@ -3,7 +3,9 @@
 
 import logging
 import re
+
 import pandas as pd
+
 from whatstk.utils.exceptions import RegexError
 
 
@@ -209,17 +211,7 @@ def _extract_header_format_from_components(elements_list, template_list):
         hour_code = "%H"
 
     # day
-    try:
-        day_pos = ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax()
-    except Exception as err:
-        logging.error(len(elements_list), exc_info=True)
-        logging.error(len(elements_list_), exc_info=True)
-        logging.error(df.shape, exc_info=True)
-        logging.error(df.dtypes, exc_info=True)
-        logging.error(df.iloc[:2], exc_info=True)
-        logging.error("----------------------------------")
-        logging.error(dates_df.shape, exc_info=True)
-        logging.error(err, exc_info=True)
+    day_pos = ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax()
     dates_df = dates_df.drop(columns=[day_pos])
     # year
     # year_pos = dates_df.std().idxmin()
