@@ -20,7 +20,6 @@ setup(
     long_description_content_type='text/markdown',
     url='http://github.com/lucasrodes/whatstk',
     author='Lucas Rodes-Guirao',
-    author_email='hi@lcsrg.me',
     license='GPL-v3',
     install_requires=requirements,
     packages=find_packages('.'),
