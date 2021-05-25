@@ -64,6 +64,12 @@ It is distributed under the GPL-3.0 license.
 pip install whatstk
 ```
 
+Install develop version (not stable):
+
+```
+pip install git+https://github.com/lucasrodes/whatstk.git@develop
+```
+
 _More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
 
 ## Getting Started
