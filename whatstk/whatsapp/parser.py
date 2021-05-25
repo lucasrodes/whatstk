@@ -5,10 +5,13 @@ import os
 import re
 from datetime import datetime
 from urllib.request import urlopen
+
 import pandas as pd
+
 from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
 from whatstk.whatsapp.auto_header import extract_header_from_text
+from whatstk.utils.gdrive import _load_str_from_file_id
 
 
 regex_simplifier = {
@@ -30,8 +33,13 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
     """Load chat as a DataFrame.
 
     Args:
-        filepath (str): Path to the file. It can be a local file (e.g. 'path/to/file.txt') or an URL to a hosted
-                            file (e.g. 'http://www.url.to/file.txt')
+        filepath (str): Path to the file. Accepted sources are:
+
+                * Local file, e.g. 'path/to/file.txt'.
+                * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
+                * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
+                  to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
+                  :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
         auto_header (bool, optional): Detect header automatically. If False, ``hformat`` is required.
         hformat (str, optional): :ref:`Format of the header <The header format>`, e.g.
                                     ``'[%y-%m-%d %H:%M:%S] - %name:'``. Use following keywords:
@@ -51,7 +59,7 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
 
                                     Example 2: For the header '2016-08-12, 4:20 PM - username:' we have
                                     ``hformat='%y-%m-%d, %I:%M %P - %name:'``.
-        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. 'utf-8').
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
 
@@ -62,44 +70,14 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
 
         * :func:`WhatsAppChat.from_source <whatstk.whatsapp.objects.WhatsAppChat.from_source>`
         * :func:`extract_header_from_text <whatstk.whatsapp.auto_header.extract_header_from_text>`
+        * :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`
 
     """
     # Read local file
-    if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
-        with open(filepath, encoding=encoding) as f:
-            text = f.read()
-    # Read file from URL
-    elif filepath.lower().startswith('http'):
-        with urlopen(filepath) as response:  # noqa
-            text = response.read()
-        text = text.decode(encoding)
-    else:
-        raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
+    text = _str_from_txt(filepath, encoding)
 
-    # Get hformat
-    if hformat:
-        # Bracket is reserved character in RegEx, add backslash before them.
-        hformat = hformat.replace('[', r'\[').replace(']', r'\]')
-    if not hformat and auto_header:
-        hformat = extract_header_from_text(text)
-        if not hformat:
-            raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
-                               " input argument `hformat`. Report this issue so that automatic header detection support"
-                               " for your header format is added: https://github.com/lucasrodes/whatstk/issues.")
-    elif not (hformat or auto_header):
-        raise ValueError("If auto_header is False, hformat can't be None.")
-
-    # Generate regex for given hformat
-    r, r_x = generate_regex(hformat=hformat)
-
-    # Parse chat to DataFrame
-    try:
-        df = _parse_chat(text, r)
-    except RegexError:
-        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
-    df = _remove_alerts_from_df(r_x, df)
-
-    df = _add_schema(df)
+    # Build dataframe
+    df = _df_from_str(text, auto_header, hformat)
     return df
 
 
@@ -131,6 +109,66 @@ def generate_regex(hformat):
     hformat = hformat + ' '
     hformat_x = hformat.split('(?P<username>[^:]*)')[0]
     return hformat, hformat_x
+
+
+def _str_from_txt(filepath: str, encoding='utf-8'):
+    """Read text content as string.
+
+    Args:
+        filepath (str): Path to file. Accepted: local file, url (http://...), Google Drive file (gdrive://[file-id]).
+        encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                                  `List of Python standard encodings <https://docs.python.org/3/library/codecs.
+                                  html#standard-encodings>`_.
+
+    Raises:
+        FileNotFoundError: [description]
+
+    Returns:
+        str: File content as a string.
+    """
+    # Read local file
+    if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
+        with open(filepath, encoding=encoding) as f:
+            text = f.read()
+    # Read file from URL
+    elif filepath.lower().startswith('http'):
+        with urlopen(filepath) as response:  # noqa
+            text = response.read()
+        text = text.decode(encoding)
+    elif filepath.startswith("gdrive"):
+        file_id = filepath.replace("gdrive://", "")
+        text = _load_str_from_file_id(file_id)
+    else:
+        raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
+    return text
+
+
+def _df_from_str(text, auto_header=True, hformat=None):
+    # Get hformat
+    if hformat:
+        # Bracket is reserved character in RegEx, add backslash before them.
+        hformat = hformat.replace('[', r'\[').replace(']', r'\]')
+    if not hformat and auto_header:
+        hformat = extract_header_from_text(text)
+        if not hformat:
+            raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
+                               " input argument `hformat`. Report this issue so that automatic header detection support"
+                               " for your header format is added: https://github.com/lucasrodes/whatstk/issues.")
+    elif not (hformat or auto_header):
+        raise ValueError("If auto_header is False, hformat can't be None.")
+
+    # Generate regex for given hformat
+    r, r_x = generate_regex(hformat=hformat)
+
+    # Parse chat to DataFrame
+    try:
+        df = _parse_chat(text, r)
+    except RegexError:
+        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
+    df = _remove_alerts_from_df(r_x, df)
+
+    df = _add_schema(df)
+    return df
 
 
 def _parse_chat(text, regex):

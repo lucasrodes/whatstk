@@ -20,6 +20,14 @@ whatstk.utils.exceptions module
    :undoc-members:
    :show-inheritance:
 
+whatstk.utils.gdrive module
+--------------------------
+
+.. automodule:: whatstk.utils.gdrive
+   :members:
+   :undoc-members:
+   :show-inheritance:
+      
 whatstk.utils.utils module
 --------------------------
 

@@ -6,7 +6,10 @@ python:
   - 3.9
 git:
   depth: false
+
 install:
+  # - git fetch --tags
+  - pip install --upgrade pip
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
   - ls -l

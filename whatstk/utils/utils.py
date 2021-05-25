@@ -38,7 +38,15 @@ def _get_df(df, chat):
     return df
 
 
-def map_hformat_filename(filename):
+def _map_hformat_filename(filename):
+    """Map hformat to valid filename (Linux, MacOS, Win).
+
+    Args:
+        filename (str): Header format.
+
+    Returns:
+        str: Mapped header format.
+    """
     filename = (
         filename
         .replace(' ', '_')

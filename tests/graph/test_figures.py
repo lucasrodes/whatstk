@@ -1,10 +1,13 @@
 import pytest
-from whatstk.graph.base import FigureBuilder
-from whatstk.whatsapp.objects import WhatsAppChat
 import plotly.graph_objs as go
 
+from whatstk.graph.base import FigureBuilder
+from whatstk.whatsapp.objects import WhatsAppChat
+from whatstk.utils.utils import _map_hformat_filename
 
-filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+
+hformat = "[%d.%m.%y_%I:%M:%S_%p]_%name:"
+filename = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
 
 
 def load_chat_as_df():

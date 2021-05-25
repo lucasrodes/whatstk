@@ -31,4 +31,4 @@ py.test \
     --cov-report html:reports/htmlcov\
     --cov-report term\
     --cov-report xml:reports/cov.xml\
-    --cov=whatstk tests/
+    --cov=whatstk tests
