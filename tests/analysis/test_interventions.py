@@ -211,9 +211,6 @@ def test_interventions_date_cumsum():
     assert(chat.df[COLNAMES_DF.DATE].max().date() == counts.index.max().date())
     assert(chat.df[COLNAMES_DF.DATE].min().date() == counts.index.min().date())
 
-    # TO BE DEPRECATED
-    counts = get_interventions_count(chat=chat, date_mode='date', msg_length=False, cummulative=True)
-
     assert(isinstance(counts, pd.DataFrame))
     # Asswert chat df and counts df have same users
     assert(set(chat.users) == set(counts.columns))
