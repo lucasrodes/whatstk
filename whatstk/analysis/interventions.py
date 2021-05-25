@@ -1,7 +1,6 @@
 """Base analysis tools."""
 
 
-import warnings
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
 
