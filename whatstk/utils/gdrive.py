@@ -17,7 +17,7 @@ SETTINGS_PATH = os.path.join(CONFIG_PATH, "settings.yaml")
 CREDENTIALS_PATH = os.path.join(CONFIG_PATH, "credentials.json")
 
 
-def gdrive_init(client_secret_file):
+def gdrive_init(client_secret_file, encoding='utf8'):
     """Initialize GDrive credentials.
 
     This should only run once before reading a file from Google Drive the first time. Subsequent executions should run
@@ -33,6 +33,9 @@ def gdrive_init(client_secret_file):
 
     Args:
         client_secret_file (str): Path to clien_secret.json file (Created in Google Console).
+        encoding (str): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
     """
     if not os.path.isdir(CONFIG_PATH):
         os.makedirs(CONFIG_PATH, exist_ok=True)
@@ -53,7 +56,7 @@ def gdrive_init(client_secret_file):
             "https://www.googleapis.com/auth/drive.install",
         ]
     }
-    with open(SETTINGS_PATH, 'w') as f:
+    with open(SETTINGS_PATH, 'w', encoding=encoding) as f:
         yaml.dump(dix, f)
 
     # credentials.json

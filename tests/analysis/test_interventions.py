@@ -1,12 +1,12 @@
 #  TODO: Assert number of columns equals number of users
 from whatstk.analysis.interventions import get_interventions_count
 from whatstk.whatsapp.objects import WhatsAppChat
-from whatstk.utils.utils import COLNAMES_DF
+from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
 import pandas as pd
 import pytest
 
-
-filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+hformat = "[%d.%m.%y_%I:%M:%S_%p]_%name:"
+filename = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
 
 
 def test_interventions_date_all():

@@ -3,7 +3,9 @@
 
 import logging
 import re
+
 import pandas as pd
+
 from whatstk.utils.exceptions import RegexError
 
 
@@ -45,7 +47,7 @@ def extract_header_from_text(text, encoding='utf-8'):
         hformat = _extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
         return hformat
-    except:  # noqa
+    except Exception as err:  # noqa
         logging.info("Format not found.")
     return None
 
@@ -198,8 +200,8 @@ def _extract_header_format_from_components(elements_list, template_list):
             template_list_.append(t)
     # Get positions
     df = pd.DataFrame(elements_list_)
-    dates_df = df.select_dtypes(int)
-
+    # dates_df = df.select_dtypes(int)
+    dates_df = df.select_dtypes('number')
     template = template_list[0]
 
     if '%p' in template:

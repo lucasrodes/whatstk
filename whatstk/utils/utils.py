@@ -36,3 +36,21 @@ def _get_df(df, chat):
     if (df is None) and (chat is not None):
         df = chat.df
     return df
+
+
+def _map_hformat_filename(filename):
+    """Map hformat to valid filename (Linux, MacOS, Win).
+
+    Args:
+        filename (str): Header format.
+
+    Returns:
+        str: Mapped header format.
+    """
+    filename = (
+        filename
+        .replace(' ', '_')
+        .replace('/', '--')
+        .replace(':', ';')
+    )
+    return filename

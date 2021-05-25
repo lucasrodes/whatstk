@@ -2,9 +2,10 @@ import math
 import pytest
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.analysis.responses import get_response_matrix
+from whatstk.utils.utils import _map_hformat_filename
 
-
-filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+hformat = "[%d.%m.%y_%I:%M:%S_%p]_%name:"
+filename = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
 
 
 def test_get_response_matrix_1():
