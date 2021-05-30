@@ -69,5 +69,8 @@ setup(
             'whatstk-graph=whatstk.scripts.graph:main'
         ]
     },
+    package_data = {
+        'whatstk': ['whatsapp/assets/header_format_support.json'],
+    },
     extras_require=extras_require,
 )
