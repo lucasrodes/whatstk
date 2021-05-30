@@ -22,10 +22,23 @@ with open(os.path.join(this_directory, 'requirements-flake.txt')) as f:
 with open(os.path.join(this_directory, 'requirements-docs.txt')) as f:
     requirements_docs = f.readlines()
 
+requirements_gdrive = [
+    "PyDrive2~=1.8.2",
+    "PyYAML~=5.4.1",
+]
+
+requirements_generate = [
+    "scipy~=1.6.0",
+    "python-lorem==1.1.2",
+]
+
+requirements_full = requirements_gdrive + requirements_generate
+
 
 extras_require = {
-    "gdrive": ["PyDrive2~=1.8.2", "PyYAML~=5.4.1 "],
-    "generate": ["scipy~=1.6.0", "python-lorem==1.1.2"],
+    "gdrive": requirements_gdrive,
+    "generate": requirements_generate,
+    "full": requirements_full,
     "dev": requirements_test + requirements_flake + requirements_docs,
 }
 
