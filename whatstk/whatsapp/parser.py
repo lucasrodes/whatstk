@@ -11,7 +11,6 @@ import pandas as pd
 from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
 from whatstk.whatsapp.auto_header import extract_header_from_text
-from whatstk.utils.gdrive import _load_str_from_file_id
 
 
 regex_simplifier = {
@@ -136,6 +135,7 @@ def _str_from_txt(filepath: str, encoding='utf-8'):
             text = response.read()
         text = text.decode(encoding)
     elif filepath.startswith("gdrive"):
+        from whatstk.utils.gdrive import _load_str_from_file_id
         file_id = filepath.replace("gdrive://", "")
         text = _load_str_from_file_id(file_id)
     else:

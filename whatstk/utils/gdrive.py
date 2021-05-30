@@ -1,13 +1,21 @@
 """Google Drive utils."""
 
 
-import yaml
 from shutil import copyfile
 import os
 
-from pydrive2.auth import GoogleAuth
-from pydrive2.drive import GoogleDrive
-from pydrive2.files import ApiRequestError
+try:
+    from pydrive2.auth import GoogleAuth
+    from pydrive2.drive import GoogleDrive
+    from pydrive2.files import ApiRequestError
+    import yaml
+except ImportError as e:
+    msg = (
+        "whatstk Google Drive requirements are not installed.\n\n"
+        "Please pip install as follows:\n\n"
+        '  python -m pip install "whatstk[gdrive]" --upgrade  # or python -m pip install'
+    )
+    raise ImportError(msg) from e
 
 
 # Create .config/whatstk/gdrive if it does not exist

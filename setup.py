@@ -5,12 +5,30 @@ from setuptools import setup, find_packages
 import os
 import glob
 
+
 this_directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(this_directory, 'README.md'), encoding='utf8') as f:
     long_description = f.read()
 
 with open(os.path.join(this_directory, 'requirements.txt')) as f:
     requirements = f.readlines()
+
+with open(os.path.join(this_directory, 'requirements-test.txt')) as f:
+    requirements_test = f.readlines()
+
+with open(os.path.join(this_directory, 'requirements-flake.txt')) as f:
+    requirements_flake = f.readlines()
+
+with open(os.path.join(this_directory, 'requirements-docs.txt')) as f:
+    requirements_docs = f.readlines()
+
+
+extras_require = {
+    "gdrive": ["PyDrive2~=1.8.2", "PyYAML~=5.4.1 "],
+    "generate": ["scipy~=1.6.0", "python-lorem==1.1.2"],
+    "dev": requirements_test + requirements_flake + requirements_docs,
+}
+
 
 setup(
     name='whatstk',
@@ -50,5 +68,6 @@ setup(
             'whatstk-to-csv=whatstk.scripts.txt_to_csv:main',
             'whatstk-graph=whatstk.scripts.graph:main'
         ]
-    }
+    },
+    extras_require=extras_require,
 )

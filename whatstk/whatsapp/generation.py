@@ -6,12 +6,22 @@ from datetime import datetime, timedelta
 import itertools
 import numpy as np
 import pandas as pd
-from scipy.stats import lomax
-from lorem import sentence
 from emoji.unicode_codes import EMOJI_UNICODE
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.whatsapp.hformat import get_supported_hformats_as_list
 from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
+from scipy.stats import lomax
+
+
+try:
+    from lorem import sentence
+except ImportError as e:
+    msg = (
+        "whatstk ChatGenerator requirements are not installed.\n\n"
+        "Please pip install as follows:\n\n"
+        '  python -m pip install "whatstk[generate]" --upgrade  # or python -m pip install'
+    )
+    raise ImportError(msg) from e
 
 
 USERS = [
