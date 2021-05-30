@@ -64,7 +64,7 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
     if date_mode == 'date':
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.date], msg_length)
         n_interventions.index = pd.to_datetime(n_interventions.index)
-        print(n_interventions.shape)
+        # print(n_interventions.shape)
     elif date_mode == 'hour':
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.hour], msg_length)
     elif date_mode == 'weekday':
