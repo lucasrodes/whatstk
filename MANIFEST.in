@@ -2,6 +2,9 @@ include *.md
 include LICENSE
 include requirements.txt
 include requirements-test.txt
+include requirements-flake.txt
+include requirements-docs.txt
+include whatstk/whatsapp/assets/*.json
 include .coveragerc
 
 recursive-include altair *.py *.json *.ipynb *.html
