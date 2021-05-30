@@ -46,7 +46,7 @@ This project is on `PyPI <https://pypi.org/project/whatstk/>`_, install it with 
 
     pip install whatstk
 
-Project has been tested with Python 3.7-3.8.
+Project has been tested in Python>=3.7.
 
 From source
 ^^^^^^^^^^^
@@ -68,12 +68,13 @@ and install it locally
 Develop
 ^^^^^^^
 You can also install the version in development directly from github
-`develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch.
+`develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch. 
 
 .. code-block:: bash
 
-    pip install  
     pip install git+https://github.com/lucasrodes/whatstk.git@develop
+
+Note: It requires `git <https://git-scm.com/>`_ to be installed.
 
 ----
 
