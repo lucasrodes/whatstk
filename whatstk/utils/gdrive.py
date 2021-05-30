@@ -45,7 +45,6 @@ def gdrive_init(client_secret_file, encoding='utf8'):
     https://medium.com/analytics-vidhya/how-to-connect-google-drive-to-python-using-pydrive-9681b2a14f20
 
     Notes:
-
         - Additionally, make sure to add yourself in Test users, as noted in:
           https://stackoverflow.com/questions/65980758/pydrive-quickstart-and-error-403-access-denied
         - Select Desktop App instead of Web Application as the application type.

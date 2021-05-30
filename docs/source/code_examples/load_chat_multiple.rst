@@ -1,5 +1,5 @@
-Load chat from multiple sources
-===============================
+Load WhatsApp chat from multiple sources
+========================================
 
 You can also load a chat using multiple source files. You might want to use this when several files have been exported
 from the same chat over the years. 
@@ -39,3 +39,12 @@ username. To fix this, we rename *Maria* and *Maria2* as *Mary*:
     >>> chat = chat.rename_users({'Mary': ['Maria', 'Maria2']})
     >>> chat.users
     ['+1 123 456 789', 'Giuseppe', 'John', 'Mary']
+
+
+----
+
+.. seealso::
+
+    * :ref:`Load WhatsApp chat <Load WhatsApp chat>`
+    * :ref:`Load WhatsApp chat from Google Drive <Load WhatsApp chat from Google Drive>`
+    * :ref:`Load WhatsApp chat with specific hformat <Load WhatsApp chat with specific hformat>`

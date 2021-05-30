@@ -15,7 +15,9 @@ Generate random WhatsApp chat.
 .. code-block:: bash
 
     whatstk-generate-chat --help
-    usage: Generate chat. [-h] -o OUTPUT_PATH
+    usage: Generate chat. Make sure to install the library with required extension: pip install whatstk[generate]
+    --upgrade
+           [-h] -o OUTPUT_PATH
                           [--filenames FILENAMES [FILENAMES ...]] [-s SIZE]
                           [-f HFORMATS [HFORMATS ...]]
                           [--last-timestamp LAST_TIMESTAMP] [-v]

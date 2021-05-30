@@ -7,11 +7,16 @@ from whatstk.whatsapp.generation import generate_chats_hformats
 
 
 def _parse_args():
-    parser = argparse.ArgumentParser("Generate chat.")
+    parser = argparse.ArgumentParser(
+        "Generate chat. Make sure to install the library with required extension: pip install whatstk[generate] "
+        "--upgrade"
+    )
     parser.add_argument(
         "-o", "--output-path",
         type=str, required=True,
-        help="Path where to store generated chats. Must exist."
+        help=(
+            "Path where to store generated chats. Must exist."
+        )
     )
     parser.add_argument(
         "--filenames",
