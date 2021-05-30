@@ -18,7 +18,7 @@ install:
   - pip install .
   - pip install .[gdrive] --upgrade
   - pip install .[generate] --upgrade
-  - ls -l /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/whatstk/whatsapp/assets/
+  # - ls -l /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/whatstk/whatsapp/assets/
   - cat MANIFEST.in
   - mkdir -p tests/chats/hformats tests/chats/merge
   - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
