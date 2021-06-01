@@ -15,7 +15,9 @@ install:
   - pip install -r requirements-flake.txt
   - ls -l
   - pip uninstall whatstk
-  - pip install -e .
+  - pip install .[full]
+  # - ls -l /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/whatstk/whatsapp/assets/
+  - cat MANIFEST.in
   - mkdir -p tests/chats/hformats tests/chats/merge
   - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
   - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt

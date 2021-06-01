@@ -1,13 +1,31 @@
-"""Google Drive utils."""
+"""Google Drive utils.
+
+.. warning::
+
+    To load chats from google drive, install the library with the corresponding extension (ignore the
+    ``--upgrade`` option if you haven't installed the library):
+
+    .. code-block::
+
+        pip install whatstk[gdrive] --upgrade
+"""
 
 
-import yaml
 from shutil import copyfile
 import os
 
-from pydrive2.auth import GoogleAuth
-from pydrive2.drive import GoogleDrive
-from pydrive2.files import ApiRequestError
+try:
+    from pydrive2.auth import GoogleAuth
+    from pydrive2.drive import GoogleDrive
+    from pydrive2.files import ApiRequestError
+    import yaml
+except ImportError as e:
+    msg = (
+        "whatstk Google Drive requirements are not installed.\n\n"
+        "Please pip install as follows:\n\n"
+        '  python -m pip install "whatstk[gdrive]" --upgrade  # or python -m pip install'
+    )
+    raise ImportError(msg) from e
 
 
 # Create .config/whatstk/gdrive if it does not exist
@@ -28,7 +46,7 @@ def gdrive_init(client_secret_file, encoding='utf8'):
 
     Notes:
         - Additionally, make sure to add yourself in Test users, as noted in:
-        https://stackoverflow.com/questions/65980758/pydrive-quickstart-and-error-403-access-denied
+          https://stackoverflow.com/questions/65980758/pydrive-quickstart-and-error-403-access-denied
         - Select Desktop App instead of Web Application as the application type.
 
     Args:

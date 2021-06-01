@@ -1,12 +1,23 @@
 ``whatstk-generate-chat``
 =========================
 
+.. warning::
+
+    To use the chat generation functionalities, install the library with the corresponding extension (ignore the
+    ``--upgrade`` option if you haven't installed the library):
+
+    .. code-block::
+
+        pip install whatstk[generate] --upgrade
+
 Generate random WhatsApp chat.
 
 .. code-block:: bash
 
     whatstk-generate-chat --help
-    usage: Generate chat. [-h] -o OUTPUT_PATH
+    usage: Generate chat. Make sure to install the library with required extension: pip install whatstk[generate]
+    --upgrade
+           [-h] -o OUTPUT_PATH
                           [--filenames FILENAMES [FILENAMES ...]] [-s SIZE]
                           [-f HFORMATS [HFORMATS ...]]
                           [--last-timestamp LAST_TIMESTAMP] [-v]

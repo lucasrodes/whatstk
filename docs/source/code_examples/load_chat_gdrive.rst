@@ -1,5 +1,14 @@
-Load a chat from Google Drive
-=============================
+Load WhatsApp chat from Google Drive
+====================================
+
+.. warning::
+
+    To load chats from google drive, install the library with the corresponding extension (ignore the
+    ``--upgrade`` option if you haven't installed the library):
+
+    .. code-block::
+
+        pip install whatstk[gdrive] --upgrade
 
 You can also load a file saved in your Google Drive. Note that in order to do so, you need first to configure the
 credentials to interact with Google Drive.

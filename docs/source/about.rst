@@ -46,34 +46,54 @@ This project is on `PyPI <https://pypi.org/project/whatstk/>`_, install it with 
 
     pip install whatstk
 
-Project has been tested with Python 3.7-3.8.
+Project has been tested in Python>=3.7.
 
 From source
 ^^^^^^^^^^^
-Clone the project from the `official repository <https://github.com/lucasrodes/whatstk/>`_
+Clone the project from the `official repository <https://github.com/lucasrodes/whatstk/>`_ and install it locally 
 
 .. code-block:: bash
 
     git clone https://github.com/lucasrodes/whatstk.git
+    cd whatstk
+    pip install .
 
-
-and install it locally 
+Extensions
+^^^^^^^
+To use Google Drive or Chat Generation support, install the library along with the corresponding extensions:
 
 .. code-block:: bash
 
-    cd whatstk
-    pip install .
+    pip install whatstk[gdrive]
+
+.. code-block:: bash
+
+    pip install whatstk[generate]
+
+Or install the full suite:
+
+.. code-block:: bash
+
+    pip install whatstk[full]
 
 
 Develop
 ^^^^^^^
 You can also install the version in development directly from github
-`develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch.
+`develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch. 
 
 .. code-block:: bash
 
-    pip install  
+    pip install git+https://github.com/lucasrodes/whatstk.git@developDevelop
+^^^^^^^
+You can also install the version in development directly from github
+`develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch. 
+
+.. code-block:: bash
+
     pip install git+https://github.com/lucasrodes/whatstk.git@develop
+
+Note: It requires `git <https://git-scm.com/>`_ to be installed.
 
 ----
 
