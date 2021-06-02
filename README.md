@@ -78,22 +78,18 @@ For a rapid introduction, check this [tutorial on Medium](https://towardsdatasci
 #### Export your chat using your phone: 
 _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html)._
 
+#### Load chat as a DataFrame
+
+```python
+from whatstk import df_from_txt_whatsapp
+df = df_from_txt_whatsapp("path/to/chat.txt")
+```
+
 #### Convert chat to csv
-Easily convert your txt chat file to csv using command `whatstk-to-csv`.
 
 ```bash
 $ whatstk-to-csv [input_filename] [output_filename]
 ```
-
-#### Load chat in python
-You can also load the exported txt file with python.
-
-```python
-from whatstk import WhatsAppChat
-from whatstk.data import whatsapp_urls
-chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
-```
-
 #### More examples
 
 _See more in sections [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and 

@@ -1,4 +1,5 @@
 ## (1) Test dependencies (run this part only the first time)
+# pip install -e .[full]
 
 ## (1.1) Install pytest dependencies
 # pip install -r requirements-test.txt
