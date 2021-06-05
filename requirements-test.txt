@@ -3,3 +3,4 @@ pytest-cov>=2.8.1
 coverage>=4.5.1
 codecov>=2.0.22
 pytest-html==2.1.1
+pytest-mock~=3.6.1

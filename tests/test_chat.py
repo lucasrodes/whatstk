@@ -1,10 +1,13 @@
-import pytest
 from datetime import datetime
+
+import pytest
+
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk._chat import BaseChat
+from whatstk.utils.utils import _map_hformat_filename
 
-
-filepath = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+hformat = "[%d.%m.%y_%I:%M:%S_%p]_%name:"
+filepath = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
 
 
 def test_properties():

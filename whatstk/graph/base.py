@@ -104,7 +104,7 @@ class FigureBuilder:
         return fig
 
     def user_interventions_count_linechart(self, date_mode='date', msg_length=False, cumulative=False, all_users=False,
-                                           title="User interventions count", xlabel="Date/Time", cummulative=None):
+                                           title="User interventions count", xlabel="Date/Time"):
         """Plot number of user interventions over time.
 
         Args:
@@ -122,7 +122,6 @@ class FigureBuilder:
             all_users (bool, optional): Obtain number of interventions of all users combined. Defaults to False.
             title (str, optional): Title for plot. Defaults to "User interventions count".
             xlabel (str, optional): x-axis label title. Defaults to "Date/Time".
-            cummulative (bool, optional): Deprecated, use cumulative.
 
         Returns:
             plotly.graph_objs.Figure: Plotly Figure.
@@ -149,7 +148,6 @@ class FigureBuilder:
             msg_length=msg_length,
             cumulative=cumulative,
             all_users=all_users,
-            cummulative=cummulative
         )
         if all_users:
             fig = fig_scatter_time(

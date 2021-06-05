@@ -1,6 +1,8 @@
 [run]
 branch = True
-omit = whatstk/tests/*
+omit = 
+        whatstk/tests/*
+        whatstk/scripts/*
 
 [report]
 fail_under=80

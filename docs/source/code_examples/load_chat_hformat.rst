@@ -1,5 +1,5 @@
-Load a chat with specific hformat
-=================================
+Load WhatsApp chat with specific hformat
+========================================
 
 If ``auto_header`` option fails, you can still load your chat manually specifying the ``hformat``. In the example below,
 we have that the ``hformat='%d.%m.%y, %H:%M - %name:'``.
@@ -17,7 +17,11 @@ we have that the ``hformat='%d.%m.%y, %H:%M - %name:'``.
     3 2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
     4 2016-08-06 14:30:00        Misty                                          Definetly
 
+----
+
 .. seealso::
+
     :ref:`The header format <The header format>`
-
-
+    * :ref:`Load WhatsApp chat <Load WhatsApp chat>`
+    * :ref:`Load WhatsApp chat from Google Drive <Load WhatsApp chat from Google Drive>`
+    * :ref:`Load WhatsApp chat with specific hformat <Load WhatsApp chat with specific hformat>`

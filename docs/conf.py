@@ -19,17 +19,18 @@ from sphinx.ext.autosummary import Autosummary
 from sphinx.ext.autosummary import get_documenter
 from docutils.parsers.rst import directives
 from sphinx.util.inspect import safe_getattr
+from datetime import datetime
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'whatstk'
-copyright = '2020, sociepy'
-copy_right = '2020, sociepy'
+copyright = f'{datetime.now().year}, sociepy'
+copy_right = f'{datetime.now().year}, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.4.1'
+version = 'v0.5.0.rc0'
 
 
 # -- General configuration ---------------------------------------------------

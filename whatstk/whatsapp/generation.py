@@ -6,12 +6,22 @@ from datetime import datetime, timedelta
 import itertools
 import numpy as np
 import pandas as pd
-from scipy.stats import lomax
-from lorem import sentence
 from emoji.unicode_codes import EMOJI_UNICODE
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.whatsapp.hformat import get_supported_hformats_as_list
-from whatstk.utils.utils import COLNAMES_DF
+from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
+from scipy.stats import lomax
+
+
+try:
+    from lorem import sentence
+except ImportError as e:
+    msg = (
+        "whatstk ChatGenerator requirements are not installed.\n\n"
+        "Please pip install as follows:\n\n"
+        '  python -m pip install "whatstk[generate]" --upgrade  # or python -m pip install'
+    )
+    raise ImportError(msg) from e
 
 
 USERS = [
@@ -178,7 +188,7 @@ def generate_chats_hformats(output_path, size=2000, hformats=None, filepaths=Non
         hformats (list, optional): List of header formats to use when exporting chat. If None,
                                     defaults to all supported header formats.
         filepaths (list, optional): List with filepaths. If None, defaults to
-                                    `hformat.replace(' ', '_').replace('/', '\\')`.
+                                    `whatstk.utils.utils._map_hformat_filename(filepath)`.
         last_timestamp (datetime, optional): Datetime of last message. If `None`, defaults to current date.
         seed (int, optional): Seed for random processes. Defaults to 100.
         verbose (bool): Set to True to print runtime messages.
@@ -198,6 +208,7 @@ def generate_chats_hformats(output_path, size=2000, hformats=None, filepaths=Non
         if filepaths:
             filepath = filepaths[i]
         else:
-            filepath = '{}.txt'.format(hformat.replace(' ', '_').replace('/', '\\'))
+            filepath = _map_hformat_filename(hformat)
+            filepath = '{}.txt'.format(filepath)
         filepath = os.path.join(output_path, filepath)
         chat.to_txt(filepath=filepath, hformat=hformat)

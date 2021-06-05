@@ -1,10 +1,10 @@
 import os
 import pandas as pd
 import pytest
-from whatstk.whatsapp.parser import df_from_txt_whatsapp
+from whatstk.whatsapp.parser import df_from_txt_whatsapp, _str_from_txt
 from whatstk.whatsapp.hformat import get_supported_hformats_as_dict
 from whatstk.utils.exceptions import HFormatError
-from whatstk.utils.utils import COLNAMES_DF
+from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
 
 
 # Generate chats
@@ -35,7 +35,7 @@ def test_df_from_txt_whatsapp():
         chats = []
         hformat = elem['format']
         auto_header = bool(elem['auto_header'])
-        filename = hformat.replace(' ', '_').replace('/', '\\')
+        filename = _map_hformat_filename(hformat)
         filename = os.path.join(output_folder, '{}.txt'.format(filename))
 
         # Auto
@@ -71,8 +71,25 @@ def test_df_from_txt_whatsapp_2():
         _ = df_from_txt_whatsapp(filename1, hformat='%y')
 
 
+def test_df_from_txt_whatsapp_3():
+    with pytest.raises(ValueError):
+        _ = df_from_txt_whatsapp(filename1, auto_header=False)
+
+
 def test_df_from_txt_whatsapp_url():
     df = df_from_txt_whatsapp(filepath_url)
+    assert(isinstance(df, pd.DataFrame))
+
+
+def test_df_from_txt_whatsapp_gdrive(mocker):
+    gdrive_url = "gdrive://456456456-ewgwegegw"
+    with open(filename1, "r", encoding='utf8') as f:
+        mock_text = f.read()
+    # mocker.patch('whatstk.utils.gdrive._load_str_from_file_id', return_value="bla bla")
+    mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)
+    mocker.patch("pydrive2.files.GoogleDriveFile.GetContentString", return_value=mock_text)
+    mocker.patch("whatstk.utils.gdrive._check_gdrive_config", return_value=None)
+    df = df_from_txt_whatsapp(gdrive_url)
     assert(isinstance(df, pd.DataFrame))
 
 

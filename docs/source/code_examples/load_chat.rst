@@ -1,5 +1,5 @@
-Load chat
-==============
+Load WhatsApp chat
+==================
 
 Once you have :doc:`exported <../getting_started/export_chat>` a chat it is time to load it in python.
 
@@ -14,8 +14,8 @@ develop/chats/whatsapp/lorem.txt>`_, which is available online, using library cl
     >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
 
 Once loaded, we can check some of the chat messages by accessing its attribute :func:`df <whatstk.WhatsAppChat.df>`,
-which is a pandas.DataFrame with columns `username` (name of user sending the message), `message` (message sent) and
-`date` index (timestamp of message).
+which is a pandas.DataFrame with columns `date` index (timestamp of message), `username` (name of user sending the
+message) and `message` (message sent).
 
 .. code-block:: python
 
@@ -41,3 +41,11 @@ Also, getting a list with the chat members is simple
 
     >>> chat.users
     ['+1 123 456 789', 'Giuseppe', 'John', 'Mary']
+
+----
+
+.. seealso::
+
+    * :ref:`Load WhatsApp chat from multiple sources <Load WhatsApp chat from multiple sources>`
+    * :ref:`Load WhatsApp chat from Google Drive <Load WhatsApp chat from Google Drive>`
+    * :ref:`Load WhatsApp chat with specific hformat <Load WhatsApp chat with specific hformat>`

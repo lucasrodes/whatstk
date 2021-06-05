@@ -1,4 +1,5 @@
 ## (1) Test dependencies (run this part only the first time)
+# pip install -e .[full]
 
 ## (1.1) Install pytest dependencies
 # pip install -r requirements-test.txt
@@ -31,4 +32,4 @@ py.test \
     --cov-report html:reports/htmlcov\
     --cov-report term\
     --cov-report xml:reports/cov.xml\
-    --cov=whatstk tests/
+    --cov=whatstk tests

@@ -1,12 +1,15 @@
-from whatstk.whatsapp.objects import WhatsAppChat
-from whatstk.utils.exceptions import HFormatError
 import os
+
 import pandas as pd
 import pytest
 
+from whatstk.whatsapp.objects import WhatsAppChat
+from whatstk.utils.exceptions import HFormatError
+from whatstk.utils.utils import _map_hformat_filename
 
-filename = "./tests/chats/hformats/[%d.%m.%y_%I:%M:%S_%p]_%name:.txt"
+
 hformat = "[%d.%m.%y %I:%M:%S %p] %name:"
+filename = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
 
 chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')

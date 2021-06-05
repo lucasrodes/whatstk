@@ -5,13 +5,13 @@
 </h1>
 <p align="left">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.4.1-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.5.0.rc0-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
 
 <p align="left">
-  <a href="https://travis-ci.org/lucasrodes/whatstk">
+  <a href="https://travis-ci.com/lucasrodes/whatstk">
     <img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
@@ -20,14 +20,14 @@
   <a href='https://whatstk.readthedocs.io/en/stable/?badge=stable'>
     <img src='https://readthedocs.org/projects/whatstk/badge/?version=stable' alt='Documentation Status' />
   </a>
+  <a href="https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d">
+    <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
+  </a>
   <a href="https://www.python.org/downloads/release/python-3/">
     <img alt="Python 3" src="https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
-  </a>
-  <a href="http://github.com/lucasrodes/whatstk">
-    <img alt="HitCount" src="https://views.whatilearened.today/views/github/lucasrodes/whatstk.svg">
   </a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
@@ -64,29 +64,32 @@ It is distributed under the GPL-3.0 license.
 pip install whatstk
 ```
 
+Install develop version (not stable):
+
+```
+pip install git+https://github.com/lucasrodes/whatstk.git@develop
+```
+
 _More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
 
 ## Getting Started
+For a rapid introduction, check this [tutorial on Medium](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d).
 
 #### Export your chat using your phone: 
 _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html)._
 
+#### Load chat as a DataFrame
+
+```python
+from whatstk import df_from_txt_whatsapp
+df = df_from_txt_whatsapp("path/to/chat.txt")
+```
+
 #### Convert chat to csv
-Easily convert your txt chat file to csv using command `whatstk-to-csv`.
 
 ```bash
 $ whatstk-to-csv [input_filename] [output_filename]
 ```
-
-#### Load chat in python
-You can also load the exported txt file with python.
-
-```python
-from whatstk import WhatsAppChat
-from whatstk.data import whatsapp_urls
-chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
-```
-
 #### More examples
 
 _See more in sections [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and 

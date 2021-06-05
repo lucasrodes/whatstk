@@ -283,3 +283,7 @@ reports
 docs/_build/
 package-lock.json
 version-changes
+
+client_secrets.json
+settings.yaml
+credentials.json
