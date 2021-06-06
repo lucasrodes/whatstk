@@ -45,7 +45,7 @@ extras_require = {
 
 setup(
     name='whatstk',
-    version="0.5.0.rc1",
+    version="0.5.0",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
