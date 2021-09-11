@@ -63,14 +63,14 @@ Count of characters sent per user
 Now, instead of counting the number of interventions we might want to explore the number of characters sent. Note that a
 user might send tons of messages with few words, whereas another user might send few messages with tons of words.
 Depending on your analysis you might prefer exploring interventions or number of characters. Getting the number of
-characters sent per user can be done using ``msg_len=True`` when calling function
+characters sent per user can be done using ``msg_length=True`` when calling function
 :func:`user_interventions_count_linechart <whatstk.FigureBuilder.user_interventions_count_linechart>`.
 
 In the following we explore the cumulative number of characters sent per user.
 
 .. code-block:: python
 
-    >>> fig = fb.user_interventions_count_linechart(msg_len=True, cumulative=True, title='Characters sent by user (cumulative)')
+    >>> fig = fb.user_interventions_count_linechart(msg_length=True, cumulative=True, title='Characters sent by user (cumulative)')
     >>> plot(fig)
 
 

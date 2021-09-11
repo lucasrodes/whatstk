@@ -5,7 +5,7 @@ You can also load a chat using multiple source files. You might want to use this
 from the same chat over the years. 
 
 In the example below, we load chats
-`LOREM1 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_ and `LOREM2 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part2.txt>`_.
+`LOREM1 <http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/lorem-merge-part1.txt>`_ and `LOREM2 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/main/whatsapp/lorem-merge-part2.txt>`_.
 
 .. code-block:: python
 
@@ -17,8 +17,8 @@ Rename usernames
 ----------------
 
 In the example here, chat `LOREM1
-<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_ and chat `LOREM2
-<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part2.txt>`_ contain slightly
+<http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/lorem-merge-part1.txt>`_ and chat `LOREM2
+<http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/lorem-merge-part2.txt>`_ contain slightly
 different usernames. In particular, in chat LOREM2, user *Mary* appears as *Maria* and *Maria2*:
 
 .. code-block:: python

@@ -4,7 +4,7 @@ Load WhatsApp chat
 Once you have :doc:`exported <../getting_started/export_chat>` a chat it is time to load it in python.
 
 In this example we load the example `LOREM chat <http://raw.githubusercontent.com/lucasrodes/whatstk/
-develop/chats/whatsapp/lorem.txt>`_, which is available online, using library class :class:`WhatsAppChat 
+main/chats/whatsapp/lorem.txt>`_, which is available online, using library class :class:`WhatsAppChat 
 <whatstk.WhatsAppChat>`.
 
 .. code-block:: python

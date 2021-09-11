@@ -5,7 +5,7 @@
 </h1>
 <p align="left">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.4.1-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.5.0-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
@@ -56,6 +56,7 @@ It is distributed under the GPL-3.0 license.
 * [Getting Started](#getting-started)
 * [Documentation](https://whatstk.readthedocs.io/en/stable/)
 * [Contribute](#contribute)
+* [Covered in](#covered-in)
 * [Citation](#citation)
 
 ## Installation
@@ -106,3 +107,9 @@ _See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contri
 
 ## Citation
 Lucas Rodés-Guirao. "whatstk, WhatsApp analysis and parsing toolkit", https://github.com/lucasrodes/whatstk
+
+## Covered in
+
+- [Your Whatsapp Chat History in Cool Graphs](https://deepnote.com/@batmanscode/Your-Whatsapp-Chat-History-in-Cool-Graphs-mQoSsYjUSw29D4nZDs_KwA), by [@batmanscode](https://github.com/batmanscode).
+- [WhatsAppening to the news](https://whatsappening.joltetn.eu/), by [@enric1994](https://github.com/enric1994)
+- [whatsappening source code](https://github.com/enric1994/whatsappening), by [@enric1994](https://github.com/enric1994)
