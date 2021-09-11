@@ -17,7 +17,7 @@ First contact with whatstk
 :func:`from_source <whatstk._chat.BaseChat.from_source>` to be implemented. This method loads and parses the source 
 chat file into a pandas.DataFrame.
 
-Below, we use the WhatsApp implementation, i.e. :class:`WhatsAppChat <whatstk.WhatsAppChat>`, to load `LOREM chat
+Below, we use method :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>` to load `LOREM chat
 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own 
 chat, simply :ref:`export it as a txt file<Export chat>` to your computer and then use class argument ``filepath``, as
 shown in the following example.
@@ -25,10 +25,10 @@ shown in the following example.
 
 .. code-block:: python
 
-    >>> from whatstk.whatsapp.objects import WhatsAppChat
+    >>> from whatstk import df_from_txt_whatsapp
     >>> from whatstk.data import whatsapp_urls
-    >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM)
-    >>> chat.df.head(5)
+    >>> df = df_from_txt_whatsapp(filepath=whatsapp_urls.LOREM)
+    >>> df.head(5)
                      date        username                                            message
     0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
     1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
@@ -60,7 +60,7 @@ Clone the project from the `official repository <https://github.com/lucasrodes/w
 
 Extensions
 ^^^^^^^
-To use Google Drive or Chat Generation support, install the library along with the corresponding extensions:
+To use :ref:`Google Drive <Load WhatsApp chat from Google Drive>` or Chat Generation support, install the library along with the corresponding extensions:
 
 .. code-block:: bash
 
