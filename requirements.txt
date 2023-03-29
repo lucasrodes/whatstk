@@ -3,4 +3,4 @@ numpy~=1.19.1
 pandas~=1.2.0
 plotly~=4.14.3
 seaborn==0.11.1
-certifi==2020.12.5
+certifi==2022.12.7
