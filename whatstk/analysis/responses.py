@@ -8,8 +8,8 @@ import pandas as pd
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.utils.utils import _get_df, COLNAMES_DF
 
-if TYPE_CHECKING:
-    from whatstk._charts import BaseChat
+if TYPE_CHECKING:  # pragma: no cover
+    from whatstk._chat import BaseChat  # pragma: no cover
 
 Norms = namedtuple("Norms", ["ABSOLUTE", "JOINT", "SENDER", "RECEIVER"])
 NORMS = Norms(ABSOLUTE="absolute", JOINT="joint", SENDER="sender", RECEIVER="receiver")

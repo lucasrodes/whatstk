@@ -13,8 +13,8 @@ from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
 from whatstk.whatsapp.auto_header import extract_header_from_text
 
-if TYPE_CHECKING:
-    from whatstk.whatsapp.objects import WhatsAppChat
+if TYPE_CHECKING:  # pragma: no cover
+    from whatstk.whatsapp.objects import WhatsAppChat  # pragma: no cover
 
 
 regex_simplifier = {

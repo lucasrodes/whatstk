@@ -3,8 +3,8 @@
 from typing import TYPE_CHECKING
 import pandas as pd
 
-if TYPE_CHECKING:
-    from whatstk._chat import BaseChat
+if TYPE_CHECKING:  # pragma: no cover
+    from whatstk._chat import BaseChat  # pragma: no cover
 
 
 class ColnamesDf:
