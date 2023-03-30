@@ -13,15 +13,16 @@ Example: Check if header is available.
 
 import os
 import json
+from typing import Tuple, List, Dict
 
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
-assets_folder = 'assets'
-hformat_support_filename = 'header_format_support.json'
+assets_folder = "assets"
+hformat_support_filename = "header_format_support.json"
 hformat_support_filepath = os.path.join(this_directory, assets_folder, hformat_support_filename)
 
 
-def is_supported(hformat, encoding='utf8'):
+def is_supported(hformat: str, encoding: str = "utf8") -> Tuple[bool, bool]:
     """Check if header `hformat` is currently supported.
 
     Args:
@@ -36,23 +37,23 @@ def is_supported(hformat, encoding='utf8'):
                 * bool: True if header is supported with `auto_header` feature.
 
     """
-    with open(hformat_support_filepath, 'r', encoding=encoding) as f:
+    with open(hformat_support_filepath, "r", encoding=encoding) as f:
         h = json.load(f)
 
-    if ('%P' in hformat or "%p" in hformat):
+    if "%P" in hformat or "%p" in hformat:
         hformat = hformat.replace("%P", "%p").replace("%H", "%I")
-    hformat = hformat.replace('%Y', '%y')
+    hformat = hformat.replace("%Y", "%y")
     auto_header_support = 0
     support = 0
     for hh in h:
-        if hformat == hh['format']:
+        if hformat == hh["format"]:
             support = 1
-            auto_header_support = hh['auto_header']
+            auto_header_support = hh["auto_header"]
 
     return bool(support), bool(auto_header_support)
 
 
-def is_supported_verbose(hformat):
+def is_supported_verbose(hformat: str) -> str:
     """Check if header `hformat` is currently supported (both manually and using `auto_header`).
 
     Result is shown as a string.
@@ -75,13 +76,13 @@ def is_supported_verbose(hformat):
 
     msg = "The header '{}' is {}supported. `auto_header` for this header is {}supported.".format(
         hformat,
-        'not ' if not support else '',
-        'not ' if not auto_header_support else '',
+        "not " if not support else "",
+        "not " if not auto_header_support else "",
     )
     return msg
 
 
-def get_supported_hformats_as_list(encoding='utf8'):
+def get_supported_hformats_as_list(encoding: str = "utf8") -> List[str]:
     """Get list of supported formats.
 
     Returns:
@@ -90,12 +91,12 @@ def get_supported_hformats_as_list(encoding='utf8'):
                              `List of Python standard encodings
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
     """
-    with open(hformat_support_filepath, 'r', encoding=encoding) as f:
+    with open(hformat_support_filepath, "r", encoding=encoding) as f:
         h = json.load(f)
-    return [hh['format'] for hh in h]
+    return [hh["format"] for hh in h]
 
 
-def get_supported_hformats_as_dict(encoding='utf8'):
+def get_supported_hformats_as_dict(encoding: str = "utf8") -> Dict[str, int]:
     """Get dictionary with supported formats and relevant info.
 
     Args:
@@ -109,6 +110,6 @@ def get_supported_hformats_as_dict(encoding='utf8'):
                 * ``auto_header``: 1 if auto_header is supported), 0 otherwise.
 
     """
-    with open(hformat_support_filepath, 'r', encoding=encoding) as f:
+    with open(hformat_support_filepath, "r", encoding=encoding) as f:
         headers = json.load(f)
     return headers

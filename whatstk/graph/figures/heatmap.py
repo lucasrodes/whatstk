@@ -2,9 +2,10 @@
 
 
 import plotly.graph_objs as go
+import pandas as pd
 
 
-def fig_heatmap(df_matrix, title=""):
+def fig_heatmap(df_matrix: pd.DataFrame, title: str = "") -> go.Figure:
     """Generate heatmap figure from NxN matrix.
 
     Args:
@@ -19,15 +20,11 @@ def fig_heatmap(df_matrix, title=""):
         z=df_matrix,
         x=df_matrix.columns,
         y=df_matrix.index,
-        hovertemplate='%{y} ---> %{x}<extra>%{z}</extra>',
-        colorscale='Greens'
+        hovertemplate="%{y} ---> %{x}<extra>%{z}</extra>",
+        colorscale="Greens",
     )
     data = [trace]
-    layout = {
-        'title': {'text': title},
-        'xaxis': {'title': "Receiver"},
-        'yaxis': {'title': "Sender"}
-    }
+    layout = {"title": {"text": title}, "xaxis": {"title": "Receiver"}, "yaxis": {"title": "Sender"}}
 
     fig = go.Figure(data=data, layout=layout)
     return fig

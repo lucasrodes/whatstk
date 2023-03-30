@@ -2,21 +2,25 @@
 
 
 from collections import namedtuple
+from typing import TYPE_CHECKING, Optional
+
 import pandas as pd
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.utils.utils import _get_df, COLNAMES_DF
 
+if TYPE_CHECKING:
+    from whatstk._charts import BaseChat
 
-Norms = namedtuple('Norms', ['ABSOLUTE', 'JOINT', 'SENDER', 'RECEIVER'])
-NORMS = Norms(
-    ABSOLUTE='absolute',
-    JOINT='joint',
-    SENDER='sender',
-    RECEIVER='receiver'
-)
+Norms = namedtuple("Norms", ["ABSOLUTE", "JOINT", "SENDER", "RECEIVER"])
+NORMS = Norms(ABSOLUTE="absolute", JOINT="joint", SENDER="sender", RECEIVER="receiver")
 
 
-def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
+def get_response_matrix(
+    df: Optional[pd.DataFrame] = None,
+    chat: Optional["BaseChat"] = None,
+    zero_own: bool = True,
+    norm: str = NORMS.ABSOLUTE,
+) -> pd.DataFrame:
     """Get response matrix for given chat.
 
     Obtains a DataFrame of shape `[n_users, n_users]` counting the number of responses between members. Responses can
@@ -71,16 +75,16 @@ def get_response_matrix(df=None, chat=None, zero_own=True, norm=NORMS.ABSOLUTE):
     users = WhatsAppChat(df).users
     # Get list of username transitions and initialize dicitonary with counts
     user_transitions = df[COLNAMES_DF.USERNAME].tolist()
-    responses = {user: dict(zip(users, [0]*len(users))) for user in users}
+    responses = {user: dict(zip(users, [0] * len(users))) for user in users}
     # Fill count dictionary
     for i in range(1, len(user_transitions)):
         sender = user_transitions[i]
-        receiver = user_transitions[i-1]
+        receiver = user_transitions[i - 1]
         if zero_own and (sender != receiver):
             responses[sender][receiver] += 1
         elif not zero_own:
             responses[sender][receiver] += 1
-    responses = pd.DataFrame.from_dict(responses, orient='index')
+    responses = pd.DataFrame.from_dict(responses, orient="index")
 
     # Normalize
     if norm not in [NORMS.ABSOLUTE, NORMS.JOINT, NORMS.RECEIVER, NORMS.SENDER]:

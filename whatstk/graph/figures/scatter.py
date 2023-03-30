@@ -1,10 +1,17 @@
 """Scatter plot figures."""
 
+from typing import Optional, Dict
 
+import pandas as pd
 import plotly.graph_objs as go
 
 
-def fig_scatter_time(user_data, username_to_color=None, title="", xlabel=None):
+def fig_scatter_time(
+    user_data: pd.DataFrame,
+    username_to_color: Optional[Dict[str, str]] = None,
+    title: str = "",
+    xlabel: Optional[str] = None,
+) -> go.Figure:
     """Obtain Figure to plot using plotly.
 
     ``user_data`` must be a pandas.DataFrame with timestamps as index and a column for each user. You can easily
@@ -37,14 +44,11 @@ def fig_scatter_time(user_data, username_to_color=None, title="", xlabel=None):
             showlegend=True,
             name=username,
             text=user_data.index,
-            line=dict(color=username_to_color[username]) if username_to_color is not None else None
+            line=dict(color=username_to_color[username]) if username_to_color is not None else None,
         )
         data.append(trace)
 
-    layout = dict(
-        title=title,
-        xaxis=dict(title=xlabel)
-    )
+    layout = dict(title=title, xaxis=dict(title=xlabel))
 
     fig = go.Figure(data=data, layout=layout)
 

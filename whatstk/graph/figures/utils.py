@@ -2,16 +2,17 @@
 
 
 import seaborn as sns
+from typing import List
 
 
-def hex_color_palette(n_colors):
+def hex_color_palette(n_colors: int) -> List[str]:
     """Get palette of `n_colors` color hexadecimal codes.
 
     Args:
         n_colors (int): Size of the color palette.
 
     """
-    palette = 'hls'  # ref: https://seaborn.pydata.org/tutorial/color_palettes.html
+    palette = "hls"  # ref: https://seaborn.pydata.org/tutorial/color_palettes.html
     rgb = sns.color_palette(palette=palette, n_colors=n_colors)
-    color_codes = ["#"+"".join("%02X" % int(round(i*255)) for i in r) for r in rgb]
+    color_codes = ["#" + "".join("%02X" % int(round(i * 255)) for i in r) for r in rgb]
     return color_codes

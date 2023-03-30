@@ -1,6 +1,9 @@
 """Library WhatsApp objects."""
 
 
+import pandas as pd
+from typing import Dict, Optional, Any
+
 from whatstk._chat import BaseChat
 from whatstk.utils.chat_merge import merge_chats
 from whatstk.whatsapp.parser import df_from_txt_whatsapp
@@ -30,17 +33,18 @@ class WhatsAppChat(BaseChat):
             4 2016-08-06 14:30:00        Misty                                          Definetly
 
     """
-    def __init__(self, df):
+
+    def __init__(self, df: pd.DataFrame) -> None:
         """Constructor.
 
         Args:
             df (pandas.DataFrame): Chat.
 
         """
-        super().__init__(df, platform='whatsapp')
+        super().__init__(df, platform="whatsapp")
 
     @classmethod
-    def from_source(cls, filepath, **kwargs):
+    def from_source(cls, filepath: str, **kwargs: Dict[str, Any]) -> "WhatsAppChat":
         """Create an instance from a chat text file.
 
         Args:
@@ -70,7 +74,9 @@ class WhatsAppChat(BaseChat):
         return cls(df)
 
     @classmethod
-    def from_sources(cls, filepaths, auto_header=None, hformat=None, encoding='utf-8'):
+    def from_sources(
+        cls, filepaths: str, auto_header: Optional[bool] = None, hformat: Optional[str] = None, encoding: str = "utf-8"
+    ) -> "WhatsAppChat":
         """Load a WhatsAppChat instance from multiple sources.
 
         Args:
@@ -115,18 +121,18 @@ class WhatsAppChat(BaseChat):
         """
         dfs = []
         if auto_header is None or auto_header:
-            auto_header = [True]*len(filepaths)
+            auto_header = [True] * len(filepaths)
         else:
-            auto_header = [False]*len(filepaths)
+            auto_header = [False] * len(filepaths)
         if hformat is None:
-            hformat = [None]*len(filepaths)
+            hformat = [None] * len(filepaths)
         for filepath, ah, hf in zip(filepaths, auto_header, hformat):
             chat = WhatsAppChat.from_source(filepath, auto_header=ah, hformat=hf, encoding=encoding)
             dfs.append(chat.df)
         df = merge_chats(dfs)
         return cls(df)
 
-    def to_txt(self, filepath, hformat=None, encoding='utf8'):
+    def to_txt(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:
         """Export chat to a text file.
 
         Usefull to export the chat to different formats (i.e. using different hformats).
@@ -139,7 +145,7 @@ class WhatsAppChat(BaseChat):
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
 
         """
-        if not filepath.endswith('.txt'):
+        if not filepath.endswith(".txt"):
             raise ValueError("filepath must end with .txt")
         if not hformat:
             hformat = "%y-%m-%d, %H:%M - %name:"
@@ -147,10 +153,10 @@ class WhatsAppChat(BaseChat):
         raw_lines = self.df.values.tolist()
         for line in raw_lines:
             date, user, text = line
-            hformat = hformat.replace('%name', '{name}')
+            hformat = hformat.replace("%name", "{name}")
             header = date.strftime(hformat).format(name=user)
-            formatted_line = '{} {}'.format(header, text)
+            formatted_line = "{} {}".format(header, text)
             lines.append(formatted_line)
-        text = '\n'.join(lines)
-        with open(r"{}".format(filepath), 'w', encoding=encoding) as f:
+        text = "\n".join(lines)
+        with open(r"{}".format(filepath), "w", encoding=encoding) as f:
             f.write(text)

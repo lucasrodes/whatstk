@@ -15,7 +15,7 @@ name = "whatstk"
 __version__ = "0.5.0"
 
 __all__ = [
-    'WhatsAppChat',
-    'df_from_txt_whatsapp',
-    'FigureBuilder',
+    "WhatsAppChat",
+    "df_from_txt_whatsapp",
+    "FigureBuilder",
 ]

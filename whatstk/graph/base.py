@@ -2,6 +2,10 @@
 
 
 import numpy as np
+import pandas as pd
+import plotly.graph_objs as go
+from typing import Optional, Dict
+
 from whatstk._chat import BaseChat
 from whatstk.analysis.interventions import get_interventions_count
 from whatstk.analysis.responses import get_response_matrix, NORMS
@@ -27,7 +31,7 @@ class FigureBuilder:
 
     """
 
-    def __init__(self, df=None, chat=None):
+    def __init__(self, df: Optional[pd.DataFrame] = None, chat: "BaseChat" = None) -> None:
         """Constructor.
 
         Args:
@@ -40,7 +44,7 @@ class FigureBuilder:
         self.__user_color_mapping = None
 
     @property
-    def usernames(self):
+    def usernames(self) -> BaseChat:
         """Get list with users available in given chat.
 
         Returns:
@@ -50,7 +54,7 @@ class FigureBuilder:
         return BaseChat(df=self.df).users
 
     @property
-    def user_color_mapping(self):
+    def user_color_mapping(self) -> Dict[str, str]:
         """Get mapping between user and color.
 
         Each user is assigned a color automatically, so that this color is preserved for that user in all
@@ -67,10 +71,10 @@ class FigureBuilder:
         return self.__user_color_mapping
 
     @user_color_mapping.setter
-    def user_color_mapping(self, value):
+    def user_color_mapping(self, value: Dict[str, str]) -> None:
         self.__user_color_mapping = value
 
-    def user_msg_length_boxplot(self, title="User message length", xlabel="User"):
+    def user_msg_length_boxplot(self, title: str = "User message length", xlabel: str = "User") -> go.Figure:
         """Generate figure with boxplots of each user's message length.
 
         Args:
@@ -95,16 +99,18 @@ class FigureBuilder:
                 >>> plot(fig)
 
         """
-        fig = fig_boxplot_msglen(
-            df=self.df,
-            username_to_color=self.user_color_mapping,
-            title=title,
-            xlabel=xlabel
-        )
+        fig = fig_boxplot_msglen(df=self.df, username_to_color=self.user_color_mapping, title=title, xlabel=xlabel)
         return fig
 
-    def user_interventions_count_linechart(self, date_mode='date', msg_length=False, cumulative=False, all_users=False,
-                                           title="User interventions count", xlabel="Date/Time"):
+    def user_interventions_count_linechart(
+        self,
+        date_mode: str = "date",
+        msg_length: bool = False,
+        cumulative: bool = False,
+        all_users: bool = False,
+        title: str = "User interventions count",
+        xlabel: str = "Date/Time",
+    ) -> go.Figure:
         """Plot number of user interventions over time.
 
         Args:
@@ -150,21 +156,14 @@ class FigureBuilder:
             all_users=all_users,
         )
         if all_users:
-            fig = fig_scatter_time(
-                user_data=counts,
-                title=title,
-                xlabel=xlabel
-            )
+            fig = fig_scatter_time(user_data=counts, title=title, xlabel=xlabel)
         else:
             fig = fig_scatter_time(
-                user_data=counts,
-                username_to_color=self.user_color_mapping,
-                title=title,
-                xlabel=xlabel
+                user_data=counts, username_to_color=self.user_color_mapping, title=title, xlabel=xlabel
             )
         return fig
 
-    def user_message_responses_flow(self, title="Message flow"):
+    def user_message_responses_flow(self, title: str = "Message flow") -> go.Figure:
         """Get the flow of message responses.
 
         A response from user X to user Y happens if user X sends a message right after a message from user Y.
@@ -198,25 +197,18 @@ class FigureBuilder:
 
         # Node lists
         label = self.usernames * 2
-        color = list(self.user_color_mapping.values())*2
+        color = list(self.user_color_mapping.values()) * 2
         # Link lists
         n_users = len(self.usernames)
         source = np.repeat(np.arange(n_users), n_users).tolist()
-        target = np.arange(n_users, 2*n_users).tolist()*n_users
+        target = np.arange(n_users, 2 * n_users).tolist() * n_users
         value = responses.values.flatten().tolist()
 
         # Get figure
-        fig = fig_sankey(
-            label=label,
-            color=color,
-            source=source,
-            target=target,
-            value=value,
-            title=title
-        )
+        fig = fig_sankey(label=label, color=color, source=source, target=target, value=value, title=title)
         return fig
 
-    def user_message_responses_heatmap(self, norm=NORMS.ABSOLUTE, title="Response matrix"):
+    def user_message_responses_heatmap(self, norm: str = NORMS.ABSOLUTE, title: str = "Response matrix") -> go.Figure:
         """Get the response matrix heatmap.
 
         A response from user X to user Y happens if user X sends a message right after a message from user Y.
@@ -253,8 +245,5 @@ class FigureBuilder:
         responses = get_response_matrix(self.df, norm=norm)
 
         # Get figure
-        fig = fig_heatmap(
-            df_matrix=responses,
-            title=title
-        )
+        fig = fig_heatmap(df_matrix=responses, title=title)
         return fig

@@ -16,7 +16,4 @@ from whatstk.graph.base import FigureBuilder
 pio.templates.default = "plotly_white"
 
 
-__all__ = [
-    'plot',
-    'FigureBuilder'
-]
+__all__ = ["plot", "FigureBuilder"]
