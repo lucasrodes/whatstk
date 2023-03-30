@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, List
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
 
-if TYPE_CHECKING: # pragma: no cover
+if TYPE_CHECKING:  # pragma: no cover
     from whatstk._chat import BaseChat  # pragma: no cover
 
 
