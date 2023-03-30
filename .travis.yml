@@ -44,7 +44,7 @@ jobs:
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
     - stage: deploy
-      python: 3.8
+      python: 3.10
       deploy:
         - provider: pypi
           user: $USER_PYPI
