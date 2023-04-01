@@ -2,6 +2,10 @@
 
 
 from copy import deepcopy
+import pandas as pd
+from typing import Optional, List, Union, Dict, Any
+from datetime import datetime
+
 from whatstk.utils.chat_merge import merge_chats
 from whatstk.utils.utils import COLNAMES_DF
 
@@ -18,7 +22,7 @@ class BaseChat:
 
     """
 
-    def __init__(self, df, platform=None):
+    def __init__(self, df: pd.DataFrame, platform: Optional[str] = None) -> None:
         """Constructor.
 
         Args:
@@ -30,7 +34,7 @@ class BaseChat:
         self._platform = platform
 
     @property
-    def df(self):
+    def df(self) -> pd.DataFrame:
         """Chat as DataFrame.
 
         Returns:
@@ -39,7 +43,7 @@ class BaseChat:
         return self._df
 
     @property
-    def users(self):
+    def users(self) -> List[str]:
         """List with users.
 
         Returns:
@@ -48,7 +52,7 @@ class BaseChat:
         return sorted(list(self.df[COLNAMES_DF.USERNAME].unique()))
 
     @property
-    def start_date(self):
+    def start_date(self) -> Union[str, datetime]:
         """Chat starting date.
 
         Returns:
@@ -58,7 +62,7 @@ class BaseChat:
         return self.df[COLNAMES_DF.DATE].min()
 
     @property
-    def end_date(self):
+    def end_date(self) -> Union[str, datetime]:
         """Chat end date.
 
         Returns:
@@ -68,7 +72,7 @@ class BaseChat:
         return self.df[COLNAMES_DF.DATE].max()
 
     @classmethod
-    def from_source(cls, **kwargs):
+    def from_source(cls, **kwargs: Dict[str, Any]) -> None:
         """Load chat.
 
         Args:
@@ -84,7 +88,7 @@ class BaseChat:
         """
         raise NotImplementedError
 
-    def merge(self, chat, rename_users=None):
+    def merge(self, chat: "BaseChat", rename_users: Optional[Dict[str, str]] = None) -> "BaseChat":
         """Merge current instance with ``chat``.
 
         Args:
@@ -94,7 +98,7 @@ class BaseChat:
                                  names must come as list (even if there is only one).
 
         Returns:
-            WhatsAppChat: Merged chat.
+            BaseChat: Merged chat.
 
         ..  seealso::
 
@@ -124,7 +128,7 @@ class BaseChat:
             self_ = self_.rename_users(mapping=rename_users)
         return self_
 
-    def rename_users(self, mapping):
+    def rename_users(self, mapping: Dict[str, str]) -> "BaseChat":
         """Rename users.
 
         This might be needed in multiple occations:
@@ -167,18 +171,18 @@ class BaseChat:
                 self_.df[COLNAMES_DF.USERNAME][self_.df[COLNAMES_DF.USERNAME] == old_name] = new_name
         return self_
 
-    def to_csv(self, filepath):
+    def to_csv(self, filepath: str) -> None:
         """Save chat as csv.
 
         Args:
             filepath (str): Name of file.
 
         """
-        if not filepath.endswith('.csv'):
+        if not filepath.endswith(".csv"):
             raise ValueError("filepath must end with .csv")
         self.df.to_csv(filepath, index=False)
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Number of messages.
 
         Returns:

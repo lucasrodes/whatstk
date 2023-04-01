@@ -1,11 +1,22 @@
 """Base analysis tools."""
 
+from typing import TYPE_CHECKING, List
 
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
 
+if TYPE_CHECKING:  # pragma: no cover
+    from whatstk._chat import BaseChat  # pragma: no cover
 
-def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=False, cumulative=False, all_users=False):
+
+def get_interventions_count(
+    df: pd.DataFrame = None,
+    chat: "BaseChat" = None,
+    date_mode: str = "date",
+    msg_length: bool = False,
+    cumulative: bool = False,
+    all_users: bool = False,
+) -> pd.DataFrame:
     """Get number of interventions per user per unit of time.
 
     The unit of time can be chosen by means of argument ``date_mode``.
@@ -61,38 +72,41 @@ def get_interventions_count(df=None, chat=None, date_mode='date', msg_length=Fal
     """
     df = _get_df(df=df, chat=chat)
 
-    if date_mode == 'date':
+    if date_mode == "date":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.date], msg_length)
         n_interventions.index = pd.to_datetime(n_interventions.index)
         # print(n_interventions.shape)
-    elif date_mode == 'hour':
+    elif date_mode == "hour":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.hour], msg_length)
-    elif date_mode == 'weekday':
+    elif date_mode == "weekday":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday], msg_length)
-    elif date_mode == 'hourweekday':
-        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour],
-                                         msg_length)
-    elif date_mode == 'month':
+    elif date_mode == "hourweekday":
+        n_interventions = _interventions(
+            df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour], msg_length
+        )
+    elif date_mode == "month":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.month], msg_length)
     else:
-        raise ValueError("Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
-                         "'hourweekday' and 'month'.".format(date_mode))
+        raise ValueError(
+            "Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
+            "'hourweekday' and 'month'.".format(date_mode)
+        )
 
-    if date_mode == 'hourweekday':
-        n_interventions.index = n_interventions.index.set_names(['weekday', 'hour'])
+    if date_mode == "hourweekday":
+        n_interventions.index = n_interventions.index.set_names(["weekday", "hour"])
     else:
         n_interventions.index.name = date_mode
     n_interventions.columns = n_interventions.columns.get_level_values(COLNAMES_DF.USERNAME)
 
     if all_users:
-        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=['interventions count'])
+        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=["interventions count"])
     if cumulative:
         n_interventions = n_interventions.cumsum()
 
     return n_interventions
 
 
-def _interventions(df, series_tf, msg_length):
+def _interventions(df: pd.DataFrame, series_tf: List[pd.DataFrame], msg_length: bool) -> pd.DataFrame:
     """Get number of interventions per date per user.
 
     Args:
@@ -107,11 +121,11 @@ def _interventions(df, series_tf, msg_length):
     if msg_length:
         counts_ = df.copy()
         counts_[COLNAMES_DF.MESSAGE_LENGTH] = counts_[COLNAMES_DF.MESSAGE].apply(lambda x: len(x))
-        counts = counts_.groupby(by=series_tf+[COLNAMES_DF.USERNAME]).agg({
-            COLNAMES_DF.MESSAGE_LENGTH: lambda x: x.sum()
-        })
+        counts = counts_.groupby(by=series_tf + [COLNAMES_DF.USERNAME]).agg(
+            {COLNAMES_DF.MESSAGE_LENGTH: lambda x: x.sum()}
+        )
     else:
-        counts = df.groupby(by=series_tf + [COLNAMES_DF.USERNAME]).agg({'message': 'count'})
+        counts = df.groupby(by=series_tf + [COLNAMES_DF.USERNAME]).agg({"message": "count"})
     counts = counts.unstack(fill_value=0)
 
     return counts

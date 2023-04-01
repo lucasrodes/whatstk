@@ -35,7 +35,7 @@ SETTINGS_PATH = os.path.join(CONFIG_PATH, "settings.yaml")
 CREDENTIALS_PATH = os.path.join(CONFIG_PATH, "credentials.json")
 
 
-def gdrive_init(client_secret_file, encoding='utf8'):
+def gdrive_init(client_secret_file: str, encoding: str = "utf8") -> None:
     """Initialize GDrive credentials.
 
     This should only run once before reading a file from Google Drive the first time. Subsequent executions should run
@@ -72,9 +72,9 @@ def gdrive_init(client_secret_file, encoding='utf8'):
         "oauth_scope": [
             "https://www.googleapis.com/auth/drive",
             "https://www.googleapis.com/auth/drive.install",
-        ]
+        ],
     }
-    with open(SETTINGS_PATH, 'w', encoding=encoding) as f:
+    with open(SETTINGS_PATH, "w", encoding=encoding) as f:
         yaml.dump(dix, f)
 
     # credentials.json
@@ -82,7 +82,7 @@ def gdrive_init(client_secret_file, encoding='utf8'):
     gauth.CommandLineAuth()
 
 
-def _check_gdrive_config():
+def _check_gdrive_config() -> None:
     error_msg = (
         "Google Drive not correctly configured. Run `gdrive_init(client_secret_file)` (from whatstk.utils.gdrive)."
     )
@@ -93,13 +93,13 @@ def _check_gdrive_config():
             raise ValueError(error_msg)
 
 
-def _load_str_from_file_id(file_id):
+def _load_str_from_file_id(file_id: int) -> str:
     _check_gdrive_config()
     gauth = GoogleAuth(settings_file=SETTINGS_PATH)
     drive = GoogleDrive(gauth)
     # Load file using id
     try:
-        file_obj = drive.CreateFile({'id': file_id})
+        file_obj = drive.CreateFile({"id": file_id})
         file_obj.FetchMetadata()
     except ApiRequestError:
         raise ValueError(

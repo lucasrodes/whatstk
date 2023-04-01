@@ -23,13 +23,13 @@ with open(os.path.join(this_directory, 'requirements-docs.txt')) as f:
     requirements_docs = f.readlines()
 
 requirements_gdrive = [
-    "PyDrive2~=1.8.2",
-    "PyYAML~=5.4.1",
+    "PyDrive2~=1.15.0",
+    "PyYAML~=6.0",
 ]
 
 requirements_generate = [
-    "scipy~=1.6.0",
-    "python-lorem==1.1.2",
+    "scipy~=1.10.0",
+    "python-lorem==1.2.0",
 ]
 
 requirements_full = requirements_gdrive + requirements_generate
@@ -45,7 +45,7 @@ extras_require = {
 
 setup(
     name='whatstk',
-    version="0.5.0",
+    version="0.6.0",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -62,9 +62,10 @@ setup(
         "Development Status :: 4 - Beta",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],

@@ -53,13 +53,13 @@ Note: You will need to add tests for your code. For this, you can check the curr
 Adding new examples
 -------------------
 To add new examples, consider editing yourself a ``rst`` file in ``docs/source/`` directory in the repository. For
-questions or doubts, join the `gitter group <https://gitter.im/whatstk/>`_.
+questions or doubts, join the `gitter group <https://gitter.im/sociepy/whatstk>`_.
 
 ----
 
 API discussions
 ---------------
-Consider joining the `gitter group <https://gitter.im/whatstk/>`_.
+Consider joining the `gitter group <https://gitter.im/sociepy/whatstk>`_.
 
 ----
 

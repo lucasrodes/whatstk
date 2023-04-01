@@ -3,16 +3,17 @@
 
 import logging
 import re
+from typing import List, Tuple, Optional
 
 import pandas as pd
 
 from whatstk.utils.exceptions import RegexError
 
 
-separators = {'.', ',', '-', '/', ':', '[', ']'}
+separators = {".", ",", "-", "/", ":", "[", "]"}
 
 
-def extract_header_from_text(text, encoding='utf-8'):
+def extract_header_from_text(text: str, encoding: str = "utf-8") -> Optional[str]:
     """Extract header from text.
 
     Args:
@@ -40,7 +41,7 @@ def extract_header_from_text(text, encoding='utf-8'):
                 '%d.%m.%y, %H:%M - %name:
     """
     # Split lines
-    lines = text.split('\n')
+    lines = text.split("\n")
 
     # Get format auto
     try:
@@ -52,7 +53,7 @@ def extract_header_from_text(text, encoding='utf-8'):
     return None
 
 
-def _extract_header_format_from_lines(lines):
+def _extract_header_format_from_lines(lines: List[str]) -> str:
     """Extract header from list of lines.
 
     Args:
@@ -67,7 +68,7 @@ def _extract_header_format_from_lines(lines):
     return _extract_header_format_from_components(elements_list, template_list)
 
 
-def _extract_elements_template_from_lines(lines):
+def _extract_elements_template_from_lines(lines: str) -> Tuple[List[List[int]], List[str]]:
     """Get elements_list and template_list from lines.
 
     Args:
@@ -92,7 +93,7 @@ def _extract_elements_template_from_lines(lines):
     return elements_list, template_list
 
 
-def _extract_possible_header_from_line(line):
+def _extract_possible_header_from_line(line: str) -> str:
     """Given a `line` extract possible header. Uses ':' as separator.
 
     Args:
@@ -103,19 +104,19 @@ def _extract_possible_header_from_line(line):
 
     """
     # Extract possible header from line
-    line_split = line.split(': ')
+    line_split = line.split(": ")
     if len(line_split) >= 2:
         # possible header
         header = line_split[0]
         if not header.isprintable():
-            header = header.replace('\u200e', '').replace('\u202e', '')
-        if header[-1] != ':':
-            header += ':'
+            header = header.replace("\u200e", "").replace("\u202e", "")
+        if header[-1] != ":":
+            header += ":"
         return header
     return None
 
 
-def _extract_header_parts(header):
+def _extract_header_parts(header: str) -> Tuple[List[int], str]:
     """Extract all parts from header (i.e. date elements and name).
 
     Args:
@@ -127,10 +128,10 @@ def _extract_header_parts(header):
 
     """
 
-    def get_last_idx_digit(v, i):
-        if i+1 < len(v):
-            if v[i+1].isdigit():
-                return get_last_idx_digit(v, i+1)
+    def _get_last_idx_digit(v: str, i: int) -> int:
+        if i + 1 < len(v):
+            if v[i + 1].isdigit():
+                return _get_last_idx_digit(v, i + 1)
         return i
 
     # def get_last_idx_alpha(v, i):
@@ -143,40 +144,42 @@ def _extract_header_parts(header):
     #     return i
 
     hformat_elements = []
-    hformat_template = ''
+    hformat_template = ""
     i = 0
     while i < len(header):
         if header[i].isdigit():
-            j = get_last_idx_digit(header, i)
-            hformat_elements.append(int(header[i:j+1]))
-            hformat_template += '{}'
+            j = _get_last_idx_digit(header, i)
+            hformat_elements.append(int(header[i: j + 1]))
+            hformat_template += "{}"
             i = j
         else:
-            if header[i] in ['[', ']']:
-                hformat_template += '\\'+header[i]
+            if header[i] in ["[", "]"]:
+                hformat_template += "\\" + header[i]
             else:
                 hformat_template += header[i]
         i += 1
-    items = re.findall(r'[-|\]]\s[^:]*:', hformat_template)
+    items = re.findall(r"[-|\]]\s[^:]*:", hformat_template)
     if len(items) != 1:
         raise RegexError(
             "Username match was not possible. Check that header (%s) is of format '... - %name:' or '[...] %name:'",
-            hformat_template)
-    hformat_template = hformat_template.replace(items[0][2:-1], '%name')
-    code = ' %p'
-    hformat_template = hformat_template\
-        .replace(' PM', code)\
-        .replace(' AM', code)\
-        .replace(' A.M.', code)\
-        .replace(' P.M.', code)\
-        .replace(' am', code)\
-        .replace(' pm', code)\
-        .replace(' a.m.', code)\
-        .replace(' p.m.', code)
+            hformat_template,
+        )
+    hformat_template = hformat_template.replace(items[0][2:-1], "%name")
+    code = " %p"
+    hformat_template = (
+        hformat_template.replace(" PM", code)
+        .replace(" AM", code)
+        .replace(" A.M.", code)
+        .replace(" P.M.", code)
+        .replace(" am", code)
+        .replace(" pm", code)
+        .replace(" a.m.", code)
+        .replace(" p.m.", code)
+    )
     return hformat_elements, hformat_template
 
 
-def _extract_header_format_from_components(elements_list, template_list):
+def _extract_header_format_from_components(elements_list: List[List[int]], template_list: List[int]) -> str:
     """Extract header format from list containing elements and list containing templates.
 
     Args:
@@ -201,10 +204,10 @@ def _extract_header_format_from_components(elements_list, template_list):
     # Get positions
     df = pd.DataFrame(elements_list_)
     # dates_df = df.select_dtypes(int)
-    dates_df = df.select_dtypes('number')
+    dates_df = df.select_dtypes("number")
     template = template_list[0]
 
-    if '%p' in template:
+    if "%p" in template:
         hour_code = "%I"
     else:
         hour_code = "%H"
@@ -228,22 +231,16 @@ def _extract_header_format_from_components(elements_list, template_list):
     minutes_pos = 4
     dates_df = dates_df.drop(columns=[minutes_pos])
     # Dictionary with positions and date element code
-    dates_pos = {
-        day_pos: '%d',
-        year_pos: '%y',
-        month_pos: '%m',
-        hour_pos: hour_code,
-        minutes_pos: '%M'
-    }
+    dates_pos = {day_pos: "%d", year_pos: "%y", month_pos: "%m", hour_pos: hour_code, minutes_pos: "%M"}
     # Seconds
     if dates_df.shape[1] > 0:
         seconds_pos = 5
-        dates_pos[seconds_pos] = '%S'
+        dates_pos[seconds_pos] = "%S"
 
     keys_ordered = sorted(dates_pos.keys())
     dates_codes = [dates_pos[k] for k in keys_ordered]
 
-    codes = dates_codes + ['%name']
+    codes = dates_codes + ["%name"]
     # print(codes)
     # print(template)
     # print(template)

@@ -1,6 +1,6 @@
-pytest>=5.4.1
-pytest-cov>=2.8.1
-coverage>=4.5.1
-codecov>=2.0.22
-pytest-html==2.1.1
-pytest-mock~=3.6.1
+pytest~=7.2.0
+pytest-cov~=4.0.0
+coverage~=7.2.2
+codecov~=2.1.0
+pytest-html~=3.2.0
+pytest-mock~=3.10.0
