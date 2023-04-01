@@ -5,7 +5,7 @@
 </h1>
 <p align="left">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.5.0-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.6.0-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
