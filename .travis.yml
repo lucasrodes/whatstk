@@ -1,5 +1,4 @@
-# TCI SUPPORT TEST RUN
-dist: xenial
+dist: focal
 language: python
 python:
   - 3.8
