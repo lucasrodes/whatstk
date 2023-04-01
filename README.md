@@ -24,7 +24,7 @@
     <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
   </a>
   <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg?&logo=python&logoColor=yellow">
+    <img alt="Python 3" src="https://img.shields.io/badge/python-3.8|3.9|3.10|3.11-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
@@ -37,7 +37,8 @@
   </a>
 </p>
 
-----
+---
+
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
@@ -46,18 +47,18 @@
 the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
 the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
 
-It is distributed under the GPL-3.0 license. 
+It is distributed under the GPL-3.0 license.
 
 ⭐ Please **star** our project if you found it interesting to **give us some dopamine** 😄!
 
-
 ### Content
-* [Installation](#installation)
-* [Getting Started](#getting-started)
-* [Documentation](https://whatstk.readthedocs.io/en/stable/)
-* [Contribute](#contribute)
-* [Covered in](#covered-in)
-* [Citation](#citation)
+
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Documentation](https://whatstk.readthedocs.io/en/stable/)
+- [Contribute](#contribute)
+- [Covered in](#covered-in)
+- [Citation](#citation)
 
 ## Installation
 
@@ -74,9 +75,11 @@ pip install git+https://github.com/lucasrodes/whatstk.git@develop
 _More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
 
 ## Getting Started
+
 For a rapid introduction, check this [tutorial on Medium](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d).
 
-#### Export your chat using your phone: 
+#### Export your chat using your phone:
+
 _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html)._
 
 #### Load chat as a DataFrame
@@ -91,21 +94,26 @@ df = df_from_txt_whatsapp("path/to/chat.txt")
 ```bash
 $ whatstk-to-csv [input_filename] [output_filename]
 ```
+
 #### More examples
 
-_See more in sections [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and 
+_See more in sections [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and
 [examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html)._
 
 ## Documentation
+
 _See [official documentation](https://whatstk.readthedocs.io/en/stable/)._
 
 ## Contribute
+
 _See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contribute.html)._
 
 ## License
+
 [GPL-3.0](LICENSE)
 
 ## Citation
+
 Lucas Rodés-Guirao. "whatstk, WhatsApp analysis and parsing toolkit", https://github.com/lucasrodes/whatstk
 
 ## Covered in

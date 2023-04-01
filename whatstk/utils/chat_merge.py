@@ -1,11 +1,12 @@
 """Merging chats."""
 
+from typing import List
 
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF
 
 
-def _merge_two_chats(df1, df2):
+def _merge_two_chats(df1: pd.DataFrame, df2: pd.DataFrame) -> pd.DataFrame:
     if df1[COLNAMES_DF.DATE].min() <= df2[COLNAMES_DF.DATE].min():
         df = pd.concat([df1, df2[df2[COLNAMES_DF.DATE] > df1[COLNAMES_DF.DATE].max()]])
     else:
@@ -13,7 +14,7 @@ def _merge_two_chats(df1, df2):
     return df
 
 
-def merge_chats(dfs):
+def merge_chats(dfs: List[pd.DataFrame]) -> pd.DataFrame:
     """Merge several chats into a single one.
 
     Can come in handy when you have old exports and new ones, and both have relevant data.

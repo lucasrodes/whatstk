@@ -1,6 +1,5 @@
-emoji==0.6.0
-numpy~=1.19.1
-pandas~=1.2.0
+emoji~=2.2.0
+numpy~=1.24.0
+pandas~=1.5.0
 plotly~=4.14.3
-seaborn==0.11.1
-certifi==2022.12.7
+seaborn~=0.12.0

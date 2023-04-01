@@ -5,6 +5,7 @@ import os
 import re
 from datetime import datetime
 from urllib.request import urlopen
+from typing import Optional, TYPE_CHECKING, Tuple, List, Dict
 
 import pandas as pd
 
@@ -12,23 +13,31 @@ from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
 from whatstk.whatsapp.auto_header import extract_header_from_text
 
+if TYPE_CHECKING:  # pragma: no cover
+    from whatstk.whatsapp.objects import WhatsAppChat  # pragma: no cover
+
 
 regex_simplifier = {
-    '%Y': r'(?P<year>\d{2,4})',
-    '%y': r'(?P<year>\d{2,4})',
-    '%m': r'(?P<month>\d{1,2})',
-    '%d': r'(?P<day>\d{1,2})',
-    '%H': r'(?P<hour>\d{1,2})',
-    '%I': r'(?P<hour>\d{1,2})',
-    '%M': r'(?P<minutes>\d{2})',
-    '%S': r'(?P<seconds>\d{2})',
-    '%P': r'(?P<ampm>[AaPp].? ?[Mm].?)',
-    '%p': r'(?P<ampm>[AaPp].? ?[Mm].?)',
-    '%name': fr'(?P<{COLNAMES_DF.USERNAME}>[^:]*)'
+    "%Y": r"(?P<year>\d{2,4})",
+    "%y": r"(?P<year>\d{2,4})",
+    "%m": r"(?P<month>\d{1,2})",
+    "%d": r"(?P<day>\d{1,2})",
+    "%H": r"(?P<hour>\d{1,2})",
+    "%I": r"(?P<hour>\d{1,2})",
+    "%M": r"(?P<minutes>\d{2})",
+    "%S": r"(?P<seconds>\d{2})",
+    "%P": r"(?P<ampm>[AaPp].? ?[Mm].?)",
+    "%p": r"(?P<ampm>[AaPp].? ?[Mm].?)",
+    "%name": rf"(?P<{COLNAMES_DF.USERNAME}>[^:]*)",
 }
 
 
-def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf-8'):
+def df_from_txt_whatsapp(
+    filepath: str,
+    auto_header: bool = True,
+    hformat: Optional[str] = None,
+    encoding: str = "utf-8",
+) -> "WhatsAppChat":
     """Load chat as a DataFrame.
 
     Args:
@@ -80,7 +89,7 @@ def df_from_txt_whatsapp(filepath, auto_header=True, hformat=None, encoding='utf
     return df
 
 
-def generate_regex(hformat):
+def generate_regex(hformat: str) -> Tuple[str, str]:
     r"""Generate regular expression from hformat.
 
     Args:
@@ -101,16 +110,16 @@ def generate_regex(hformat):
             P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?P<seconds>\\d{2}) - ')
 
     """
-    items = re.findall(r'\%\w*', hformat)
+    items = re.findall(r"\%\w*", hformat)
     for i in items:
         hformat = hformat.replace(i, regex_simplifier[i])
 
-    hformat = hformat + ' '
-    hformat_x = hformat.split('(?P<username>[^:]*)')[0]
+    hformat = hformat + " "
+    hformat_x = hformat.split("(?P<username>[^:]*)")[0]
     return hformat, hformat_x
 
 
-def _str_from_txt(filepath: str, encoding='utf-8'):
+def _str_from_txt(filepath: str, encoding: str = "utf-8") -> str:
     """Read text content as string.
 
     Args:
@@ -127,15 +136,16 @@ def _str_from_txt(filepath: str, encoding='utf-8'):
     """
     # Read local file
     if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
-        with open(filepath, 'r', encoding=encoding) as f:
+        with open(filepath, "r", encoding=encoding) as f:
             text = f.read()
     # Read file from URL
-    elif filepath.lower().startswith('http'):
+    elif filepath.lower().startswith("http"):
         with urlopen(filepath) as response:  # noqa
             text = response.read()
         text = text.decode(encoding)
     elif filepath.startswith("gdrive"):
         from whatstk.utils.gdrive import _load_str_from_file_id
+
         file_id = filepath.replace("gdrive://", "")
         text = _load_str_from_file_id(file_id)
     else:
@@ -143,17 +153,19 @@ def _str_from_txt(filepath: str, encoding='utf-8'):
     return text
 
 
-def _df_from_str(text, auto_header=True, hformat=None):
+def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = None) -> pd.DataFrame:
     # Get hformat
     if hformat:
         # Bracket is reserved character in RegEx, add backslash before them.
-        hformat = hformat.replace('[', r'\[').replace(']', r'\]')
+        hformat = hformat.replace("[", r"\[").replace("]", r"\]")
     if not hformat and auto_header:
         hformat = extract_header_from_text(text)
         if not hformat:
-            raise RuntimeError("Header automatic extraction failed. Please specify the format manually by setting"
-                               " input argument `hformat`. Report this issue so that automatic header detection support"
-                               " for your header format is added: https://github.com/lucasrodes/whatstk/issues.")
+            raise RuntimeError(
+                "Header automatic extraction failed. Please specify the format manually by setting"
+                " input argument `hformat`. Report this issue so that automatic header detection support"
+                " for your header format is added: https://github.com/lucasrodes/whatstk/issues."
+            )
     elif not (hformat or auto_header):
         raise ValueError("If auto_header is False, hformat can't be None.")
 
@@ -171,7 +183,7 @@ def _df_from_str(text, auto_header=True, hformat=None):
     return df
 
 
-def _parse_chat(text, regex):
+def _parse_chat(text: str, regex: str) -> pd.DataFrame:
     """Parse chat using given regex.
 
     Args:
@@ -198,7 +210,7 @@ def _parse_chat(text, regex):
     return df_chat
 
 
-def _add_schema(df):
+def _add_schema(df: pd.DataFrame) -> pd.DataFrame:
     """Add default chat schema to df.
 
     Args:
@@ -208,15 +220,17 @@ def _add_schema(df):
         pandas.DataFrame: Chat dataframe with correct dtypes.
 
     """
-    df = df.astype({
-        COLNAMES_DF.DATE: 'datetime64[ns]',
-        COLNAMES_DF.USERNAME: pd.StringDtype(),
-        COLNAMES_DF.MESSAGE: pd.StringDtype()
-    })
+    df = df.astype(
+        {
+            COLNAMES_DF.DATE: "datetime64[ns]",
+            COLNAMES_DF.USERNAME: pd.StringDtype(),
+            COLNAMES_DF.MESSAGE: pd.StringDtype(),
+        }
+    )
     return df
 
 
-def _parse_line(text, headers, i):
+def _parse_line(text: str, headers: List[str], i: int) -> Dict[str, str]:
     """Get date, username and message from the i:th intervention.
 
     Args:
@@ -229,39 +243,50 @@ def _parse_line(text, headers, i):
 
     """
     result_ = headers[i].groupdict()
-    if 'ampm' in result_:
-        hour = int(result_['hour'])
-        mode = result_.get('ampm').lower()
-        if hour == 12 and mode == 'am':
+    if "ampm" in result_:
+        hour = int(result_["hour"])
+        mode = result_.get("ampm").lower()
+        if hour == 12 and mode == "am":
             hour = 0
-        elif hour != 12 and mode == 'pm':
+        elif hour != 12 and mode == "pm":
             hour += 12
     else:
-        hour = int(result_['hour'])
+        hour = int(result_["hour"])
 
     # Check format of year. If year is 2-digit represented we add 2000
-    if len(result_['year']) == 2:
-        year = int(result_['year']) + 2000
+    if len(result_["year"]) == 2:
+        year = int(result_["year"]) + 2000
     else:
-        year = int(result_['year'])
+        year = int(result_["year"])
 
-    if 'seconds' not in result_:
-        date = datetime(year, int(result_['month']), int(result_['day']), hour,
-                        int(result_['minutes']))
+    if "seconds" not in result_:
+        date = datetime(
+            year,
+            int(result_["month"]),
+            int(result_["day"]),
+            hour,
+            int(result_["minutes"]),
+        )
     else:
-        date = datetime(year, int(result_['month']), int(result_['day']), hour,
-                        int(result_['minutes']), int(result_['seconds']))
+        date = datetime(
+            year,
+            int(result_["month"]),
+            int(result_["day"]),
+            hour,
+            int(result_["minutes"]),
+            int(result_["seconds"]),
+        )
     username = result_[COLNAMES_DF.USERNAME]
     message = _get_message(text, headers, i)
     line_dict = {
         COLNAMES_DF.DATE: date,
         COLNAMES_DF.USERNAME: username,
-        COLNAMES_DF.MESSAGE: message
+        COLNAMES_DF.MESSAGE: message,
     }
     return line_dict
 
 
-def _remove_alerts_from_df(r_x, df):
+def _remove_alerts_from_df(r_x: str, df: pd.DataFrame) -> pd.DataFrame:
     """Try to get rid of alert/notification messages.
 
     Args:
@@ -277,7 +302,7 @@ def _remove_alerts_from_df(r_x, df):
     return df_new
 
 
-def _remove_alerts_from_line(r_x, line_df):
+def _remove_alerts_from_line(r_x: str, line_df: str) -> str:
     """Remove line content that is not desirable (automatic alerts etc.).
 
     Args:
@@ -289,12 +314,12 @@ def _remove_alerts_from_line(r_x, line_df):
 
     """
     if re.search(r_x, line_df):
-        return line_df[:re.search(r_x, line_df).start()]
+        return line_df[: re.search(r_x, line_df).start()]
     else:
         return line_df
 
 
-def _get_message(text, headers, i):
+def _get_message(text: str, headers: List[str], i: int) -> str:
     """Get i:th message from text.
 
     Args:

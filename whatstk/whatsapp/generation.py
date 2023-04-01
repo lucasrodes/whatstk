@@ -4,13 +4,16 @@
 import os
 from datetime import datetime, timedelta
 import itertools
+from typing import Optional, List
+
 import numpy as np
 import pandas as pd
-from emoji.unicode_codes import EMOJI_UNICODE
+from emoji.unicode_codes import EMOJI_DATA
+from scipy.stats import lomax
+
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.whatsapp.hformat import get_supported_hformats_as_list
 from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
-from scipy.stats import lomax
 
 
 try:
@@ -24,9 +27,7 @@ except ImportError as e:
     raise ImportError(msg) from e
 
 
-USERS = [
-    'John', 'Mary', 'Giuseppe', '+1 123 456 789'
-]
+USERS = ["John", "Mary", "Giuseppe", "+1 123 456 789"]
 
 
 class ChatGenerator:
@@ -57,7 +58,7 @@ class ChatGenerator:
 
     """
 
-    def __init__(self, size, users=None, seed=100):
+    def __init__(self, size: int, users: Optional[List[str]] = None, seed: int = 100) -> None:
         """Instantiate ChatGenerator class.
 
         Args:
@@ -71,7 +72,7 @@ class ChatGenerator:
         self.seed = seed
         np.random.seed(seed=self.seed)
 
-    def _generate_messages(self):
+    def _generate_messages(self) -> List[str]:
         """Generate list of messages.
 
         To generate sentences, Lorem Ipsum is used.
@@ -83,10 +84,10 @@ class ChatGenerator:
         emojis = self._generate_emojis()
         s = sentence(count=self.size, comma=(0, 2), word_range=(4, 8))
         sentences = list(itertools.islice(s, self.size))
-        messages = [sentences[i] + ' ' + emojis[i] for i in range(self.size)]
+        messages = [sentences[i] + " " + emojis[i] for i in range(self.size)]
         return messages
 
-    def _generate_emojis(self, k=1):
+    def _generate_emojis(self, k: int = 1) -> str:
         """Generate random list of emojis.
 
         Emojis are sampled from a list of `n` emojis and `k*n` empty strings.
@@ -98,12 +99,12 @@ class ChatGenerator:
             list: List with emojis
 
         """
-        emojis = list(EMOJI_UNICODE.values())
+        emojis = list(EMOJI_DATA.keys())
         n = len(emojis)
-        emojis = emojis + [''] * k*n
+        emojis = emojis + [""] * k * n
         return np.random.choice(emojis, self.size)
 
-    def _generate_timestamps(self, last=None):
+    def _generate_timestamps(self, last: Optional[datetime] = None) -> List[datetime]:
         """Generate list of timestamps.
 
         Args:
@@ -119,11 +120,11 @@ class ChatGenerator:
         c = 1.0065
         scale = 40.06
         loc = 30
-        ts_ = [0] + lomax.rvs(c=c, loc=loc, scale=scale, size=self.size-1, random_state=self.seed).cumsum().tolist()
-        ts = [last-timedelta(seconds=t*60) for t in ts_]
+        ts_ = [0] + lomax.rvs(c=c, loc=loc, scale=scale, size=self.size - 1, random_state=self.seed).cumsum().tolist()
+        ts = [last - timedelta(seconds=t * 60) for t in ts_]
         return ts[::-1]
 
-    def _generate_users(self):
+    def _generate_users(self) -> str:
         """Generate list of users.
 
         Returns:
@@ -132,7 +133,7 @@ class ChatGenerator:
         """
         return np.random.choice(self.users, self.size)
 
-    def _generate_df(self, last_timestamp=None):
+    def _generate_df(self, last_timestamp: Optional[datetime] = None) -> pd.DataFrame:
         """Generate random chat as DataFrame.
 
         Args:
@@ -145,14 +146,14 @@ class ChatGenerator:
         messages = self._generate_messages()
         timestamps = self._generate_timestamps(last=last_timestamp)
         users = self._generate_users()
-        df = pd.DataFrame.from_dict({
-            COLNAMES_DF.DATE: timestamps,
-            COLNAMES_DF.USERNAME: users,
-            COLNAMES_DF.MESSAGE: messages
-        })
+        df = pd.DataFrame.from_dict(
+            {COLNAMES_DF.DATE: timestamps, COLNAMES_DF.USERNAME: users, COLNAMES_DF.MESSAGE: messages}
+        )
         return df
 
-    def generate(self, filepath=None, hformat=None, last_timestamp=None):
+    def generate(
+        self, filepath: Optional[str] = None, hformat: Optional[str] = None, last_timestamp: Optional[datetime] = None
+    ) -> str:
         """Generate random chat as :func:`WhatsAppChat <whatstk.whatsapp.objects.WhatsAppChat>`.
 
         Args:
@@ -176,8 +177,15 @@ class ChatGenerator:
         return chat
 
 
-def generate_chats_hformats(output_path, size=2000, hformats=None, filepaths=None,
-                            last_timestamp=None, seed=100, verbose=False):
+def generate_chats_hformats(
+    output_path: str,
+    size: int = 2000,
+    hformats: Optional[str] = None,
+    filepaths: Optional[str] = None,
+    last_timestamp: Optional[datetime] = None,
+    seed: int = 100,
+    verbose: bool = False,
+) -> None:
     r"""Generate a chat and export using given header format.
 
     If no hformat specified, chat is generated & exported using all supported header formats.
@@ -209,6 +217,6 @@ def generate_chats_hformats(output_path, size=2000, hformats=None, filepaths=Non
             filepath = filepaths[i]
         else:
             filepath = _map_hformat_filename(hformat)
-            filepath = '{}.txt'.format(filepath)
+            filepath = "{}.txt".format(filepath)
         filepath = os.path.join(output_path, filepath)
         chat.to_txt(filepath=filepath, hformat=hformat)

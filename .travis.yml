@@ -1,16 +1,17 @@
-dist: xenial
+dist: focal
 language: python
 python:
-  - 3.7
   - 3.8
   - 3.9
+  - "3.10"
+  - "3.11"
 git:
   depth: false
 before_install:
   - pip install --upgrade pip
 install:
   # - git fetch --tags
-  # 
+  #
   - pip install -r requirements-test.txt
   - pip install -r requirements-flake.txt
   - ls -l
@@ -19,12 +20,12 @@ install:
   # - ls -l /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/whatstk/whatsapp/assets/
   - cat MANIFEST.in
   - mkdir -p tests/chats/hformats tests/chats/merge
-  - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/  # Generate chats for hformat checks
+  - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/ # Generate chats for hformat checks
   - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
   - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
-#pip install -r requirements.txt 
+#pip install -r requirements.txt
 script:
-  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 whatstk
+  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 --ignore=ANN101,ANN102 whatstk
   - pytest --cov-report term --cov=whatstk tests
 after_success:
   - codecov # submit coverage
@@ -42,7 +43,7 @@ jobs:
         # make sure it's on PATH as 'python3'
         - ln -s /c/Python38/python.exe /c/Python38/python3.exe
     - stage: deploy
-      python: 3.8
+      python: 3.10
       deploy:
         - provider: pypi
           user: $USER_PYPI

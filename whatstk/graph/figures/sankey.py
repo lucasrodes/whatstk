@@ -1,10 +1,13 @@
 """Sankey plot figures."""
 
+from typing import List
 
 import plotly.graph_objs as go
 
 
-def fig_sankey(label, color, source, target, value, title=""):
+def fig_sankey(
+    label: List[str], color: List[str], source: List[str], target: List[str], value: List[int], title: str = ""
+) -> go.Figure:
     """Generate sankey image.
 
     Args:
@@ -20,16 +23,13 @@ def fig_sankey(label, color, source, target, value, title=""):
 
     """
     trace = go.Sankey(
-        arrangement='fixed',
-        orientation='v',
+        arrangement="fixed",
+        orientation="v",
         valueformat=".0f",
         node=dict(
             pad=20,
             thickness=40,
-            line=dict(
-                color="black",
-                width=0
-            ),
+            line=dict(color="black", width=0),
             label=label,
             color=color,
             hovertemplate="%{label}<br>Number of messages: %{value}<extra></extra>",
@@ -40,41 +40,41 @@ def fig_sankey(label, color, source, target, value, title=""):
             source=source,
             target=target,
             value=value,
-            hovertemplate="%{source.label} ---> %{target.label}<extra>%{value}</extra>"
-        )
+            hovertemplate="%{source.label} ---> %{target.label}<extra>%{value}</extra>",
+        ),
     )
     data = [trace]
 
     layout = {
-        'title': dict(text=title),
-        'annotations': [
+        "title": dict(text=title),
+        "annotations": [
             {
-                'text': "Senders",
-                'font': {
-                    'size': 13,
-                    'color': 'rgb(116, 101, 130)',
+                "text": "Senders",
+                "font": {
+                    "size": 13,
+                    "color": "rgb(116, 101, 130)",
                 },
-                'showarrow': False,
-                'align': 'center',
-                'x': 0.5,
-                'y': 1.1,
-                'xref': 'paper',
-                'yref': 'paper',
+                "showarrow": False,
+                "align": "center",
+                "x": 0.5,
+                "y": 1.1,
+                "xref": "paper",
+                "yref": "paper",
             },
             {
-                'text': "Receivers",
-                'font': {
-                    'size': 13,
-                    'color': 'rgb(116, 101, 130)',
+                "text": "Receivers",
+                "font": {
+                    "size": 13,
+                    "color": "rgb(116, 101, 130)",
                 },
-                'showarrow': False,
-                'align': 'center',
-                'x': 0.5,
-                'y': -.1,
-                'xref': 'paper',
-                'yref': 'paper',
-            }
-        ]
+                "showarrow": False,
+                "align": "center",
+                "x": 0.5,
+                "y": -0.1,
+                "xref": "paper",
+                "yref": "paper",
+            },
+        ],
     }
 
     fig = go.Figure(data=data, layout=layout)

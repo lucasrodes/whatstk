@@ -1,4 +1,5 @@
-## (1) Test dependencies (run this part only the first time)
+## (1) Test dependencies (run this part only the first time).
+# If using zsh, install using '\', i.e. `pip install -e .\[full\]`
 # pip install -e .[full]
 
 ## (1.1) Install pytest dependencies
@@ -24,6 +25,7 @@ flake8 \
     --docstring-convention=google\
     --format=html --htmldir=reports/flake-report\
     --max-line-length=120\
+    --ignore=ANN101,ANN102\
     whatstk
 
 ## (3) Run tests

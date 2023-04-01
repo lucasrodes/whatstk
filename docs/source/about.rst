@@ -84,13 +84,6 @@ You can also install the version in development directly from github
 
 .. code-block:: bash
 
-    pip install git+https://github.com/lucasrodes/whatstk.git@developDevelop
-^^^^^^^
-You can also install the version in development directly from github
-`develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch. 
-
-.. code-block:: bash
-
     pip install git+https://github.com/lucasrodes/whatstk.git@develop
 
 Note: It requires `git <https://git-scm.com/>`_ to be installed.
