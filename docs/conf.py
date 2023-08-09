@@ -151,7 +151,7 @@ html_theme_options = {
 }
 
 # -- Args ---------------------------------------------------------------------
-html4_writer = True
+# html4_writer = True
 napoleon_use_rtype = False
 autosummary_generate = True
 
