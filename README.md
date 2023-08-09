@@ -39,6 +39,10 @@
 
 ---
 
+**Try the [live demo parser](https://whatstk.streamlit.app/) to convert your chats to CSV**
+
+---
+
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
 
