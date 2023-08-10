@@ -5,7 +5,7 @@
 </h1>
 <p align="left">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.6.1-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.6.2-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
@@ -36,6 +36,10 @@
     <img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg">
   </a>
 </p>
+
+---
+
+**Try the [live demo parser](https://whatstk.streamlit.app/) to convert your chats to CSV**
 
 ---
 

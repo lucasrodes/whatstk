@@ -6,6 +6,9 @@ About whatstk
 using the python library. The package uses `pandas <https://github.com/pandas-dev/pandas>`_ to
 process the data and `plotly <https://github.com/plotly/plotly.py>`_ to visualise it.
 
+You can also `try a live demo <https://whatstk.streamlit.app/>`_.
+
+
 The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/master/LICENSE>`_
 and is available on `GitHub <http://github.com/lucasrodes/whatstk>`_.
 
