@@ -62,7 +62,7 @@ Clone the project from the `official repository <https://github.com/lucasrodes/w
     pip install .
 
 Extensions
-^^^^^^^
+^^^^^^^^^^
 To use :ref:`Google Drive <Load WhatsApp chat from Google Drive>` or Chat Generation support, install the library along with the corresponding extensions:
 
 .. code-block:: bash
