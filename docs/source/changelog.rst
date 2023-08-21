@@ -5,7 +5,18 @@ Changelog
 Unreleased
 ----------
 .. git_changelog::
-    :rev-list: v0.4.0..HEAD
+    :rev-list: v0.6.2..HEAD
+
+v0.6.x
+----------
+.. git_changelog::
+    :rev-list: v0.5.0..v0.6.2
+
+v0.5.x
+----------
+.. git_changelog::
+    :rev-list: v0.4.0..v0.5.0
+
 
 v0.4.x
 ----------

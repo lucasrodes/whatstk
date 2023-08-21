@@ -88,8 +88,7 @@ def get_supported_hformats_as_list(encoding: str = "utf8") -> List[str]:
     Returns:
         list: List with supported formats (as str).
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
-                             `List of Python standard encodings
-                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
+            `List of Python standard encodings <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
     """
     with open(hformat_support_filepath, "r", encoding=encoding) as f:
         h = json.load(f)
