@@ -72,7 +72,7 @@ class BaseChat:
         return self.df[COLNAMES_DF.DATE].max()
 
     @classmethod
-    def from_source(cls, **kwargs: Any) -> None:
+    def from_source(cls, **kwargs: Any) -> None:  # noqa: ANN401
         """Load chat.
 
         Args:
