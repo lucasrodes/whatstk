@@ -4,17 +4,18 @@
 import os
 import re
 from datetime import datetime
+from pathlib import Path
+import tempfile
+from typing import Any, Optional, Tuple, List, Dict
 from urllib.request import urlopen
-from typing import Optional, TYPE_CHECKING, Tuple, List, Dict
+import warnings
+import zipfile
 
 import pandas as pd
 
 from whatstk.utils.exceptions import RegexError, HFormatError
 from whatstk.utils.utils import COLNAMES_DF
 from whatstk.whatsapp.auto_header import extract_header_from_text
-
-if TYPE_CHECKING:  # pragma: no cover
-    from whatstk.whatsapp.objects import WhatsAppChat  # pragma: no cover
 
 
 regex_simplifier = {
@@ -32,18 +33,18 @@ regex_simplifier = {
 }
 
 
-def df_from_txt_whatsapp(
+def df_from_source_whatsapp(
     filepath: str,
     auto_header: bool = True,
     hformat: Optional[str] = None,
     encoding: str = "utf-8",
-) -> "WhatsAppChat":
+) -> pd.DataFrame:
     """Load chat as a DataFrame.
 
     Args:
         filepath (str): Path to the file. Accepted sources are:
 
-                * Local file, e.g. 'path/to/file.txt'.
+                * Local file, e.g. 'path/to/file.txt' OR 'path/to/_chat.zip' (iOS export).
                 * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
                 * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
                   to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
@@ -82,11 +83,22 @@ def df_from_txt_whatsapp(
 
     """
     # Read local file
-    text = _str_from_txt(filepath, encoding)
+    text = _str_from_file(filepath, encoding)
 
     # Build dataframe
     df = _df_from_str(text, auto_header, hformat)
     return df
+
+
+# Alias for df_from_source_whatsapp
+def df_from_txt_whatsapp(filepath: str, **kwargs: Any) -> pd.DataFrame:
+    """Alias for :func:`df_from_source_whatsapp <whatstk.whatsapp.parser.df_from_source_whatsapp>`."""
+    warnings.warn(
+        "This function is deprecated and will be removed in future versions. Use `df_from_source_whatsapp` instead.",
+        FutureWarning,
+        stacklevel=2,
+    )
+    return df_from_source_whatsapp(filepath, **kwargs)
 
 
 def generate_regex(hformat: str) -> Tuple[str, str]:
@@ -119,7 +131,7 @@ def generate_regex(hformat: str) -> Tuple[str, str]:
     return hformat, hformat_x
 
 
-def _str_from_txt(filepath: str, encoding: str = "utf-8") -> str:
+def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
     """Read text content as string.
 
     Args:
@@ -134,22 +146,38 @@ def _str_from_txt(filepath: str, encoding: str = "utf-8") -> str:
     Returns:
         str: File content as a string.
     """
-    # Read local file
-    if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
-        with open(filepath, "r", encoding=encoding) as f:
-            text = f.read()
-    # Read file from URL
-    elif filepath.lower().startswith("http"):
-        with urlopen(filepath) as response:  # noqa
-            text = response.read()
-        text = text.decode(encoding)
-    elif filepath.startswith("gdrive"):
-        from whatstk.utils.gdrive import _load_str_from_file_id
-
-        file_id = filepath.replace("gdrive://", "")
-        text = _load_str_from_file_id(file_id)
+    # ZIP
+    if filepath.endswith(".zip"):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            # Uncompress the file
+            with zipfile.ZipFile(filepath, 'r') as zip_ref:
+                zip_ref.extractall(temp_dir)
+            files = os.listdir(temp_dir)
+            if len(files) != 1:
+                raise ValueError("Unexpected number of files in the ZIP! Only one is expected (the chat txt file)")
+            # Replace filepath
+            filepath = str(temp_dir / Path(files[0]))
+            # Read
+            with open(filepath, "r", encoding=encoding) as f:
+                text = f.read()
+    # TXT
     else:
-        raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
+        # Read local file
+        if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
+            with open(filepath, "r", encoding=encoding) as f:
+                text = f.read()
+        # Read file from URL
+        elif filepath.lower().startswith("http"):
+            with urlopen(filepath) as response:  # noqa
+                text = response.read()
+            text = text.decode(encoding)
+        elif filepath.startswith("gdrive"):
+            from whatstk.utils.gdrive import _load_str_from_file_id
+
+            file_id = filepath.replace("gdrive://", "")
+            text = _load_str_from_file_id(file_id)
+        else:
+            raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
     return text
 
 

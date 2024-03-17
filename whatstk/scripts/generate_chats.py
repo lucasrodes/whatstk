@@ -31,6 +31,13 @@ def _parse_args() -> None:
         default=None,
         help="Timestamp of last message. Format YYYY-mm-dd",
     )
+    parser.add_argument(
+        "-z",
+        "--export-as-zip",
+        default=False,
+        action="store_true",
+        help="Export chat as ZIP (additionally)",
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbosity.")
     args = parser.parse_args()
     return args
@@ -45,4 +52,5 @@ def main() -> None:
         hformats=args.hformats,
         last_timestamp=args.last_timestamp,
         filepaths=args.filenames,
+        export_as_zip=args.export_as_zip
     )

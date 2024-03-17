@@ -1,8 +1,11 @@
 """Library WhatsApp objects."""
 
+import os
+import tempfile
+from typing import Optional, Any
+import zipfile
 
 import pandas as pd
-from typing import Optional, Any
 
 from whatstk._chat import BaseChat
 from whatstk.utils.chat_merge import merge_chats
@@ -132,7 +135,7 @@ class WhatsAppChat(BaseChat):
         df = merge_chats(dfs)
         return cls(df)
 
-    def to_txt(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:
+    def to_zip(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:
         """Export chat to a text file.
 
         Usefull to export the chat to different formats (i.e. using different hformats).
@@ -145,18 +148,58 @@ class WhatsAppChat(BaseChat):
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
 
         """
-        if not filepath.endswith(".txt"):
-            raise ValueError("filepath must end with .txt")
+        if not filepath.endswith(".zip"):
+            raise ValueError(f"filepath {filepath} must end with .zip")
         if not hformat:
             hformat = "%y-%m-%d, %H:%M - %name:"
-        lines = []
-        raw_lines = self.df.values.tolist()
-        for line in raw_lines:
-            date, user, text = line
-            hformat = hformat.replace("%name", "{name}")
-            header = date.strftime(hformat).format(name=user)
-            formatted_line = "{} {}".format(header, text)
-            lines.append(formatted_line)
-        text = "\n".join(lines)
+        text = _df_to_str(self.df, hformat)
+        text_filename = "_chat.txt"
+
+        # Create a temporary directory to hold the text file
+        with tempfile.TemporaryDirectory() as temp_dir:
+            text_file_path = os.path.join(temp_dir, text_filename)
+
+            # Write the string to a temporary text file
+            with open(text_file_path, 'w') as text_file:
+                text_file.write(text)
+
+            # Create a zip file and add the text file to it
+            with zipfile.ZipFile(filepath, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                zipf.write(text_file_path, text_filename)
+
         with open(r"{}".format(filepath), "w", encoding=encoding) as f:
             f.write(text)
+
+    def to_txt(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:
+        """Export chat to a zip file.
+
+        Usefull to export the chat to different formats (i.e. using different hformats).
+
+        Args:
+            filepath (str): Name of the file to export (must be a local path).
+            hformat (str, optional): Header format. Defaults to '%y-%m-%d, %H:%M - %name:'.
+            encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
+                             `List of Python standard encodings
+                             <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
+
+        """
+        if not filepath.endswith(".txt"):
+            raise ValueError(f"filepath {filepath} must end with .zip")
+        if not hformat:
+            hformat = "%y-%m-%d, %H:%M - %name:"
+        text = _df_to_str(self.df, hformat)
+        with open(r"{}".format(filepath), "w", encoding=encoding) as f:
+            f.write(text)
+
+
+def _df_to_str(df: pd.DataFrame, hformat: str) -> str:
+    lines = []
+    raw_lines = df.values.tolist()
+    for line in raw_lines:
+        date, user, text = line
+        hformat = hformat.replace("%name", "{name}")
+        header = date.strftime(hformat).format(name=user)
+        formatted_line = "{} {}".format(header, text)
+        lines.append(formatted_line)
+    text = "\n".join(lines)
+    return text
