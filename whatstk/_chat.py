@@ -3,7 +3,7 @@
 
 from copy import deepcopy
 import pandas as pd
-from typing import Optional, List, Union, Dict, Any
+from typing import Optional, List, Union, Dict, Any, Tuple
 from datetime import datetime
 
 from whatstk.utils.chat_merge import merge_chats
@@ -30,7 +30,8 @@ class BaseChat:
             platform (str): Name of the platform, e.g. 'whatsapp'.
 
         """
-        self._df = df
+        self._df_raw = df
+        self._df, self._df_system, self._name = _build_dfs(df.copy())
         self._platform = platform
 
     @property
@@ -43,6 +44,15 @@ class BaseChat:
         return self._df
 
     @property
+    def df_system(self) -> pd.DataFrame:
+        """Chat as DataFrame.
+
+        Returns:
+            pandas.DataFrame
+        """
+        return self._df_system
+
+    @property
     def users(self) -> List[str]:
         """List with users.
 
@@ -52,6 +62,17 @@ class BaseChat:
         return sorted(list(self.df[COLNAMES_DF.USERNAME].unique()))
 
     @property
+    def name(self) -> Optional[str]:
+        """Name of the chat.
+
+        Returns None if no name could be found. The name is extracted from the username of with the first system message in the chat.
+
+        Returns:
+            list
+        """
+        return self._name
+
+    @property
     def start_date(self) -> Union[str, datetime]:
         """Chat starting date.
 
@@ -59,7 +80,7 @@ class BaseChat:
             datetime
 
         """
-        return self.df[COLNAMES_DF.DATE].min()
+        return self._df_raw[COLNAMES_DF.DATE].min()
 
     @property
     def end_date(self) -> Union[str, datetime]:
@@ -69,7 +90,7 @@ class BaseChat:
             datetime
 
         """
-        return self.df[COLNAMES_DF.DATE].max()
+        return self._df_raw[COLNAMES_DF.DATE].max()
 
     @classmethod
     def from_source(cls, **kwargs: Any) -> None:  # noqa: ANN401
@@ -124,6 +145,8 @@ class BaseChat:
         """
         self_ = deepcopy(self)
         self_._df = merge_chats([self.df, chat.df])
+        if (not self.df_system.empty) and (not chat.df_system.empty):
+            self_._df_system = merge_chats([self.df_system, chat.df_system])
         if rename_users:
             self_ = self_.rename_users(mapping=rename_users)
         return self_
@@ -190,3 +213,21 @@ class BaseChat:
 
         """
         return len(self.df)
+
+
+def _build_dfs(df_raw: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, str]:
+    if COLNAMES_DF.MESSAGE_TYPE in df_raw.columns:
+        mask = df_raw[COLNAMES_DF.MESSAGE_TYPE] == "system"
+        # Get chat only with user messages
+        df = df_raw.loc[~mask].drop(columns=COLNAMES_DF.MESSAGE_TYPE)
+        # Get chat only with system messages
+        df_system = df_raw.loc[mask].drop(columns=COLNAMES_DF.MESSAGE_TYPE)
+        # Get system messages dataframe
+        if len(set(df_system[COLNAMES_DF.USERNAME])) != 1:
+            raise ValueError("System messages dataframe must contain only one username.")
+        chat_name = df_system[COLNAMES_DF.USERNAME].iloc[0]
+        # Drop 'username' from system dataframe
+        df_system = df_system.drop(columns=COLNAMES_DF.USERNAME)
+        return df, df_system, chat_name
+    else:
+        return df_raw, pd.DataFrame(), ""

@@ -86,8 +86,8 @@ _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_star
 #### Load chat as a DataFrame
 
 ```python
-from whatstk import df_from_txt_whatsapp
-df = df_from_txt_whatsapp("path/to/chat.txt")
+from whatstk import df_from_whatsapp
+df = df_from_whatsapp("path/to/chat.txt")
 ```
 
 #### Convert chat to csv

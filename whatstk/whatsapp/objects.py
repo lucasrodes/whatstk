@@ -3,13 +3,14 @@
 import os
 import tempfile
 from typing import Optional, Any
+import warnings
 import zipfile
 
 import pandas as pd
 
 from whatstk._chat import BaseChat
 from whatstk.utils.chat_merge import merge_chats
-from whatstk.whatsapp.parser import df_from_txt_whatsapp
+from whatstk.whatsapp.parser import df_from_whatsapp
 
 
 class WhatsAppChat(BaseChat):
@@ -35,6 +36,24 @@ class WhatsAppChat(BaseChat):
             3 2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
             4 2016-08-06 14:30:00        Misty                                          Definetly
 
+
+        Optionally, you can use the argument `extra_metadata` to add additional metadata to the chat:
+
+        ..  code-block:: python
+
+            >>> chat = WhatsAppChat.from_source(filepath=whatsapp_urls.POKEMON, extra_metadata=True)
+            >>> chat.name
+            'Pokemon Chat'
+            >>> chat.df_system
+            	               date	                                          message
+            0	2016-04-15 15:04:00	Messages and calls are end-to-end encrypted. N...
+            >>> chat.df.head()
+                             date     username                                            message
+            0 2016-08-06 13:23:00  Ash Ketchum                                          Hey guys!
+            1 2016-08-06 13:25:00        Brock              Hey Ash, good to have a common group!
+            2 2016-08-06 13:30:00        Misty  Hey guys! Long time haven't heard anything fro...
+            3 2016-08-06 13:45:00  Ash Ketchum  Indeed. I think having a whatsapp group nowada...
+            4 2016-08-06 14:30:00        Misty                                          Definetly
     """
 
     def __init__(self, df: pd.DataFrame) -> None:
@@ -47,32 +66,51 @@ class WhatsAppChat(BaseChat):
         super().__init__(df, platform="whatsapp")
 
     @classmethod
-    def from_source(cls, filepath: str, **kwargs: Any) -> "WhatsAppChat":  # noqa: ANN401
+    def from_source(cls, filepath: str, extra_metadata: Optional[bool] = None, **kwargs: Any) -> "WhatsAppChat":  # noqa: ANN401
         """Create an instance from a chat text file.
 
         Args:
             filepath (str): Path to the file. Accepted sources are:
 
-                * Local file, e.g. 'path/to/file.txt'.
+                * Local file, e.g. 'path/to/file.txt' or 'path/to/file.zip' (iOS).
                 * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
                 * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
                   to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
                   :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
             **kwargs: Refer to the docs from
-                        :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>` for details on
+                        :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` for details on
                         additional arguments.
+            extra_metadata (bool): If True, additional metadata will be added to the DataFrame. This includes class attributes such as 
+                                    chat.name, chat.df_system (DataFrame with only system messages).
 
         Returns:
             WhatsAppChat: Class instance with loaded and parsed chat.
 
         ..  seealso::
 
-            * :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>`
+            * :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>`
             * :func:`WhatsAppChat.from_sources <whatstk.WhatsAppChat.from_sources>`
 
         """
-        # Prepare DataFrame
-        df = df_from_txt_whatsapp(filepath=filepath, **kwargs)
+        # Use extra metadata (label message types)
+        if extra_metadata is None:
+            warnings.warn(
+                (
+                    "The argument `extra_metadata` will change its default value in a future version. "
+                    "Set `extra_metadata=False` to keep current behavior or `extra_metadata=True` "
+                    "to use the future behaviour. The new behaviour will fill enable class attributes "
+                    "`chat.name` and `chat.df_system`."
+                ),
+                FutureWarning,
+                stacklevel=2,
+            )
+        if extra_metadata:
+            kwargs["message_type"] = True
+        elif extra_metadata is False:
+            kwargs["message_type"] = False
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            df = df_from_whatsapp(filepath=filepath, **kwargs)
 
         return cls(df)
 

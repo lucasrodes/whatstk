@@ -33,11 +33,12 @@ regex_simplifier = {
 }
 
 
-def df_from_source_whatsapp(
+def df_from_whatsapp(
     filepath: str,
     auto_header: bool = True,
     hformat: Optional[str] = None,
     encoding: str = "utf-8",
+    message_type: Optional[bool] = None,
 ) -> pd.DataFrame:
     """Load chat as a DataFrame.
 
@@ -71,9 +72,43 @@ def df_from_source_whatsapp(
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. 'utf-8').
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
+        message_type (bool, optional): Label for the message type. Can be 'user' or 'system', based on who sent the message.
 
     Returns:
         WhatsAppChat: Class instance with loaded and parsed chat.
+
+    Example:
+        Read a chat
+
+        ..  code-block:: python
+
+            >>> from whatstk import df_from_whatsapp
+            >>> from whatstk.data import whatsapp_urls
+            >>> df = df_from_whatsapp(filepath=whatsapp_urls.LOREM)
+            >>> df.head(5)
+                             date        username                                            message    message_type
+            0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.          system
+            1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰            user
+            2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...            user
+            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...    
+            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
+
+        Read a chat, labelling each message as 'user' or 'system'. 'system' messages are those sent by the chat itself (creation of chat, etc.)
+
+        ..  code-block:: python
+
+            >>> from whatstk import df_from_whatsapp
+            >>> from whatstk.data import whatsapp_urls
+            >>> df = df_from_whatsapp(filepath=whatsapp_urls.POKEMON, message_type=True)
+            >>> df.head()
+
+                             date        username                                            message    message_type
+            0 2016-04-15 15:04:00    Pokemon Chat  Messages and calls are end-to-end encrypted. N...          system
+            1 2016-08-06 13:23:00     Ash Ketchum                                          Hey guys!            user
+            2 2016-08-06 13:25:00           Brock              Hey Ash, good to have a common group!            user
+            3 2016-08-06 13:30:00           Misty  Hey guys! Long time since heard anything from you            user
+
+
 
     ..  seealso::
 
@@ -87,18 +122,36 @@ def df_from_source_whatsapp(
 
     # Build dataframe
     df = _df_from_str(text, auto_header, hformat)
+
+    # Raise FutureWarning
+    if message_type is None:
+        message_type = False
+        warnings.warn(
+            (
+                "The argument `message_type` will change its default value in a future version. "
+                "Set `message_type=False` to keep current behavior or `message_type=True` "
+                "to start using the future default behaviour."
+            ),
+            FutureWarning,
+            stacklevel=2,
+        )
+    if message_type:
+        chat_name = df["username"].iloc[0]
+        df["message_type"] = df["username"].apply(
+            lambda x: "user" if x != chat_name else "system"
+        )
     return df
 
 
-# Alias for df_from_source_whatsapp
+# Alias for df_from_whatsapp
 def df_from_txt_whatsapp(filepath: str, **kwargs: Any) -> pd.DataFrame:
-    """Alias for :func:`df_from_source_whatsapp <whatstk.whatsapp.parser.df_from_source_whatsapp>`."""
+    """Alias for :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>`."""
     warnings.warn(
-        "This function is deprecated and will be removed in future versions. Use `df_from_source_whatsapp` instead.",
+        "This function is deprecated and will be removed in future versions. Use `df_from_whatsapp` instead.",
         FutureWarning,
         stacklevel=2,
     )
-    return df_from_source_whatsapp(filepath, **kwargs)
+    return df_from_whatsapp(filepath, **kwargs)
 
 
 def generate_regex(hformat: str) -> Tuple[str, str]:
