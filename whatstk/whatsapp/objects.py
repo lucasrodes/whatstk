@@ -44,7 +44,7 @@ class WhatsAppChat(BaseChat):
         super().__init__(df, platform="whatsapp")
 
     @classmethod
-    def from_source(cls, filepath: str, **kwargs: Dict[str, Any]) -> "WhatsAppChat":
+    def from_source(cls, filepath: str, **kwargs: Any) -> "WhatsAppChat":
         """Create an instance from a chat text file.
 
         Args:
