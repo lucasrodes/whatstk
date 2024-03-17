@@ -1,8 +1,8 @@
 About whatstk
 =============
 
-**whatstk**  is a python package providing tools to parse, analyze and visualize WhatsApp chats developed under the
-`sociepy <https://github.com/sociepy>`_ project. Easily convert your chats to csv or simply visualize statistics
+**whatstk**  is a python package providing tools to parse, analyze and visualize WhatsApp chats developed by
+`Lucas Rodés-Guirao <https://lcsrg.me>`_. Easily convert your chats to csv or simply visualize statistics
 using the python library. The package uses `pandas <https://github.com/pandas-dev/pandas>`_ to
 process the data and `plotly <https://github.com/plotly/plotly.py>`_ to visualise it.
 
@@ -95,9 +95,8 @@ Note: It requires `git <https://git-scm.com/>`_ to be installed.
 
 Support
 -------
-You can ask questions and join the development discussion on `Gitter <https://gitter.im/sociepy/whatstk>`_. Use the
-`GitHub issues <https://github.com/lucasrodes/whatstk/issues>`_ section to report bugs or request features. You
-can also check the `project roadmap <https://github.com/lucasrodes/whatstk/projects/3>`_.
+You can ask questions and join the development discussion on `GitHub <https://github.com/lucasrodes/whatstk>`_. Use the
+`GitHub issues <https://github.com/lucasrodes/whatstk/issues>`_ section to report bugs or request features and `GitHub discussions <https://github.com/lucasrodes/whatstk/issues>`_ to open up broader discussions. You can also check the `project roadmap <https://github.com/lucasrodes/whatstk/projects/3>`_.
 
 For more details, refer to the :ref:`contribute section <Contribute>`.
 
@@ -105,5 +104,4 @@ For more details, refer to the :ref:`contribute section <Contribute>`.
 
 Why this name, whatstk?
 -----------------------
-whatstk stands for "WhatsApp Toolkit", since the project was initially conceived as a python library to read and process
-WhatsApp chats.
+whatstk stands for "WhatsApp Toolkit", since the project was initially conceived as a python library to read and process WhatsApp chats. It currently only supports WhatsApp chats, but this might be extended in the future.
