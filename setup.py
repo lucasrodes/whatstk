@@ -28,7 +28,7 @@ requirements_gdrive = [
 ]
 
 requirements_generate = [
-    "scipy~=1.10.0",
+    "scipy~=1.12.0",
     "python-lorem==1.2.0",
 ]
 
