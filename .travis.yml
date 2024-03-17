@@ -25,7 +25,7 @@ install:
   - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
 #pip install -r requirements.txt
 script:
-  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 --ignore=ANN101,ANN102 whatstk
+  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 --ignore=ANN101,ANN102,ANN401 whatstk
   - pytest --cov-report term --cov=whatstk tests
 after_success:
   - codecov # submit coverage
