@@ -14,4 +14,4 @@ Getting started with the library is fairly easy.
 
 For examples refer to :ref:`code examples <Code examples>` section.
 
-For a rapid introduction, check this :ref:`tutorial on Medium <https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d>`.
+For a rapid introduction, check this `tutorial on Medium <https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d>`_.

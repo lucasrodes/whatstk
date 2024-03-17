@@ -42,4 +42,4 @@ Check the table below to see the codes for each header format unit:
     ``'%name'``,	Name of user
 
 .. seealso::
-    :ref:`Loading chat using hformat <Load a chat with specific hformat>`
+    :ref:`Load WhatsApp chat with specific hformat <Load WhatsApp chat with specific hformat>`

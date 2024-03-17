@@ -2,7 +2,7 @@
 
 
 import pandas as pd
-from typing import Dict, Optional, Any
+from typing import Optional, Any
 
 from whatstk._chat import BaseChat
 from whatstk.utils.chat_merge import merge_chats
@@ -44,7 +44,7 @@ class WhatsAppChat(BaseChat):
         super().__init__(df, platform="whatsapp")
 
     @classmethod
-    def from_source(cls, filepath: str, **kwargs: Dict[str, Any]) -> "WhatsAppChat":
+    def from_source(cls, filepath: str, **kwargs: Any) -> "WhatsAppChat":  # noqa: ANN401
         """Create an instance from a chat text file.
 
         Args:

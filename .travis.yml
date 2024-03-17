@@ -1,10 +1,10 @@
 dist: focal
 language: python
 python:
-  - 3.8
   - 3.9
   - "3.10"
   - "3.11"
+  - "3.12"
 git:
   depth: false
 before_install:
@@ -38,12 +38,12 @@ jobs:
     - os: windows
       language: shell
       before_install:
-        - choco upgrade python -y --version 3.8.6
-        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - choco upgrade python -y --version 3.12.2
+        - export PATH="/c/Python312:/c/Python312/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
-        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+        - ln -s /c/Python312/python.exe /c/Python312/python3.exe
     - stage: deploy
-      python: 3.10
+      python: 3.11
       deploy:
         - provider: pypi
           user: $USER_PYPI

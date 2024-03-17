@@ -24,16 +24,13 @@
     <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
   </a>
   <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.8|3.9|3.10|3.11-blue.svg?&logo=python&logoColor=yellow">
+    <img alt="Python 3" src="https://img.shields.io/badge/python-3.9|3.10|3.11-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
   </a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
-  </a>
-  <a href="https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
-    <img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg">
   </a>
 </p>
 
