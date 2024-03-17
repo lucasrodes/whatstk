@@ -55,6 +55,14 @@ def test_object_to_txt(tmpdir):
         chat.to_txt(filepath=str(filename_))
 
 
+def test_object_to_zip(tmpdir):
+    chat = WhatsAppChat.from_source(filename)
+    filename_ = tmpdir.join("export")
+    print(filename_)
+    with pytest.raises(ValueError):
+        chat.to_zip(filepath=str(filename_))
+
+
 def test_object_from_source_error(tmpdir):
     with pytest.raises((HFormatError, KeyError)):
         _ = WhatsAppChat.from_source(filename, hformat="%y%name")

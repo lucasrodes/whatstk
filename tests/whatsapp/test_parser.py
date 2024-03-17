@@ -15,6 +15,7 @@ filenames = [os.path.join(output_folder, f) for f in os.listdir(output_folder) i
 chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
+
 # Chat hosted on repo
 # filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
 filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
@@ -35,8 +36,9 @@ def test_df_from_txt_whatsapp():
         chats = []
         hformat = elem['format']
         auto_header = bool(elem['auto_header'])
-        filename = _map_hformat_filename(hformat)
-        filename = os.path.join(output_folder, '{}.txt'.format(filename))
+        filename_base = _map_hformat_filename(hformat)
+        filename = os.path.join(output_folder, '{}.txt'.format(filename_base))
+        filename_zip = os.path.join(output_folder, '{}.zip'.format(filename_base))
 
         # Auto
         if auto_header:
@@ -45,6 +47,15 @@ def test_df_from_txt_whatsapp():
         # Manual
         chat = df_from_txt_whatsapp(filename, hformat=hformat)
         chats.append(chat)
+
+        # ZIP
+        # Auto
+        if auto_header:
+            chat_zip = df_from_txt_whatsapp(filename_zip)
+            assert chat_zip.equals(chat)
+        # Manual
+        chat_zip = df_from_txt_whatsapp(filename_zip, hformat=hformat)
+        assert chat_zip.equals(chat)
 
         # Check manual and auto chats are equal
         assert(chats[0].equals(chats[1]))  # TODO: Assumes there are always two elements in list chats!

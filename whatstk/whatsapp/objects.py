@@ -136,7 +136,7 @@ class WhatsAppChat(BaseChat):
         return cls(df)
 
     def to_zip(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:
-        """Export chat to a text file.
+        """Export chat to a zip file.
 
         Usefull to export the chat to different formats (i.e. using different hformats).
 
@@ -167,11 +167,8 @@ class WhatsAppChat(BaseChat):
             with zipfile.ZipFile(filepath, 'w', zipfile.ZIP_DEFLATED) as zipf:
                 zipf.write(text_file_path, text_filename)
 
-        with open(r"{}".format(filepath), "w", encoding=encoding) as f:
-            f.write(text)
-
     def to_txt(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:
-        """Export chat to a zip file.
+        """Export chat to a text file.
 
         Usefull to export the chat to different formats (i.e. using different hformats).
 
@@ -181,7 +178,6 @@ class WhatsAppChat(BaseChat):
             encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
                              `List of Python standard encodings
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
-
         """
         if not filepath.endswith(".txt"):
             raise ValueError(f"filepath {filepath} must end with .zip")
