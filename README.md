@@ -32,9 +32,6 @@
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
   </a>
-  <a href="https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
-    <img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg">
-  </a>
 </p>
 
 ---
