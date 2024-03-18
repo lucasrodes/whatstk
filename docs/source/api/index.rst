@@ -5,7 +5,7 @@ Main objects
 ------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    WhatsAppChat <whatstk.WhatsAppChat>
    FigureBuilder <whatstk.FigureBuilder>

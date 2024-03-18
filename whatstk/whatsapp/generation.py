@@ -185,6 +185,7 @@ def generate_chats_hformats(
     last_timestamp: Optional[datetime] = None,
     seed: int = 100,
     verbose: bool = False,
+    export_as_zip: bool = False,
 ) -> None:
     r"""Generate a chat and export using given header format.
 
@@ -195,11 +196,12 @@ def generate_chats_hformats(
         size (int, optional): Number of messages of the chat. Defaults to 2000.
         hformats (list, optional): List of header formats to use when exporting chat. If None,
                                     defaults to all supported header formats.
-        filepaths (list, optional): List with filepaths. If None, defaults to
+        filepaths (list, optional): List with filepaths (only txt files). If None, defaults to
                                     `whatstk.utils.utils._map_hformat_filename(filepath)`.
         last_timestamp (datetime, optional): Datetime of last message. If `None`, defaults to current date.
         seed (int, optional): Seed for random processes. Defaults to 100.
         verbose (bool): Set to True to print runtime messages.
+        export_as_zip (bool): Set to True to export the chat(s) zipped, additionally.
 
     ..  seealso::
 
@@ -209,6 +211,13 @@ def generate_chats_hformats(
     """
     if not hformats:
         hformats = get_supported_hformats_as_list()
+
+    # Sanity check
+    if filepaths:
+        if len(filepaths) != len(hformats):
+            raise ValueError("Length of filepaths must be equal to length of hformats.")
+
+    # Generate chat
     chat = ChatGenerator(size=size, seed=seed).generate(last_timestamp=last_timestamp)
     for i in range(len(hformats)):
         hformat = hformats[i]
@@ -220,3 +229,5 @@ def generate_chats_hformats(
             filepath = "{}.txt".format(filepath)
         filepath = os.path.join(output_path, filepath)
         chat.to_txt(filepath=filepath, hformat=hformat)
+        if export_as_zip:
+            chat.to_zip(filepath.replace(".txt", ".zip"), hformat)
