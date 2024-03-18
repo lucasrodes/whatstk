@@ -45,7 +45,7 @@ class WhatsAppChat(BaseChat):
             >>> chat.name
             'Pokemon Chat'
             >>> chat.df_system
-            	               date	                                          message
+                             date                                            message
             0	2016-04-15 15:04:00	Messages and calls are end-to-end encrypted. N...
             >>> chat.df.head()
                              date     username                                            message
@@ -66,7 +66,12 @@ class WhatsAppChat(BaseChat):
         super().__init__(df, platform="whatsapp")
 
     @classmethod
-    def from_source(cls, filepath: str, extra_metadata: Optional[bool] = None, **kwargs: Any) -> "WhatsAppChat":  # noqa: ANN401
+    def from_source(
+        cls,
+        filepath: str,
+        extra_metadata: Optional[bool] = None,
+        **kwargs: Any  # noqa: ANN401
+    ) -> "WhatsAppChat":
         """Create an instance from a chat text file.
 
         Args:
@@ -80,8 +85,9 @@ class WhatsAppChat(BaseChat):
             **kwargs: Refer to the docs from
                         :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` for details on
                         additional arguments.
-            extra_metadata (bool): If True, additional metadata will be added to the DataFrame. This includes class attributes such as 
-                                    chat.name, chat.df_system (DataFrame with only system messages).
+            extra_metadata (bool): If True, additional metadata will be added to the DataFrame. This includes class
+                                    attributes such as chat.name, chat.df_system (DataFrame with only system messages).
+                                     Note that this attribute only works on group chats.
 
         Returns:
             WhatsAppChat: Class instance with loaded and parsed chat.

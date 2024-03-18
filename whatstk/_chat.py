@@ -31,8 +31,26 @@ class BaseChat:
 
         """
         self._df_raw = df
-        self._df, self._df_system, self._name = _build_dfs(df.copy())
+        self._df, self._df_system, self._name = self._build_dfs(df.copy())
         self._platform = platform
+
+    def _build_dfs(self, df_raw: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, str]:
+        if (COLNAMES_DF.MESSAGE_TYPE in df_raw.columns) and self.is_group:
+            mask = df_raw[COLNAMES_DF.MESSAGE_TYPE] == "system"
+            # Get chat only with user messages
+            df = df_raw.loc[~mask].drop(columns=COLNAMES_DF.MESSAGE_TYPE)
+            # Get chat only with system messages
+            df_system = df_raw.loc[mask].drop(columns=COLNAMES_DF.MESSAGE_TYPE)
+            # Get system messages dataframe
+            if len(set(df_system[COLNAMES_DF.USERNAME])) != 1:
+                raise ValueError("System messages dataframe must contain only one username.")
+            chat_name = df_system[COLNAMES_DF.USERNAME].iloc[0]
+            # Drop 'username' from system dataframe
+            df_system = df_system.drop(columns=COLNAMES_DF.USERNAME)
+            return df, df_system, chat_name
+        if (COLNAMES_DF.MESSAGE_TYPE in df_raw.columns) and not self.is_group:
+            df_raw = df_raw.drop(columns=COLNAMES_DF.MESSAGE_TYPE)
+        return df_raw, pd.DataFrame(), ""
 
     @property
     def df(self) -> pd.DataFrame:
@@ -53,6 +71,20 @@ class BaseChat:
         return self._df_system
 
     @property
+    def is_group(self) -> bool:
+        """True if the chart is a group.
+
+        A chat is detected as a group if it has more than 2 users (including the 'system').
+        Groups with one person will not be detected as groups.
+
+        Returns:
+            bool
+        """
+        if len(set(self._df_raw[COLNAMES_DF.USERNAME])) > 2:
+            return True
+        return False
+
+    @property
     def users(self) -> List[str]:
         """List with users.
 
@@ -65,7 +97,8 @@ class BaseChat:
     def name(self) -> Optional[str]:
         """Name of the chat.
 
-        Returns None if no name could be found. The name is extracted from the username of with the first system message in the chat.
+        Returns None if no name could be found. The name is extracted from the username of with
+        the first system message in the chat.
 
         Returns:
             list
@@ -143,7 +176,12 @@ class BaseChat:
                 >>> chat = chat_1.merge(chat_2)
 
         """
+        # Can only merge from same platform
+        if self._platform != chat._platform:
+            raise ValueError("Both chats must come from the same platform.")
+        # Merge
         self_ = deepcopy(self)
+        self_._df_raw = merge_chats([self._df_raw, chat._df_raw])
         self_._df = merge_chats([self.df, chat.df])
         if (not self.df_system.empty) and (not chat.df_system.empty):
             self_._df_system = merge_chats([self.df_system, chat.df_system])
@@ -213,21 +251,3 @@ class BaseChat:
 
         """
         return len(self.df)
-
-
-def _build_dfs(df_raw: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, str]:
-    if COLNAMES_DF.MESSAGE_TYPE in df_raw.columns:
-        mask = df_raw[COLNAMES_DF.MESSAGE_TYPE] == "system"
-        # Get chat only with user messages
-        df = df_raw.loc[~mask].drop(columns=COLNAMES_DF.MESSAGE_TYPE)
-        # Get chat only with system messages
-        df_system = df_raw.loc[mask].drop(columns=COLNAMES_DF.MESSAGE_TYPE)
-        # Get system messages dataframe
-        if len(set(df_system[COLNAMES_DF.USERNAME])) != 1:
-            raise ValueError("System messages dataframe must contain only one username.")
-        chat_name = df_system[COLNAMES_DF.USERNAME].iloc[0]
-        # Drop 'username' from system dataframe
-        df_system = df_system.drop(columns=COLNAMES_DF.USERNAME)
-        return df, df_system, chat_name
-    else:
-        return df_raw, pd.DataFrame(), ""

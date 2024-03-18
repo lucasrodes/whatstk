@@ -72,7 +72,8 @@ def df_from_whatsapp(
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. 'utf-8').
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
-        message_type (bool, optional): Label for the message type. Can be 'user' or 'system', based on who sent the message.
+        message_type (bool, optional): Label for the message type. Can be 'user' or 'system', based on
+                                        who sent the message.
 
     Returns:
         WhatsAppChat: Class instance with loaded and parsed chat.
@@ -90,10 +91,11 @@ def df_from_whatsapp(
             0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.          system
             1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰            user
             2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...            user
-            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...    
-            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
+            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...            user
+            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.            user
 
-        Read a chat, labelling each message as 'user' or 'system'. 'system' messages are those sent by the chat itself (creation of chat, etc.)
+        Read a chat, labelling each message as 'user' or 'system'. 'system' messages are those sent by the chat itself
+        (creation of chat, etc.)
 
         ..  code-block:: python
 
@@ -135,16 +137,20 @@ def df_from_whatsapp(
             FutureWarning,
             stacklevel=2,
         )
+    # Add message type only if num users > 2
     if message_type:
-        chat_name = df["username"].iloc[0]
-        df["message_type"] = df["username"].apply(
-            lambda x: "user" if x != chat_name else "system"
-        )
+        if len(set(df["username"])) > 2:
+            chat_name = df["username"].iloc[0]
+            df["message_type"] = df["username"].apply(
+                lambda x: "user" if x != chat_name else "system"
+            )
+        else:
+            df["message_type"] = "user"
     return df
 
 
 # Alias for df_from_whatsapp
-def df_from_txt_whatsapp(filepath: str, **kwargs: Any) -> pd.DataFrame:
+def df_from_txt_whatsapp(filepath: str, **kwargs: Any) -> pd.DataFrame:  # noqa: ANN401
     """Alias for :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>`."""
     warnings.warn(
         "This function is deprecated and will be removed in future versions. Use `df_from_whatsapp` instead.",
