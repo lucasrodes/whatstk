@@ -12,7 +12,7 @@
 
 <p align="left">
   <a href="https://travis-ci.com/lucasrodes/whatstk">
-    <img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop">
+    <img alt="Build Status" src="https://app.travis-ci.com/lucasrodes/whatstk.svg?&branch=main">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
     <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">
