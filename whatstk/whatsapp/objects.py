@@ -85,9 +85,9 @@ class WhatsAppChat(BaseChat):
             **kwargs: Refer to the docs from
                         :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` for details on
                         additional arguments.
-            extra_metadata (bool): If True, additional metadata will be added to the DataFrame. This includes class
-                                    attributes such as chat.name, chat.df_system (DataFrame with only system messages).
-                                     Note that this attribute only works on group chats.
+            extra_metadata (bool): This is experimental. If True, additional metadata will be added to the DataFrame.
+                                    This includes class attributes such as chat.name, chat.df_system (DataFrame with
+                                    only system messages). Note that this attribute only works on group chats.
 
         Returns:
             WhatsAppChat: Class instance with loaded and parsed chat.
@@ -105,7 +105,7 @@ class WhatsAppChat(BaseChat):
                     "The argument `extra_metadata` will change its default value in a future version. "
                     "Set `extra_metadata=False` to keep current behavior or `extra_metadata=True` "
                     "to use the future behaviour. The new behaviour will fill enable class attributes "
-                    "`chat.name` and `chat.df_system`."
+                    "`chat.name` and `chat.df_system`. This is experimental, and has been mostly tested on iOS."
                 ),
                 FutureWarning,
                 stacklevel=2,
