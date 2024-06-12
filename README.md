@@ -90,6 +90,8 @@ from whatstk import df_from_whatsapp
 df = df_from_whatsapp("path/to/chat.txt")
 ```
 
+**NOTE:** You can now also load directly from a zip chat (iOS export).
+
 #### Convert chat to csv
 
 ```bash
