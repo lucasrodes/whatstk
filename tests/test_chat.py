@@ -28,16 +28,18 @@ def test_from_source_2():
 
     # Fake system column
     data = {
-        COLNAMES_DF.DATE: ["2020-12-01"],
+        COLNAMES_DF.DATE: ["2020-11-21 03:02:06"],
         COLNAMES_DF.USERNAME: ["chat_name"],
         COLNAMES_DF.MESSAGE: ["chat was created"],
         COLNAMES_DF.MESSAGE_TYPE: ["system"]
     }
     df_system = pd.DataFrame(data)
     df[COLNAMES_DF.MESSAGE_TYPE] = "user"
-
+    # Add fake row to main df
     df = pd.concat([df_system, df])
-
+    # Ensure type of datetime
+    df[COLNAMES_DF.DATE] = pd.to_datetime(df[COLNAMES_DF.DATE])
+    
     chat = WhatsAppChat(df)
     assert isinstance(chat.start_date, datetime)
     assert isinstance(chat.end_date, datetime)
