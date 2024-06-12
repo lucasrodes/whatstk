@@ -204,7 +204,7 @@ class WhatsAppChat(BaseChat):
             text_file_path = os.path.join(temp_dir, text_filename)
 
             # Write the string to a temporary text file
-            with open(text_file_path, 'w') as text_file:
+            with open(text_file_path, 'w', encoding=encoding) as text_file:
                 text_file.write(text)
 
             # Create a zip file and add the text file to it
