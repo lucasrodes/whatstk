@@ -45,7 +45,7 @@ def df_from_whatsapp(
     Args:
         filepath (str): Path to the file. Accepted sources are:
 
-                * Local file, e.g. 'path/to/file.txt' OR 'path/to/_chat.zip' (iOS export).
+                * Local file, e.g. 'path/to/file.txt' OR 'path/to/_chat.zip' (e.g. iOS export).
                 * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
                 * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
                   to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
