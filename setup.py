@@ -28,7 +28,7 @@ requirements_gdrive = [
 ]
 
 requirements_generate = [
-    "scipy~=1.10.0",
+    "scipy~=1.12.0",
     "python-lorem==1.2.0",
 ]
 
@@ -45,7 +45,7 @@ extras_require = {
 
 setup(
     name='whatstk',
-    version="0.6.2",
+    version="0.7.0",
     description="Parser and analytics tools for WhatsApp group chats",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -62,10 +62,10 @@ setup(
         "Development Status :: 4 - Beta",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],

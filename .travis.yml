@@ -1,10 +1,10 @@
 dist: focal
 language: python
 python:
-  - 3.8
   - 3.9
   - "3.10"
   - "3.11"
+  - "3.12"
 git:
   depth: false
 before_install:
@@ -20,12 +20,12 @@ install:
   # - ls -l /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/whatstk/whatsapp/assets/
   - cat MANIFEST.in
   - mkdir -p tests/chats/hformats tests/chats/merge
-  - whatstk-generate-chat --size 500 --output-path tests/chats/hformats/ # Generate chats for hformat checks
+  - whatstk-generate-chat --size 500 -z --output-path tests/chats/hformats/ # Generate chats for hformat checks
   - whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file1.txt
   - whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 --hformats '%Y-%m-%d, %H:%M - %name:' --output-path tests/chats/merge/ --filenames file2.txt
 #pip install -r requirements.txt
 script:
-  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 --ignore=ANN101,ANN102 whatstk
+  - flake8 --max-complexity=10 --docstring-convention=google --max-line-length=120 --ignore=ANN101,ANN102,ANN401 whatstk
   - pytest --cov-report term --cov=whatstk tests
 after_success:
   - codecov # submit coverage
@@ -38,12 +38,12 @@ jobs:
     - os: windows
       language: shell
       before_install:
-        - choco upgrade python -y --version 3.8.6
-        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - choco upgrade python -y --version 3.12.2
+        - export PATH="/c/Python312:/c/Python312/Scripts:$PATH"
         # make sure it's on PATH as 'python3'
-        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+        - ln -s /c/Python312/python.exe /c/Python312/python3.exe
     - stage: deploy
-      python: 3.10
+      python: 3.11
       deploy:
         - provider: pypi
           user: $USER_PYPI

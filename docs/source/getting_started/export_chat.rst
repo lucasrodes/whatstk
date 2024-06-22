@@ -25,10 +25,10 @@ iOS
 The chat is exported as a `zip <https://en.wikipedia.org/wiki/Zip_(file_format)>`_, which can be easily unzipped in
 your computer.
 
-.. figure:: ../../_static/images/chat-export-ios12-wp2.20.31.gif
+.. figure:: ../../_static/images/chat-export-ios17-wp24.5.75.gif
     :width: 300
     :alt: Concept diagram of WhatsAppChat.from_source
     :align: center
     :figclass: align-center
 
-    iOS 12, WhatsApp v2.20.31
+    iOS 17.3.1, WhatsApp v24.5.75

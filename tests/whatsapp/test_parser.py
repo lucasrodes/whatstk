@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import pytest
-from whatstk.whatsapp.parser import df_from_txt_whatsapp, _str_from_txt
+from whatstk.whatsapp.parser import df_from_whatsapp
 from whatstk.whatsapp.hformat import get_supported_hformats_as_dict
 from whatstk.utils.exceptions import HFormatError
 from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
@@ -15,12 +15,16 @@ filenames = [os.path.join(output_folder, f) for f in os.listdir(output_folder) i
 chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
+# TODO: Message type chats
+chats_merge_path = 'chats/whatsapp/pokemon.txt'
+file_type_1 = os.path.abspath(chats_merge_path)
+
 # Chat hosted on repo
 # filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
 filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
 
 
-def test_df_from_txt_whatsapp():
+def test_df_from_whatsapp():
     """This test checks most of the logic of the library.
 
     - Generates tests in all formats to be supported (according to JSON)
@@ -35,16 +39,26 @@ def test_df_from_txt_whatsapp():
         chats = []
         hformat = elem['format']
         auto_header = bool(elem['auto_header'])
-        filename = _map_hformat_filename(hformat)
-        filename = os.path.join(output_folder, '{}.txt'.format(filename))
+        filename_base = _map_hformat_filename(hformat)
+        filename = os.path.join(output_folder, '{}.txt'.format(filename_base))
+        filename_zip = os.path.join(output_folder, '{}.zip'.format(filename_base))
 
         # Auto
         if auto_header:
-            chat = df_from_txt_whatsapp(filename)
+            chat = df_from_whatsapp(filename)
             chats.append(chat)
         # Manual
-        chat = df_from_txt_whatsapp(filename, hformat=hformat)
+        chat = df_from_whatsapp(filename, hformat=hformat)
         chats.append(chat)
+
+        # ZIP
+        # Auto
+        if auto_header:
+            chat_zip = df_from_whatsapp(filename_zip)
+            assert chat_zip.equals(chat)
+        # Manual
+        chat_zip = df_from_whatsapp(filename_zip, hformat=hformat)
+        assert chat_zip.equals(chat)
 
         # Check manual and auto chats are equal
         assert(chats[0].equals(chats[1]))  # TODO: Assumes there are always two elements in list chats!
@@ -66,22 +80,22 @@ def test_df_from_txt_whatsapp():
     assert((df == False).sum().sum() == 0)
 
 
-def test_df_from_txt_whatsapp_2():
+def test_df_from_whatsapp_2():
     with pytest.raises(HFormatError):
-        _ = df_from_txt_whatsapp(filename1, hformat='%y')
+        _ = df_from_whatsapp(filename1, hformat='%y')
 
 
-def test_df_from_txt_whatsapp_3():
+def test_df_from_whatsapp_3():
     with pytest.raises(ValueError):
-        _ = df_from_txt_whatsapp(filename1, auto_header=False)
+        _ = df_from_whatsapp(filename1, auto_header=False)
 
 
-def test_df_from_txt_whatsapp_url():
-    df = df_from_txt_whatsapp(filepath_url)
+def test_df_from_whatsapp_url():
+    df = df_from_whatsapp(filepath_url)
     assert(isinstance(df, pd.DataFrame))
 
 
-def test_df_from_txt_whatsapp_gdrive(mocker):
+def test_df_from_whatsapp_gdrive(mocker):
     gdrive_url = "gdrive://456456456-ewgwegegw"
     with open(filename1, "r", encoding='utf8') as f:
         mock_text = f.read()
@@ -89,14 +103,19 @@ def test_df_from_txt_whatsapp_gdrive(mocker):
     mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)
     mocker.patch("pydrive2.files.GoogleDriveFile.GetContentString", return_value=mock_text)
     mocker.patch("whatstk.utils.gdrive._check_gdrive_config", return_value=None)
-    df = df_from_txt_whatsapp(gdrive_url)
+    df = df_from_whatsapp(gdrive_url)
     assert(isinstance(df, pd.DataFrame))
 
 
-def test_df_from_txt_whatsapp_error():
+def test_df_from_whatsapp_error():
     with pytest.raises(FileNotFoundError):
-        _ = df_from_txt_whatsapp('grger')
+        _ = df_from_whatsapp('grger')
 
-# def test_df_from_multiple_txt():
-#     df = df_from_multiple_txt([filename1, filename2])
-#     assert(isinstance(df, pd.DataFrame))
+
+def test_df_message_type_true():
+    df = df_from_whatsapp(file_type_1, message_type=True)
+    assert(isinstance(df, pd.DataFrame))
+
+    # Check group name
+    group_name = "Pokemon Chat"
+    assert set(df.loc[df["username"] == group_name, COLNAMES_DF.MESSAGE_TYPE]) == {"system"}

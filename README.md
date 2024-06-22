@@ -5,14 +5,14 @@
 </h1>
 <p align="left">
   <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.6.2-blue.svg?&color=25D366&logo=whatsapp&">
+    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.7.0-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
 <!-- style=for-the-badge -->
 
 <p align="left">
-  <a href="https://travis-ci.com/lucasrodes/whatstk">
-    <img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop">
+  <a href="https://app.travis-ci.com/lucasrodes/whatstk">
+    <img alt="Build Status" src="https://app.travis-ci.com/lucasrodes/whatstk.svg?&branch=main">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
     <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">
@@ -24,16 +24,13 @@
     <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
   </a>
   <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.8|3.9|3.10|3.11-blue.svg?&logo=python&logoColor=yellow">
+    <img alt="Python 3" src="https://img.shields.io/badge/python-3.9|3.10|3.11|3.12-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
   </a>
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
-  </a>
-  <a href="https://gitter.im/sociepy/whatstk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
-    <img alt="Join the chat at https://gitter.im/sociepy/whatstk" src="https://badges.gitter.im/sociepy/whatstk.svg">
   </a>
 </p>
 
@@ -89,9 +86,11 @@ _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_star
 #### Load chat as a DataFrame
 
 ```python
-from whatstk import df_from_txt_whatsapp
-df = df_from_txt_whatsapp("path/to/chat.txt")
+from whatstk import df_from_whatsapp
+df = df_from_whatsapp("path/to/chat.txt")
 ```
+
+**NOTE:** You can now also load directly from a zip chat (iOS export).
 
 #### Convert chat to csv
 

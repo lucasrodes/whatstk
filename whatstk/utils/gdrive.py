@@ -19,13 +19,13 @@ try:
     from pydrive2.drive import GoogleDrive
     from pydrive2.files import ApiRequestError
     import yaml
-except ImportError as e:
-    msg = (
+except ImportError as e:  # pragma: no cover
+    msg = (  # pragma: no cover
         "whatstk Google Drive requirements are not installed.\n\n"
         "Please pip install as follows:\n\n"
         '  python -m pip install "whatstk[gdrive]" --upgrade  # or python -m pip install'
-    )
-    raise ImportError(msg) from e
+    )  # pragma: no cover
+    raise ImportError(msg) from e  # pragma: no cover
 
 
 # Create .config/whatstk/gdrive if it does not exist

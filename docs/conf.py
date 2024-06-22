@@ -29,7 +29,7 @@ copy_right = f'{datetime.now().year}, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.6.2'
+version = 'v0.7.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -146,7 +146,8 @@ html_theme_options = {
     'navigation_depth': 4,
     'display_version': True,
     'collapse_navigation': False,
-    'sticky_navigation': False
+    'sticky_navigation': False,
+    'github_banner': True,
 }
 
 # -- Args ---------------------------------------------------------------------

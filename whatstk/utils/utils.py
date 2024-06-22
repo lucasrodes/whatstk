@@ -33,6 +33,9 @@ class ColnamesDf:
     MESSAGE_LENGTH = "message_length"
     """Message length column"""
 
+    MESSAGE_TYPE = "message_type"
+    """Message type column"""
+
 
 COLNAMES_DF = ColnamesDf()
 

@@ -68,7 +68,7 @@ def _extract_header_format_from_lines(lines: List[str]) -> str:
     return _extract_header_format_from_components(elements_list, template_list)
 
 
-def _extract_elements_template_from_lines(lines: str) -> Tuple[List[List[int]], List[str]]:
+def _extract_elements_template_from_lines(lines: List[str]) -> Tuple[List[List[int]], List[str]]:
     """Get elements_list and template_list from lines.
 
     Args:
