@@ -53,7 +53,7 @@ Note: You will need to add tests for your code. For this, you can check the curr
 Adding new examples
 -------------------
 To add new examples, consider editing yourself a ``rst`` file in ``docs/source/`` directory in the repository. For
-questions or doubts, us `GitHub discussions <https://github.com/lucasrodes/whatstk/discussions>`_.
+questions or doubts, use `GitHub discussions <https://github.com/lucasrodes/whatstk/discussions>`_.
 
 ----
 
