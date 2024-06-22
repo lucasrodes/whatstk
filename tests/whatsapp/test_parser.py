@@ -16,7 +16,7 @@ chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
 # TODO: Message type chats
-chats_merge_path = '../../chats/whatsapp/pokemon.txt'
+chats_merge_path = '../chats/whatsapp/pokemon.txt'
 file_type_1 = os.path.abspath(chats_merge_path)
 
 # Chat hosted on repo
