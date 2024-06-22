@@ -20,7 +20,7 @@ First contact with whatstk
 :func:`from_source <whatstk._chat.BaseChat.from_source>` to be implemented. This method loads and parses the source 
 chat file into a pandas.DataFrame.
 
-Below, we use method :func:`df_from_txt_whatsapp <whatstk.whatsapp.parser.df_from_txt_whatsapp>` to load `LOREM chat
+Below, we use method :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` to load `LOREM chat
 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own 
 chat, simply :ref:`export it as a txt file<Export chat>` to your computer and then use class argument ``filepath``, as
 shown in the following example.
@@ -28,9 +28,9 @@ shown in the following example.
 
 .. code-block:: python
 
-    >>> from whatstk import df_from_txt_whatsapp
+    >>> from whatstk import df_from_whatsapp
     >>> from whatstk.data import whatsapp_urls
-    >>> df = df_from_txt_whatsapp(filepath=whatsapp_urls.LOREM)
+    >>> df = df_from_whatsapp(filepath=whatsapp_urls.LOREM)
     >>> df.head(5)
                      date        username                                            message
     0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.

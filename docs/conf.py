@@ -146,7 +146,8 @@ html_theme_options = {
     'navigation_depth': 4,
     'display_version': True,
     'collapse_navigation': False,
-    'sticky_navigation': False
+    'sticky_navigation': False,
+    'github_banner': True,
 }
 
 # -- Args ---------------------------------------------------------------------

@@ -11,8 +11,8 @@
 <!-- style=for-the-badge -->
 
 <p align="left">
-  <a href="https://travis-ci.com/lucasrodes/whatstk">
-    <img alt="Build Status" src="https://travis-ci.com/lucasrodes/whatstk.svg?branch=develop">
+  <a href="https://app.travis-ci.com/lucasrodes/whatstk">
+    <img alt="Build Status" src="https://app.travis-ci.com/lucasrodes/whatstk.svg?&branch=main">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
     <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">
@@ -86,9 +86,11 @@ _See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_star
 #### Load chat as a DataFrame
 
 ```python
-from whatstk import df_from_txt_whatsapp
-df = df_from_txt_whatsapp("path/to/chat.txt")
+from whatstk import df_from_whatsapp
+df = df_from_whatsapp("path/to/chat.txt")
 ```
+
+**NOTE:** You can now also load directly from a zip chat (iOS export).
 
 #### Convert chat to csv
 
