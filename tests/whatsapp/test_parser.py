@@ -16,8 +16,8 @@ chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
 # TODO: Message type chats
-# chats_merge_path = 'tests/chats/message_type/'
-# file_type_1 = os.path.join(chats_merge_path, 'chat_1.txt')
+chats_merge_path = '../../chats/whatsapp/pokemon.txt'
+file_type_1 = os.path.abspath(chats_merge_path)
 
 # Chat hosted on repo
 # filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
@@ -112,10 +112,10 @@ def test_df_from_whatsapp_error():
         _ = df_from_whatsapp('grger')
 
 
-# def test_df_message_type_true():
-#     df = df_from_whatsapp(file_type_1, message_type=True)
-#     assert(isinstance(df, pd.DataFrame))
+def test_df_message_type_true():
+    df = df_from_whatsapp(file_type_1, message_type=True)
+    assert(isinstance(df, pd.DataFrame))
 
-#     # Check group name
-#     group_name = "Group"
-#     assert set(df.loc[df["username"] == group_name, COLNAMES_DF.MESSAGE_TYPE]) == {"system"}
+    # Check group name
+    group_name = "Pokemon Chat"
+    assert set(df.loc[df["username"] == group_name, COLNAMES_DF.MESSAGE_TYPE]) == {"system"}
