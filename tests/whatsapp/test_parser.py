@@ -15,6 +15,9 @@ filenames = [os.path.join(output_folder, f) for f in os.listdir(output_folder) i
 chats_merge_path = 'tests/chats/merge/'
 filename1 = os.path.join(chats_merge_path, 'file1.txt')
 filename2 = os.path.join(chats_merge_path, 'file2.txt')
+# Message type chats
+chats_merge_path = 'tests/chats/message_type/'
+file_type_1 = os.path.join(chats_merge_path, 'chat_1.txt')
 
 # Chat hosted on repo
 # filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
@@ -108,6 +111,14 @@ def test_df_from_whatsapp_error():
     with pytest.raises(FileNotFoundError):
         _ = df_from_whatsapp('grger')
 
-# def test_df_from_multiple_txt():
-#     df = df_from_multiple_txt([filename1, filename2])
-#     assert(isinstance(df, pd.DataFrame))
+
+def test_df_message_type_true():
+    df = df_from_whatsapp(file_type_1, message_type=True)
+    assert(isinstance(df, pd.DataFrame))
+
+    # Check group name
+    group_name = "Group"
+    assert set(df.loc[df["username"] == group_name, COLNAMES_DF.MESSAGE_TYPE]) == {"system"}
+
+def test_df_message_type_false():
+    df = df_from_whatsapp(filename1, message_type=True)
