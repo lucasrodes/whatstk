@@ -14,7 +14,7 @@ from whatstk.graph.figures.boxplot import fig_boxplot_msglen
 from whatstk.graph.figures.sankey import fig_sankey
 from whatstk.graph.figures.heatmap import fig_heatmap
 from whatstk.graph.figures.utils import hex_color_palette
-from whatstk.utils.utils import _get_df
+from whatstk.utils.utils import _get_df, COLNAMES_DF
 
 
 class FigureBuilder:
@@ -41,6 +41,8 @@ class FigureBuilder:
 
         """
         self.df = _get_df(df=df, chat=chat)
+        # Check type of df
+        _check_types(self.df)
         self.__user_color_mapping = None
 
     @property
@@ -247,3 +249,9 @@ class FigureBuilder:
         # Get figure
         fig = fig_heatmap(df_matrix=responses, title=title)
         return fig
+
+
+def _check_types(df: pd.DataFrame) -> None:
+    is_datetime = pd.api.types.is_datetime64_any_dtype(df[COLNAMES_DF.DATE])
+    if not is_datetime:
+        raise TypeError("Column 'date_column' must be of type datetime64[ns].")

@@ -128,17 +128,18 @@ def df_from_whatsapp(
     # Raise FutureWarning
     if message_type is None:
         message_type = False
+    # Add message type only if num users > 2
+    if message_type:
         warnings.warn(
             (
-                "The argument `message_type` will change its default value in a future version. "
-                "Set `message_type=False` to keep current behavior or `message_type=True` "
-                "to start using the future default behaviour."
+                "The argument `extra_metadata` is an experimental feature that might become the default "
+                "in a future version. Set `extra_metadata=False` to keep current behavior. "
+                "The new behaviour will enables class attributes `chat.name` and `chat.df_system`. "
+                "Agian, this is very experimental, and has been mostly tested on iOS."
             ),
             FutureWarning,
             stacklevel=2,
         )
-    # Add message type only if num users > 2
-    if message_type:
         if len(set(df["username"])) > 2:
             chat_name = df["username"].iloc[0]
             df["message_type"] = df["username"].apply(

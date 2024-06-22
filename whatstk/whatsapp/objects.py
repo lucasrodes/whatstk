@@ -99,20 +99,19 @@ class WhatsAppChat(BaseChat):
 
         """
         # Use extra metadata (label message types)
-        if extra_metadata is None:
+        if extra_metadata:
             warnings.warn(
                 (
-                    "The argument `extra_metadata` will change its default value in a future version. "
-                    "Set `extra_metadata=False` to keep current behavior or `extra_metadata=True` "
-                    "to use the future behaviour. The new behaviour will fill enable class attributes "
-                    "`chat.name` and `chat.df_system`. This is experimental, and has been mostly tested on iOS."
+                    "The argument `extra_metadata` is an experimental feature that might become the default "
+                    "in a future version. Set `extra_metadata=False` to keep current behavior. "
+                    "The new behaviour will enables class attributes `chat.name` and `chat.df_system`. "
+                    "Agian, this is very experimental, and has been mostly tested on iOS."
                 ),
                 FutureWarning,
                 stacklevel=2,
             )
-        if extra_metadata:
             kwargs["message_type"] = True
-        elif extra_metadata is False:
+        elif (extra_metadata is False) or (extra_metadata is None):
             kwargs["message_type"] = False
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
