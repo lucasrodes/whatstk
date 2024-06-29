@@ -109,9 +109,6 @@ def _extract_possible_header_from_line(line: str) -> str:
         header = line_split[0]
         if not header.isprintable():
             print("There is some unprintable character in the header. Please report this in https://github.com/lucasrodes/whatstk.")
-            # header = header.replace("\u200e", "").replace("\u202e", "")
-            # header = _clean_text(header)
-            # header = unicodedata.normalize('NFKD', header)
         if header[-1] != ":":
             header += ":"
         return header

@@ -7,6 +7,7 @@ from datetime import datetime
 from pathlib import Path
 import tempfile
 from typing import Any, Optional, Tuple, List, Dict
+import unicodedata
 from urllib.request import urlopen
 import warnings
 import zipfile
@@ -302,7 +303,6 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
 
 
 def _clean_text(text: str) -> str:
-    import unicodedata
     # List of additional unwanted Unicode characters
     unwanted_chars = [
         '\u200B',  # Zero Width Space
