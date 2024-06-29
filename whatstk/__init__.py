@@ -12,7 +12,7 @@ from whatstk.whatsapp.parser import df_from_txt_whatsapp, df_from_whatsapp
 
 name = "whatstk"
 
-__version__ = "0.6.2"
+__version__ = "0.7.0"
 
 __all__ = [
     "WhatsAppChat",

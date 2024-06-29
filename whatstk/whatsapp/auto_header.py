@@ -4,7 +4,6 @@
 import logging
 import re
 from typing import List, Tuple, Optional
-
 import pandas as pd
 
 from whatstk.utils.exceptions import RegexError
@@ -109,7 +108,10 @@ def _extract_possible_header_from_line(line: str) -> str:
         # possible header
         header = line_split[0]
         if not header.isprintable():
-            header = header.replace("\u200e", "").replace("\u202e", "")
+            print("""
+                  There is some unprintable character in the header.
+                  Please report this in https://github.com/lucasrodes/whatstk.
+            """)
         if header[-1] != ":":
             header += ":"
         return header
