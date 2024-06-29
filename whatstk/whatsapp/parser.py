@@ -328,6 +328,7 @@ def _clean_text(text: str) -> str:
 
     return text
 
+
 def _add_schema(df: pd.DataFrame) -> pd.DataFrame:
     """Add default chat schema to df.
 

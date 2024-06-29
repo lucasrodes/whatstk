@@ -108,7 +108,10 @@ def _extract_possible_header_from_line(line: str) -> str:
         # possible header
         header = line_split[0]
         if not header.isprintable():
-            print("There is some unprintable character in the header. Please report this in https://github.com/lucasrodes/whatstk.")
+            print("""
+                  There is some unprintable character in the header. 
+                  Please report this in https://github.com/lucasrodes/whatstk.
+            """)
         if header[-1] != ":":
             header += ":"
         return header
