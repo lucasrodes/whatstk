@@ -27,8 +27,8 @@ regex_simplifier = {
     "%I": r"(?P<hour>\d{1,2})",
     "%M": r"(?P<minutes>\d{2})",
     "%S": r"(?P<seconds>\d{2})",
-    "%P": r"(?P<ampm>[AaPp].? ?[Mm].?)",
-    "%p": r"(?P<ampm>[AaPp].? ?[Mm].?)",
+    "%P": r"(?P<ampm>[AaPp]\.?\s?[Mm].?)",
+    "%p": r"(?P<ampm>[AaPp]\.?\s?[Mm]\.?)",
     "%name": rf"(?P<{COLNAMES_DF.USERNAME}>[^:]*)",
 }
 
@@ -121,6 +121,9 @@ def df_from_whatsapp(
     """
     # Read local file
     text = _str_from_file(filepath, encoding)
+
+    # Clean text from unwanted unicode characters
+    text = _clean_text(text)
 
     # Build dataframe
     df = _df_from_str(text, auto_header, hformat)
@@ -297,6 +300,33 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
     df_chat = df_chat[[COLNAMES_DF.DATE, COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
     return df_chat
 
+
+def _clean_text(text: str) -> str:
+    import unicodedata
+    # List of additional unwanted Unicode characters
+    unwanted_chars = [
+        '\u200B',  # Zero Width Space
+        '\u200C',  # Zero Width Non-Joiner
+        '\u200D',  # Zero Width Joiner
+        '\u202A',  # Left-to-Right Embedding
+        '\u202B',  # Right-to-Left Embedding
+        '\u202C',  # Pop Directional Formatting
+        '\u202D',  # Left-to-Right Override
+        '\u202E',  # Right-To-Left Override
+        '\u200E',  # Left-To-Right Mark
+        '\u200F',  # Right-to-Left Mark
+        '\u00AD',  # Soft Hyphen
+    ]
+
+    # Create a regex pattern from the list
+    pattern = '[' + ''.join(unwanted_chars) + ']'
+
+    # Remove unwanted characters
+    text = re.sub(pattern, '', text)
+
+    text = unicodedata.normalize('NFKD', text)
+
+    return text
 
 def _add_schema(df: pd.DataFrame) -> pd.DataFrame:
     """Add default chat schema to df.
