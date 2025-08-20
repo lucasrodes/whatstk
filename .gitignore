@@ -284,6 +284,9 @@ docs/_build/
 package-lock.json
 version-changes
 
+# MkDocs documentation
+site/
+
 client_secrets.json
 settings.yaml
 credentials.json
