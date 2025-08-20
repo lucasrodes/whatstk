@@ -1,0 +1,115 @@
+site_name: WhatsApp Analysis Toolkit
+site_description: Parser and analytics tools for WhatsApp group chats
+site_url: https://whatstk.readthedocs.io/
+repo_url: https://github.com/lucasrodes/whatstk
+repo_name: lucasrodes/whatstk
+
+theme:
+  name: material
+  logo: assets/logo.png
+  favicon: docs/_static/favicon.png
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - docs/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: true
+            merge_init_into_class: true
+            show_submodules: false
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: lucasrodes
+      repo: whatstk
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Getting Started:
+    - getting_started/index.md
+    - Export Chat: getting_started/export_chat.md
+    - Load Chat: getting_started/load_chat.md
+    - Command Line: getting_started/command_line.md
+    - Header Format: getting_started/hformat.md
+    - Available Chats: getting_started/library-available-chats.md
+  - Code Examples: code_examples/index.md
+  - API Reference: reference/
+  - Why whatstk?: why_whatstk.md
+  - Community: community.md
+  - Contribute: contribute.md
+  - Changelog: changelog.md
+
+watch:
+  - whatstk/
