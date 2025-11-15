@@ -1,9 +1,6 @@
 include *.md
 include LICENSE
-include requirements.txt
-include requirements-test.txt
-include requirements-flake.txt
-include requirements-docs.txt
+include pyproject.toml
 include whatstk/whatsapp/assets/header_format_support.json
 include .coveragerc
 

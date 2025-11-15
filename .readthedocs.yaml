@@ -23,4 +23,4 @@ python:
       path: .
       extra_requirements:
         - full
-    - requirements: requirements-docs.txt
+        - docs

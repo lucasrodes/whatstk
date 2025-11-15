@@ -1,4 +1,4 @@
-.PHONY: help install install-dev test-data lint test clean
+.PHONY: help install install.dev generate-test-data lint test clean bump.patch bump.minor bump.major
 
 .DEFAULT_GOAL := help
 
@@ -10,12 +10,12 @@ help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
 install: ## Install package in editable mode
-	pip install -e .
+	uv pip install -e .
 
-install-dev: ## Install package with dev dependencies
-	pip install -e .[dev]
+install.dev: ## Install package with dev dependencies
+	uv pip install -e .[dev]
 
-test-data: ## Generate test chat files
+generate-test-data: ## Generate test chat files
 	mkdir -p $(TEST_DIR)/chats/hformats $(TEST_DIR)/chats/merge
 	whatstk-generate-chat --size 500 -z --output-path $(TEST_DIR)/chats/hformats/
 	whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 \
@@ -46,4 +46,13 @@ test: ## Run tests with coverage
 clean: ## Remove build and test artifacts
 	find . -type f -name '*.py[co]' -delete
 	find . -type d -name '__pycache__' -delete
-	rm -rf $(REPORTS_DIR) .pytest_cache .coverage htmlcov build dist *.egg-info
+	rm -rf $(REPORTS_DIR) .pytest_cache .coverage htmlcov build dist *.egg-info .uv
+
+bump.patch: ## Bump patch version (0.0.X)
+	bump-my-version bump patch
+
+bump.minor: ## Bump minor version (0.X.0)
+	bump-my-version bump minor
+
+bump.major: ## Bump major version (X.0.0)
+	bump-my-version bump major

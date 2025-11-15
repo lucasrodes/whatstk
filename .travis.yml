@@ -8,10 +8,11 @@ python:
 git:
   depth: false
 before_install:
-  - pip install --upgrade pip
+  - curl -LsSf https://astral.sh/uv/install.sh | sh
+  - source $HOME/.cargo/env
 install:
   - pip uninstall whatstk
-  - make install-dev
+  - make install.dev
   - cat MANIFEST.in
   - make generate-test-data
 script:
