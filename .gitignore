@@ -287,3 +287,5 @@ version-changes
 client_secrets.json
 settings.yaml
 credentials.json
+
+.sanity-check

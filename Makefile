@@ -36,7 +36,7 @@ lint: ## Run flake8 linting
 
 test: ## Run tests with coverage
 	mkdir -p $(REPORTS_DIR)
-	pytest \
+	uv run pytest \
 		--html=$(REPORTS_DIR)/testreport.html \
 		--cov-report html:$(REPORTS_DIR)/htmlcov \
 		--cov-report term \
@@ -56,3 +56,30 @@ bump.minor: ## Bump minor version (0.X.0)
 
 bump.major: ## Bump major version (X.0.0)
 	bump-my-version bump major
+
+
+.sanity-check:
+	@echo '==> Checking your Python setup'
+
+	@if python -c "import sys; exit(0 if sys.platform.startswith('win32') else 1)"; then \
+		echo 'ERROR: you are using a non-WSL Python interpreter, please consult the'; \
+		echo '       docs on how to swich to WSL Python on windows'; \
+		echo '       https://github.com/owid/etl/'; \
+		exit 1; \
+	fi
+	touch .sanity-check
+
+install-uv:
+	@if ! command -v uv >/dev/null 2>&1; then \
+		echo '==> UV not found. Installing...'; \
+		curl -LsSf https://astral.sh/uv/install.sh | sh; \
+	fi
+
+.venv: install-uv .sanity-check
+	@echo '==> Installing packages'
+	@if [ -n "$(PYTHON_VERSION)" ]; then \
+		echo '==> Using Python version $(PYTHON_VERSION)'; \
+		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && UV_PYTHON=$(PYTHON_VERSION) uv sync --all-extras; \
+	else \
+		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && uv sync --all-extras; \
+	fi
