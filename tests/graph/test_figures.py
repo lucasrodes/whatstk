@@ -31,16 +31,16 @@ def test_init_mapping_dict_1():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     mapping = fb.user_color_mapping
-    assert(isinstance(fb.user_color_mapping, dict))
-    assert(len(mapping) == df['username'].nunique())
+    assert isinstance(fb.user_color_mapping, dict)
+    assert len(mapping) == df["username"].nunique()
 
 
 def test_init_mapping_dict_2():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
-    value = {'a': 'b'}
+    value = {"a": "b"}
     fb.user_color_mapping = value
-    assert(fb.user_color_mapping == value)
+    assert fb.user_color_mapping == value
 
 
 def test_user_msg_length_boxplot():
@@ -48,7 +48,7 @@ def test_user_msg_length_boxplot():
     fb = FigureBuilder(df=df)
     fig = fb.user_msg_length_boxplot()
     assert isinstance(fig, go.Figure)
-    assert ('data' in fig and 'layout' in fig)
+    assert "data" in fig and "layout" in fig
 
 
 def test_user_interventions_count_linechart():
@@ -56,14 +56,15 @@ def test_user_interventions_count_linechart():
     fb = FigureBuilder(df=df)
     fig = fb.user_interventions_count_linechart()
     assert isinstance(fig, go.Figure)
-    assert ('data' in fig and 'layout' in fig)
+    assert "data" in fig and "layout" in fig
+
 
 def test_user_interventions_count_linechart_2():
     df = load_chat_as_df()
     fb = FigureBuilder(df=df)
     fig = fb.user_interventions_count_linechart(all_users=True)
     assert isinstance(fig, go.Figure)
-    assert ('data' in fig and 'layout' in fig)
+    assert "data" in fig and "layout" in fig
 
 
 def test_user_message_responses_flow():
@@ -71,7 +72,7 @@ def test_user_message_responses_flow():
     fb = FigureBuilder(df=df)
     fig = fb.user_message_responses_flow()
     assert isinstance(fig, go.Figure)
-    assert ('data' in fig and 'layout' in fig)
+    assert "data" in fig and "layout" in fig
 
 
 def test_user_message_responses_heatmap():
@@ -79,4 +80,4 @@ def test_user_message_responses_heatmap():
     fb = FigureBuilder(df=df)
     fig = fb.user_message_responses_heatmap()
     assert isinstance(fig, go.Figure)
-    assert ('data' in fig and 'layout' in fig)
+    assert "data" in fig and "layout" in fig

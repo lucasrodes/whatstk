@@ -12,7 +12,7 @@ def test_init_1(tmpdir, mocker):
     # Create tmp secrets
     client_secret = {"field": 1}
     client_secret_file = tmpdir.join("client_secrets.json")
-    with open(client_secret_file, 'w') as f:
+    with open(client_secret_file, "w") as f:
         json.dump(client_secret, f)
     # Mock 1
     CONFIG_PATH = tmpdir.mkdir(".config")
@@ -28,7 +28,7 @@ def test_init_2(tmpdir, mocker):
     # Create tmp secrets
     client_secret = {"field": 1}
     client_secret_file = tmpdir.join("client_secrets.json")
-    with open(client_secret_file, 'w') as f:
+    with open(client_secret_file, "w") as f:
         json.dump(client_secret, f)
     # Mock 2
     CONFIG_PATH = tmpdir.join(".config2")

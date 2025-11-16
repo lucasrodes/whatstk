@@ -70,7 +70,7 @@ class WhatsAppChat(BaseChat):
         cls,
         filepath: str,
         extra_metadata: Optional[bool] = None,
-        **kwargs: Any  # noqa: ANN401
+        **kwargs: Any,  # noqa: ANN401
     ) -> "WhatsAppChat":
         """Create an instance from a chat text file.
 
@@ -203,11 +203,11 @@ class WhatsAppChat(BaseChat):
             text_file_path = os.path.join(temp_dir, text_filename)
 
             # Write the string to a temporary text file
-            with open(text_file_path, 'w', encoding=encoding) as text_file:
+            with open(text_file_path, "w", encoding=encoding) as text_file:
                 text_file.write(text)
 
             # Create a zip file and add the text file to it
-            with zipfile.ZipFile(filepath, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            with zipfile.ZipFile(filepath, "w", zipfile.ZIP_DEFLATED) as zipf:
                 zipf.write(text_file_path, text_filename)
 
     def to_txt(self, filepath: str, hformat: Optional[str] = None, encoding: str = "utf8") -> None:

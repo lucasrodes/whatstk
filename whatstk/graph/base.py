@@ -1,6 +1,5 @@
 """Build plotly-compatible figures."""
 
-
 import numpy as np
 import pandas as pd
 import plotly.graph_objs as go

@@ -1,6 +1,5 @@
 """Utils for library plots."""
 
-
 import seaborn as sns
 from typing import List
 

@@ -1,6 +1,5 @@
 """Get infor regarding responses between users."""
 
-
 from collections import namedtuple
 from typing import TYPE_CHECKING, Optional
 

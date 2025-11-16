@@ -1,6 +1,5 @@
 """Generate multiple graphics for your chat using plotly."""
 
-
 import argparse
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.graph import plot, FigureBuilder

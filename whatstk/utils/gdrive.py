@@ -10,7 +10,6 @@
         pip install whatstk[gdrive] --upgrade
 """
 
-
 from shutil import copyfile
 import os
 
