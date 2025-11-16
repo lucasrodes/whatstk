@@ -265,7 +265,7 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
     try:
         df = _parse_chat(text, r)
     except RegexError:
-        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
+        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat)) from None
     df = _remove_alerts_from_df(r_x, df)
 
     df = _add_schema(df)
@@ -276,7 +276,7 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
     """Parse chat using given regex.
 
     Args:
-        text (str) Whole log chat text.
+        text (str): Whole log chat text.
         regex (str): Regular expression
 
     Returns:
@@ -292,7 +292,7 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
         try:
             line_dict = _parse_line(text, headers, i)
         except KeyError:
-            raise RegexError("Could not match the provided regex with provided text. No match was found.")
+            raise RegexError("Could not match the provided regex with provided text. No match was found.") from None
         result.append(line_dict)
     df_chat = pd.DataFrame.from_records(result)
     df_chat = df_chat[[COLNAMES_DF.DATE, COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
