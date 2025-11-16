@@ -7,4 +7,4 @@
 
 ## (2) Run linting and tests
 make lint
-make test
+make unittest
