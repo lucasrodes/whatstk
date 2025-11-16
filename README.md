@@ -24,7 +24,7 @@
     <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
   </a>
   <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.9|3.10|3.11|3.12-blue.svg?&logo=python&logoColor=yellow">
+    <img alt="Python 3" src="https://img.shields.io/badge/python-3.11|3.12|3.13|3.14-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">

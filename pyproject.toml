@@ -7,7 +7,7 @@ name = "whatstk"
 version = "0.7.1"
 description = "Parser and analytics tools for WhatsApp group chats"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = {text = "GPL-3.0-only"}
 authors = [
     {name = "Lucas Rodes-Guirao"}
@@ -17,19 +17,19 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "emoji~=2.10.1",
-    "numpy~=1.26.4",
-    "pandas~=2.2.1",
-    "plotly~=5.20.0",
-    "seaborn~=0.13.2",
+    "emoji>=2.10.1",
+    "numpy>=1.26.4",
+    "pandas>=2.2.1",
+    "plotly>=5.20.0",
+    "seaborn>=0.13.2",
 ]
 
 [project.optional-dependencies]
@@ -38,8 +38,8 @@ gdrive = [
     "PyYAML~=6.0",
 ]
 generate = [
-    "scipy~=1.12.0",
-    "python-lorem==1.2.0",
+    "scipy>=1.13.0",
+    "python-lorem>=1.2.0",
 ]
 full = [
     "whatstk[gdrive,generate]",
@@ -53,14 +53,8 @@ test = [
     "pytest-mock~=3.10.0",
 ]
 lint = [
-    "flake8~=6.0.0",
-    "flake8-docstrings~=1.7.0",
-    "flake8-bugbear~=23.3.0",
-    "flake8-builtins~=2.1.0",
-    "flake8-bandit~=4.1.0",
-    "flake8-mutable~=1.2.0",
-    "flake8-annotations~=3.0.0",
-    "flake8-html~=0.4.3",
+    "ruff~=0.8.0",
+    "pyright~=1.1.0",
 ]
 docs = [
     "recommonmark==0.6.0",
@@ -152,3 +146,48 @@ replace = "version = 'v{new_version}'"
 
 [[tool.bumpversion.files]]
 filename = "README.md"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+# Enable flake8-bugbear (B), flake8-builtins (A), flake8-bandit (S),
+# pydocstyle/flake8-docstrings (D), and flake8-annotations (ANN) equivalents
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "B",   # flake8-bugbear
+    "A",   # flake8-builtins
+    "S",   # flake8-bandit (security)
+    "D",   # pydocstyle (docstrings)
+    "ANN", # flake8-annotations
+    "C90", # mccabe complexity
+]
+
+# Ignore same rules as flake8 config
+ignore = [
+    "ANN401", # Dynamically typed expressions (typing.Any)
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.per-file-ignores]
+# Tests can use assert statements, don't need docstrings or type annotations
+"tests/**/*.py" = [
+    "S101",   # Use of assert
+    "D100",   # Missing docstring in public module
+    "D103",   # Missing docstring in public function
+    "D104",   # Missing docstring in public package
+    "ANN001", # Missing type annotation for function argument (fixtures)
+    "ANN201", # Missing return type annotation
+]
