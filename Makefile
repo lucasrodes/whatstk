@@ -78,11 +78,11 @@ clean: ## Remove build and test artifacts
 
 generate-test-data: ## Generate test chat files
 	mkdir -p $(TEST_DIR)/chats/hformats $(TEST_DIR)/chats/merge
-	whatstk-generate-chat --size 500 -z --output-path $(TEST_DIR)/chats/hformats/
-	whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 \
+	uv run whatstk-generate-chat --size 500 -z --output-path $(TEST_DIR)/chats/hformats/
+	uv run whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 \
 		--hformats '%Y-%m-%d, %H:%M - %name:' \
 		--output-path $(TEST_DIR)/chats/merge/ --filenames file1.txt
-	whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 \
+	uv run whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 \
 		--hformats '%Y-%m-%d, %H:%M - %name:' \
 		--output-path $(TEST_DIR)/chats/merge/ --filenames file2.txt
 
@@ -90,11 +90,11 @@ generate-test-data: ## Generate test chat files
 ##################################################
 # VERSION BUMPING
 bump.patch: ## Bump patch version (0.0.X)
-	bump-my-version bump patch
+	uv run bump-my-version bump patch
 
 bump.minor: ## Bump minor version (0.X.0)
-	bump-my-version bump minor
+	uv run bump-my-version bump minor
 
 bump.major: ## Bump major version (X.0.0)
-	bump-my-version bump major
+	uv run bump-my-version bump major
 
