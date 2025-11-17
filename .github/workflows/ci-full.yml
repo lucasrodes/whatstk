@@ -1,0 +1,94 @@
+name: CI Full Matrix
+
+# Full matrix testing on PRs marked as ready and before releases
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  # Skip if PR is draft
+  check-ready:
+    name: Check if PR is ready
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.check.outputs.should-run }}
+    steps:
+      - name: Check PR status
+        id: check
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]] && [[ "${{ github.event.pull_request.draft }}" == "true" ]]; then
+            echo "should-run=false" >> $GITHUB_OUTPUT
+            echo "Skipping full matrix - PR is draft"
+          else
+            echo "should-run=true" >> $GITHUB_OUTPUT
+            echo "Running full matrix"
+          fi
+
+  full-matrix-test:
+    name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    needs: check-ready
+    if: needs.check-ready.outputs.should-run == 'true'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+        # Optionally exclude some combinations to reduce job count
+        # exclude:
+        #   - os: macos-latest
+        #     python-version: "3.11"
+        #   - os: windows-latest
+        #     python-version: "3.11"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Create environment
+        run: make .venv
+
+      - name: Generate test data
+        run: make generate-test-data
+
+      - name: Run format check
+        run: make check.format
+
+      - name: Run linting
+        run: make check.lint
+
+      - name: Run type checking
+        run: make check.type
+
+      - name: Run tests with coverage
+        run: make unittest
+
+      - name: Upload coverage to Codecov
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.13'
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./reports/cov.xml
+          flags: full-matrix
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
