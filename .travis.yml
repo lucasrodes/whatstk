@@ -16,7 +16,7 @@ install:
   - cat MANIFEST.in
   - make generate-test-data
 script:
-  - make lint
+  - make check.lint
   - pytest --cov-report term --cov=whatstk tests
 after_success:
   - codecov # submit coverage

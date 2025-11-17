@@ -1,4 +1,4 @@
-.PHONY: help install install.dev generate-test-data format lint typecheck test unittest clean bump.patch bump.minor bump.major
+.PHONY: help install install.dev generate-test-data check.format check.lint check.type test unittest clean bump.patch bump.minor bump.major
 
 .DEFAULT_GOAL := help
 
@@ -45,16 +45,19 @@ install-uv:
 
 ##################################################
 # TESTING
-test: format lint typecheck unittest  ## Run formatting, linting, type-checking, and unit tests
+test: check.format check.lint check.type unittest  ## Run formatting, linting, type-checking, and unit tests
+
+check.format: ## Format code with ruff
+	uv run ruff format --check $(PACKAGE_NAME) $(TEST_DIR)
 
 format: ## Format code with ruff
 	uv run ruff format $(PACKAGE_NAME) $(TEST_DIR)
 
-lint: ## Run ruff linting
+check.lint: ## Run ruff linting
 	mkdir -p $(REPORTS_DIR)
 	uv run ruff check $(PACKAGE_NAME) $(TEST_DIR)
 
-typecheck: ## Run pyright type checking
+check.type: ## Run pyright type checking
 	uv run pyright $(PACKAGE_NAME)
 
 unittest: ## Run tests with coverage

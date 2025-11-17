@@ -6,5 +6,5 @@
 # make generate-test-data
 
 ## (2) Run linting and tests
-make lint
+make check.lint
 make unittest
