@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  test:
+    name: Test before release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          make .venv
+
+      - name: Generate test data
+        run: |
+          make generate-test-data
+
+      - name: Run tests
+        run: |
+          make test
+
+  deploy-pypi:
+    name: Deploy to PyPI
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for trusted publishing
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build package
+        run: |
+          uv build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+
+  trigger-docs:
+    name: Trigger ReadTheDocs build
+    needs: deploy-pypi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger ReadTheDocs webhook
+        if: github.event_name == 'release'
+        run: |
+          curl -X POST -d "branches=main" -d "token=${{ secrets.READTHEDOCS_WEBHOOK_TOKEN }}" \
+            https://readthedocs.org/api/v2/webhook/whatstk/1/
