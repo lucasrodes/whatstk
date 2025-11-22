@@ -1,0 +1,15 @@
+codecov:
+  require_ci_to_pass: yes
+
+coverage:
+  status:
+    # Project Coverage: Set to auto (will pass if coverage doesn't drop by more than 1%).
+    project:
+      default:
+        target: auto
+        threshold: 1%
+    # Patch Coverage: Set target to 80% with a 5% threshold. This means new code should be mostly covered, but it won't fail the build if a few lines are missed, solving the "93.33% of diff hit" warning.
+    patch:
+      default:
+        target: 80%
+        threshold: 5%
