@@ -48,3 +48,100 @@ def test_from_source_2():
     assert isinstance(chat.df, pd.DataFrame)
     assert isinstance(chat.df_system, pd.DataFrame)
     assert chat.is_group
+
+
+def test_is_group_false():
+    """Test is_group returns False for non-group chats (2 users or less)."""
+    chat = WhatsAppChat.from_source(filepath)
+    df = chat.df
+    # Create a chat with only 2 users (not a group)
+    df_two_users = df[df[COLNAMES_DF.USERNAME].isin(df[COLNAMES_DF.USERNAME].unique()[:2])]
+    chat_two_users = WhatsAppChat(df_two_users)
+    assert not chat_two_users.is_group
+
+
+def test_system_messages_invalid_usernames():
+    """Test ValueError when system messages have multiple different usernames."""
+    chat = WhatsAppChat.from_source(filepath)
+    df = chat.df
+
+    # Create system messages with DIFFERENT usernames (invalid)
+    data = {
+        COLNAMES_DF.DATE: ["2020-11-21 03:02:06", "2020-11-21 03:02:07"],
+        COLNAMES_DF.USERNAME: ["chat_name1", "chat_name2"],  # Different names - invalid!
+        COLNAMES_DF.MESSAGE: ["chat was created", "settings changed"],
+        COLNAMES_DF.MESSAGE_TYPE: ["system", "system"],
+    }
+    df_system = pd.DataFrame(data)
+    df[COLNAMES_DF.MESSAGE_TYPE] = "user"
+    df = pd.concat([df_system, df])
+    df[COLNAMES_DF.DATE] = pd.to_datetime(df[COLNAMES_DF.DATE])
+
+    with pytest.raises(ValueError, match="System messages dataframe must contain only one username"):
+        WhatsAppChat(df)
+
+
+def test_non_group_with_message_type():
+    """Test that message_type column is dropped for non-group chats."""
+    chat = WhatsAppChat.from_source(filepath)
+    df = chat.df
+
+    # Create a non-group chat (2 users) with message_type column
+    df_two_users = df[df[COLNAMES_DF.USERNAME].isin(df[COLNAMES_DF.USERNAME].unique()[:2])].copy()
+    df_two_users[COLNAMES_DF.MESSAGE_TYPE] = "user"
+
+    chat_two_users = WhatsAppChat(df_two_users)
+
+    # Message type should be dropped since it's not a group
+    assert COLNAMES_DF.MESSAGE_TYPE not in chat_two_users.df.columns
+    assert not chat_two_users.is_group
+
+
+def test_merge_platform_mismatch():
+    """Test ValueError when merging chats from different platforms."""
+    from tests.paths import TEST_CHATS_MERGE_DIR
+    import os
+
+    filename1 = os.path.join(TEST_CHATS_MERGE_DIR, "file1.txt")
+    chat1 = WhatsAppChat.from_source(filename1)
+    chat2 = WhatsAppChat.from_source(filename1)
+
+    # Manually set different platforms
+    chat1._platform = "whatsapp"
+    chat2._platform = "telegram"  # Different platform
+
+    with pytest.raises(ValueError, match="Both chats must come from the same platform"):
+        chat1.merge(chat2)
+
+
+def test_merge_with_df_system():
+    """Test merging two chats that both have df_system."""
+    from tests.paths import TEST_CHATS_MERGE_DIR
+    import os
+
+    filename1 = os.path.join(TEST_CHATS_MERGE_DIR, "file1.txt")
+
+    # Create two chats with system messages
+    chat1 = WhatsAppChat.from_source(filename1)
+    df1 = chat1.df.copy()
+
+    # Add system messages to both chats
+    data_system = {
+        COLNAMES_DF.DATE: ["2019-01-01 00:00:00"],
+        COLNAMES_DF.USERNAME: ["Group Chat"],
+        COLNAMES_DF.MESSAGE: ["Group created"],
+        COLNAMES_DF.MESSAGE_TYPE: ["system"],
+    }
+    df_system = pd.DataFrame(data_system)
+    df_system[COLNAMES_DF.DATE] = pd.to_datetime(df_system[COLNAMES_DF.DATE])
+    df1[COLNAMES_DF.MESSAGE_TYPE] = "user"
+    df1_full = pd.concat([df_system, df1])
+
+    chat1_with_system = WhatsAppChat(df1_full)
+    chat2_with_system = WhatsAppChat(df1_full)
+
+    # Merge should combine both df_system
+    merged = chat1_with_system.merge(chat2_with_system)
+
+    assert len(merged.df_system) > 0
+    assert isinstance(merged.df_system, pd.DataFrame)

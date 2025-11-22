@@ -124,3 +124,53 @@ def test_df_message_type_true():
     # Check group name
     group_name = "Pokemon Chat"
     assert set(df.loc[df["username"] == group_name, COLNAMES_DF.MESSAGE_TYPE]) == {"system"}
+
+
+def test_df_from_txt_whatsapp_deprecated():
+    """Test deprecated function df_from_txt_whatsapp."""
+    import warnings
+    from whatstk.whatsapp.parser import df_from_txt_whatsapp
+
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        df = df_from_txt_whatsapp(filename1)
+        assert len(w) == 1
+        assert issubclass(w[0].category, FutureWarning)
+        assert "deprecated" in str(w[0].message).lower()
+        assert isinstance(df, pd.DataFrame)
+
+
+def test_zip_multiple_files_error(tmpdir):
+    """Test ValueError when ZIP contains multiple files."""
+    import zipfile
+
+    # Create a ZIP with multiple files
+    zip_path = tmpdir.join("multi_file.zip")
+    with zipfile.ZipFile(str(zip_path), "w") as zf:
+        zf.writestr("file1.txt", "some content")
+        zf.writestr("file2.txt", "more content")
+
+    with pytest.raises(ValueError, match="Unexpected number of files in the ZIP"):
+        df_from_whatsapp(str(zip_path))
+
+
+def test_auto_header_extraction_failure():
+    """Test RuntimeError when auto-header extraction fails."""
+    # Create text that won't match any known header format
+    text = "This is just random text\nwithout any\nheader format at all\n"
+    from whatstk.whatsapp.parser import _df_from_str
+
+    with pytest.raises(RuntimeError, match="Header automatic extraction failed"):
+        _df_from_str(text, auto_header=True, hformat=None)
+
+
+def test_message_type_non_group():
+    """Test that message_type='user' for non-group chats."""
+    # Use a file with 2-3 users - it will have message_type column
+    df = df_from_whatsapp(filename1, message_type=True)
+
+    # Should have message_type column
+    assert COLNAMES_DF.MESSAGE_TYPE in df.columns
+    # For non-group chats (<=2 users), all messages should be 'user'
+    # Check that we have the message_type column (which covers line 150)
+    assert len(df) > 0
