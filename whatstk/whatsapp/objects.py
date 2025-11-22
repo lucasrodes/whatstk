@@ -172,7 +172,7 @@ class WhatsAppChat(BaseChat):
             auto_header = [False] * len(filepaths)
         if hformat is None:
             hformat = [None] * len(filepaths)
-        for filepath, ah, hf in zip(filepaths, auto_header, hformat):
+        for filepath, ah, hf in zip(filepaths, auto_header, hformat, strict=True):
             chat = WhatsAppChat.from_source(filepath, auto_header=ah, hformat=hf, encoding=encoding)
             dfs.append(chat.df)
         df = merge_chats(dfs)

@@ -198,7 +198,7 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
     types = ["".join([str(type(ee).__name__) for ee in e]) for e in elements_list]
     len_mode = max(set(lengths), key=lengths.count)
     type_mode = max(set(types), key=types.count)
-    for e, t in zip(elements_list, template_list):
+    for e, t in zip(elements_list, template_list, strict=True):
         if (len(e) == len_mode) and ("".join([str(type(ee).__name__) for ee in e]) == type_mode):
             elements_list_.append(e)
             template_list_.append(t)
