@@ -1,4 +1,4 @@
-import os
+from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR, CHATS_DIR
 import pandas as pd
 import pytest
 from whatstk.whatsapp.parser import df_from_whatsapp
@@ -8,16 +8,16 @@ from whatstk.utils.utils import COLNAMES_DF, _map_hformat_filename
 
 
 # Generate chats
-output_folder = "./tests/chats/hformats"
-# generate_chats_hformats(output_folder, 500, verbose=True)
-filenames = [os.path.join(output_folder, f) for f in os.listdir(output_folder) if f.endswith(".txt")]
+filenames = [
+    str(TEST_CHATS_HFORMATS_DIR / f)
+    for f in TEST_CHATS_HFORMATS_DIR.iterdir()
+    if f.is_file() and f.name.endswith(".txt")
+]
 # Chats for multiple txt loading
-chats_merge_path = "tests/chats/merge/"
-filename1 = os.path.join(chats_merge_path, "file1.txt")
-filename2 = os.path.join(chats_merge_path, "file2.txt")
+filename1 = str(TEST_CHATS_MERGE_DIR / "file1.txt")
+filename2 = str(TEST_CHATS_MERGE_DIR / "file2.txt")
 # TODO: Message type chats
-chats_merge_path = "chats/whatsapp/pokemon.txt"
-file_type_1 = os.path.abspath(chats_merge_path)
+file_type_1 = str(CHATS_DIR / "whatsapp" / "pokemon.txt")
 
 # Chat hosted on repo
 # filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
@@ -40,8 +40,8 @@ def test_df_from_whatsapp():
         hformat = elem["format"]
         auto_header = bool(elem["auto_header"])
         filename_base = _map_hformat_filename(hformat)
-        filename = os.path.join(output_folder, "{}.txt".format(filename_base))
-        filename_zip = os.path.join(output_folder, "{}.zip".format(filename_base))
+        filename = str(TEST_CHATS_HFORMATS_DIR / "{}.txt".format(filename_base))
+        filename_zip = str(TEST_CHATS_HFORMATS_DIR / "{}.zip".format(filename_base))
 
         # Auto
         if auto_header:
@@ -81,7 +81,7 @@ def test_df_from_whatsapp():
             record[j] = all_chats[i].equals(all_chats[j])
         records.append(record)
     df = pd.DataFrame.from_records(records, index="chat")
-    assert (~df).sum().sum() == 0
+    assert (df.eq(False)).sum().sum() == 0
 
 
 def test_df_from_whatsapp_2():

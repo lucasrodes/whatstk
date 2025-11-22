@@ -1,4 +1,4 @@
-import os
+from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR
 
 import pandas as pd
 import pytest
@@ -9,11 +9,10 @@ from whatstk.utils.utils import _map_hformat_filename
 
 
 hformat = "[%d.%m.%y %I:%M:%S %p] %name:"
-filename = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
+filename = str(TEST_CHATS_HFORMATS_DIR / "{}.txt".format(_map_hformat_filename(hformat)))
 
-chats_merge_path = "tests/chats/merge/"
-filename1 = os.path.join(chats_merge_path, "file1.txt")
-filename2 = os.path.join(chats_merge_path, "file2.txt")
+filename1 = str(TEST_CHATS_MERGE_DIR / "file1.txt")
+filename2 = str(TEST_CHATS_MERGE_DIR / "file2.txt")
 hformat_merge = "%y-%m-%d, %H:%M - %name:"
 
 

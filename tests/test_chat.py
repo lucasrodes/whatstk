@@ -1,4 +1,5 @@
 from datetime import datetime
+from tests.paths import TEST_CHATS_HFORMATS_DIR
 import pandas as pd
 import pytest
 
@@ -8,7 +9,7 @@ from whatstk.utils.utils import _map_hformat_filename
 from whatstk.utils.utils import COLNAMES_DF
 
 hformat = "[%d.%m.%y_%I:%M:%S_%p]_%name:"
-filepath = f"./tests/chats/hformats/{_map_hformat_filename(hformat)}.txt"
+filepath = f"{TEST_CHATS_HFORMATS_DIR}/{_map_hformat_filename(hformat)}.txt"
 
 
 def test_properties():
