@@ -81,7 +81,7 @@ def test_df_from_whatsapp():
             record[j] = all_chats[i].equals(all_chats[j])
         records.append(record)
     df = pd.DataFrame.from_records(records, index="chat")
-    assert (df == False).sum().sum() == 0
+    assert (~df).sum().sum() == 0
 
 
 def test_df_from_whatsapp_2():

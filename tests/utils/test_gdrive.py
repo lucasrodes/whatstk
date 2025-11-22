@@ -2,7 +2,6 @@ import os
 import json
 
 import pytest
-from pydrive2.files import ApiRequestError
 
 from whatstk.utils.gdrive import gdrive_init, _check_gdrive_config, _load_str_from_file_id
 import whatstk
