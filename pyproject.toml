@@ -52,6 +52,7 @@ test = [
     "pytest-html~=3.2.0",
     "pytest-mock~=3.10.0",
     "pytest-xdist~=3.6.0",
+    "pytest-rerunfailures~=14.0",
 ]
 lint = [
     "ruff~=0.8.0",

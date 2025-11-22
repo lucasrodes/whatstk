@@ -94,6 +94,7 @@ def test_df_from_whatsapp_3():
         _ = df_from_whatsapp(filename1, auto_header=False)
 
 
+@pytest.mark.flaky(reruns=3, reruns_delay=2)
 def test_df_from_whatsapp_url():
     df = df_from_whatsapp(filepath_url)
     assert isinstance(df, pd.DataFrame)
