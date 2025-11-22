@@ -5,7 +5,7 @@
 PACKAGE_NAME := whatstk
 TEST_DIR := tests
 REPORTS_DIR := reports
-CHATS_TEST_DIR := $(TEST_DIR)/chats
+TEST_CHATS_DIR := $(TEST_DIR)/chats
 
 help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -61,9 +61,9 @@ check.lint: ## Run ruff linting
 check.type: ## Run pyright type checking
 	uv run pyright $(PACKAGE_NAME)
 
-unittest: $(CHATS_TEST_DIR) ## Run tests with coverage
+unittest: $(TEST_CHATS_DIR) ## Run tests with coverage (use N=4 or N=auto for parallel execution)
 	mkdir -p $(REPORTS_DIR)
-	uv run pytest \
+	uv run pytest $(if $(N),-n $(N)) \
 		--html=$(REPORTS_DIR)/testreport.html \
 		--cov-report html:$(REPORTS_DIR)/htmlcov \
 		--cov-report term \
@@ -78,7 +78,7 @@ clean: ## Remove build and test artifacts
 	rm -rf $(REPORTS_DIR) .pytest_cache .coverage htmlcov build dist *.egg-info .uv
 
 # Build analytics DuckDB snapshot
-$(CHATS_TEST_DIR):
+$(TEST_CHATS_DIR):
 	@make generate-test-data
 
 generate-test-data: ## Generate test chat files
