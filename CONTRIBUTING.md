@@ -14,16 +14,16 @@ Make sure to test your code before issuing a pull request:
 1. Install library in develop mode, 
 
 ```bash
-pip install -e .
+make install.dev
 ```
 
 2. Run test script
 
 ```bash
-sh run-tests.sh
+make test
 ```
 
-However, pull requests will trigger the Travis CI pipeline, which will run the tests as well.
+However, pull requests will trigger the GitHub Actions CI pipeline, which will run the tests as well.
 
 ## Join the community
 

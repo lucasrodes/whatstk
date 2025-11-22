@@ -11,8 +11,8 @@
 <!-- style=for-the-badge -->
 
 <p align="left">
-  <a href="https://app.travis-ci.com/lucasrodes/whatstk">
-    <img alt="Build Status" src="https://app.travis-ci.com/lucasrodes/whatstk.svg?&branch=main">
+  <a href="https://github.com/lucasrodes/whatstk/actions">
+    <img alt="Build Status" src="https://github.com/lucasrodes/whatstk/actions/workflows/ci-full.yml/badge.svg?branch=main">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
     <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">

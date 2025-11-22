@@ -22,12 +22,12 @@ Submitting a Pull Request
 -------------------------
 - Start by forking the `develop <https://github.com/lucasrodes/whatstk/tree/develop>`_ branch.
 - Add your code to the project!
-- Test your code running script `run-tests.sh <https://github.com/lucasrodes/whatstk/blob/master/run-tests.sh>`_.
-This script checks the code style (flake8) and the logic of your code (pytest). Note: Make sure to open and read it. The first time you will need to run steps 1.1, 1.2 and 1.3.
+- Test your code running the tests using `make`.
+This script checks the code style (flake8) and the logic of your code (pytest).
 
 .. code-block:: bash
 
-    sh ./run-tests.sh
+    make test
 
 This script generates three HTML files which are placed within a created folder `reports`.
 
