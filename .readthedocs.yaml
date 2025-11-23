@@ -13,10 +13,10 @@ build:
   jobs:
     pre_install:
       # Install uv package manager
-      - pip install uv
+      - make install-uv
     install:
       # Use uv to install project dependencies
-      - uv pip install --system -e .[full,docs]
+      - make .venv
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
