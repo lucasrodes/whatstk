@@ -1,8 +1,17 @@
 Changelog
 =========
 
-Latest version
+
+v0.8.0
 ----------
+
+- **Python version support**: Added Python 3.13 and 3.14 support, dropped Python 3.9 and 3.10
+- **Build system**: Migrated to ``uv`` for dependency management and build process
+- **CI improvements**: Migrated from Travis CI to GitHub Actions, added matrix builds
+- **Testing**: Added ``pytest-xdist`` for parallel testing and improved test suite
+- **Documentation**: Updated contribution guidelines, README, and removed Gitter references
+- **Bug fixes**: Fixed issue #61 and other minor bugs
+- **Code quality**: Added ``pyright`` configuration and applied formatting improvements
 
 .. container:: toggle
 
