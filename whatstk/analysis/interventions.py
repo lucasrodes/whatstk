@@ -88,8 +88,9 @@ def get_interventions_count(
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.month], msg_length)
     else:
         raise ValueError(
-            "Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', "
-            "'hourweekday' and 'month'.".format(date_mode)
+            "Mode {} is not implemented. Valid modes are 'date', 'hour', 'weekday', 'hourweekday' and 'month'.".format(
+                date_mode
+            )
         )
 
     if date_mode == "hourweekday":
