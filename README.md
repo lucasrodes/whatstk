@@ -13,7 +13,7 @@
   [![License](https://img.shields.io/github/license/lucasrodes/whatstk)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
   [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk)
 
-  [Documentation](https://whatstk.readthedocs.io/en/stable/) • [Try Live Demo](https://whatstk.streamlit.app/) • [Tutorial](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d)
+  [Documentation](https://whatstk.readthedocs.io/en/stable/) • [Try Live Demo](https://whatstk.streamlit.app/) • [Tutorial](https://medium.com/data-science/analyzing-whatsapp-chats-with-python-20d62ce7fe2d)
 
 </div>
 
