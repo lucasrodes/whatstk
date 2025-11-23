@@ -6,113 +6,132 @@ Unreleased
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: v0.7.1..HEAD
 
 v0.7.1
 ------
-**Bugfix and robustness release** on top of **v0.7.0**.
 
-- **Text cleaning is now more robust**, improving handling of **Unicode and special characters** in chats.
-- **ZIP support is expanded and stabilised**: you can **read chats directly from ZIP archives** and **export with explicit encoding** via ``to_zip``.
-- The library now **uses system messages** more consistently in the interface, improving clarity and UX.
-- **CI/CD and documentation** have been refreshed: fixed Travis badge links, **pinned doc dependencies** (working around a docutils/RtD bullet rendering issue), and cleaned up links and examples.
-- **Dependency updates and typing cleanups** (e.g. bumping ``scipy`` and ignoring selected static-analysis warnings) keep the project aligned with modern tooling.
-- **Python 3.8 support is deprecated**, and legacy pieces like the old ``webapp.py`` and Gitter integration have been removed/deprecated to simplify maintenance.
+- **Dependency updates**: Updated ``scipy``, ``pandas``, and ``certifi`` to latest versions
+- **Python 3.13 support**: Made project ready for Python 3.13
+- **CI improvements**: Enhanced continuous integration pipeline
+- **Documentation improvements**: Improved contribution documentation
+- **Code cleanup**: Removed Gitter references and applied formatting improvements
+- **Security**: Keep dependencies modern and secure
 
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: v0.6.3..v0.7.1
 
 v0.6.3
 ------
-**Maintenance release** that **updates dependencies** (including ``certifi``) and **aligns CI with Python 3.10 and 3.11 support** while dropping 3.7. Improves **documentation and links** (including chat/demo and Read the Docs config) and performs minor **linting and typing cleanups** to keep the project stable on modern environments.
+
+- **Python version support**: Added Python 3.10 and 3.11, dropped Python 3.7
+- **Dependency updates**: Updated dependencies including ``certifi``
+- **CI alignment**: Updated continuous integration for new Python versions
+- **Documentation**: Improved links, chat/demo references, and Read the Docs config
+- **Code quality**: Linting and typing cleanups
 
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: v0.5.0..v0.6.3
 
 v0.5.0
 ------
-**Adds Google Drive support** for loading chats, brings **official Windows compatibility** (paths, encoding, wheels), and **reorganises dependencies/extras** to make installing the “full” library easier. Documentation, Travis CI config, and project links are refreshed, and the deprecated **``cummulative`` argument is phased out** with minor cleanups and tests.
+
+- **Google Drive support**: Load chats directly from Google Drive
+- **Windows compatibility**: Official support for Windows (paths, encoding, wheels)
+- **Dependencies reorganization**: Easier installation with reorganized extras
+- **Deprecated argument removal**: Phased out ``cumulative`` typo argument
+- **Documentation updates**: Refreshed Travis CI config and project links
+- **Code cleanup**: Minor cleanups and additional tests
 
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: v0.4.1..v0.5.0
 
 v0.4.1
 ------
-Patch on top of the 0.4 line that **lets you export to CSV without the index column**, applies a small **bug fix and dependency updates**, and polishes the **documentation and project metadata** (Read the Docs links, badges, funding info). The broader 0.4.x series also brings **Python 3.9 support**, a **cleaner DataFrame structure** (numeric index + date column), and a refreshed **contribution/docs experience**.
+
+- **CSV export improvement**: Export to CSV without index column
+- **Python 3.9 support**: Added support for Python 3.9
+- **DataFrame structure**: Cleaner structure with numeric index and date column
+- **Bug fixes**: Small bug fixes and dependency updates
+- **Documentation**: Polished metadata, Read the Docs links, badges, and funding info
+- **Contribution experience**: Refreshed contribution and docs experience
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: v0.3.1..v0.4.1
 
 v0.3.1
 ------
-Patch release on top of v0.3.0 that **cleans up the API and messaging around header auto-detection** (more verbose `HFormatError` pointing users to GitHub issues) and **fixes the deprecated `cummulative` variable/typo**, while the broader v0.3 line introduces **rich interactive visualisations** (Plotly/graph module, response matrix & Sankey diagrams, CLI tools for graphs and txt→csv), **more flexible chat import/export** (merge multiple chats, `df_from_txt` / `df_from_multiple_txt`, dataframe support, robust auto-header for many formats), and a **large documentation + CI overhaul** (Sphinx docs, sample chats, Travis + coverage + automated deployment).
+
+- **Plotly integration**: Visualizations now use Plotly by default
+- **New plot types**: Added Sankey diagrams and violin plots
+- **rename_users() method**: Consolidate user names in merged chats
+- **Cumulative charts**: New cumulative chart functionality
+- **DataFrame improvements**: Added dedicated date column for easier manipulation
+- **Command-line tools**: Enhanced chat-gen with new arguments
+- **Documentation**: Updated examples and documentation
 
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: v0.2.6..v0.3.1
 
 v0.2.6
 ------
-**Improves header handling** with auto-detection and full support for **12-hour WhatsApp chat headers**, backed by new tests and example chats. Refines the **documentation and public-facing materials** (README refactor, security notes, GUI app link, badges) and stabilises the **CI/release pipeline** with Travis, Codecov integration, and **pandas compatibility fixes** (`argmax`/`argmin` → `idxmax`/`idxmin`).
+
+- **12-hour format support**: Full support for 12-hour WhatsApp chat headers
+- **Header auto-detection**: Improved header handling with auto-detection
+- **Pandas compatibility**: Fixed compatibility issues (`argmax`/`argmin` → `idxmax`/`idxmin`)
+- **CI/release pipeline**: Stabilized with Travis and Codecov integration
+- **Documentation**: Refactored README, added security notes and GUI app link
+- **Testing**: Added new tests and example chats
 
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: 0.1.11..v0.2.6
 
 v0.1.11
 -------
-Early stable release that solidifies the core WhatsApp chat parsing and visualization toolkit: adds support for more date/header formats (including 2-digit years), improves performance and plotting (weekly activity grids, response matrices, SOM-based similarity, violin plots), and refreshes notebooks, docs, and examples. Packaging and CI are set up for installation via pip (PyPI), with clearer dependencies and Python 2.7 / 3.x compatibility.
+
+- **Date format support**: Added support for more formats including 2-digit years
+- **Visualization improvements**: Weekly activity grids, response matrices, violin plots
+- **SOM-based similarity**: New similarity analysis features
+- **PyPI packaging**: Set up for installation via pip
+- **Python compatibility**: Support for Python 2.7 and 3.x
+- **Documentation**: Refreshed notebooks, docs, and examples
+- **Performance**: Various performance improvements
 
 .. container:: toggle
 
-    .. container:: header
-
-        **Show all commits**
+    **Show all commits**
 
     .. git_changelog::
         :rev-list: 0.1.10
-
