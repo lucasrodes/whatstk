@@ -50,7 +50,8 @@ extensions = [
     'sphinx_git',
     'autodocsumm',
     'sphinx.ext.mathjax',
-    'recommonmark'
+    'recommonmark',
+    'sphinx_togglebutton'
     # "sphinx_multiversion",
     # 'sphinx_gallery.gen_gallery'
 ]
