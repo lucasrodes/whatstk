@@ -70,14 +70,3 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
-
-  trigger-docs:
-    name: Trigger ReadTheDocs build
-    needs: deploy-pypi
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger ReadTheDocs webhook
-        if: github.event_name == 'release'
-        run: |
-          curl -X POST -d "branches=main" -d "token=${{ secrets.READTHEDOCS_WEBHOOK_TOKEN }}" \
-            https://readthedocs.org/api/v2/webhook/whatstk/1/
