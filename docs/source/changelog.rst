@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+Latest version
 ----------
 
 .. container:: toggle
