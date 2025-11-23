@@ -63,7 +63,17 @@ check.type: ## Run pyright type checking
 
 unittest: $(TEST_CHATS_DIR) ## Run tests with coverage (use N=4 or N=auto for parallel execution)
 	mkdir -p $(REPORTS_DIR)
-	uv run pytest $(if $(N),-n $(N)) \
+	uv run pytest \
+		--html=$(REPORTS_DIR)/testreport.html \
+		--cov-report html:$(REPORTS_DIR)/htmlcov \
+		--cov-report term \
+		--cov-report xml:$(REPORTS_DIR)/cov.xml \
+		--cov=$(PACKAGE_NAME) $(TEST_DIR)
+
+
+unittest-parallel: $(TEST_CHATS_DIR) ## Run tests with coverage (use N=4 or N=auto for parallel execution)
+	mkdir -p $(REPORTS_DIR)
+	uv run pytest -n auto \
 		--html=$(REPORTS_DIR)/testreport.html \
 		--cov-report html:$(REPORTS_DIR)/htmlcov \
 		--cov-report term \
