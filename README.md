@@ -29,7 +29,7 @@
     <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
   </a>
   <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.11|3.12|3.13|3.14-blue.svg?&logo=python&logoColor=yellow">
+    <img alt="Python 3" src="https://img.shields.io/badge/python-3.11|3.12|3.13-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
@@ -73,6 +73,8 @@ Install develop version (not stable):
 ```
 pip install git+https://github.com/lucasrodes/whatstk.git@develop
 ```
+
+**Compatibility:** Python 3.11-3.13 on Linux, macOS, and Windows. Python 3.14 support is limited (Windows and Linux only, macOS not yet supported due to dependency constraints).
 
 _More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
 

@@ -7,7 +7,7 @@ name = "whatstk"
 version = "0.7.1"
 description = "Parser and analytics tools for WhatsApp group chats"
 readme = "README.md"
-requires-python = ">=3.11,<3.15"
+requires-python = ">=3.11,<3.14"
 license = { text = "GPL-3.0-only" }
 authors = [{ name = "Lucas Rodes-Guirao" }]
 keywords = ["whatsapp", "analysis", "parser", "chat"]
@@ -18,7 +18,6 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
