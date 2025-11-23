@@ -51,6 +51,7 @@ docs = [
     "sphinx-rtd-theme~=3.0",
     "sphinx-copybutton~=0.5",
     "sphinx-git~=11.0",
+    "sphinx-togglebutton~=0.3",
     "autodocsumm~=0.2",
     "auto-changelog~=0.6",
     "docutils~=0.20",

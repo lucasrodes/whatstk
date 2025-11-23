@@ -1851,6 +1851,15 @@ wheels = [
 ]
 
 [[package]]
+name = "setuptools"
+version = "80.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/18/5d/3bf57dcd21979b887f014ea83c24ae194cfcd12b9e0fda66b957c69d1fca/setuptools-80.9.0.tar.gz", hash = "sha256:f36b47402ecde768dbfafc46e8e4207b4360c654f1f3bb84475f0a28628fb19c", size = 1319958 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl", hash = "sha256:062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922", size = 1201486 },
+]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1949,6 +1958,21 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/91/44/c97faec644d29a5ceddd3020ae2edffa69e7d00054a8c7a6021e82f20335/sphinx_rtd_theme-3.0.2.tar.gz", hash = "sha256:b7457bc25dda723b20b086a670b9953c859eab60a2a03ee8eb2bb23e176e5f85", size = 7620463 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/85/77/46e3bac77b82b4df5bb5b61f2de98637724f246b4966cfc34bc5895d852a/sphinx_rtd_theme-3.0.2-py2.py3-none-any.whl", hash = "sha256:422ccc750c3a3a311de4ae327e82affdaf59eb695ba4936538552f3b00f4ee13", size = 7655561 },
+]
+
+[[package]]
+name = "sphinx-togglebutton"
+version = "0.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "docutils" },
+    { name = "setuptools" },
+    { name = "sphinx" },
+    { name = "wheel" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f0/df/d151dfbbe588116e450ca7e898750cb218dca6b2e557ced8de6f9bd7242b/sphinx-togglebutton-0.3.2.tar.gz", hash = "sha256:ab0c8b366427b01e4c89802d5d078472c427fa6e9d12d521c34fa0442559dc7a", size = 8324 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e9/18/267ce39f29d26cdc7177231428ba823fe5ca94db8c56d1bed69033b364c8/sphinx_togglebutton-0.3.2-py3-none-any.whl", hash = "sha256:9647ba7874b7d1e2d43413d8497153a85edc6ac95a3fea9a75ef9c1e08aaae2b", size = 8249 },
 ]
 
 [[package]]
@@ -2186,6 +2210,7 @@ dev = [
     { name = "sphinx-copybutton" },
     { name = "sphinx-git" },
     { name = "sphinx-rtd-theme" },
+    { name = "sphinx-togglebutton" },
 ]
 docs = [
     { name = "auto-changelog" },
@@ -2196,6 +2221,7 @@ docs = [
     { name = "sphinx-copybutton" },
     { name = "sphinx-git" },
     { name = "sphinx-rtd-theme" },
+    { name = "sphinx-togglebutton" },
 ]
 full = [
     { name = "pydrive2" },
@@ -2256,6 +2282,16 @@ requires-dist = [
     { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = "~=0.5" },
     { name = "sphinx-git", marker = "extra == 'docs'", specifier = "~=11.0" },
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = "~=3.0" },
+    { name = "sphinx-togglebutton", marker = "extra == 'docs'", specifier = "~=0.3" },
     { name = "whatstk", extras = ["gdrive", "generate"], marker = "extra == 'full'" },
     { name = "whatstk", extras = ["test", "lint", "docs"], marker = "extra == 'dev'" },
+]
+
+[[package]]
+name = "wheel"
+version = "0.45.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/98/2d9906746cdc6a6ef809ae6338005b3f21bb568bea3165cfc6a243fdc25c/wheel-0.45.1.tar.gz", hash = "sha256:661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729", size = 107545 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl", hash = "sha256:708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248", size = 72494 },
 ]
