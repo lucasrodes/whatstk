@@ -24,7 +24,3 @@ make test
 ```
 
 However, pull requests will trigger the GitHub Actions CI pipeline, which will run the tests as well.
-
-## Join the community
-
-Join us on [Gitter](https://gitter.im/sociepy/whatstk).
