@@ -106,14 +106,40 @@ generate-test-data: ## Generate test chat files
 
 ##################################################
 # VERSION BUMPING
+# Use --pre flag for pre-release versions (e.g., make bump.minor --pre)
+# Without --pre: 0.8.0 → 0.9.0 or 0.8.0.dev0 → 0.9.0
+# With --pre: 0.8.0 → 0.9.0.dev0 or 0.8.0.dev0 → 0.9.0.dev0
+
 bump.patch: ## Bump patch version (0.0.X)
-	uv run bump-my-version bump patch
+	@if [ "$(filter --pre,$(MAKECMDGOALS))" = "--pre" ]; then \
+		NEW_VER=$$(uv run python -c "import re; v='$$(uv run bump-my-version show current_version)'; m=re.match(r'(\d+)\.(\d+)\.(\d+)', v); print(f'{m[1]}.{m[2]}.{int(m[3])+1}.dev0')"); \
+		uv run bump-my-version bump --new-version $$NEW_VER patch; \
+	else \
+		NEW_VER=$$(uv run python -c "import re; v='$$(uv run bump-my-version show current_version)'; m=re.match(r'(\d+)\.(\d+)\.(\d+)', v); print(f'{m[1]}.{m[2]}.{int(m[3])+1}')"); \
+		uv run bump-my-version bump --new-version $$NEW_VER patch; \
+	fi
 
 bump.minor: ## Bump minor version (0.X.0)
-	uv run bump-my-version bump minor
+	@if [ "$(filter --pre,$(MAKECMDGOALS))" = "--pre" ]; then \
+		NEW_VER=$$(uv run python -c "import re; v='$$(uv run bump-my-version show current_version)'; m=re.match(r'(\d+)\.(\d+)\.(\d+)', v); print(f'{m[1]}.{int(m[2])+1}.0.dev0')"); \
+		uv run bump-my-version bump --new-version $$NEW_VER minor; \
+	else \
+		NEW_VER=$$(uv run python -c "import re; v='$$(uv run bump-my-version show current_version)'; m=re.match(r'(\d+)\.(\d+)\.(\d+)', v); print(f'{m[1]}.{int(m[2])+1}.0')"); \
+		uv run bump-my-version bump --new-version $$NEW_VER minor; \
+	fi
 
 bump.major: ## Bump major version (X.0.0)
-	uv run bump-my-version bump major
+	@if [ "$(filter --pre,$(MAKECMDGOALS))" = "--pre" ]; then \
+		NEW_VER=$$(uv run python -c "import re; v='$$(uv run bump-my-version show current_version)'; m=re.match(r'(\d+)\.(\d+)\.(\d+)', v); print(f'{int(m[1])+1}.0.0.dev0')"); \
+		uv run bump-my-version bump --new-version $$NEW_VER major; \
+	else \
+		NEW_VER=$$(uv run python -c "import re; v='$$(uv run bump-my-version show current_version)'; m=re.match(r'(\d+)\.(\d+)\.(\d+)', v); print(f'{int(m[1])+1}.0.0')"); \
+		uv run bump-my-version bump --new-version $$NEW_VER major; \
+	fi
+
+# Dummy target to handle --pre flag
+--pre:
+	@:
 
 
 ##################################################
