@@ -1,132 +1,138 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="30%">
+  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="30%" alt="whatstk logo">
+
+  # whatstk
+
+  **Parse, analyze, and visualize WhatsApp chats with Python**
+
+  [![PyPI](https://img.shields.io/pypi/v/whatstk?color=25D366&logo=whatsapp)](https://pypi.org/project/whatstk/)
+  [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/downloads/)
+  [![Build](https://img.shields.io/github/actions/workflow/status/lucasrodes/whatstk/ci-full.yml?branch=main)](https://github.com/lucasrodes/whatstk/actions)
+  [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
+  [![Documentation](https://readthedocs.org/projects/whatstk/badge/?version=stable)](https://whatstk.readthedocs.io/en/stable/)
+  [![License](https://img.shields.io/github/license/lucasrodes/whatstk)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
+  [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk)
+
+  [Documentation](https://whatstk.readthedocs.io/en/stable/) • [Try Live Demo](https://whatstk.streamlit.app/) • [Tutorial](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d)
+
 </div>
-<h1 align="center" style="border-bottom: none;"> WhatsApp chat parser and analysis
-</h1>
-<p align="center">
-  <a href="#">
-    <img alt="Package version" src="https://img.shields.io/badge/pypi-0.7.1-blue.svg?&color=25D366&logo=whatsapp&">
-  </a>
-</p>
 
-<p align="center">
-<b>Try the <a href="https://whatstk.streamlit.app/">live demo parser</a> to convert your chats to CSV</b>
-</p>
+<!-- --- -->
 
-<!-- style=for-the-badge -->
+## Features
 
-<p align="center">
-  <a href="https://github.com/lucasrodes/whatstk/actions">
-    <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/lucasrodes/whatstk/ci-full.yml?branch=main&label=build">
-  </a>
-  <a href="https://codecov.io/gh/lucasrodes/whatstk">
-    <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">
-  </a>
-  <a href='https://whatstk.readthedocs.io/en/stable/?badge=stable'>
-    <img src='https://readthedocs.org/projects/whatstk/badge/?version=stable' alt='Documentation Status' />
-  </a>
-  <a href="https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d">
-    <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
-  </a>
-  <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.11|3.12|3.13|3.14-blue.svg?&logo=python&logoColor=yellow">
-  </a>
-  <a href="https://pepy.tech/badge/whatstk">
-    <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
-  </a>
-  <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
-    <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
-  </a>
+- 📱 **Parse WhatsApp exports** from Android and iOS (including zip files)
+- 🐼 **Convert to pandas DataFrames** for easy analysis
+- 📊 **Interactive visualizations** powered by Plotly
+- 🔧 **Command-line tools** for quick CSV conversions
+- 🌍 **Multi-language support** for various WhatsApp date formats
+- 🚀 **Fast and efficient** processing of large chat histories
 
-</p>
-
-
-<!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
-<!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
-
-**whatstk** is a python package providing tools to parse, analyze and visualise WhatsApp chats developed under the
-**[sociepy](https://sociepy.org)** project. Easily convert your chats to csv or simply visualise some stats using
-the provided command-line tools or python. The package uses [pandas](https://github.com/pandas-dev/pandas) to process
-the data and [plotly](https://github.com/plotly/plotly.py) to visualise it.
-
-It is distributed under the GPL-3.0 license.
-
-⭐ Please **star** our project if you found it interesting to **give us some dopamine** 😄!
-
-### Content
-
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-    - [Export your chat using your phone:](#export-your-chat-using-your-phone)
-    - [Load chat as a DataFrame](#load-chat-as-a-dataframe)
-    - [Convert chat to csv](#convert-chat-to-csv)
-    - [More examples](#more-examples)
-- [Documentation](#documentation)
-- [Contribute](#contribute)
-- [License](#license)
-- [Citation](#citation)
-- [Covered in](#covered-in)
 
 ## Installation
 
-```
+```bash
 pip install whatstk
 ```
 
-Install develop version (not stable):
+**Requirements:** Python 3.11+
 
-```
+<details>
+<summary>Install development version</summary>
+
+```bash
 pip install git+https://github.com/lucasrodes/whatstk.git@develop
 ```
 
-_More details [here](https://whatstk.readthedocs.io/en/stable/source/about.html#installation-compatibility)_
+</details>
 
-## Getting Started
+## Quick Start
 
-For a rapid introduction, check this [tutorial on Medium](https://towardsdatascience.com/analyzing-whatsapp-chats-with-python-20d62ce7fe2d).
+### Export your WhatsApp chat
 
-#### Export your chat using your phone:
+Follow the [export instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html) for your device.
 
-_See [instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html)._
-
-#### Load chat as a DataFrame
+### Load and analyze
 
 ```python
 from whatstk import df_from_whatsapp
+
+# Load chat into a DataFrame
 df = df_from_whatsapp("path/to/chat.txt")
+
+# Or directly from iOS zip export
+df = df_from_whatsapp("path/to/chat.zip")
+
+# Now use pandas to analyze
+print(df.head())
 ```
 
-**NOTE:** You can now also load directly from a zip chat (iOS export).
-
-#### Convert chat to csv
+### Convert to CSV
 
 ```bash
-$ whatstk-to-csv [input_filename] [output_filename]
+whatstk-to-csv input_chat.txt output.csv
 ```
 
-#### More examples
+### Visualize
 
-_See more in sections [getting started](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html) and
-[examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html)._
+```python
+from whatstk.graph import plot_user_message_count
+
+# Interactive message count chart
+fig = plot_user_message_count(df)
+fig.show()
+```
 
 ## Documentation
 
-_See [official documentation](https://whatstk.readthedocs.io/en/stable/)._
+Full documentation available at [whatstk.readthedocs.io](https://whatstk.readthedocs.io/en/stable/)
 
-## Contribute
+- [Getting Started Guide](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html)
+- [Code Examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html)
+- [API Reference](https://whatstk.readthedocs.io/en/stable/source/code/index.html)
 
-_See [contribute section](https://whatstk.readthedocs.io/en/stable/source/contribute.html)._
+## Contributing
+
+We welcome contributions! See our [contribution guide](https://whatstk.readthedocs.io/en/stable/source/contribute.html) to get started.
 
 ## License
 
-[GPL-3.0](LICENSE)
+This project is licensed under the [GPL-3.0 License](LICENSE).
 
 ## Citation
 
-Lucas Rodés-Guirao. "whatstk, WhatsApp analysis and parsing toolkit", https://github.com/lucasrodes/whatstk
+If you use whatstk in your research or project, please cite:
 
-## Covered in
+```bibtex
+@software{whatstk,
+  author = {Rodés-Guirao, Lucas},
+  title = {whatstk: WhatsApp analysis and parsing toolkit},
+  url = {https://github.com/lucasrodes/whatstk},
+  year = {2025}
+}
+```
 
-- [Your Whatsapp Chat History in Cool Graphs](https://deepnote.com/@batmanscode/Your-Whatsapp-Chat-History-in-Cool-Graphs-mQoSsYjUSw29D4nZDs_KwA), by [@batmanscode](https://github.com/batmanscode).
-- [WhatsAppening to the news](https://whatsappening.joltetn.eu/), by [@enric1994](https://github.com/enric1994)
-- [whatsappening source code](https://github.com/enric1994/whatsappening), by [@enric1994](https://github.com/enric1994)
+or as 
+
+> Lucas Rodés-Guirao. "whatstk, WhatsApp analysis and parsing toolkit", https://github.com/lucasrodes/whatstk
+
+## Featured Projects
+
+- [Your WhatsApp Chat History in Cool Graphs](https://deepnote.com/@batmanscode/Your-Whatsapp-Chat-History-in-Cool-Graphs-mQoSsYjUSw29D4nZDs_KwA) by [@batmanscode](https://github.com/batmanscode)
+- [WhatsAppening to the news](https://whatsappening.joltetn.eu/) by [@enric1994](https://github.com/enric1994)
+- [Summary Analysis of My WhatsApp Chats](https://nmdanial.medium.com/summary-analysis-of-nik-and-afyas-whatsapp-chats-eb3928b18421) by [N.M. Danial](https://nmdanial.medium.com/)
+- [From Chat to Insights: Analyzing WhatsApp Group Conversations](https://medium.com/@barklight/cracking-the-conversation-973839be5b88) by [Erland Sada](https://medium.com/@barklight)
+- [Building a Chatbot: Fine-Tune LLMs with WhatsApp Data](https://www.linkedin.com/pulse/building-chatbot-fine-tune-llms-whatsapp-data-daniel-pleus/) by [Daniel Pleus](https://www.linkedin.com/in/daniel-pleus/)
+
+> [!NOTE]
+> If you have created a project using whatstk, I'd love to know that and add it this list! Thanks a lot!
+
+---
+
+<div align="center">
+
+  ⭐ **Star this repo if you find it useful!**
+
+  Made with ❤️ by [Lucas Rodés-Guirao](https://github.com/lucasrodes)
+
+</div>

@@ -29,7 +29,7 @@ copy_right = f'{datetime.now().year}, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.7.1'
+version = 'v0.8.0'
 
 
 # -- General configuration ---------------------------------------------------

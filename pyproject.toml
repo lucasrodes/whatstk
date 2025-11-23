@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "whatstk"
-version = "0.7.1"
+version = "0.8.0"
 description = "Parser and analytics tools for WhatsApp group chats"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -96,14 +96,14 @@ exclude_lines = [
 ]
 
 [tool.bumpversion]
-current_version = "0.7.1"
+current_version = "0.8.0"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\.(?P<pre>[a-z]+)(?P<prenum>\\d+))?"
 serialize = ["{major}.{minor}.{patch}.{pre}{prenum}", "{major}.{minor}.{patch}"]
 search = "{current_version}"
 replace = "{new_version}"
 regex = false
 ignore_missing_version = false
-tag = true
+tag = false
 sign_tags = false
 tag_name = "v{new_version}"
 tag_message = "Bump version: {current_version} → {new_version}"
