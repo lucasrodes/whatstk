@@ -7,6 +7,9 @@ resolution-markers = [
     "python_full_version < '3.12'",
 ]
 
+[options]
+prerelease-mode = "if-necessary"
+
 [[package]]
 name = "alabaster"
 version = "1.0.0"
