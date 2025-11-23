@@ -47,6 +47,10 @@ install-uv:
 		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && uv sync --all-extras; \
 	fi
 
+install.rtd: install-uv ## Install dependencies for ReadTheDocs
+	@echo '==> Installing packages for ReadTheDocs'
+	@UV_PROJECT_ENVIRONMENT=$(READTHEDOCS_VIRTUALENV_PATH) uv sync --frozen --all-extras
+
 ##################################################
 # TESTING
 test: check.format check.lint check.type unittest  ## Run formatting, linting, type-checking, and unit tests

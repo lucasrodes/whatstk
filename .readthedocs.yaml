@@ -16,7 +16,7 @@ build:
       - make install-uv
     install:
       # Use uv to install project dependencies
-      - make .venv
+      - make install.rtd
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
