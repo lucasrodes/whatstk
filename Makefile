@@ -1,4 +1,4 @@
-.PHONY: help install install.dev generate-test-data check.format check.lint check.type test unittest clean bump.patch bump.minor bump.major
+.PHONY: help install install.dev generate-test-data check.format check.lint check.type test unittest clean bump.patch bump.minor bump.major docs docs.serve
 
 .DEFAULT_GOAL := help
 
@@ -102,4 +102,13 @@ bump.minor: ## Bump minor version (0.X.0)
 
 bump.major: ## Bump major version (X.0.0)
 	uv run bump-my-version bump major
+
+
+##################################################
+# DOCUMENTATION
+docs: ## Build documentation
+	uv run make -C docs html
+
+docs.serve: docs ## Build and serve documentation
+	cd docs/_build/html && python -m http.server
 
