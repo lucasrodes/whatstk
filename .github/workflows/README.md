@@ -11,7 +11,7 @@ This directory contains GitHub Actions workflows for continuous integration and 
 - Pull requests to `main` or `develop`
 
 **Jobs:**
-- **Matrix Testing**: Tests across multiple Python versions (3.11, 3.12, 3.13) and operating systems (Ubuntu, macOS, Windows)
+- **Matrix Testing**: Tests across multiple Python versions (3.11, 3.12, 3.13, 3.14) and operating systems (Ubuntu, macOS, Windows)
 - **Quality Checks**: Runs formatting, linting, and type checking
 - **Test Suite**: Executes unit tests with coverage
 - **Coverage Upload**: Uploads coverage report to Codecov (Ubuntu + Python 3.13 only)
