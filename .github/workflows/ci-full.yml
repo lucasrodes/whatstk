@@ -40,18 +40,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest]
-        python-version: ["3.13", "3.14"]
+        # os: [macos-latest, windows-latest]
+        # python-version: ["3.13", "3.14"]
+        # Full matrix disabled temporarily to reduce PR job count
+        # Uncomment for full testing:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
         # Optionally exclude some combinations to reduce job count
         # exclude:
         #   - os: macos-latest
-        #     python-version: "3.11"
+        #     python-version: "3.14"
         #   - os: windows-latest
-        #     python-version: "3.11"
-        # Full matrix disabled temporarily to reduce PR job count
-        # Uncomment for full testing:
-        # os: [ubuntu-latest, macos-latest, windows-latest]
-        # python-version: ["3.11", "3.12", "3.13", "3.14"]
+        #     python-version: "3.14"
 
     steps:
       - name: Checkout code
