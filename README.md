@@ -17,7 +17,7 @@
 
 <p align="center">
   <a href="https://github.com/lucasrodes/whatstk/actions">
-    <img alt="Build Status" src="https://github.com/lucasrodes/whatstk/actions/workflows/ci-full.yml/badge.svg?branch=main">
+    <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/lucasrodes/whatstk/ci-full.yml?branch=main&label=build">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
     <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">
