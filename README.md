@@ -1,16 +1,21 @@
-<div align="left">
-  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="70%">
+<div align="center">
+  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="30%">
 </div>
-<h1 align="left" style="border-bottom: none;"> whatstk: analyze WhatsApp chats with python
+<h1 align="center" style="border-bottom: none;"> WhatsApp chat parser and analysis
 </h1>
-<p align="left">
+<p align="center">
   <a href="#">
     <img alt="Package version" src="https://img.shields.io/badge/pypi-0.7.1-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
+
+<p align="center">
+<b>Try the <a href="https://whatstk.streamlit.app/">live demo parser</a> to convert your chats to CSV</b>
+</p>
+
 <!-- style=for-the-badge -->
 
-<p align="left">
+<p align="center">
   <a href="https://github.com/lucasrodes/whatstk/actions">
     <img alt="Build Status" src="https://github.com/lucasrodes/whatstk/actions/workflows/ci-full.yml/badge.svg?branch=main">
   </a>
@@ -32,13 +37,9 @@
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
   </a>
+
 </p>
 
----
-
-**Try the [live demo parser](https://whatstk.streamlit.app/) to convert your chats to CSV**
-
----
 
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
