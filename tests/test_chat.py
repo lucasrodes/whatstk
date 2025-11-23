@@ -150,37 +150,37 @@ def test_merge_with_df_system():
 def test_filter_dates():
     """Test filter_dates method."""
     chat = WhatsAppChat.from_source(filepath)
-    
+
     start = chat.start_date
     end = chat.end_date
     mid = start + (end - start) / 2
-    
+
     # Test date_min
     chat_min = chat.filter_dates(date_min=mid)
     assert chat_min.start_date >= mid
     assert len(chat_min) < len(chat)
-    
+
     # Test date_max
     chat_max = chat.filter_dates(date_max=mid)
     assert chat_max.end_date <= mid
     assert len(chat_max) < len(chat)
-    
+
     # Test both
     # Ensure we pick a range that includes some messages but not all
     # Let's pick q1 and q3
     q1 = start + (end - start) / 4
     q3 = start + 3 * (end - start) / 4
-    
+
     chat_both = chat.filter_dates(date_min=q1, date_max=q3)
     assert chat_both.start_date >= q1
     assert chat_both.end_date <= q3
     assert len(chat_both) < len(chat)
-    
+
     # Test no filter
     chat_none = chat.filter_dates()
     assert len(chat_none) == len(chat)
     pd.testing.assert_frame_equal(chat_none.df, chat.df)
-    
+
     # Test empty result
     future_date = end + pd.Timedelta(days=365)
     chat_empty = chat.filter_dates(date_min=future_date)
