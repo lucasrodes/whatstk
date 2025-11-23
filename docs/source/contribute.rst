@@ -31,14 +31,14 @@ This script checks the code style (flake8) and the logic of your code (pytest).
 
 This script generates three HTML files which are placed within a created folder `reports`.
 
-- Once your code successfully passed the tests, you can submitt a pull request and wait for its aproval
+- Once your code successfully passed the tests, you can submit a pull request and wait for its approval
 
 
 .. todo::
 
     Use `tox <https://tox.readthedocs.io/en/latest/>`_
 
-Aproval of pull request
+Approval of pull request
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 A pull request will be accepted if:
@@ -59,7 +59,7 @@ questions or doubts, use `GitHub discussions <https://github.com/lucasrodes/what
 
 API discussions
 ---------------
-Consider posting your questinos or suggestions on `GitHub discussions <https://github.com/lucasrodes/whatstk/discussions>`_ or `Github issues <https://github.com/lucasrodes/whatstk/issues>`_.
+Consider posting your questions or suggestions on `GitHub discussions <https://github.com/lucasrodes/whatstk/discussions>`_ or `GitHub issues <https://github.com/lucasrodes/whatstk/issues>`_.
 
 ----
 

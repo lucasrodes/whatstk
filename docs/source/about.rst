@@ -21,8 +21,8 @@ First contact with whatstk
 chat file into a pandas.DataFrame.
 
 Below, we use method :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` to load `LOREM chat
-<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own 
-chat, simply :ref:`export it as a txt file<Export chat>` to your computer and then use class argument ``filepath``, as
+<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own
+chat, simply :ref:`export it as a txt file <Export a WhatsApp chat from your phone>` to your computer and then use class argument ``filepath``, as
 shown in the following example.
 
 
