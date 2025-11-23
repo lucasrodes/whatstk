@@ -6,7 +6,6 @@ to the source code.
 """
 # pip install --upgrade certifi
 
-
 import os
 from collections import namedtuple
 

@@ -1,18 +1,23 @@
-<div align="left">
-  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="70%">
+<div align="center">
+  <img src="https://raw.githubusercontent.com/lucasrodes/whatstk/develop/assets/logo.svg" width="30%">
 </div>
-<h1 align="left" style="border-bottom: none;"> whatstk: analyze WhatsApp chats with python
+<h1 align="center" style="border-bottom: none;"> WhatsApp chat parser and analysis
 </h1>
-<p align="left">
+<p align="center">
   <a href="#">
     <img alt="Package version" src="https://img.shields.io/badge/pypi-0.7.1-blue.svg?&color=25D366&logo=whatsapp&">
   </a>
 </p>
+
+<p align="center">
+<b>Try the <a href="https://whatstk.streamlit.app/">live demo parser</a> to convert your chats to CSV</b>
+</p>
+
 <!-- style=for-the-badge -->
 
-<p align="left">
-  <a href="https://app.travis-ci.com/lucasrodes/whatstk">
-    <img alt="Build Status" src="https://app.travis-ci.com/lucasrodes/whatstk.svg?&branch=main">
+<p align="center">
+  <a href="https://github.com/lucasrodes/whatstk/actions">
+    <img alt="Build Status" src="https://github.com/lucasrodes/whatstk/actions/workflows/ci-full.yml/badge.svg?branch=main">
   </a>
   <a href="https://codecov.io/gh/lucasrodes/whatstk">
     <img alt="codecov" src="https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg">
@@ -24,7 +29,7 @@
     <img alt="Tutorial" src="https://img.shields.io/badge/tutorial-on_medium-1a8917.svg?&logo=medium&logoColor=white">
   </a>
   <a href="https://www.python.org/downloads/release/python-3/">
-    <img alt="Python 3" src="https://img.shields.io/badge/python-3.9|3.10|3.11|3.12-blue.svg?&logo=python&logoColor=yellow">
+    <img alt="Python 3" src="https://img.shields.io/badge/python-3.11|3.12|3.13|3.14-blue.svg?&logo=python&logoColor=yellow">
   </a>
   <a href="https://pepy.tech/badge/whatstk">
     <img alt="Number of downloads" src="https://pepy.tech/badge/whatstk">
@@ -32,13 +37,9 @@
   <a href="https://github.com/lucasrodes/whatstk/blob/master/LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/lucasrodes/whatstk.svg?">
   </a>
+
 </p>
 
----
-
-**Try the [live demo parser](https://whatstk.streamlit.app/) to convert your chats to CSV**
-
----
 
 <!-- [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk) -->
 <!-- > [Get the Desktop App](https://lcsrg.me/whatstk-gui) -->
@@ -56,10 +57,15 @@ It is distributed under the GPL-3.0 license.
 
 - [Installation](#installation)
 - [Getting Started](#getting-started)
-- [Documentation](https://whatstk.readthedocs.io/en/stable/)
+    - [Export your chat using your phone:](#export-your-chat-using-your-phone)
+    - [Load chat as a DataFrame](#load-chat-as-a-dataframe)
+    - [Convert chat to csv](#convert-chat-to-csv)
+    - [More examples](#more-examples)
+- [Documentation](#documentation)
 - [Contribute](#contribute)
-- [Covered in](#covered-in)
+- [License](#license)
 - [Citation](#citation)
+- [Covered in](#covered-in)
 
 ## Installation
 

@@ -1,6 +1,5 @@
 """Get infor regarding responses between users."""
 
-
 from collections import namedtuple
 from typing import TYPE_CHECKING, Optional
 
@@ -75,7 +74,7 @@ def get_response_matrix(
     users = WhatsAppChat(df).users
     # Get list of username transitions and initialize dicitonary with counts
     user_transitions = df[COLNAMES_DF.USERNAME].tolist()
-    responses = {user: dict(zip(users, [0] * len(users))) for user in users}
+    responses = {user: dict(zip(users, [0] * len(users), strict=True)) for user in users}
     # Fill count dictionary
     for i in range(1, len(user_transitions)):
         sender = user_transitions[i]

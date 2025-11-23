@@ -10,5 +10,3 @@ def test_extract_elements_template_from_lines():
     elements_list, template_list = _extract_elements_template_from_lines(["testing"])
     assert elements_list == []
     assert template_list == []
-
-

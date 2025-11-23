@@ -5,7 +5,7 @@ You can also load a chat using multiple source files. You might want to use this
 from the same chat over the years. 
 
 In the example below, we load chats
-`LOREM1 <http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/lorem-merge-part1.txt>`_ and `LOREM2 <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/main/whatsapp/lorem-merge-part2.txt>`_.
+`LOREM1 <http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/lorem-merge-part1.txt>`_ and `LOREM2 <http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/lorem-merge-part2.txt>`_.
 
 .. code-block:: python
 
@@ -27,7 +27,7 @@ different usernames. In particular, in chat LOREM2, user *Mary* appears as *Mari
     ['+1 123 456 789', 'Giuseppe', 'John', 'Mary']
     >>> WhatsAppChat.from_source(filepath=whatsapp_urls.LOREM2).users
     ['+1 123 456 789', 'Giuseppe', 'John', 'Maria', 'Maria2']
-    >>> >>> chat.users
+    >>> chat.users
     ['+1 123 456 789', 'Giuseppe', 'John', 'Maria', 'Maria2', 'Mary']
 
 To draw some conclusions based on user behaviour we would like to group *Mary*, *Maria* and *Maria2* under the same

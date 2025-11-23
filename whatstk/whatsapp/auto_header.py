@@ -1,6 +1,5 @@
 """Detect header from chat."""
 
-
 import logging
 import re
 from typing import List, Tuple, Optional
@@ -151,7 +150,7 @@ def _extract_header_parts(header: str) -> Tuple[List[int], str]:
     while i < len(header):
         if header[i].isdigit():
             j = _get_last_idx_digit(header, i)
-            hformat_elements.append(int(header[i: j + 1]))
+            hformat_elements.append(int(header[i : j + 1]))
             hformat_template += "{}"
             i = j
         else:
@@ -199,7 +198,7 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
     types = ["".join([str(type(ee).__name__) for ee in e]) for e in elements_list]
     len_mode = max(set(lengths), key=lengths.count)
     type_mode = max(set(types), key=types.count)
-    for e, t in zip(elements_list, template_list):
+    for e, t in zip(elements_list, template_list, strict=True):
         if (len(e) == len_mode) and ("".join([str(type(ee).__name__) for ee in e]) == type_mode):
             elements_list_.append(e)
             template_list_.append(t)

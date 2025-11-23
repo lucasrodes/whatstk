@@ -1,6 +1,5 @@
 """Generate chats in all hformats with `size` number of messages and export them to a given `output_path`."""
 
-
 import argparse
 from whatstk.whatsapp.objects import WhatsAppChat
 

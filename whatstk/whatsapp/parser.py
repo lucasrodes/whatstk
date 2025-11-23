@@ -1,6 +1,5 @@
 """Parser utils."""
 
-
 import os
 import re
 from datetime import datetime
@@ -146,9 +145,7 @@ def df_from_whatsapp(
         )
         if len(set(df["username"])) > 2:
             chat_name = df["username"].iloc[0]
-            df["message_type"] = df["username"].apply(
-                lambda x: "user" if x != chat_name else "system"
-            )
+            df["message_type"] = df["username"].apply(lambda x: "user" if x != chat_name else "system")
         else:
             df["message_type"] = "user"
     return df
@@ -214,7 +211,7 @@ def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
     if filepath.endswith(".zip"):
         with tempfile.TemporaryDirectory() as temp_dir:
             # Uncompress the file
-            with zipfile.ZipFile(filepath, 'r') as zip_ref:
+            with zipfile.ZipFile(filepath, "r") as zip_ref:
                 zip_ref.extractall(temp_dir)
             files = os.listdir(temp_dir)
             if len(files) != 1:
@@ -268,7 +265,7 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
     try:
         df = _parse_chat(text, r)
     except RegexError:
-        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat))
+        raise HFormatError("hformat '{}' did not match the provided text. No match was found".format(hformat)) from None
     df = _remove_alerts_from_df(r_x, df)
 
     df = _add_schema(df)
@@ -279,7 +276,7 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
     """Parse chat using given regex.
 
     Args:
-        text (str) Whole log chat text.
+        text (str): Whole log chat text.
         regex (str): Regular expression
 
     Returns:
@@ -295,7 +292,7 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
         try:
             line_dict = _parse_line(text, headers, i)
         except KeyError:
-            raise RegexError("Could not match the provided regex with provided text. No match was found.")
+            raise RegexError("Could not match the provided regex with provided text. No match was found.") from None
         result.append(line_dict)
     df_chat = pd.DataFrame.from_records(result)
     df_chat = df_chat[[COLNAMES_DF.DATE, COLNAMES_DF.USERNAME, COLNAMES_DF.MESSAGE]]
@@ -305,26 +302,26 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
 def _clean_text(text: str) -> str:
     # List of additional unwanted Unicode characters
     unwanted_chars = [
-        '\u200B',  # Zero Width Space
-        '\u200C',  # Zero Width Non-Joiner
-        '\u200D',  # Zero Width Joiner
-        '\u202A',  # Left-to-Right Embedding
-        '\u202B',  # Right-to-Left Embedding
-        '\u202C',  # Pop Directional Formatting
-        '\u202D',  # Left-to-Right Override
-        '\u202E',  # Right-To-Left Override
-        '\u200E',  # Left-To-Right Mark
-        '\u200F',  # Right-to-Left Mark
-        '\u00AD',  # Soft Hyphen
+        "\u200b",  # Zero Width Space
+        "\u200c",  # Zero Width Non-Joiner
+        "\u200d",  # Zero Width Joiner
+        "\u202a",  # Left-to-Right Embedding
+        "\u202b",  # Right-to-Left Embedding
+        "\u202c",  # Pop Directional Formatting
+        "\u202d",  # Left-to-Right Override
+        "\u202e",  # Right-To-Left Override
+        "\u200e",  # Left-To-Right Mark
+        "\u200f",  # Right-to-Left Mark
+        "\u00ad",  # Soft Hyphen
     ]
 
     # Create a regex pattern from the list
-    pattern = '[' + ''.join(unwanted_chars) + ']'
+    pattern = "[" + "".join(unwanted_chars) + "]"
 
     # Remove unwanted characters
-    text = re.sub(pattern, '', text)
+    text = re.sub(pattern, "", text)
 
-    text = unicodedata.normalize('NFKD', text)
+    text = unicodedata.normalize("NFKD", text)
 
     return text
 

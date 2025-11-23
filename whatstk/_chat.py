@@ -1,6 +1,5 @@
 """Library objects."""
 
-
 from copy import deepcopy
 import pandas as pd
 from typing import Optional, List, Union, Dict, Any, Tuple
@@ -230,6 +229,27 @@ class BaseChat:
                 raise ValueError("Old names must come as a list of str (even if there is only one).")
             for old_name in old_names:
                 self_.df[COLNAMES_DF.USERNAME][self_.df[COLNAMES_DF.USERNAME] == old_name] = new_name
+        return self_
+
+    def filter_dates(
+        self, date_min: Optional[Union[str, datetime]] = None, date_max: Optional[Union[str, datetime]] = None
+    ) -> "BaseChat":
+        """Filter chat by date range.
+
+        Args:
+            date_min (str, datetime, optional): Minimum date.
+            date_max (str, datetime, optional): Maximum date.
+
+        Returns:
+            BaseChat: Filtered chat.
+
+        """
+        self_ = deepcopy(self)
+        if date_min:
+            self_._df_raw = self_._df_raw[self_._df_raw[COLNAMES_DF.DATE] >= date_min]
+        if date_max:
+            self_._df_raw = self_._df_raw[self_._df_raw[COLNAMES_DF.DATE] <= date_max]
+        self_._df, self_._df_system, self_._name = self_._build_dfs(self_._df_raw.copy())
         return self_
 
     def to_csv(self, filepath: str) -> None:
