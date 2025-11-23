@@ -49,7 +49,7 @@ This project is on `PyPI <https://pypi.org/project/whatstk/>`_, install it with 
 
     pip install whatstk
 
-Project has been tested in Python>=3.7.
+Project has been tested in Python>=3.11.
 
 From source
 ^^^^^^^^^^^
