@@ -20,14 +20,16 @@ install.dev: ## Install package with dev dependencies
 
 .sanity-check:
 	@echo '==> Checking your Python setup'
-
-	@if python -c "import sys; exit(0 if sys.platform.startswith('win32') else 1)"; then \
-		echo 'ERROR: you are using a non-WSL Python interpreter, please consult the'; \
-		echo '       docs on how to swich to WSL Python on windows'; \
-		echo '       https://github.com/owid/etl/'; \
-		exit 1; \
+	@# Skip sanity check in CI environments (GitHub Actions, etc.)
+	@if [ -z "$$CI" ]; then \
+		if python -c "import sys; exit(0 if sys.platform.startswith('win32') else 1)"; then \
+			echo 'ERROR: you are using a non-WSL Python interpreter, please consult the'; \
+			echo '       docs on how to switch to WSL Python on windows'; \
+			echo '       https://github.com/lucasrodes/whatstk/'; \
+			exit 1; \
+		fi; \
 	fi
-	touch .sanity-check
+	@touch .sanity-check
 
 install-uv:
 	@if ! command -v uv >/dev/null 2>&1; then \
@@ -39,9 +41,9 @@ install-uv:
 	@echo '==> Installing packages'
 	@if [ -n "$(PYTHON_VERSION)" ]; then \
 		echo '==> Using Python version $(PYTHON_VERSION)'; \
-		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && UV_PYTHON=$(PYTHON_VERSION) uv sync --all-extras; \
+		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && UV_PYTHON=$(PYTHON_VERSION) uv sync --all-extras --prerelease=if-necessary; \
 	else \
-		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && uv sync --all-extras; \
+		[ -f $$HOME/.cargo/env ] && . $$HOME/.cargo/env || true && uv sync --all-extras --prerelease=if-necessary; \
 	fi
 
 ##################################################
