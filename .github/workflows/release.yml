@@ -3,9 +3,6 @@ name: Release
 on:
   release:
     types: [published]
-  push:
-    tags:
-      - "v*"
 
 jobs:
   # Full matrix test before release - all Python versions and OS
@@ -48,6 +45,7 @@ jobs:
     name: Deploy to PyPI
     needs: test-matrix
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       id-token: write # Required for trusted publishing
     steps:
@@ -68,5 +66,3 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
