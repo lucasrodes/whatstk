@@ -12,8 +12,6 @@ license = { text = "GPL-3.0-only" }
 authors = [{ name = "Lucas Rodes-Guirao" }]
 keywords = ["whatsapp", "analysis", "parser", "chat"]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
