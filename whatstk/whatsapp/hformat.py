@@ -10,7 +10,6 @@ Example: Check if header is available.
 
 """
 
-
 import os
 import json
 from typing import Tuple, List, Dict

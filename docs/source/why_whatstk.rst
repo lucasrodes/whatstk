@@ -14,7 +14,7 @@ improbable case that the automatic parser does not work for a certain chat, you 
 
 The power of pandas and plotly
 ------------------------------
-**whatstk** uses well established and mantained python libraries `pandas <https://github.com/pandas-dev/pandas>`_ to
+**whatstk** uses well established and maintained python libraries `pandas <https://github.com/pandas-dev/pandas>`_ to
 process the data and `plotly <https://github.com/plotly/plotly.py>`_ and exploits their potential to efficiently process
 and create figures.
 
@@ -23,4 +23,4 @@ Open source and Community oriented
 The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/master/LICENSE>`_,
 available on `GitHub <http://github.com/lucasrodes/whatstk>`_ and open for `user contributions <contribute.html>`_.
 
-The project is mantained since 2016 by `@lucasrodes <https://github.com/lucasrodes>`_.
+The project is maintained since 2016 by `@lucasrodes <https://github.com/lucasrodes>`_.

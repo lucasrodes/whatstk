@@ -1,6 +1,5 @@
 """Automatic generation of chat using Lorem Ipsum text and time series statistics."""
 
-
 import os
 from datetime import datetime, timedelta
 import itertools

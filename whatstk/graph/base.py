@@ -1,6 +1,5 @@
 """Build plotly-compatible figures."""
 
-
 import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
@@ -68,7 +67,7 @@ class FigureBuilder:
         """
         if self.__user_color_mapping is None:
             colors = hex_color_palette(n_colors=len(self.usernames))
-            mapping = dict(zip(self.usernames, colors))
+            mapping = dict(zip(self.usernames, colors, strict=True))
             return mapping
         return self.__user_color_mapping
 

@@ -1,6 +1,5 @@
 """Generate multiple graphics for your chat using plotly."""
 
-
 import argparse
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.graph import plot, FigureBuilder
@@ -8,7 +7,7 @@ from whatstk.graph import plot, FigureBuilder
 
 def _parse_args() -> None:
     parser = argparse.ArgumentParser(
-        description="Visualise a WhatsApp chat. For advance settings, see package library" "documentation"
+        description="Visualise a WhatsApp chat. For advance settings, see package librarydocumentation"
     )
     parser.add_argument("input_filename", type=str, default=None, help="Input txt file.")
     parser.add_argument(
@@ -16,7 +15,7 @@ def _parse_args() -> None:
         "--output_filename",
         type=str,
         default="output.html",
-        help="Graph generated can be stored as an HTML" " file. Defaults to 'output.html'.",
+        help="Graph generated can be stored as an HTML file. Defaults to 'output.html'.",
     )
     parser.add_argument(
         "-t",

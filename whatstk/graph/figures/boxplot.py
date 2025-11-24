@@ -15,7 +15,7 @@ def fig_boxplot_msglen(
 
     Args:
         df (pandas.DataFrame): Chat data.
-        username_to_color (dict, optional). Dictionary mapping username to color. Defaults to None.
+        username_to_color (dict, optional): Dictionary mapping username to color. Defaults to None.
         title (str, optional): Title for plot. Defaults to "".
         xlabel (str, optional): x-axis label title. Defaults to None.
 

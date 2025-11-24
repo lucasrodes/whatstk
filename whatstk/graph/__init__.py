@@ -7,7 +7,6 @@ Import :func:`plot <whatstk.graph.plot>` to plot figures.
 
 """
 
-
 from plotly.offline import plot
 import plotly.io as pio
 from whatstk.graph.base import FigureBuilder

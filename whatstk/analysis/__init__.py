@@ -1,6 +1,5 @@
 """Analysis tools."""
 
-
 from whatstk.analysis.interventions import get_interventions_count
 from whatstk.analysis.responses import get_response_matrix
 

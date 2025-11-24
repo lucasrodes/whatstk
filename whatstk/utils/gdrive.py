@@ -10,7 +10,6 @@
         pip install whatstk[gdrive] --upgrade
 """
 
-
 from shutil import copyfile
 import os
 
@@ -101,10 +100,10 @@ def _load_str_from_file_id(file_id: int) -> str:
     try:
         file_obj = drive.CreateFile({"id": file_id})
         file_obj.FetchMetadata()
-    except ApiRequestError:
+    except ApiRequestError as err:
         raise ValueError(
             f"File ID {file_id} not valid. Please use a valid File ID. You can find it in the shareable file link."
-        )
+        ) from err
     # Get raw file content as str
     txt = file_obj.GetContentString()
     return txt

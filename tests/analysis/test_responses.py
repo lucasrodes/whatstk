@@ -14,11 +14,11 @@ def test_get_response_matrix_1():
 
     # Check shape and colnames of returned dataframe
     n_users = len(chat.users)
-    assert(df_resp.shape == (n_users, n_users))
-    assert(set(chat.users) == set(df_resp.columns))
+    assert df_resp.shape == (n_users, n_users)
+    assert set(chat.users) == set(df_resp.columns)
 
     # Check diagonal of returned dataframe is zero
-    assert(all([df_resp.loc[user, user] == 0 for user in df_resp.columns]))
+    assert all([df_resp.loc[user, user] == 0 for user in df_resp.columns])
 
 
 def test_get_response_matrix_2():
@@ -27,50 +27,50 @@ def test_get_response_matrix_2():
 
     # Check shape and colnames of returned dataframe
     n_users = len(chat.users)
-    assert(df_resp.shape == (n_users, n_users))
-    assert(set(chat.users) == set(df_resp.columns))
+    assert df_resp.shape == (n_users, n_users)
+    assert set(chat.users) == set(df_resp.columns)
 
 
 def test_get_response_matrix_3():
     chat = WhatsAppChat.from_source(filename)
-    df_resp = get_response_matrix(chat=chat, norm='joint')
+    df_resp = get_response_matrix(chat=chat, norm="joint")
 
     # Check shape and colnames of returned dataframe
     n_users = len(chat.users)
-    assert(df_resp.shape == (n_users, n_users))
-    assert(set(chat.users) == set(df_resp.columns))
+    assert df_resp.shape == (n_users, n_users)
+    assert set(chat.users) == set(df_resp.columns)
 
     # Check scaling has been done correct
-    assert(math.isclose(df_resp.sum().sum(), 1))
+    assert math.isclose(df_resp.sum().sum(), 1)
 
 
 def test_get_response_matrix_4():
     chat = WhatsAppChat.from_source(filename)
-    df_resp = get_response_matrix(chat=chat, norm='sender')
+    df_resp = get_response_matrix(chat=chat, norm="sender")
 
     # Check shape and colnames of returned dataframe
     n_users = len(chat.users)
-    assert(df_resp.shape == (n_users, n_users))
-    assert(set(chat.users) == set(df_resp.columns))
+    assert df_resp.shape == (n_users, n_users)
+    assert set(chat.users) == set(df_resp.columns)
 
     # Check scaling has been done correct
-    assert(all([math.isclose(x, 1) for x in df_resp.sum(axis=1)]))
+    assert all([math.isclose(x, 1) for x in df_resp.sum(axis=1)])
 
 
 def test_get_response_matrix_5():
     chat = WhatsAppChat.from_source(filename)
-    df_resp = get_response_matrix(chat=chat, norm='receiver')
+    df_resp = get_response_matrix(chat=chat, norm="receiver")
 
     # Check shape and colnames of returned dataframe
     n_users = len(chat.users)
-    assert(df_resp.shape == (n_users, n_users))
-    assert(set(chat.users) == set(df_resp.columns))
+    assert df_resp.shape == (n_users, n_users)
+    assert set(chat.users) == set(df_resp.columns)
 
     # Check scaling has been done correct
-    assert(all([math.isclose(x, 1) for x in df_resp.sum(axis=0)]))
+    assert all([math.isclose(x, 1) for x in df_resp.sum(axis=0)])
 
 
 def test_get_response_matrix_error():
     chat = WhatsAppChat.from_source(filename)
     with pytest.raises(ValueError):
-        _ = get_response_matrix(chat=chat, norm='error')
+        _ = get_response_matrix(chat=chat, norm="error")

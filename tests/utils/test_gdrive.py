@@ -2,7 +2,6 @@ import os
 import json
 
 import pytest
-from pydrive2.files import ApiRequestError
 
 from whatstk.utils.gdrive import gdrive_init, _check_gdrive_config, _load_str_from_file_id
 import whatstk
@@ -12,7 +11,7 @@ def test_init_1(tmpdir, mocker):
     # Create tmp secrets
     client_secret = {"field": 1}
     client_secret_file = tmpdir.join("client_secrets.json")
-    with open(client_secret_file, 'w') as f:
+    with open(client_secret_file, "w") as f:
         json.dump(client_secret, f)
     # Mock 1
     CONFIG_PATH = tmpdir.mkdir(".config")
@@ -28,7 +27,7 @@ def test_init_2(tmpdir, mocker):
     # Create tmp secrets
     client_secret = {"field": 1}
     client_secret_file = tmpdir.join("client_secrets.json")
-    with open(client_secret_file, 'w') as f:
+    with open(client_secret_file, "w") as f:
         json.dump(client_secret, f)
     # Mock 2
     CONFIG_PATH = tmpdir.join(".config2")

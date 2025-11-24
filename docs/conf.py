@@ -29,7 +29,7 @@ copy_right = f'{datetime.now().year}, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.7.1'
+version = 'v0.8.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -50,7 +50,8 @@ extensions = [
     'sphinx_git',
     'autodocsumm',
     'sphinx.ext.mathjax',
-    'recommonmark'
+    'recommonmark',
+    'sphinx_togglebutton'
     # "sphinx_multiversion",
     # 'sphinx_gallery.gen_gallery'
 ]
@@ -65,8 +66,8 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '../../setup.py']
-EXCLUDE_PATTERN = ['../setup.py']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+EXCLUDE_PATTERN = []
 
 # -- Options for HTML output -------------------------------------------------
 

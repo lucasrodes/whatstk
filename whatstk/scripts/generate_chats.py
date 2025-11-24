@@ -1,6 +1,5 @@
 """Generate chats in all hformats with `size` number of messages and export them to a given `output_path`."""
 
-
 import argparse
 from datetime import datetime
 from whatstk.whatsapp.generation import generate_chats_hformats
@@ -52,5 +51,5 @@ def main() -> None:
         hformats=args.hformats,
         last_timestamp=args.last_timestamp,
         filepaths=args.filenames,
-        export_as_zip=args.export_as_zip
+        export_as_zip=args.export_as_zip,
     )

@@ -1,5 +1,6 @@
 from whatstk.utils.utils import COLNAMES_DF
 
+
 def test_colnames():
     assert COLNAMES_DF.DATE == "date"
     assert COLNAMES_DF.USERNAME == "username"
