@@ -50,7 +50,7 @@ pip install git+https://github.com/lucasrodes/whatstk.git@develop
 
 ### Export your WhatsApp chat
 
-Follow the [export instructions](https://whatstk.readthedocs.io/en/stable/source/getting_started/export_chat.html) for your device.
+Follow the [export instructions](https://whatstk.readthedocs.io/en/latest/source/getting_started/export_chat.html) for your device.
 
 ### Load and analyze
 
@@ -85,15 +85,15 @@ fig.show()
 
 ## Documentation
 
-Full documentation available at [whatstk.readthedocs.io](https://whatstk.readthedocs.io/en/stable/)
+Full documentation available at [whatstk.readthedocs.io](https://whatstk.readthedocs.io/en/latest/)
 
-- [Getting Started Guide](https://whatstk.readthedocs.io/en/stable/source/getting_started/index.html)
-- [Code Examples](https://whatstk.readthedocs.io/en/stable/source/code_examples/index.html)
-- [API Reference](https://whatstk.readthedocs.io/en/stable/source/code/index.html)
+- [Getting Started Guide](https://whatstk.readthedocs.io/en/latest/source/getting_started/index.html)
+- [Code Examples](https://whatstk.readthedocs.io/en/latest/source/api/index.html)
+- [API Reference](https://whatstk.readthedocs.io/en/latest/source/code/index.html)
 
 ## Contributing
 
-We welcome contributions! See our [contribution guide](https://whatstk.readthedocs.io/en/stable/source/contribute.html) to get started.
+We welcome contributions! See our [contribution guide](https://whatstk.readthedocs.io/en/latest/source/contribute.html) to get started.
 
 ## License
 
