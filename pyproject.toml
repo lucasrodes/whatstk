@@ -57,7 +57,7 @@ docs = [
 dev = ["whatstk[test,lint,docs]", "bump-my-version~=1.2"]
 
 [project.urls]
-Documentation = "https://whatstk.readthedocs.io/en/stable/"
+Documentation = "https://whatstk.readthedocs.io/en/latest/"
 Github = "http://github.com/lucasrodes/whatstk"
 "Bug Tracker" = "https://github.com/lucasrodes/whatstk/issues"
 
