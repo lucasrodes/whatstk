@@ -14,6 +14,8 @@ build:
     pre_install:
       # Install uv package manager
       - make install-uv
+      # Fetch full history for changelog generation
+      - git fetch --unshallow || true
     install:
       # Use uv to install project dependencies
       - make install.rtd
