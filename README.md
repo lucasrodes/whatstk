@@ -5,7 +5,7 @@
 
   **Parse, analyze, and visualize WhatsApp chats with Python**
 
-  [![PyPI](https://img.shields.io/pypi/v/whatstk?color=25D366&logo=whatsapp)](https://pypi.org/project/whatstk/)
+  [![PyPI](https://img.shields.io/badge/pypi-v0.8.0-25D366?logo=whatsapp)](https://pypi.org/project/whatstk/)
   [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/downloads/)
   [![Build](https://img.shields.io/github/actions/workflow/status/lucasrodes/whatstk/ci-full.yml?branch=main)](https://github.com/lucasrodes/whatstk/actions)
   [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
