@@ -1,3 +1,6 @@
+from pathlib import Path
+from typing import Any
+
 from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR, CHATS_DIR
 import pandas as pd
 import pytest
@@ -174,3 +177,86 @@ def test_message_type_non_group():
     # For non-group chats (<=2 users), all messages should be 'user'
     # Check that we have the message_type column (which covers line 150)
     assert len(df) > 0
+
+
+def _df_from_chat_content(tmp_path: Path, content: str, **kwargs: Any) -> pd.DataFrame:
+    """Write chat content to a txt file and load it with df_from_whatsapp."""
+    filepath = tmp_path / "chat.txt"
+    filepath.write_text(content, encoding="utf-8")
+    return df_from_whatsapp(str(filepath), **kwargs)
+
+
+def test_df_from_whatsapp_composed_unicode(tmp_path):
+    """Accented characters must remain composed (NFC form) after parsing.
+
+    NFKD normalization decomposed e.g. u-umlaut (U+00FC) into 'u' + combining diaeresis (U+0308), breaking downstream
+    NLP tools. See https://github.com/lucasrodes/whatstk/issues/172.
+    """
+    # 'Ju\u0308rgen': decomposed u-umlaut ('u' + combining diaeresis) in username and message
+    content = (
+        "12.06.2024, 20:35 - Ju\u0308rgen: Ich mu\u0308sste morgen fru\u0308h los\n12.06.2024, 20:36 - Hans: ok!\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert df["username"].iloc[0] == "J\u00fcrgen"
+    assert df["message"].iloc[0] == "Ich m\u00fcsste morgen fr\u00fch los"
+    # No combining marks left behind
+    assert "\u0308" not in df["message"].iloc[0]
+
+
+def test_df_from_whatsapp_zwj_emoji(tmp_path):
+    """Compound emojis (ZWJ sequences) must not be broken into their parts.
+
+    Removing the Zero Width Joiner (U+200D) turned e.g. the 'mending heart' emoji into two separate emojis. See
+    https://github.com/lucasrodes/whatstk/issues/171.
+    """
+    heart = "\u2764\ufe0f\u200d\U0001fa79"  # mending heart (ZWJ sequence)
+    family = "\U0001f468\u200d\U0001f469\u200d\U0001f466"  # family: man, woman, boy (ZWJ sequence)
+    content = (
+        f"12.06.2024, 20:35 - Ash: I feel {heart} today\n"
+        f"12.06.2024, 20:36 - Misty: nice {family}\n"
+        f"12.06.2024, 20:37 - Mom {heart}: dinner is ready\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert heart in df["message"].iloc[0]
+    assert family in df["message"].iloc[1]
+    # Username containing a ZWJ emoji must not break header detection
+    assert df["username"].iloc[2] == f"Mom {heart}"
+
+
+def test_df_from_whatsapp_zwnj_preserved(tmp_path):
+    """Zero Width Non-Joiner (U+200C) is meaningful in e.g. Persian text and must be preserved."""
+    persian = "\u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u0645"  # 'I want' in Persian, contains ZWNJ
+    content = f"12.06.2024, 20:35 - Ali: {persian}\n12.06.2024, 20:36 - Sara: ok\n"
+    df = _df_from_chat_content(tmp_path, content)
+    assert df["message"].iloc[0] == persian
+
+
+def test_df_from_whatsapp_directional_marks_stripped(tmp_path):
+    """Directional marks (e.g. U+200E) inserted by WhatsApp must still be removed, so header detection works.
+
+    This was the original reason for _clean_text, see https://github.com/lucasrodes/whatstk/pull/152.
+    """
+    content = (
+        "\u200e[12.06.24, 20:35:11] Mary: hello\n"
+        "\u200e[12.06.24, 20:36:00] John: hi \u200ethere\n"
+        "\u200e[12.06.24, 20:37:00] Mary: bye\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert len(df) == 3
+    assert df["username"].tolist() == ["Mary", "John", "Mary"]
+    assert df["message"].iloc[1] == "hi there"
+
+
+def test_df_from_whatsapp_narrow_nbsp_ampm(tmp_path):
+    """Auto header detection must handle the narrow no-break space (U+202F) iOS puts before 'AM'/'PM'.
+
+    This is why _clean_text uses a compatibility normalization form (NFKC), which folds U+202F into a regular space.
+    """
+    content = (
+        "[10/31/23, 3:34:33\u202fPM] Mary: hello\n"
+        "[10/31/23, 3:35:00\u202fPM] John: hi\n"
+        "[10/31/23, 4:01:12\u202fPM] Mary: bye\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert len(df) == 3
+    assert df["date"].iloc[0].hour == 15

@@ -300,11 +300,13 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
 
 
 def _clean_text(text: str) -> str:
-    # List of additional unwanted Unicode characters
+    # List of additional unwanted Unicode characters. These are invisible formatting characters that WhatsApp inserts
+    # around headers (dates, usernames), which would otherwise break header detection and parsing.
+    # NOTE: Zero Width Joiner (U+200D) and Zero Width Non-Joiner (U+200C) must NOT be removed: ZWJ is required for
+    # compound emojis (e.g. the 'mending heart' emoji is U+2764 U+FE0F U+200D U+1FA79) and ZWNJ is meaningful in
+    # e.g. Persian text. See issue #171.
     unwanted_chars = [
         "\u200b",  # Zero Width Space
-        "\u200c",  # Zero Width Non-Joiner
-        "\u200d",  # Zero Width Joiner
         "\u202a",  # Left-to-Right Embedding
         "\u202b",  # Right-to-Left Embedding
         "\u202c",  # Pop Directional Formatting
@@ -321,7 +323,11 @@ def _clean_text(text: str) -> str:
     # Remove unwanted characters
     text = re.sub(pattern, "", text)
 
-    text = unicodedata.normalize("NFKD", text)
+    # NFKC (not NFKD, see issue #172): keeps characters composed (u-umlaut stays U+00FC instead of being decomposed
+    # into 'u' + combining diaeresis U+0308), while still folding compatibility characters. The compatibility folding
+    # (K) is required: iOS exports use a narrow no-break space (U+202F) before 'AM'/'PM', which must become a regular
+    # space for header detection to work.
+    text = unicodedata.normalize("NFKC", text)
 
     return text
 
