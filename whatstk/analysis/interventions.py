@@ -1,6 +1,6 @@
 """Base analysis tools."""
 
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Optional
 
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
@@ -10,8 +10,8 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 def get_interventions_count(
-    df: pd.DataFrame = None,
-    chat: "BaseChat" = None,
+    df: Optional[pd.DataFrame] = None,
+    chat: Optional["BaseChat"] = None,
     date_mode: str = "date",
     msg_length: bool = False,
     cumulative: bool = False,
@@ -100,7 +100,7 @@ def get_interventions_count(
     n_interventions.columns = n_interventions.columns.get_level_values(COLNAMES_DF.USERNAME)
 
     if all_users:
-        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=["interventions count"])
+        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=pd.Index(["interventions count"]))
     if cumulative:
         n_interventions = n_interventions.cumsum()
 

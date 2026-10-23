@@ -92,7 +92,7 @@ def _check_gdrive_config() -> None:
             raise ValueError(error_msg)
 
 
-def _load_str_from_file_id(file_id: int) -> str:
+def _load_str_from_file_id(file_id: str) -> str:
     _check_gdrive_config()
     gauth = GoogleAuth(settings_file=SETTINGS_PATH)
     drive = GoogleDrive(gauth)

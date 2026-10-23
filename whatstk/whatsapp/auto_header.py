@@ -177,7 +177,7 @@ def _extract_header_parts(header: str) -> Tuple[List[int], str]:
     return hformat_elements, hformat_template
 
 
-def _extract_header_format_from_components(elements_list: List[List[int]], template_list: List[int]) -> str:
+def _extract_header_format_from_components(elements_list: List[List[int]], template_list: List[str]) -> str:
     """Extract header format from list containing elements and list containing templates.
 
     Args:

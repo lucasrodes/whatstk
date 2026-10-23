@@ -179,8 +179,8 @@ class ChatGenerator:
 def generate_chats_hformats(
     output_path: str,
     size: int = 2000,
-    hformats: Optional[str] = None,
-    filepaths: Optional[str] = None,
+    hformats: Optional[List[str]] = None,
+    filepaths: Optional[List[str]] = None,
     last_timestamp: Optional[datetime] = None,
     seed: int = 100,
     verbose: bool = False,

@@ -430,10 +430,10 @@ def _remove_alerts_from_line(r_x: str, line_df: str) -> str:
         str: Cleaned message string.
 
     """
-    if re.search(r_x, line_df):
-        return line_df[: re.search(r_x, line_df).start()]
-    else:
-        return line_df
+    match = re.search(r_x, line_df)
+    if match:
+        return line_df[: match.start()]
+    return line_df
 
 
 def _get_message(text: str, headers: List[re.Match], i: int) -> str:

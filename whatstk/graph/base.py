@@ -30,7 +30,7 @@ class FigureBuilder:
 
     """
 
-    def __init__(self, df: Optional[pd.DataFrame] = None, chat: "BaseChat" = None) -> None:
+    def __init__(self, df: Optional[pd.DataFrame] = None, chat: Optional["BaseChat"] = None) -> None:
         """Constructor.
 
         Args:
