@@ -61,6 +61,24 @@ data-loss bugs found and closed, and pandas 3 support.
         :rev-list: v0.8.1..HEAD
 
 
+v0.8.1
+------
+
+A documentation and packaging release. No library code changed.
+
+- **Documentation links**: Point at ``/en/latest/`` rather than ``/en/stable/`` throughout the
+  README, the project metadata and the Read the Docs config, so links resolve to the current build.
+- **Packaging**: Dropped the ``Development Status :: 4 - Beta`` and redundant
+  ``Programming Language :: Python`` classifiers from ``pyproject.toml``.
+- **README**: Pinned the PyPI badge to the released version instead of resolving it dynamically.
+
+.. container:: toggle
+
+    **Show all commits**
+
+    .. git_changelog::
+        :rev-list: v0.8.0..v0.8.1
+
 v0.8.0
 ----------
 
