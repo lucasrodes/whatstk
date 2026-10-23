@@ -1,3 +1,6 @@
+import re
+import time
+
 from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR, CHATS_DIR
 import pandas as pd
 import pytest
@@ -206,3 +209,68 @@ def test_remove_alerts_applied_when_parsing():
         }
     )
     assert _remove_alerts_from_df(r_x, df).loc[0, COLNAMES_DF.MESSAGE] == "kept "
+
+
+# --- Report #1799: regex metacharacter injection via hformat -------------------------------------
+
+METACHARACTER_SEPARATORS = ["+", "*", "(", ")", "|", "?", "^", "$", ".", "\\"]
+
+
+@pytest.mark.parametrize("sep", METACHARACTER_SEPARATORS)
+def test_generate_regex_escapes_literal_separators(sep):
+    """Separators are literals and must never reach the regex engine as syntax.
+
+    Report #1799: codes were substituted into the hformat by plain string replacement, so a
+    separator such as '+' became a quantifier on the preceding named group.
+    """
+    from whatstk.whatsapp.parser import generate_regex
+
+    regex, _ = generate_regex(f"%d{sep}%m{sep}%y, %H:%M - %name:")
+    # The separator survives only in escaped form, never bare between two groups.
+    assert f"){sep}(" not in regex
+    assert re.escape(sep) in regex
+    re.compile(regex)  # must still be a valid pattern
+
+
+@pytest.mark.parametrize("sep", METACHARACTER_SEPARATORS)
+def test_chat_with_metacharacter_separator_parses(sep, tmp_path):
+    """A chat whose date separator is a metacharacter must parse, not raise a raw re/Type error.
+
+    Report #1799: auto-detection copies the header characters verbatim, so such a chat produced a
+    broken or exponential pattern with no hformat supplied by the caller.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "\n".join(f"0{d}{sep}08{sep}2016, 13:2{d} - Ash Ketchum: message {d}" for d in range(1, 6)),
+        encoding="utf-8",
+    )
+    df = df_from_whatsapp(str(chat))
+    assert len(df) == 5
+    assert set(df[COLNAMES_DF.USERNAME]) == {"Ash Ketchum"}
+
+
+def test_crafted_chat_does_not_cause_catastrophic_backtracking(tmp_path):
+    """A short crafted chat must not send the parser exponential.
+
+    Report #1799: with '+' separators, a ~170 byte file took 27s at 32 digits and scaled ~8x per
+    4 extra digits, so 48 digits ran for hours. The bound here is deliberately loose; before the
+    fix this input did not finish.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "\n".join(f"0{d}+08+2016, 13:2{d} - Ash: hi" for d in range(1, 6)) + "\n" + "1" * 48 + "x\n",
+        encoding="utf-8",
+    )
+
+    start = time.monotonic()
+    df_from_whatsapp(str(chat))
+    assert time.monotonic() - start < 10
+
+
+def test_dot_separator_is_literal_not_wildcard():
+    """'.' in an hformat must match a dot, not any character."""
+    from whatstk.whatsapp.parser import generate_regex
+
+    regex, _ = generate_regex("%d.%m.%y, %H:%M - %name:")
+    assert re.match(regex, "06.08.2016, 13:23 - Ash: ")
+    assert not re.match(regex, "06X08X2016, 13:23 - Ash: ")
