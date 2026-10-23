@@ -2,6 +2,65 @@ Changelog
 =========
 
 
+v0.9.0
+------
+
+The parser release. Five externally reported security issues fixed, several silent
+data-loss bugs found and closed, and pandas 3 support.
+
+.. warning::
+
+    Two changes can require action:
+
+    - **Inputs are now size-capped.** ``df_from_whatsapp`` refuses a chat whose text exceeds 50 MB.
+      Pass ``max_size`` to raise the limit, or ``None`` to disable it. Roughly half a million
+      messages, so it should not affect a real export.
+    - **Dependency floors raised** to numpy 2.3.2 and pandas 2.3.3. The previous floors had no
+      wheels for the newer Python versions.
+
+- **Security**: Fixed a denial of service where a separator that is a regex metacharacter turned
+  the header pattern exponential — a 173 byte chat could occupy the parser for hours, with no
+  ``hformat`` supplied by the caller. Separators such as ``(``, ``*`` and ``|`` also raised
+  uncaught ``re.PatternError`` and ``TypeError``. Literals are now escaped (report #1799).
+- **Security**: The ZIP loader no longer extracts to disk and no longer reads without a limit. A
+  59 KB archive could expand to 265 MB of memory; over-limit archives are now refused before
+  anything is decompressed (report #1800).
+- **Security**: Google Drive credentials are written ``0600`` inside a ``0700`` directory. The
+  client secret had been world-readable, and a file the user had protected was silently widened
+  when copied (report #1611).
+- **Security**: Sample chat URLs use HTTPS (report #1814).
+- **Bug fix**: Merging chats no longer discards messages. Chats were ordered by a sort that did
+  nothing, and messages falling inside a range already covered were dropped — merging two exports
+  of one conversation lost 6 of 21 messages. Merging now returns the deduplicated union, ordered by
+  date (report #1872).
+- **Bug fix**: A chat whose first header differs in shape from the rest no longer decides the
+  format for the whole file, which could produce a malformed format and an uncaught
+  ``re.PatternError`` (#175).
+- **Bug fix**: ``extract_header_from_text`` returns a format that can be passed straight back as
+  ``hformat``. Bracketed iOS-style formats were returned pre-escaped and crashed on reuse.
+- **Bug fix**: ``rename_users`` used chained assignment, which pandas copy-on-write discards. On
+  pandas 3 it would have returned an unchanged chat.
+- **Unicode**: Normalisation uses NFKC instead of NFKD, so accented characters stay composed, and
+  ZWJ/ZWNJ are preserved so compound emoji and Persian text survive (#171, #172).
+- **pandas 3.0 support**: Resolves pandas 2.3.3 through 3.1 (#170). A CI job now tests the oldest
+  versions the pins allow, on the oldest and newest supported Python.
+- **Deprecation**: Google Drive support warns and will be removed in 0.10.0. Download the export
+  and pass a local path instead (#177).
+- **Deprecation**: ``df_from_txt_whatsapp`` is no longer exported at the top level; import it from
+  ``whatstk.whatsapp.parser``.
+- **Documentation**: New pages on automatic header detection and on what whatstk cannot tell you —
+  notably that the ``username`` column reports who an export *says* sent a message, which an export
+  cannot prove. Added ``llms.txt`` for AI assistants, and ``AGENTS.md`` for contributors.
+- **Typing**: pyright runs in standard mode with 20 previously disabled checks re-enabled.
+
+.. container:: toggle
+
+    **Show all commits**
+
+    .. git_changelog::
+        :rev-list: v0.8.1..HEAD
+
+
 v0.8.0
 ----------
 
