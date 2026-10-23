@@ -190,11 +190,11 @@ def test_client_secret_content_survives_the_copy(tmpdir, mocker):
         assert json.load(f) == {"installed": {"client_secret": "SUPERSECRET"}}
 
 
-# --- #177: Google Drive is deprecated, FutureWarning in 0.9, removal in 1.0 ---------------------
+# --- #177: Google Drive is deprecated, FutureWarning in 0.9.0, removal in 0.10.0 ----------------
 
 
 def test_gdrive_init_warns_it_is_deprecated(tmpdir, mocker):
-    with pytest.warns(FutureWarning, match="deprecated and will be removed in whatstk 1.0"):
+    with pytest.warns(FutureWarning, match="deprecated and will be removed in whatstk 0.10.0"):
         _init_into(tmpdir, mocker)
 
 
@@ -204,5 +204,5 @@ def test_loading_from_gdrive_warns_it_is_deprecated(mocker):
     mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)
     mocker.patch("pydrive2.files.GoogleDriveFile.GetContentString", return_value="mock text")
 
-    with pytest.warns(FutureWarning, match="deprecated and will be removed in whatstk 1.0"):
+    with pytest.warns(FutureWarning, match="deprecated and will be removed in whatstk 0.10.0"):
         _load_str_from_file_id("some-id")

@@ -2,8 +2,8 @@
 
 .. deprecated:: 0.9.0
 
-    Google Drive support is deprecated and will be removed in 1.0. Download the export and pass a
-    local path instead. See `issue #177 <https://github.com/lucasrodes/whatstk/issues/177>`_.
+    Google Drive support is deprecated and will be removed in 0.10.0. Download the export and pass
+    a local path instead. See `issue #177 <https://github.com/lucasrodes/whatstk/issues/177>`_.
 
 .. warning::
 
@@ -44,7 +44,7 @@ CONFIG_DIR_MODE = 0o700
 CREDENTIAL_FILE_MODE = 0o600
 
 _DEPRECATION_MESSAGE = (
-    "Google Drive support is deprecated and will be removed in whatstk 1.0. Download the export "
+    "Google Drive support is deprecated and will be removed in whatstk 0.10.0. Download the export "
     "and pass a local path to df_from_whatsapp or WhatsAppChat.from_source instead. See "
     "https://github.com/lucasrodes/whatstk/issues/177"
 )
