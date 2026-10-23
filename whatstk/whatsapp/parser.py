@@ -1,10 +1,9 @@
 """Parser utils."""
 
+import io
 import os
 import re
 from datetime import datetime
-from pathlib import Path
-import tempfile
 from typing import Any, Optional, Tuple, List, Dict
 import unicodedata
 from urllib.request import urlopen
@@ -36,6 +35,15 @@ regex_simplifier = {
 # could prefix it. Anything that is not a known code is a literal and gets escaped by generate_regex.
 _HFORMAT_CODE_RE = re.compile("|".join(re.escape(code) for code in sorted(regex_simplifier, key=len, reverse=True)))
 
+MAX_INPUT_SIZE = 50 * 1024 * 1024
+"""Default cap on how much chat text is read from a single source, in bytes.
+
+50 MB is on the order of half a million messages, comfortably more than a real export, while
+keeping a hostile one bounded. Parsing peaks at roughly 13x the size of the text, so even at this
+limit a single chat can cost several hundred MB of memory; services accepting uploads should pass
+a smaller ``max_size``. Set it to None to read without a limit.
+"""
+
 
 def df_from_whatsapp(
     filepath: str,
@@ -43,6 +51,7 @@ def df_from_whatsapp(
     hformat: Optional[str] = None,
     encoding: str = "utf-8",
     message_type: Optional[bool] = None,
+    max_size: Optional[int] = MAX_INPUT_SIZE,
 ) -> pd.DataFrame:
     """Load chat as a DataFrame.
 
@@ -78,6 +87,9 @@ def df_from_whatsapp(
                                   html#standard-encodings>`_.
         message_type (bool, optional): Label for the message type. Can be 'user' or 'system', based on
                                         who sent the message.
+        max_size (int, optional): Maximum size of the chat text to read, in bytes. Guards against
+                                    compressed archives that expand to far more than they appear to
+                                    hold. Defaults to 50 MB; set to None to read without a limit.
 
     Returns:
         WhatsAppChat: Class instance with loaded and parsed chat.
@@ -124,7 +136,7 @@ def df_from_whatsapp(
 
     """
     # Read local file
-    text = _str_from_file(filepath, encoding)
+    text = _str_from_file(filepath, encoding, max_size=max_size)
 
     # Clean text from unwanted unicode characters
     text = _clean_text(text)
@@ -213,7 +225,40 @@ def generate_regex(hformat: str) -> Tuple[str, str]:
     return regex, regex_x
 
 
-def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
+def _too_large(source: str, max_size: int) -> ValueError:
+    """Build the error raised when a source exceeds the size limit."""
+    return ValueError(
+        f"{source} exceeds the maximum input size of {max_size} bytes. If this chat really is that "
+        "large, raise or disable the limit with the `max_size` argument."
+    )
+
+
+def _read_bounded(stream: Any, max_size: Optional[int], source: str) -> Any:  # noqa: ANN401
+    """Read a stream, refusing to materialise more than ``max_size`` units.
+
+    Reads one unit beyond the limit so that hitting it is distinguishable from a file that merely
+    ends there. Works for both binary and text streams; the caller decodes if needed.
+
+    Args:
+        stream: An open stream supporting ``read(n)``.
+        max_size (int, optional): Maximum number of bytes (or characters) to accept. None disables.
+        source (str): Human-readable description of the source, used in the error message.
+
+    Returns:
+        The stream contents.
+
+    Raises:
+        ValueError: If the stream holds more than ``max_size``.
+    """
+    if max_size is None:
+        return stream.read()
+    content = stream.read(max_size + 1)
+    if len(content) > max_size:
+        raise _too_large(source, max_size)
+    return content
+
+
+def _str_from_file(filepath: str, encoding: str = "utf-8", max_size: Optional[int] = MAX_INPUT_SIZE) -> str:
     """Read text content as string.
 
     Args:
@@ -221,43 +266,53 @@ def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
+        max_size (int, optional): Maximum size of the chat text to read, in bytes. Set to None to
+                                  read without a limit.
 
     Raises:
-        FileNotFoundError: [description]
+        FileNotFoundError: If the file exists neither locally nor remotely.
+        ValueError: If the ZIP does not hold exactly one file, or a source exceeds ``max_size``.
 
     Returns:
         str: File content as a string.
     """
     # ZIP
     if filepath.endswith(".zip"):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            # Uncompress the file
-            with zipfile.ZipFile(filepath, "r") as zip_ref:
-                zip_ref.extractall(temp_dir)
-            files = os.listdir(temp_dir)
-            if len(files) != 1:
+        with zipfile.ZipFile(filepath, "r") as zip_ref:
+            members = [m for m in zip_ref.infolist() if not m.is_dir()]
+            # Checked before reading anything, so a malformed archive costs nothing.
+            if len(members) != 1:
                 raise ValueError("Unexpected number of files in the ZIP! Only one is expected (the chat txt file)")
-            # Replace filepath
-            filepath = str(temp_dir / Path(files[0]))
-            # Read
-            with open(filepath, "r", encoding=encoding) as f:
-                text = f.read()
+            member = members[0]
+            source = f"ZIP member '{member.filename}'"
+            # The declared size is attacker-controlled, so it is only a cheap first rejection; the
+            # bounded read below is what actually caps how much is materialised.
+            if max_size is not None and member.file_size > max_size:
+                raise _too_large(source, max_size)
+            # Read the member straight out of the archive: nothing is written to disk, so a bomb
+            # cannot fill the filesystem either.
+            with zip_ref.open(member) as raw, io.TextIOWrapper(raw, encoding=encoding) as stream:
+                text = _read_bounded(stream, max_size, source)
     # TXT
     else:
         # Read local file
         if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
+            if max_size is not None and os.path.getsize(filepath) > max_size:
+                raise _too_large(f"File '{filepath}'", max_size)
             with open(filepath, "r", encoding=encoding) as f:
                 text = f.read()
         # Read file from URL
         elif filepath.lower().startswith("http"):
             with urlopen(filepath) as response:  # noqa
-                text = response.read()
-            text = text.decode(encoding)
+                raw_bytes = _read_bounded(response, max_size, f"Remote file '{filepath}'")
+            text = raw_bytes.decode(encoding)
         elif filepath.startswith("gdrive"):
             from whatstk.utils.gdrive import _load_str_from_file_id
 
             file_id = filepath.replace("gdrive://", "")
             text = _load_str_from_file_id(file_id)
+            if max_size is not None and len(text) > max_size:
+                raise _too_large(f"Google Drive file '{file_id}'", max_size)
         else:
             raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
     return text
