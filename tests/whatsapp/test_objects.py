@@ -177,13 +177,16 @@ def test_rename_users_does_not_rely_on_chained_assignment():
 
 
 def test_rename_users_works_under_copy_on_write(monkeypatch):
-    """Renaming must survive pandas copy-on-write, which is the default from pandas 3.0.
+    """Renaming must survive pandas copy-on-write.
 
     The previous implementation assigned through ``df[col][mask] = ...``. Under copy-on-write that
     writes to a temporary and is discarded, so rename_users silently returned an unchanged chat.
-    Prerequisite for #170.
+
+    On pandas 3 copy-on-write is always on and the switch is deprecated, so simply running this
+    exercises it. On pandas 2.x the option has to be turned on explicitly.
     """
-    monkeypatch.setattr(pd.options.mode, "copy_on_write", True)
+    if int(pd.__version__.split(".")[0]) < 3:
+        monkeypatch.setattr(pd.options.mode, "copy_on_write", True)
 
     chat = WhatsAppChat.from_source(filename1)
     renamed = chat.rename_users(mapping={"J": ["John"]})

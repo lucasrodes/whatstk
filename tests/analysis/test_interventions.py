@@ -131,8 +131,8 @@ def test_interventions_weekday():
     assert len(chat.users) == counts.shape[1]
 
     # Check range weekdays
-    assert counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max()
-    assert counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min()
+    assert counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.max()
+    assert counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.min()
 
 
 def test_interventions_weekday_msg_length():
@@ -145,8 +145,8 @@ def test_interventions_weekday_msg_length():
     assert len(chat.users) == counts.shape[1]
 
     # Check range weekdays
-    assert counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max()
-    assert counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min()
+    assert counts.index.max() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.max()
+    assert counts.index.min() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.min()
 
 
 def test_interventions_hourweekday():
@@ -159,8 +159,8 @@ def test_interventions_hourweekday():
     assert len(chat.users) == counts.shape[1]
 
     # Check range weekdays
-    assert counts.index.levels[0].max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max()
-    assert counts.index.levels[0].min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min()
+    assert counts.index.levels[0].max() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.max()
+    assert counts.index.levels[0].min() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.min()
 
     # Check range hours
     assert counts.index.levels[1].max() == chat.df[COLNAMES_DF.DATE].dt.hour.max()
@@ -177,8 +177,8 @@ def test_interventions_hourweekday_msg_length():
     assert len(chat.users) == counts.shape[1]
 
     # Check range weekdays
-    assert counts.index.levels[0].max() == chat.df[COLNAMES_DF.DATE].dt.weekday.max()
-    assert counts.index.levels[0].min() == chat.df[COLNAMES_DF.DATE].dt.weekday.min()
+    assert counts.index.levels[0].max() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.max()
+    assert counts.index.levels[0].min() == chat.df[COLNAMES_DF.DATE].dt.day_of_week.min()
 
     # Check range hours
     assert counts.index.levels[1].max() == chat.df[COLNAMES_DF.DATE].dt.hour.max()
