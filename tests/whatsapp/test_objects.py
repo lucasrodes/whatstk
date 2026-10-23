@@ -139,3 +139,54 @@ def test_from_source_extra_metadata_populates_name_and_system_messages():
 
     plain = WhatsAppChat.from_source(filepath=pokemon_filename)
     assert len(plain.df) == len(chat.df) + len(chat.df_system)
+
+
+# --- #177 small known bugs -----------------------------------------------------------------
+
+
+def test_to_txt_rejects_wrong_extension_with_the_right_message(tmp_path):
+    """The error said .zip, which is what to_zip wants, not to_txt."""
+    chat = WhatsAppChat.from_source(filename)
+    with pytest.raises(ValueError, match=r"must end with \.txt"):
+        chat.to_txt(str(tmp_path / "chat.csv"))
+
+
+def test_to_zip_rejects_wrong_extension(tmp_path):
+    chat = WhatsAppChat.from_source(filename)
+    with pytest.raises(ValueError, match=r"must end with \.zip"):
+        chat.to_zip(str(tmp_path / "chat.txt"))
+
+
+def test_rename_users_does_not_rely_on_chained_assignment():
+    """Renaming must actually take effect on the returned chat, and leave the original alone.
+
+    The previous implementation assigned through `df[col][mask] = ...`, which writes to a temporary
+    and is silently ignored under pandas copy-on-write.
+    """
+    chat = WhatsAppChat.from_source(filename1)
+    original_users = chat.users
+    assert "John" in original_users
+
+    renamed = chat.rename_users(mapping={"J": ["John"]})
+
+    assert "J" in renamed.users
+    assert "John" not in renamed.users
+    assert (renamed.df["username"] == "J").sum() == (chat.df["username"] == "John").sum()
+    # The source chat is untouched.
+    assert chat.users == original_users
+
+
+def test_rename_users_works_under_copy_on_write(monkeypatch):
+    """Renaming must survive pandas copy-on-write, which is the default from pandas 3.0.
+
+    The previous implementation assigned through ``df[col][mask] = ...``. Under copy-on-write that
+    writes to a temporary and is discarded, so rename_users silently returned an unchanged chat.
+    Prerequisite for #170.
+    """
+    monkeypatch.setattr(pd.options.mode, "copy_on_write", True)
+
+    chat = WhatsAppChat.from_source(filename1)
+    renamed = chat.rename_users(mapping={"J": ["John"]})
+
+    assert "J" in renamed.users
+    assert "John" not in renamed.users

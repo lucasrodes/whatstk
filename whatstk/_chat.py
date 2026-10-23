@@ -229,7 +229,8 @@ class BaseChat:
             if not isinstance(old_names, list):
                 raise ValueError("Old names must come as a list of str (even if there is only one).")
             for old_name in old_names:
-                self_.df[COLNAMES_DF.USERNAME][self_.df[COLNAMES_DF.USERNAME] == old_name] = new_name
+                mask = self_.df[COLNAMES_DF.USERNAME] == old_name
+                self_.df.loc[mask, COLNAMES_DF.USERNAME] = new_name
         return self_
 
     def filter_dates(

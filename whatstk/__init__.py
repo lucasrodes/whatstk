@@ -6,7 +6,7 @@ This library provides a powerful wrapper for multiple Languages and OS. In addit
 
 from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.graph import FigureBuilder
-from whatstk.whatsapp.parser import df_from_txt_whatsapp, df_from_whatsapp
+from whatstk.whatsapp.parser import df_from_whatsapp
 
 
 name = "whatstk"
@@ -15,7 +15,6 @@ __version__ = "0.8.1"
 
 __all__ = [
     "WhatsAppChat",
-    "df_from_txt_whatsapp",
     "df_from_whatsapp",
     "FigureBuilder",
 ]
