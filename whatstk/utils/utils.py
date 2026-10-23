@@ -1,6 +1,6 @@
 """Utils."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 import pandas as pd
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -40,12 +40,12 @@ class ColnamesDf:
 COLNAMES_DF = ColnamesDf()
 
 
-def _get_df(df: pd.DataFrame, chat: "BaseChat") -> pd.DataFrame:
-    if (df is None) & (chat is None):
+def _get_df(df: Optional[pd.DataFrame], chat: Optional["BaseChat"]) -> pd.DataFrame:
+    if df is not None:
+        return df
+    if chat is None:
         raise ValueError("Please provide a chat, using either argument `df` or `chat`.")
-    if (df is None) and (chat is not None):
-        df = chat.df
-    return df
+    return chat.df
 
 
 def _map_hformat_filename(filename: str) -> str:

@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 
 from whatstk._chat import BaseChat
 from whatstk.analysis.interventions import get_interventions_count
@@ -30,7 +30,7 @@ class FigureBuilder:
 
     """
 
-    def __init__(self, df: Optional[pd.DataFrame] = None, chat: "BaseChat" = None) -> None:
+    def __init__(self, df: Optional[pd.DataFrame] = None, chat: Optional["BaseChat"] = None) -> None:
         """Constructor.
 
         Args:
@@ -45,7 +45,7 @@ class FigureBuilder:
         self.__user_color_mapping = None
 
     @property
-    def usernames(self) -> BaseChat:
+    def usernames(self) -> List[str]:
         """Get list with users available in given chat.
 
         Returns:

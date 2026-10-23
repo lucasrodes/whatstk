@@ -20,7 +20,7 @@ and create figures.
 
 Open source and Community oriented
 ----------------------------------
-The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/master/LICENSE>`_,
-available on `GitHub <http://github.com/lucasrodes/whatstk>`_ and open for `user contributions <contribute.html>`_.
+The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/main/LICENSE>`_,
+available on `GitHub <https://github.com/lucasrodes/whatstk>`_ and open for `user contributions <contribute.html>`_.
 
 The project is maintained since 2016 by `@lucasrodes <https://github.com/lucasrodes>`_.

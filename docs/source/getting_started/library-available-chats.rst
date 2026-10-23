@@ -2,8 +2,8 @@ Library available chats
 =======================
 
 For the purpose of showcasing code examples and benchmarking different implementations, we have created a pool of chats,
-hosted in the `official repository page <https://github.com/lucasrodes/whatstk/tree/master/chats>`_. If you want to test
-the library with one of your own tests, check in the :ref:`code examples <Load chat>`.
+hosted in the `official repository page <https://github.com/lucasrodes/whatstk/tree/main/chats>`_. If you want to test
+the library with one of your own tests, check in the :ref:`code examples <Load WhatsApp chat>`.
 
 The chats are available via their corresponding URLs, which are listed in source code :mod:`whatstk.data`.
 
@@ -41,7 +41,7 @@ Brief fictional chat with Pokemon characters, which was manually designed by  `@
 
 
 .. seealso:: 
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_
 
 
 LOREM
@@ -64,7 +64,7 @@ library.
     4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_
 
 LOREM1
 ^^^^^^
@@ -84,13 +84,13 @@ Chat with 300 interventions of fictional users, generated using `python-lorem <h
     4 2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
 
 LOREM2
 ^^^^^^
 Chat with 300 interventions of fictional users, generated using `python-lorem <https://lorem.jarryshaw.me/en/latest/>`_.
 
-Can be used along with **LOREM1** to test :func:`chat merging functionalities <whatstk.WhatsAppChat.merge>` or :ref:`multiple-source loading <Load chat from multiple sources>`.
+Can be used along with **LOREM1** to test :func:`chat merging functionalities <whatstk.WhatsAppChat.merge>` or :ref:`multiple-source loading <Load WhatsApp chat from multiple sources>`.
 
 .. code-block:: python
 
@@ -106,7 +106,7 @@ Can be used along with **LOREM1** to test :func:`chat merging functionalities <w
     4 2020-06-20 17:28:00            John                      Dolore in cupidatat proident.
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part2.txt>`_
 
 LOREM_2000
 ^^^^^^^^^^
@@ -126,4 +126,4 @@ Chat with 2000 interventions of fictional users, generated using `python-lorem <
     4 2019-04-17 15:09:00            John  Eiusmod irure laboris dolore anim, velit velit...
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt>`_
