@@ -1,5 +1,5 @@
 ``whatstk-to-csv``
-=================
+==================
 
 Convert a WhatsApp txt file to csv.
 
