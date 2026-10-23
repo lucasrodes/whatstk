@@ -96,3 +96,42 @@ jobs:
           flags: full-matrix
           fail_ci_if_error: false
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  dependency-bounds:
+    name: Oldest allowed dependencies (Python ${{ matrix.python-version }})
+    needs: check-ready
+    if: needs.check-ready.outputs.should-run == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Both ends of the supported range: the floors have to work on the newest interpreter too,
+        # which is where stale pins break (no wheels, or a segfault at runtime).
+        python-version: ["3.11", "3.14"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Resolve to the lowest versions the pins allow
+        run: uv sync --all-extras --resolution lowest-direct
+
+      - name: Show what was resolved
+        run: uv run python -c "import pandas, numpy; print('pandas', pandas.__version__, 'numpy', numpy.__version__)"
+
+      - name: Generate test data
+        run: make generate-test-data
+
+      - name: Run tests
+        run: uv run pytest tests -q --no-header

@@ -28,6 +28,7 @@ make check.lint         # ruff check
 make check.type         # pyright
 make unittest           # pytest with coverage
 make unittest-parallel   # same, via pytest-xdist
+make unittest-lowest    # run against the oldest dependency versions the pins allow
 
 make docs               # build Sphinx docs to docs/_build/html
 make docs.serve         # build and serve on :8000
@@ -164,7 +165,11 @@ Releasing is a multi-step procedure with ordering constraints — **use the `rel
 ### CI
 
 - `ci-quick.yml` — every push and draft PR: Ubuntu / Python 3.13, full check suite.
-- `ci-full.yml` — PRs to `main`/`develop` and pushes there: 3 OSes × Python 3.11–3.14.
+- `ci-full.yml` — PRs to `main`/`develop` and pushes there: 3 OSes × Python 3.11–3.14, plus a
+  `dependency-bounds` job that resolves to the **lowest** versions the pins allow on Python 3.11
+  and 3.14. Without it, a floor can be nominally supported while being broken: `pandas~=2.2`
+  allowed pandas 2.2, which segfaults on Python 3.14, and nothing caught it because resolvers
+  always picked the newest 2.x.
 - `release.yml` — on a **published GitHub Release**: full matrix, then PyPI trusted publishing.
 
 Read the Docs builds independently via its own webhook; no workflow triggers it.

@@ -2,7 +2,7 @@
 
 import logging
 import re
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, cast
 import pandas as pd
 
 from whatstk.utils.exceptions import RegexError
@@ -209,16 +209,17 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
         hour_code = "%H"
 
     # day
-    day_pos = ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax()
+    # cast(): these are integer column positions, but pandas types idxmax/idxmin as Hashable.
+    day_pos = cast(int, ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax())
     dates_df = dates_df.drop(columns=[day_pos])
     # year
     # year_pos = dates_df.std().idxmin()
     pos = [0, 1, 2]
     pos.remove(day_pos)
-    year_pos = dates_df[pos].max().idxmax()  # Only consider positions 0,1,2
+    year_pos = cast(int, dates_df[pos].max().idxmax())  # Only consider positions 0,1,2
     dates_df = dates_df.drop(columns=[year_pos])
     # Month
-    month_pos = dates_df.columns.min()
+    month_pos = cast(int, dates_df.columns.min())
     dates_df = dates_df.drop(columns=[month_pos])
     # Hour
     hour_pos = 3

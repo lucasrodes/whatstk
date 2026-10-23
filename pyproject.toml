@@ -22,15 +22,18 @@ classifiers = [
 ]
 dependencies = [
     "emoji~=2.15",
-    "numpy~=2.1",
-    "pandas~=2.2",
+    # Floors are the oldest releases that work on every Python we support. Older numpy, pandas and
+    # scipy ship no wheels for the newer interpreters and either fail to build from source or, in
+    # pandas 2.2's case, segfault at runtime on 3.14. Upper bounds are the next major.
+    "numpy>=2.3.2,<3",
+    "pandas>=2.3.3,<4",
     "plotly~=6.5",
     "seaborn~=0.13",
 ]
 
 [project.optional-dependencies]
-gdrive = ["PyDrive2~=1.21", "PyYAML~=6.0"]
-generate = ["scipy~=1.14", "python-lorem~=1.3"]
+gdrive = ["PyDrive2~=1.21", "PyYAML>=6.0.3,<7"]
+generate = ["scipy>=1.16.1,<2", "python-lorem~=1.3"]
 full = ["whatstk[gdrive,generate]"]
 test = [
     "pytest~=9.0",

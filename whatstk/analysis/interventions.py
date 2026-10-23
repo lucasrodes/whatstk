@@ -1,6 +1,6 @@
 """Base analysis tools."""
 
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, List, Optional, cast
 
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
@@ -79,10 +79,10 @@ def get_interventions_count(
     elif date_mode == "hour":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.hour], msg_length)
     elif date_mode == "weekday":
-        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.day_of_week], msg_length)
     elif date_mode == "hourweekday":
         n_interventions = _interventions(
-            df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour], msg_length
+            df, [df[COLNAMES_DF.DATE].dt.day_of_week, df[COLNAMES_DF.DATE].dt.hour], msg_length
         )
     elif date_mode == "month":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.month], msg_length)
@@ -129,4 +129,6 @@ def _interventions(df: pd.DataFrame, series_tf: List[pd.DataFrame], msg_length: 
         counts = df.groupby(by=series_tf + [COLNAMES_DF.USERNAME]).agg({"message": "count"})
     counts = counts.unstack(fill_value=0)
 
-    return counts
+    # Grouping is always on at least two keys, so unstacking yields a frame; the pandas stubs
+    # widen it to DataFrame | Series.
+    return cast(pd.DataFrame, counts)
