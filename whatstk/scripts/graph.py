@@ -5,7 +5,7 @@ from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.graph import plot, FigureBuilder
 
 
-def _parse_args() -> None:
+def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Visualise a WhatsApp chat. For advance settings, see package librarydocumentation"
     )
@@ -69,4 +69,6 @@ def main() -> None:
         )
     elif args.type == "msg_length":
         fig = FigureBuilder(chat=chat).user_msg_length_boxplot()
+    else:
+        raise ValueError(f"Unsupported graph type: {args.type}")
     plot(fig, filename=args.output_filename)

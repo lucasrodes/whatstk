@@ -1,3 +1,9 @@
+import os
+import re
+import time
+from pathlib import Path
+from typing import Any
+
 from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR, CHATS_DIR
 import pandas as pd
 import pytest
@@ -20,8 +26,8 @@ filename2 = str(TEST_CHATS_MERGE_DIR / "file2.txt")
 file_type_1 = str(CHATS_DIR / "whatsapp" / "pokemon.txt")
 
 # Chat hosted on repo
-# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
-filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
+# filepath_url = "https://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/example.txt"
+filepath_url = "https://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/pokemon.txt"
 
 
 def test_df_from_whatsapp():
@@ -164,13 +170,339 @@ def test_auto_header_extraction_failure():
         _df_from_str(text, auto_header=True, hformat=None)
 
 
-def test_message_type_non_group():
-    """Test that message_type='user' for non-group chats."""
-    # Use a file with 2-3 users - it will have message_type column
-    df = df_from_whatsapp(filename1, message_type=True)
+def test_message_type_non_group(tmp_path):
+    """With two users or fewer there is no chat-level sender, so every message is a user message.
 
-    # Should have message_type column
-    assert COLNAMES_DF.MESSAGE_TYPE in df.columns
-    # For non-group chats (<=2 users), all messages should be 'user'
-    # Check that we have the message_type column (which covers line 150)
-    assert len(df) > 0
+    The previous version of this test used a four-user chat, so it exercised the group branch and
+    never reached the one it describes.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "06.08.2016, 13:23 - Ash: hey\n06.08.2016, 13:24 - Misty: hi\n",
+        encoding="utf-8",
+    )
+    df = df_from_whatsapp(str(chat), message_type=True)
+
+    assert len(set(df[COLNAMES_DF.USERNAME])) == 2
+    assert set(df[COLNAMES_DF.MESSAGE_TYPE]) == {"user"}
+
+
+def test_remove_alerts_truncates_embedded_header():
+    """A message body containing a header-like prefix is cut at that point.
+
+    This is what _remove_alerts_from_df exists for: the %name group is `[^:]*`, so a header can
+    over-match into the previous message. Nothing covered this, so the whole function could be
+    reduced to `return line_df` without failing a single test.
+    """
+    from whatstk.whatsapp.parser import generate_regex, _remove_alerts_from_line
+
+    _, r_x = generate_regex("%d.%m.%y, %H:%M - %name:")
+
+    assert _remove_alerts_from_line(r_x, "Hello there 06.08.2016, 13:23 - trailing junk") == "Hello there "
+    # A message with no embedded header is returned untouched.
+    assert _remove_alerts_from_line(r_x, "Hello there, nothing to strip") == "Hello there, nothing to strip"
+
+
+def test_remove_alerts_applied_when_parsing():
+    """The alert stripping runs as part of a normal parse."""
+    from whatstk.whatsapp.parser import _remove_alerts_from_df, generate_regex
+    import pandas as pd
+
+    _, r_x = generate_regex("%d.%m.%y, %H:%M - %name:")
+    df = pd.DataFrame(
+        {
+            COLNAMES_DF.DATE: pd.to_datetime(["2016-08-06 13:23"]),
+            COLNAMES_DF.USERNAME: ["Ash"],
+            COLNAMES_DF.MESSAGE: ["kept 07.08.2016, 11:45 - dropped"],
+        }
+    )
+    assert _remove_alerts_from_df(r_x, df).loc[0, COLNAMES_DF.MESSAGE] == "kept "
+
+
+# --- Report #1799: regex metacharacter injection via hformat -------------------------------------
+
+METACHARACTER_SEPARATORS = ["+", "*", "(", ")", "|", "?", "^", "$", ".", "\\"]
+
+
+@pytest.mark.parametrize("sep", METACHARACTER_SEPARATORS)
+def test_generate_regex_escapes_literal_separators(sep):
+    """Separators are literals and must never reach the regex engine as syntax.
+
+    Report #1799: codes were substituted into the hformat by plain string replacement, so a
+    separator such as '+' became a quantifier on the preceding named group.
+    """
+    from whatstk.whatsapp.parser import generate_regex
+
+    regex, _ = generate_regex(f"%d{sep}%m{sep}%y, %H:%M - %name:")
+    # The separator survives only in escaped form, never bare between two groups.
+    assert f"){sep}(" not in regex
+    assert re.escape(sep) in regex
+    re.compile(regex)  # must still be a valid pattern
+
+
+@pytest.mark.parametrize("sep", METACHARACTER_SEPARATORS)
+def test_chat_with_metacharacter_separator_parses(sep, tmp_path):
+    """A chat whose date separator is a metacharacter must parse, not raise a raw re/Type error.
+
+    Report #1799: auto-detection copies the header characters verbatim, so such a chat produced a
+    broken or exponential pattern with no hformat supplied by the caller.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "\n".join(f"0{d}{sep}08{sep}2016, 13:2{d} - Ash Ketchum: message {d}" for d in range(1, 6)),
+        encoding="utf-8",
+    )
+    df = df_from_whatsapp(str(chat))
+    assert len(df) == 5
+    assert set(df[COLNAMES_DF.USERNAME]) == {"Ash Ketchum"}
+
+
+def test_crafted_chat_does_not_cause_catastrophic_backtracking(tmp_path):
+    """A short crafted chat must not send the parser exponential.
+
+    Report #1799: with '+' separators, a ~170 byte file took 27s at 32 digits and scaled ~8x per
+    4 extra digits, so 48 digits ran for hours. The bound here is deliberately loose; before the
+    fix this input did not finish.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "\n".join(f"0{d}+08+2016, 13:2{d} - Ash: hi" for d in range(1, 6)) + "\n" + "1" * 48 + "x\n",
+        encoding="utf-8",
+    )
+
+    start = time.monotonic()
+    df_from_whatsapp(str(chat))
+    assert time.monotonic() - start < 10
+
+
+def test_dot_separator_is_literal_not_wildcard():
+    """'.' in an hformat must match a dot, not any character."""
+    from whatstk.whatsapp.parser import generate_regex
+
+    regex, _ = generate_regex("%d.%m.%y, %H:%M - %name:")
+    assert re.match(regex, "06.08.2016, 13:23 - Ash: ")
+    assert not re.match(regex, "06X08X2016, 13:23 - Ash: ")
+
+
+# --- Report #1800: decompression bomb in the ZIP loader -----------------------------------------
+
+
+def _write_zip(path, text, name="_chat.txt") -> str:
+    import zipfile
+
+    with zipfile.ZipFile(str(path), "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+        zf.writestr(name, text)
+    return str(path)
+
+
+CHAT_LINE = "06.08.2016, 13:23 - Ash Ketchum: hello there friend\n"
+
+
+def test_zip_exceeding_max_size_is_rejected(tmp_path):
+    """A highly compressible archive must be refused on its decompressed size, not its file size.
+
+    Report #1800: the loader called extractall with no size or ratio limit, so a small archive
+    could write hundreds of MB to disk and load the same again into memory.
+    """
+    bomb = _write_zip(tmp_path / "bomb.zip", CHAT_LINE * 200_000)
+    assert os.path.getsize(bomb) < 100_000  # small on disk...
+
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp(bomb, max_size=1024 * 1024)  # ...but far larger once expanded
+
+
+def test_zip_within_max_size_still_parses(tmp_path):
+    """The limit must not get in the way of an ordinary chat."""
+    ok = _write_zip(tmp_path / "ok.zip", CHAT_LINE * 50)
+    assert len(df_from_whatsapp(ok, max_size=1024 * 1024)) == 50
+
+
+def test_max_size_none_disables_the_limit(tmp_path):
+    """Callers who genuinely have a huge chat can opt out."""
+    big = _write_zip(tmp_path / "big.zip", CHAT_LINE * 2_000)
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp(big, max_size=1000)
+    assert len(df_from_whatsapp(big, max_size=None)) == 2_000
+
+
+def test_plain_text_file_exceeding_max_size_is_rejected(tmp_path):
+    """The cap applies to an uncompressed chat too, not only to archives."""
+    chat = tmp_path / "chat.txt"
+    chat.write_text(CHAT_LINE * 2_000, encoding="utf-8")
+
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp(str(chat), max_size=1000)
+
+
+def test_zip_member_count_checked_before_reading(tmp_path):
+    """The one-file guard must run before anything is decompressed.
+
+    Report #1800 noted the check sat after extractall, so a malformed archive still paid the full
+    decompression cost before being rejected.
+    """
+    import zipfile
+
+    path = tmp_path / "two.zip"
+    with zipfile.ZipFile(str(path), "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+        zf.writestr("_chat.txt", CHAT_LINE * 200_000)
+        zf.writestr("other.txt", CHAT_LINE * 200_000)
+
+    # Rejected on member count, and the tiny limit is never even consulted.
+    with pytest.raises(ValueError, match="Unexpected number of files in the ZIP"):
+        df_from_whatsapp(str(path), max_size=1024)
+
+
+def test_zip_is_not_extracted_to_disk(tmp_path, monkeypatch):
+    """The member is read from the archive; nothing is written to the filesystem."""
+    import tempfile as _tempfile
+
+    ok = _write_zip(tmp_path / "ok.zip", CHAT_LINE * 10)
+
+    def _fail(*args: object, **kwargs: object) -> None:
+        raise AssertionError("ZIP loading must not create a temporary directory")
+
+    monkeypatch.setattr(_tempfile, "TemporaryDirectory", _fail)
+    assert len(df_from_whatsapp(ok)) == 10
+
+
+def test_size_limit_is_applied_by_default():
+    """The cap must be on by default, not only when a caller remembers to pass it."""
+    import inspect
+
+    from whatstk.whatsapp.parser import MAX_INPUT_SIZE, _str_from_file
+
+    assert MAX_INPUT_SIZE == 50 * 1024 * 1024
+    for func in (df_from_whatsapp, _str_from_file):
+        assert inspect.signature(func).parameters["max_size"].default == MAX_INPUT_SIZE
+
+
+class _FakeResponse:
+    """Minimal stand-in for the object urlopen returns."""
+
+    def __init__(self, payload: bytes) -> None:
+        self._payload = payload
+
+    def read(self, n: int = -1) -> bytes:
+        return self._payload if n == -1 else self._payload[:n]
+
+    def __enter__(self) -> "_FakeResponse":
+        return self
+
+    def __exit__(self, *exc: object) -> bool:
+        return False
+
+
+def test_remote_file_exceeding_max_size_is_rejected(mocker):
+    """A URL has no trustworthy size up front, so the bounded read is the only guard there.
+
+    This is also the backstop that protects the ZIP path when an archive header understates the
+    member size, which the declared-size check would wave through.
+    """
+    mocker.patch(
+        "whatstk.whatsapp.parser.urlopen",
+        return_value=_FakeResponse((CHAT_LINE * 2_000).encode("utf-8")),
+    )
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp("https://example.invalid/chat.txt", max_size=1000)
+
+
+def test_remote_file_within_max_size_is_read(mocker):
+    """The same path must still work for a normal chat."""
+    mocker.patch(
+        "whatstk.whatsapp.parser.urlopen",
+        return_value=_FakeResponse((CHAT_LINE * 10).encode("utf-8")),
+    )
+    assert len(df_from_whatsapp("https://example.invalid/chat.txt", max_size=1024 * 1024)) == 10
+
+
+def test_gdrive_file_exceeding_max_size_is_rejected(mocker):
+    """The Google Drive path is capped too, even though it cannot stream."""
+    mocker.patch("whatstk.utils.gdrive._load_str_from_file_id", return_value=CHAT_LINE * 2_000)
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp("gdrive://some-file-id", max_size=1000)
+
+
+# --- unicode cleaning: NFKC, preserve ZWJ/ZWNJ (#171, #172) ---
+
+
+def _df_from_chat_content(tmp_path: Path, content: str, **kwargs: Any) -> pd.DataFrame:
+    """Write chat content to a txt file and load it with df_from_whatsapp."""
+    filepath = tmp_path / "chat.txt"
+    filepath.write_text(content, encoding="utf-8")
+    return df_from_whatsapp(str(filepath), **kwargs)
+
+
+def test_df_from_whatsapp_composed_unicode(tmp_path):
+    """Accented characters must remain composed (NFC form) after parsing.
+
+    NFKD normalization decomposed e.g. u-umlaut (U+00FC) into 'u' + combining diaeresis (U+0308), breaking downstream
+    NLP tools. See https://github.com/lucasrodes/whatstk/issues/172.
+    """
+    # 'Ju\u0308rgen': decomposed u-umlaut ('u' + combining diaeresis) in username and message
+    content = (
+        "12.06.2024, 20:35 - Ju\u0308rgen: Ich mu\u0308sste morgen fru\u0308h los\n12.06.2024, 20:36 - Hans: ok!\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert df["username"].iloc[0] == "J\u00fcrgen"
+    assert df["message"].iloc[0] == "Ich m\u00fcsste morgen fr\u00fch los"
+    # No combining marks left behind
+    assert "\u0308" not in df["message"].iloc[0]
+
+
+def test_df_from_whatsapp_zwj_emoji(tmp_path):
+    """Compound emojis (ZWJ sequences) must not be broken into their parts.
+
+    Removing the Zero Width Joiner (U+200D) turned e.g. the 'mending heart' emoji into two separate emojis. See
+    https://github.com/lucasrodes/whatstk/issues/171.
+    """
+    heart = "\u2764\ufe0f\u200d\U0001fa79"  # mending heart (ZWJ sequence)
+    family = "\U0001f468\u200d\U0001f469\u200d\U0001f466"  # family: man, woman, boy (ZWJ sequence)
+    content = (
+        f"12.06.2024, 20:35 - Ash: I feel {heart} today\n"
+        f"12.06.2024, 20:36 - Misty: nice {family}\n"
+        f"12.06.2024, 20:37 - Mom {heart}: dinner is ready\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert heart in df["message"].iloc[0]
+    assert family in df["message"].iloc[1]
+    # Username containing a ZWJ emoji must not break header detection
+    assert df["username"].iloc[2] == f"Mom {heart}"
+
+
+def test_df_from_whatsapp_zwnj_preserved(tmp_path):
+    """Zero Width Non-Joiner (U+200C) is meaningful in e.g. Persian text and must be preserved."""
+    persian = "\u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u0645"  # 'I want' in Persian, contains ZWNJ
+    content = f"12.06.2024, 20:35 - Ali: {persian}\n12.06.2024, 20:36 - Sara: ok\n"
+    df = _df_from_chat_content(tmp_path, content)
+    assert df["message"].iloc[0] == persian
+
+
+def test_df_from_whatsapp_directional_marks_stripped(tmp_path):
+    """Directional marks (e.g. U+200E) inserted by WhatsApp must still be removed, so header detection works.
+
+    This was the original reason for _clean_text, see https://github.com/lucasrodes/whatstk/pull/152.
+    """
+    content = (
+        "\u200e[12.06.24, 20:35:11] Mary: hello\n"
+        "\u200e[12.06.24, 20:36:00] John: hi \u200ethere\n"
+        "\u200e[12.06.24, 20:37:00] Mary: bye\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert len(df) == 3
+    assert df["username"].tolist() == ["Mary", "John", "Mary"]
+    assert df["message"].iloc[1] == "hi there"
+
+
+def test_df_from_whatsapp_narrow_nbsp_ampm(tmp_path):
+    """Auto header detection must handle the narrow no-break space (U+202F) iOS puts before 'AM'/'PM'.
+
+    This is why _clean_text uses a compatibility normalization form (NFKC), which folds U+202F into a regular space.
+    """
+    content = (
+        "[10/31/23, 3:34:33\u202fPM] Mary: hello\n"
+        "[10/31/23, 3:35:00\u202fPM] John: hi\n"
+        "[10/31/23, 4:01:12\u202fPM] Mary: bye\n"
+    )
+    df = _df_from_chat_content(tmp_path, content)
+    assert len(df) == 3
+    assert df["date"].iloc[0].hour == 15

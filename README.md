@@ -5,12 +5,12 @@
 
   **Parse, analyze, and visualize WhatsApp chats with Python**
 
-  [![PyPI](https://img.shields.io/badge/pypi-v0.8.1-25D366?logo=whatsapp)](https://pypi.org/project/whatstk/)
+  [![PyPI](https://img.shields.io/badge/pypi-v0.9.0-25D366?logo=whatsapp)](https://pypi.org/project/whatstk/)
   [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/downloads/)
   [![Build](https://img.shields.io/github/actions/workflow/status/lucasrodes/whatstk/ci-full.yml?branch=main)](https://github.com/lucasrodes/whatstk/actions)
-  [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/master/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
+  [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/main/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
   [![Documentation](https://readthedocs.org/projects/whatstk/badge/?version=latest)](https://whatstk.readthedocs.io/en/latest/)
-  [![License](https://img.shields.io/github/license/lucasrodes/whatstk)](https://github.com/lucasrodes/whatstk/blob/master/LICENSE)
+  [![License](https://img.shields.io/github/license/lucasrodes/whatstk)](https://github.com/lucasrodes/whatstk/blob/main/LICENSE)
   [![Downloads](https://pepy.tech/badge/whatstk)](https://pepy.tech/project/whatstk)
 
   [Documentation](https://whatstk.readthedocs.io/en/latest/) • [Try Live Demo](https://whatstk.streamlit.app/) • [Tutorial](https://medium.com/data-science/analyzing-whatsapp-chats-with-python-20d62ce7fe2d)
@@ -88,8 +88,11 @@ fig.show()
 Full documentation available at [whatstk.readthedocs.io](https://whatstk.readthedocs.io/en/latest/)
 
 - [Getting Started Guide](https://whatstk.readthedocs.io/en/latest/source/getting_started/index.html)
-- [Code Examples](https://whatstk.readthedocs.io/en/latest/source/api/index.html)
-- [API Reference](https://whatstk.readthedocs.io/en/latest/source/code/index.html)
+- [Code Examples](https://whatstk.readthedocs.io/en/latest/source/code_examples/index.html)
+- [API Reference](https://whatstk.readthedocs.io/en/latest/source/api/index.html)
+- [What whatstk cannot tell you](https://whatstk.readthedocs.io/en/latest/source/getting_started/limitations.html) — read before treating parsed output as a faithful record
+
+Using an AI assistant? Point it at [llms.txt](https://whatstk.readthedocs.io/en/latest/llms.txt), a condensed map of the library in one fetch.
 
 ## Contributing
 

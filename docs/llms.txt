@@ -1,0 +1,118 @@
+# whatstk
+
+> Parse WhatsApp chat exports into pandas DataFrames. Python 3.11+, GPL-3.0. The parser is the
+> product: it handles 96 header formats across Android and iOS, detects the format automatically,
+> and reads both `.txt` and `.zip` exports. Analysis and plotting helpers are included but are
+> secondary.
+
+Install with `pip install whatstk`. Everything runs locally; no chat data leaves the machine.
+
+## Parse a chat
+
+```python
+from whatstk import df_from_whatsapp
+
+df = df_from_whatsapp("chat.txt")   # .zip (iOS export) works too
+```
+
+The DataFrame has a RangeIndex and exactly three columns:
+
+| column | dtype | meaning |
+| --- | --- | --- |
+| `date` | `datetime64[ns]` | when the message was sent |
+| `username` | `string` | who the export says sent it |
+| `message` | `string` | the text, with multi-line messages joined |
+
+Use `whatstk.utils.utils.COLNAMES_DF` (`.DATE`, `.USERNAME`, `.MESSAGE`) instead of hardcoding the
+names.
+
+`df_from_whatsapp(filepath, auto_header=True, hformat=None, encoding="utf-8", message_type=None,
+max_size=52428800)`
+
+- `filepath` — local `.txt`/`.zip`, an `https://` URL, or `gdrive://FILE-ID`.
+- `hformat` — the header format. Omit it and the format is inferred.
+- `max_size` — refuse an input whose text exceeds this many bytes. Defaults to 50 MB; pass `None`
+  to disable. Parsing peaks at roughly 13x the text, so lower it if you parse untrusted uploads.
+
+## The header format
+
+Every message line starts with a header giving the timestamp and sender:
+
+```
+06.08.2016, 13:23 - Ash Ketchum: Hey guys!
+└──────── header ──────────────┘ └ message ┘
+```
+
+That layout is written as an `hformat` string — here `'%d.%m.%y, %H:%M - %name:'`. Codes: `%y`/`%Y`
+year, `%m` month, `%d` day, `%H` 24h hour, `%I` 12h hour, `%p`/`%P` AM/PM, `%M` minutes, `%S`
+seconds, `%name` sender. Literal characters between codes match themselves.
+
+Pass it explicitly when detection fails or when the chat is short:
+
+```python
+df = df_from_whatsapp("chat.txt", hformat="%d.%m.%y, %H:%M - %name:")
+```
+
+Check support with `whatstk.whatsapp.hformat.is_supported_verbose(hformat)`.
+
+## The chat object
+
+```python
+from whatstk import WhatsAppChat
+
+chat = WhatsAppChat.from_source("chat.txt")
+chat.df, chat.users, chat.start_date, chat.end_date
+chat.rename_users({"Mary": ["Maria", "Maria2"]})
+chat.filter_dates(date_min="2020-01-01")
+chat.to_csv("out.csv")
+```
+
+Combine several exports of the same conversation with
+`WhatsAppChat.from_sources([...])`, or `chat_a.merge(chat_b)`. Merging returns the union of the
+messages ordered by date, keeping one copy of anything that appears in more than one export.
+
+## Analysis and plots
+
+```python
+from whatstk.analysis import get_interventions_count, get_response_matrix
+from whatstk import FigureBuilder
+
+get_interventions_count(chat=chat, date_mode="date", msg_length=False)
+FigureBuilder(chat=chat).user_interventions_count_linechart(date_mode="date")
+```
+
+`FigureBuilder` also offers `user_msg_length_boxplot`, `user_message_responses_flow` and
+`user_message_responses_heatmap`. All return plotly figures.
+
+## Command line
+
+```bash
+whatstk-to-csv chat.txt out.csv
+whatstk-graph chat.txt -o output.html
+```
+
+## What whatstk cannot tell you
+
+Read this before treating the output as a faithful record.
+
+- **Authorship is a claim, not a fact.** An export does not mark the continuation lines of a
+  multi-line message, so a participant can put a line shaped like someone else's header inside
+  their own message and it parses as genuine. The two readings produce byte-identical files, so no
+  parser can separate them. Do not use an export alone as evidence of who said what.
+- **Automatic detection can pick the wrong format.** The day field is found by looking for a value
+  between 28 and 31; a chat that never reaches day 28 can have day and month swapped silently. Pass
+  `hformat` when the chat is short.
+- **Month names are not supported.** Dates must be numeric.
+- **System messages are not reliably identified.** The experimental `message_type` /
+  `extra_metadata` flags assume the first sender is the chat itself, which is wrong whenever an
+  export opens with a real message.
+
+## Docs
+
+- Getting started: https://whatstk.readthedocs.io/en/latest/source/getting_started/index.html
+- Limitations: https://whatstk.readthedocs.io/en/latest/source/getting_started/limitations.html
+- Header format: https://whatstk.readthedocs.io/en/latest/source/getting_started/hformat.html
+- Automatic detection: https://whatstk.readthedocs.io/en/latest/source/getting_started/auto_header.html
+- API reference: https://whatstk.readthedocs.io/en/latest/source/api/index.html
+- Code examples: https://whatstk.readthedocs.io/en/latest/source/code_examples/index.html
+- Source and issues: https://github.com/lucasrodes/whatstk

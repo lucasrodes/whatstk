@@ -25,11 +25,11 @@ from datetime import datetime
 # -- Project information -----------------------------------------------------
 
 project = 'whatstk'
-copy_right = f'{datetime.now().year}, sociepy'
+copyright = f'{datetime.now().year}, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.8.1'
+version = 'v0.9.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -82,6 +82,10 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# Serve llms.txt at the docs root (https://whatstk.readthedocs.io/en/latest/llms.txt).
+# See https://llmstxt.org/ -- it is a condensed map of the library for AI assistants.
+html_extra_path = ['llms.txt']
 
 # -- Copybutton ---------------------------------------------------------------
 copybutton_prompt_text = ">>> "
@@ -145,10 +149,8 @@ github_url = 'https://github.com/lucasrodes/whatstk'
 html_theme_options = {
     'logo_only': True,
     'navigation_depth': 4,
-    'display_version': True,
     'collapse_navigation': False,
     'sticky_navigation': False,
-    'github_banner': True,
 }
 
 # -- Args ---------------------------------------------------------------------

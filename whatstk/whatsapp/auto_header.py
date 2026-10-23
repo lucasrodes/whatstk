@@ -2,7 +2,7 @@
 
 import logging
 import re
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, cast
 import pandas as pd
 
 from whatstk.utils.exceptions import RegexError
@@ -46,8 +46,8 @@ def extract_header_from_text(text: str, encoding: str = "utf-8") -> Optional[str
         hformat = _extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
         return hformat
-    except Exception as err:  # noqa
-        logging.info("Format not found.")
+    except Exception as err:  # noqa: BLE001 - detection is best-effort; the caller raises if it returns None
+        logging.info("Format not found: %s: %s", type(err).__name__, err)
     return None
 
 
@@ -91,7 +91,7 @@ def _extract_elements_template_from_lines(lines: List[str]) -> Tuple[List[List[i
     return elements_list, template_list
 
 
-def _extract_possible_header_from_line(line: str) -> str:
+def _extract_possible_header_from_line(line: str) -> Optional[str]:
     """Given a `line` extract possible header. Uses ':' as separator.
 
     Args:
@@ -107,10 +107,8 @@ def _extract_possible_header_from_line(line: str) -> str:
         # possible header
         header = line_split[0]
         if not header.isprintable():
-            print("""
-                  There is some unprintable character in the header.
-                  Please report this in https://github.com/lucasrodes/whatstk.
-            """)
+            # Not necessarily an error: e.g. usernames with compound emojis contain a Zero Width Joiner (U+200D).
+            logging.debug("Header contains unprintable characters: %r", header)
         if header[-1] != ":":
             header += ":"
         return header
@@ -154,10 +152,7 @@ def _extract_header_parts(header: str) -> Tuple[List[int], str]:
             hformat_template += "{}"
             i = j
         else:
-            if header[i] in ["[", "]"]:
-                hformat_template += "\\" + header[i]
-            else:
-                hformat_template += header[i]
+            hformat_template += header[i]
         i += 1
     items = re.findall(r"[-|\]]\s[^:]*:", hformat_template)
     if len(items) != 1:
@@ -180,7 +175,7 @@ def _extract_header_parts(header: str) -> Tuple[List[int], str]:
     return hformat_elements, hformat_template
 
 
-def _extract_header_format_from_components(elements_list: List[List[int]], template_list: List[int]) -> str:
+def _extract_header_format_from_components(elements_list: List[List[int]], template_list: List[str]) -> str:
     """Extract header format from list containing elements and list containing templates.
 
     Args:
@@ -206,7 +201,9 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
     df = pd.DataFrame(elements_list_)
     # dates_df = df.select_dtypes(int)
     dates_df = df.select_dtypes("number")
-    template = template_list[0]
+    # template_list_ is the outlier-filtered list built just above; reading template_list here
+    # defeated that filtering and let a single odd first line pick the format for the whole chat.
+    template = template_list_[0]
 
     if "%p" in template:
         hour_code = "%I"
@@ -214,16 +211,17 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
         hour_code = "%H"
 
     # day
-    day_pos = ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax()
+    # cast(): these are integer column positions, but pandas types idxmax/idxmin as Hashable.
+    day_pos = cast(int, ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax())
     dates_df = dates_df.drop(columns=[day_pos])
     # year
     # year_pos = dates_df.std().idxmin()
     pos = [0, 1, 2]
     pos.remove(day_pos)
-    year_pos = dates_df[pos].max().idxmax()  # Only consider positions 0,1,2
+    year_pos = cast(int, dates_df[pos].max().idxmax())  # Only consider positions 0,1,2
     dates_df = dates_df.drop(columns=[year_pos])
     # Month
-    month_pos = dates_df.columns.min()
+    month_pos = cast(int, dates_df.columns.min())
     dates_df = dates_df.drop(columns=[month_pos])
     # Hour
     hour_pos = 3

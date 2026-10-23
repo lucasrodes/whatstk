@@ -1,10 +1,9 @@
 """Parser utils."""
 
+import io
 import os
 import re
 from datetime import datetime
-from pathlib import Path
-import tempfile
 from typing import Any, Optional, Tuple, List, Dict
 import unicodedata
 from urllib.request import urlopen
@@ -32,6 +31,19 @@ regex_simplifier = {
     "%name": rf"(?P<{COLNAMES_DF.USERNAME}>[^:]*)",
 }
 
+# Matches a single hformat code. Longest first, so '%name' is preferred over any shorter code that
+# could prefix it. Anything that is not a known code is a literal and gets escaped by generate_regex.
+_HFORMAT_CODE_RE = re.compile("|".join(re.escape(code) for code in sorted(regex_simplifier, key=len, reverse=True)))
+
+MAX_INPUT_SIZE = 50 * 1024 * 1024
+"""Default cap on how much chat text is read from a single source, in bytes.
+
+50 MB is on the order of half a million messages, comfortably more than a real export, while
+keeping a hostile one bounded. Parsing peaks at roughly 13x the size of the text, so even at this
+limit a single chat can cost several hundred MB of memory; services accepting uploads should pass
+a smaller ``max_size``. Set it to None to read without a limit.
+"""
+
 
 def df_from_whatsapp(
     filepath: str,
@@ -39,6 +51,7 @@ def df_from_whatsapp(
     hformat: Optional[str] = None,
     encoding: str = "utf-8",
     message_type: Optional[bool] = None,
+    max_size: Optional[int] = MAX_INPUT_SIZE,
 ) -> pd.DataFrame:
     """Load chat as a DataFrame.
 
@@ -46,7 +59,7 @@ def df_from_whatsapp(
         filepath (str): Path to the file. Accepted sources are:
 
                 * Local file, e.g. 'path/to/file.txt' OR 'path/to/_chat.zip' (e.g. iOS export).
-                * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
+                * URL to a remote hosted file, e.g. 'https://www.url.to/file.txt'.
                 * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
                   to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
                   :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
@@ -74,6 +87,9 @@ def df_from_whatsapp(
                                   html#standard-encodings>`_.
         message_type (bool, optional): Label for the message type. Can be 'user' or 'system', based on
                                         who sent the message.
+        max_size (int, optional): Maximum size of the chat text to read, in bytes. Guards against
+                                    compressed archives that expand to far more than they appear to
+                                    hold. Defaults to 50 MB; set to None to read without a limit.
 
     Returns:
         WhatsAppChat: Class instance with loaded and parsed chat.
@@ -87,12 +103,12 @@ def df_from_whatsapp(
             >>> from whatstk.data import whatsapp_urls
             >>> df = df_from_whatsapp(filepath=whatsapp_urls.LOREM)
             >>> df.head(5)
-                             date        username                                            message    message_type
-            0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.          system
-            1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰            user
-            2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...            user
-            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...            user
-            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.            user
+                             date        username                                            message
+            0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
+            1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
+            2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...
+            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
+            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
         Read a chat, labelling each message as 'user' or 'system'. 'system' messages are those sent by the chat itself
         (creation of chat, etc.)
@@ -112,6 +128,14 @@ def df_from_whatsapp(
 
 
 
+    ..  note::
+
+        The ``username`` column reports who the export says sent a message, which is not the same as
+        who sent it. A WhatsApp export does not mark the continuation lines of a multi-line message,
+        so a participant can place a line shaped like another person's header inside their own
+        message and it parses as genuine. See :ref:`What whatstk cannot tell you
+        <What whatstk cannot tell you>` before relying on the output as a faithful record.
+
     ..  seealso::
 
         * :func:`WhatsAppChat.from_source <whatstk.whatsapp.objects.WhatsAppChat.from_source>`
@@ -120,7 +144,7 @@ def df_from_whatsapp(
 
     """
     # Read local file
-    text = _str_from_file(filepath, encoding)
+    text = _str_from_file(filepath, encoding, max_size=max_size)
 
     # Clean text from unwanted unicode characters
     text = _clean_text(text)
@@ -135,10 +159,10 @@ def df_from_whatsapp(
     if message_type:
         warnings.warn(
             (
-                "The argument `extra_metadata` is an experimental feature that might become the default "
-                "in a future version. Set `extra_metadata=False` to keep current behavior. "
-                "The new behaviour will enables class attributes `chat.name` and `chat.df_system`. "
-                "Agian, this is very experimental, and has been mostly tested on iOS."
+                "The argument `message_type` is an experimental feature that might become the default "
+                "in a future version. Set `message_type=False` to keep current behavior. "
+                "It adds a `message_type` column labelling each message as 'user' or 'system'. "
+                "Again, this is very experimental, and has been mostly tested on iOS."
             ),
             FutureWarning,
             stacklevel=2,
@@ -165,11 +189,17 @@ def df_from_txt_whatsapp(filepath: str, **kwargs: Any) -> pd.DataFrame:  # noqa:
 def generate_regex(hformat: str) -> Tuple[str, str]:
     r"""Generate regular expression from hformat.
 
+    Each code is replaced by its named capture group. Everything between the codes is a literal
+    separator and is passed through :func:`re.escape`, so a separator that happens to be a regex
+    metacharacter (``+``, ``*``, ``(``, ``.`` …) matches itself instead of altering the pattern.
+
     Args:
         hformat (str): Simplified syntax for the header, e.g. ``'%y-%m-%d, %H:%M:%S - %name:'``.
 
     Returns:
-        str: Regular expression corresponding to the specified syntax.
+        tuple:
+                * str: Regular expression matching a full header, including the username.
+                * str: The same expression truncated just before the username group.
 
     Example:
         Generate regular expression corresponding to ``'hformat=%y-%m-%d, %H:%M:%S - %name:'``.
@@ -177,66 +207,121 @@ def generate_regex(hformat: str) -> Tuple[str, str]:
         ..  code-block:: python
 
             >>> from whatstk.whatsapp.parser import generate_regex
-            >>> generate_regex('%y-%m-%d, %H:%M:%S - %name:')
-            ('(?P<year>\\d{2,4})-(?P<month>\\d{1,2})-(?P<day>\\d{1,2}), (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?
-            P<seconds>\\d{2}) - (?P<username>[^:]*): ', '(?P<year>\\d{2,4})-(?P<month>\\d{1,2})-(?P<day>\\d{1,2}), (?
-            P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?P<seconds>\\d{2}) - ')
+            >>> regex, regex_x = generate_regex('%y-%m-%d, %H:%M:%S - %name:')
+            >>> regex
+            '(?P<year>\\d{2,4})\\-(?P<month>\\d{1,2})\\-(?P<day>\\d{1,2}),\\ (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):
+            (?P<seconds>\\d{2})\\ \\-\\ (?P<username>[^:]*): '
+            >>> regex_x
+            '(?P<year>\\d{2,4})\\-(?P<month>\\d{1,2})\\-(?P<day>\\d{1,2}),\\ (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):
+            (?P<seconds>\\d{2})\\ \\-\\ '
 
     """
-    items = re.findall(r"\%\w*", hformat)
-    for i in items:
-        hformat = hformat.replace(i, regex_simplifier[i])
+    parts: List[str] = []
+    username_at = None
+    last = 0
+    for match in _HFORMAT_CODE_RE.finditer(hformat):
+        # Everything between two codes is a literal separator and must not be read as regex syntax.
+        parts.append(re.escape(hformat[last : match.start()]))
+        if match.group() == "%name":
+            username_at = len(parts)
+        parts.append(regex_simplifier[match.group()])
+        last = match.end()
+    parts.append(re.escape(hformat[last:]) + " ")
 
-    hformat = hformat + " "
-    hformat_x = hformat.split("(?P<username>[^:]*)")[0]
-    return hformat, hformat_x
+    regex = "".join(parts)
+    regex_x = "".join(parts[:username_at]) if username_at is not None else regex
+    return regex, regex_x
 
 
-def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
+def _too_large(source: str, max_size: int) -> ValueError:
+    """Build the error raised when a source exceeds the size limit."""
+    return ValueError(
+        f"{source} exceeds the maximum input size of {max_size} bytes. If this chat really is that "
+        "large, raise or disable the limit with the `max_size` argument."
+    )
+
+
+def _read_bounded(stream: Any, max_size: Optional[int], source: str) -> Any:  # noqa: ANN401
+    """Read a stream, refusing to materialise more than ``max_size`` units.
+
+    Reads one unit beyond the limit so that hitting it is distinguishable from a file that merely
+    ends there. Works for both binary and text streams; the caller decodes if needed.
+
+    Args:
+        stream: An open stream supporting ``read(n)``.
+        max_size (int, optional): Maximum number of bytes (or characters) to accept. None disables.
+        source (str): Human-readable description of the source, used in the error message.
+
+    Returns:
+        The stream contents.
+
+    Raises:
+        ValueError: If the stream holds more than ``max_size``.
+    """
+    if max_size is None:
+        return stream.read()
+    content = stream.read(max_size + 1)
+    if len(content) > max_size:
+        raise _too_large(source, max_size)
+    return content
+
+
+def _str_from_file(filepath: str, encoding: str = "utf-8", max_size: Optional[int] = MAX_INPUT_SIZE) -> str:
     """Read text content as string.
 
     Args:
-        filepath (str): Path to file. Accepted: local file, url (http://...), Google Drive file (gdrive://[file-id]).
+        filepath (str): Path to file. Accepted: local file, url (http:// or https://), Google Drive file
+                        (gdrive://[file-id]).
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
+        max_size (int, optional): Maximum size of the chat text to read, in bytes. Set to None to
+                                  read without a limit.
 
     Raises:
-        FileNotFoundError: [description]
+        FileNotFoundError: If the file exists neither locally nor remotely.
+        ValueError: If the ZIP does not hold exactly one file, or a source exceeds ``max_size``.
 
     Returns:
         str: File content as a string.
     """
     # ZIP
     if filepath.endswith(".zip"):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            # Uncompress the file
-            with zipfile.ZipFile(filepath, "r") as zip_ref:
-                zip_ref.extractall(temp_dir)
-            files = os.listdir(temp_dir)
-            if len(files) != 1:
+        with zipfile.ZipFile(filepath, "r") as zip_ref:
+            members = [m for m in zip_ref.infolist() if not m.is_dir()]
+            # Checked before reading anything, so a malformed archive costs nothing.
+            if len(members) != 1:
                 raise ValueError("Unexpected number of files in the ZIP! Only one is expected (the chat txt file)")
-            # Replace filepath
-            filepath = str(temp_dir / Path(files[0]))
-            # Read
-            with open(filepath, "r", encoding=encoding) as f:
-                text = f.read()
+            member = members[0]
+            source = f"ZIP member '{member.filename}'"
+            # The declared size is attacker-controlled, so it is only a cheap first rejection; the
+            # bounded read below is what actually caps how much is materialised.
+            if max_size is not None and member.file_size > max_size:
+                raise _too_large(source, max_size)
+            # Read the member straight out of the archive: nothing is written to disk, so a bomb
+            # cannot fill the filesystem either.
+            with zip_ref.open(member) as raw, io.TextIOWrapper(raw, encoding=encoding) as stream:
+                text = _read_bounded(stream, max_size, source)
     # TXT
     else:
         # Read local file
         if os.path.isfile(filepath) and os.access(filepath, os.R_OK):
+            if max_size is not None and os.path.getsize(filepath) > max_size:
+                raise _too_large(f"File '{filepath}'", max_size)
             with open(filepath, "r", encoding=encoding) as f:
                 text = f.read()
         # Read file from URL
         elif filepath.lower().startswith("http"):
             with urlopen(filepath) as response:  # noqa
-                text = response.read()
-            text = text.decode(encoding)
+                raw_bytes = _read_bounded(response, max_size, f"Remote file '{filepath}'")
+            text = raw_bytes.decode(encoding)
         elif filepath.startswith("gdrive"):
             from whatstk.utils.gdrive import _load_str_from_file_id
 
             file_id = filepath.replace("gdrive://", "")
             text = _load_str_from_file_id(file_id)
+            if max_size is not None and len(text) > max_size:
+                raise _too_large(f"Google Drive file '{file_id}'", max_size)
         else:
             raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
     return text
@@ -244,9 +329,6 @@ def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
 
 def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = None) -> pd.DataFrame:
     # Get hformat
-    if hformat:
-        # Bracket is reserved character in RegEx, add backslash before them.
-        hformat = hformat.replace("[", r"\[").replace("]", r"\]")
     if not hformat and auto_header:
         hformat = extract_header_from_text(text)
         if not hformat:
@@ -255,7 +337,7 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
                 " input argument `hformat`. Report this issue so that automatic header detection support"
                 " for your header format is added: https://github.com/lucasrodes/whatstk/issues."
             )
-    elif not (hformat or auto_header):
+    elif not hformat:
         raise ValueError("If auto_header is False, hformat can't be None.")
 
     # Generate regex for given hformat
@@ -300,11 +382,13 @@ def _parse_chat(text: str, regex: str) -> pd.DataFrame:
 
 
 def _clean_text(text: str) -> str:
-    # List of additional unwanted Unicode characters
+    # List of additional unwanted Unicode characters. These are invisible formatting characters that WhatsApp inserts
+    # around headers (dates, usernames), which would otherwise break header detection and parsing.
+    # NOTE: Zero Width Joiner (U+200D) and Zero Width Non-Joiner (U+200C) must NOT be removed: ZWJ is required for
+    # compound emojis (e.g. the 'mending heart' emoji is U+2764 U+FE0F U+200D U+1FA79) and ZWNJ is meaningful in
+    # e.g. Persian text. See issue #171.
     unwanted_chars = [
         "\u200b",  # Zero Width Space
-        "\u200c",  # Zero Width Non-Joiner
-        "\u200d",  # Zero Width Joiner
         "\u202a",  # Left-to-Right Embedding
         "\u202b",  # Right-to-Left Embedding
         "\u202c",  # Pop Directional Formatting
@@ -321,7 +405,11 @@ def _clean_text(text: str) -> str:
     # Remove unwanted characters
     text = re.sub(pattern, "", text)
 
-    text = unicodedata.normalize("NFKD", text)
+    # NFKC (not NFKD, see issue #172): keeps characters composed (u-umlaut stays U+00FC instead of being decomposed
+    # into 'u' + combining diaeresis U+0308), while still folding compatibility characters. The compatibility folding
+    # (K) is required: iOS exports use a narrow no-break space (U+202F) before 'AM'/'PM', which must become a regular
+    # space for header detection to work.
+    text = unicodedata.normalize("NFKC", text)
 
     return text
 
@@ -346,7 +434,7 @@ def _add_schema(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _parse_line(text: str, headers: List[str], i: int) -> Dict[str, str]:
+def _parse_line(text: str, headers: List[re.Match], i: int) -> Dict[str, Any]:
     """Get date, username and message from the i:th intervention.
 
     Args:
@@ -359,15 +447,15 @@ def _parse_line(text: str, headers: List[str], i: int) -> Dict[str, str]:
 
     """
     result_ = headers[i].groupdict()
-    if "ampm" in result_:
-        hour = int(result_["hour"])
-        mode = result_.get("ampm").lower()
+    hour = int(result_["hour"])
+    # A 12h header carries an AM/PM marker; convert it to a 24h hour.
+    ampm = result_.get("ampm")
+    if ampm is not None:
+        mode = ampm.lower()
         if hour == 12 and mode == "am":
             hour = 0
         elif hour != 12 and mode == "pm":
             hour += 12
-    else:
-        hour = int(result_["hour"])
 
     # Check format of year. If year is 2-digit represented we add 2000
     if len(result_["year"]) == 2:
@@ -429,13 +517,13 @@ def _remove_alerts_from_line(r_x: str, line_df: str) -> str:
         str: Cleaned message string.
 
     """
-    if re.search(r_x, line_df):
-        return line_df[: re.search(r_x, line_df).start()]
-    else:
-        return line_df
+    match = re.search(r_x, line_df)
+    if match:
+        return line_df[: match.start()]
+    return line_df
 
 
-def _get_message(text: str, headers: List[str], i: int) -> str:
+def _get_message(text: str, headers: List[re.Match], i: int) -> str:
     """Get i:th message from text.
 
     Args:

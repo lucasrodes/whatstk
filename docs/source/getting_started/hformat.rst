@@ -37,7 +37,7 @@ Check the table below to see the codes for each header format unit:
     ``'%d'``,	Day of the month (1-31)
     ``'%H'``,	Hour 24h-clock (0-23)
     ``'%I'``,	Hour 12h-clock (1-12)
-    ``'%p'`` (or ``'%P'``),	"AM/PM", "am/pm", "A.M/P.M", "a.m/p.m" characters
+    ``'%p'`` (or ``'%P'``),	"AM/PM, am/pm, A.M/P.M or a.m/p.m characters"
     ``'%M'``,	Minutes (0-60)
     ``'%S'``,	Seconds (0-60)
     ``'%name'``,	Name of user

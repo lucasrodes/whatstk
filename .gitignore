@@ -279,6 +279,7 @@ flake-report
 notebooks
 reports
 
+security-reports/
 
 docs/_build/
 package-lock.json

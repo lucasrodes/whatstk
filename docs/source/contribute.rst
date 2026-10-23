@@ -9,6 +9,12 @@ Bug reporting
 -------------
 Please report any bug that you may find to the `issues <https://github.com/lucasrodes/whatstk/issues>`_ section.
 
+.. warning::
+
+    Do not report security vulnerabilities through public issues. Use
+    `private vulnerability reporting <https://github.com/lucasrodes/whatstk/security/advisories/new>`_
+    instead — see the `security policy <https://github.com/lucasrodes/whatstk/blob/main/SECURITY.md>`_.
+
 ----
 
 Requesting a Feature
@@ -28,14 +34,14 @@ Submitting a Pull Request
 
 
 Approval of pull request
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 A pull request will be accepted if:
 
 - Adds new functionalities of interest.
 - Does not decrease the overall project code `coverage <https://codecov.io/gh/lucasrodes/whatstk>`_. 
 
-.. note:: You will need to add tests for your code. For this, you can check the current `tests <https://github.com/lucasrodes/whatstk/tree/master/tests>`_.
+.. note:: You will need to add tests for your code. For this, you can check the current `tests <https://github.com/lucasrodes/whatstk/tree/main/tests>`_.
 
 ----
 

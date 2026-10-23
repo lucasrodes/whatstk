@@ -1,6 +1,6 @@
 """Base analysis tools."""
 
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Optional, cast
 
 import pandas as pd
 from whatstk.utils.utils import COLNAMES_DF, _get_df
@@ -10,8 +10,8 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 def get_interventions_count(
-    df: pd.DataFrame = None,
-    chat: "BaseChat" = None,
+    df: Optional[pd.DataFrame] = None,
+    chat: Optional["BaseChat"] = None,
     date_mode: str = "date",
     msg_length: bool = False,
     cumulative: bool = False,
@@ -47,7 +47,7 @@ def get_interventions_count(
 
     Example:
             Get number of interventions per user from `POKEMON chat
-            <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_. The counts are
+            <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_. The counts are
             represented as a `NxU` matrix, where `N`: number of time-slots and `U`: number of users.
 
             ..  code-block:: python
@@ -79,10 +79,10 @@ def get_interventions_count(
     elif date_mode == "hour":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.hour], msg_length)
     elif date_mode == "weekday":
-        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.weekday], msg_length)
+        n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.day_of_week], msg_length)
     elif date_mode == "hourweekday":
         n_interventions = _interventions(
-            df, [df[COLNAMES_DF.DATE].dt.weekday, df[COLNAMES_DF.DATE].dt.hour], msg_length
+            df, [df[COLNAMES_DF.DATE].dt.day_of_week, df[COLNAMES_DF.DATE].dt.hour], msg_length
         )
     elif date_mode == "month":
         n_interventions = _interventions(df, [df[COLNAMES_DF.DATE].dt.month], msg_length)
@@ -100,7 +100,7 @@ def get_interventions_count(
     n_interventions.columns = n_interventions.columns.get_level_values(COLNAMES_DF.USERNAME)
 
     if all_users:
-        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=["interventions count"])
+        n_interventions = pd.DataFrame(n_interventions.sum(axis=1), columns=pd.Index(["interventions count"]))
     if cumulative:
         n_interventions = n_interventions.cumsum()
 
@@ -129,4 +129,6 @@ def _interventions(df: pd.DataFrame, series_tf: List[pd.DataFrame], msg_length: 
         counts = df.groupby(by=series_tf + [COLNAMES_DF.USERNAME]).agg({"message": "count"})
     counts = counts.unstack(fill_value=0)
 
-    return counts
+    # Grouping is always on at least two keys, so unstacking yields a frame; the pandas stubs
+    # widen it to DataFrame | Series.
+    return cast(pd.DataFrame, counts)

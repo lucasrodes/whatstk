@@ -1,4 +1,4 @@
-.PHONY: help install install.dev generate-test-data check.format check.lint check.type test unittest clean bump.patch bump.minor bump.major docs docs.serve
+.PHONY: help install install.dev generate-test-data check.format check.lint check.type test unittest unittest-lowest clean bump.patch bump.minor bump.major docs docs.serve
 
 .DEFAULT_GOAL := help
 
@@ -77,6 +77,13 @@ unittest: $(TEST_CHATS_DIR) ## Run tests with coverage (use N=4 or N=auto for pa
 		--cov-report xml:$(REPORTS_DIR)/cov.xml \
 		--cov=$(PACKAGE_NAME) $(TEST_DIR)
 
+
+unittest-lowest: ## Run tests against the oldest dependency versions the pins allow
+	uv sync --all-extras --resolution lowest-direct
+	$(MAKE) generate-test-data
+	uv run pytest $(TEST_DIR) -q --no-header
+	@echo '==> Restoring the normal environment'
+	uv sync --all-extras
 
 unittest-parallel: $(TEST_CHATS_DIR) ## Run tests with coverage (use N=4 or N=auto for parallel execution)
 	mkdir -p $(REPORTS_DIR)

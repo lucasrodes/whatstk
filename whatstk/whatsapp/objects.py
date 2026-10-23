@@ -2,7 +2,7 @@
 
 import os
 import tempfile
-from typing import Optional, Any
+from typing import Optional, Any, List, Sequence
 import warnings
 import zipfile
 
@@ -78,7 +78,7 @@ class WhatsAppChat(BaseChat):
             filepath (str): Path to the file. Accepted sources are:
 
                 * Local file, e.g. 'path/to/file.txt' or 'path/to/file.zip' (iOS).
-                * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
+                * URL to a remote hosted file, e.g. 'https://www.url.to/file.txt'.
                 * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
                   to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
                   :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
@@ -104,8 +104,8 @@ class WhatsAppChat(BaseChat):
                 (
                     "The argument `extra_metadata` is an experimental feature that might become the default "
                     "in a future version. Set `extra_metadata=False` to keep current behavior. "
-                    "The new behaviour will enables class attributes `chat.name` and `chat.df_system`. "
-                    "Agian, this is very experimental, and has been mostly tested on iOS."
+                    "The new behaviour will enable class attributes `chat.name` and `chat.df_system`. "
+                    "Again, this is very experimental, and has been mostly tested on iOS."
                 ),
                 FutureWarning,
                 stacklevel=2,
@@ -121,7 +121,11 @@ class WhatsAppChat(BaseChat):
 
     @classmethod
     def from_sources(
-        cls, filepaths: str, auto_header: Optional[bool] = None, hformat: Optional[str] = None, encoding: str = "utf-8"
+        cls,
+        filepaths: List[str],
+        auto_header: Optional[bool] = None,
+        hformat: Optional[List[str]] = None,
+        encoding: str = "utf-8",
     ) -> "WhatsAppChat":
         """Load a WhatsAppChat instance from multiple sources.
 
@@ -166,14 +170,11 @@ class WhatsAppChat(BaseChat):
 
         """
         dfs = []
-        if auto_header is None or auto_header:
-            auto_header = [True] * len(filepaths)
-        else:
-            auto_header = [False] * len(filepaths)
-        if hformat is None:
-            hformat = [None] * len(filepaths)
-        for filepath, ah, hf in zip(filepaths, auto_header, hformat, strict=True):
-            chat = WhatsAppChat.from_source(filepath, auto_header=ah, hformat=hf, encoding=encoding)
+        # auto_header applies to every file; hformat is one entry per file.
+        detect_header = auto_header is None or auto_header
+        hformats: Sequence[Optional[str]] = [None] * len(filepaths) if hformat is None else hformat
+        for filepath, hf in zip(filepaths, hformats, strict=True):
+            chat = WhatsAppChat.from_source(filepath, auto_header=detect_header, hformat=hf, encoding=encoding)
             dfs.append(chat.df)
         df = merge_chats(dfs)
         return cls(df)
@@ -223,7 +224,7 @@ class WhatsAppChat(BaseChat):
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
         """
         if not filepath.endswith(".txt"):
-            raise ValueError(f"filepath {filepath} must end with .zip")
+            raise ValueError(f"filepath {filepath} must end with .txt")
         if not hformat:
             hformat = "%y-%m-%d, %H:%M - %name:"
         text = _df_to_str(self.df, hformat)

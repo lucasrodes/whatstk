@@ -125,10 +125,11 @@ class BaseChat:
         return self._df_raw[COLNAMES_DF.DATE].max()
 
     @classmethod
-    def from_source(cls, **kwargs: Any) -> None:  # noqa: ANN401
+    def from_source(cls, filepath: str, **kwargs: Any) -> "BaseChat":  # noqa: ANN401
         """Load chat.
 
         Args:
+            filepath (str): Path to the chat source.
             kwargs: Specific to the child class.
 
         Raises:
@@ -228,7 +229,8 @@ class BaseChat:
             if not isinstance(old_names, list):
                 raise ValueError("Old names must come as a list of str (even if there is only one).")
             for old_name in old_names:
-                self_.df[COLNAMES_DF.USERNAME][self_.df[COLNAMES_DF.USERNAME] == old_name] = new_name
+                mask = self_.df[COLNAMES_DF.USERNAME] == old_name
+                self_.df.loc[mask, COLNAMES_DF.USERNAME] = new_name
         return self_
 
     def filter_dates(

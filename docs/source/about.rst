@@ -9,8 +9,8 @@ process the data and `plotly <https://github.com/plotly/plotly.py>`_ to visualis
 You can also `try a live demo <https://whatstk.streamlit.app/>`_.
 
 
-The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/master/LICENSE>`_
-and is available on `GitHub <http://github.com/lucasrodes/whatstk>`_.
+The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/main/LICENSE>`_
+and is available on `GitHub <https://github.com/lucasrodes/whatstk>`_.
 
 ----
 
@@ -21,8 +21,8 @@ First contact with whatstk
 chat file into a pandas.DataFrame.
 
 Below, we use method :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` to load `LOREM chat
-<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own
-chat, simply :ref:`export it as a txt file <Export a WhatsApp chat from your phone>` to your computer and then use class argument ``filepath``, as
+<https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own
+chat, simply :ref:`export it as a txt file <Export a WhatsApp chat>` to your computer and then use class argument ``filepath``, as
 shown in the following example.
 
 
@@ -96,9 +96,12 @@ Note: It requires `git <https://git-scm.com/>`_ to be installed.
 Support
 -------
 You can ask questions and join the development discussion on `GitHub <https://github.com/lucasrodes/whatstk>`_. Use the
-`GitHub issues <https://github.com/lucasrodes/whatstk/issues>`_ section to report bugs or request features and `GitHub discussions <https://github.com/lucasrodes/whatstk/issues>`_ to open up broader discussions. You can also check the `project roadmap <https://github.com/lucasrodes/whatstk/projects/3>`_.
+`GitHub issues <https://github.com/lucasrodes/whatstk/issues>`_ section to report bugs or request features and `GitHub discussions <https://github.com/lucasrodes/whatstk/discussions>`_ to open up broader discussions.
 
 For more details, refer to the :ref:`contribute section <Contribute>`.
+
+If you are working with an AI assistant, `llms.txt <../llms.txt>`_ is a condensed map of the
+library — the public API, the header format model and the known limitations — in a single fetch.
 
 ----
 

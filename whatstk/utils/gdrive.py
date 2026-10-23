@@ -1,5 +1,10 @@
 """Google Drive utils.
 
+.. deprecated:: 0.9.0
+
+    Google Drive support is deprecated and will be removed in 0.10.0. Download the export and pass
+    a local path instead. See `issue #177 <https://github.com/lucasrodes/whatstk/issues/177>`_.
+
 .. warning::
 
     To load chats from google drive, install the library with the corresponding extension (ignore the
@@ -10,8 +15,8 @@
         pip install whatstk[gdrive] --upgrade
 """
 
-from shutil import copyfile
 import os
+import warnings
 
 try:
     from pydrive2.auth import GoogleAuth
@@ -33,6 +38,39 @@ CLIENT_SECRETS_PATH = os.path.join(CONFIG_PATH, "client_secrets.json")
 SETTINGS_PATH = os.path.join(CONFIG_PATH, "settings.yaml")
 CREDENTIALS_PATH = os.path.join(CONFIG_PATH, "credentials.json")
 
+# This directory holds the OAuth client secret and the refresh token, so nothing in it should be
+# readable by other users of the machine. POSIX only: on Windows these bits are largely ignored.
+CONFIG_DIR_MODE = 0o700
+CREDENTIAL_FILE_MODE = 0o600
+
+_DEPRECATION_MESSAGE = (
+    "Google Drive support is deprecated and will be removed in whatstk 0.10.0. Download the export "
+    "and pass a local path to df_from_whatsapp or WhatsAppChat.from_source instead. See "
+    "https://github.com/lucasrodes/whatstk/issues/177"
+)
+
+
+def _warn_deprecated() -> None:
+    """Emit the Google Drive deprecation warning."""
+    warnings.warn(_DEPRECATION_MESSAGE, FutureWarning, stacklevel=3)
+
+
+def _write_private(path: str, data: bytes) -> None:
+    """Write ``data`` to ``path``, readable and writable only by the current user.
+
+    The mode is passed to ``os.open`` rather than applied afterwards with ``chmod``, so the file is
+    never briefly world-readable. An existing file keeps its old mode through ``O_TRUNC``, hence the
+    explicit ``chmod`` as well.
+
+    Args:
+        path (str): Destination path.
+        data (bytes): Content to write.
+    """
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, CREDENTIAL_FILE_MODE)
+    with os.fdopen(fd, "wb") as f:
+        f.write(data)
+    os.chmod(path, CREDENTIAL_FILE_MODE)
+
 
 def gdrive_init(client_secret_file: str, encoding: str = "utf8") -> None:
     """Initialize GDrive credentials.
@@ -42,6 +80,11 @@ def gdrive_init(client_secret_file: str, encoding: str = "utf8") -> None:
 
     To obtain `client_secret_file`, follow the instructions from:
     https://medium.com/analytics-vidhya/how-to-connect-google-drive-to-python-using-pydrive-9681b2a14f20
+
+    The client secret, the generated settings and the refresh token are written to
+    ``~/.config/whatstk/gdrive`` with permissions ``0600``, inside a directory with ``0700``, so that
+    other users of the machine cannot read them. These are POSIX permission bits; Windows largely
+    ignores them, so on Windows the files are only as protected as the user's profile directory.
 
     Notes:
         - Additionally, make sure to add yourself in Test users, as noted in:
@@ -54,11 +97,17 @@ def gdrive_init(client_secret_file: str, encoding: str = "utf8") -> None:
                              `List of Python standard encodings
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
     """
-    if not os.path.isdir(CONFIG_PATH):
-        os.makedirs(CONFIG_PATH, exist_ok=True)
+    _warn_deprecated()
 
-    # Copy credentials to config folder
-    copyfile(client_secret_file, CLIENT_SECRETS_PATH)
+    os.makedirs(CONFIG_PATH, mode=CONFIG_DIR_MODE, exist_ok=True)
+    # makedirs only applies the mode to directories it creates, and subtracts the umask, so set it
+    # explicitly to also tighten a directory left behind by an earlier version.
+    os.chmod(CONFIG_PATH, CONFIG_DIR_MODE)
+
+    # Copy credentials to config folder. Read and rewrite rather than shutil.copyfile, which does
+    # not carry permissions over and would leave the copy at whatever the umask allows.
+    with open(client_secret_file, "rb") as f:
+        _write_private(CLIENT_SECRETS_PATH, f.read())
 
     # Create settings.yaml file
     dix = {
@@ -73,12 +122,14 @@ def gdrive_init(client_secret_file: str, encoding: str = "utf8") -> None:
             "https://www.googleapis.com/auth/drive.install",
         ],
     }
-    with open(SETTINGS_PATH, "w", encoding=encoding) as f:
-        yaml.dump(dix, f)
+    _write_private(SETTINGS_PATH, yaml.dump(dix).encode(encoding))
 
     # credentials.json
     gauth = GoogleAuth(settings_file=SETTINGS_PATH)
     gauth.CommandLineAuth()
+    # The refresh token is written by pydrive2, so tighten it once it exists.
+    if os.path.isfile(CREDENTIALS_PATH):
+        os.chmod(CREDENTIALS_PATH, CREDENTIAL_FILE_MODE)
 
 
 def _check_gdrive_config() -> None:
@@ -92,7 +143,8 @@ def _check_gdrive_config() -> None:
             raise ValueError(error_msg)
 
 
-def _load_str_from_file_id(file_id: int) -> str:
+def _load_str_from_file_id(file_id: str) -> str:
+    _warn_deprecated()
     _check_gdrive_config()
     gauth = GoogleAuth(settings_file=SETTINGS_PATH)
     drive = GoogleDrive(gauth)

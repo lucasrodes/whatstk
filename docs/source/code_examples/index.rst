@@ -11,7 +11,6 @@ Basic examples
    Load WhatsApp chat from multiple sources <load_chat_multiple>
    Load WhatsApp chat from Google Drive  <load_chat_gdrive>
    Load WhatsApp chat with specific hformat  <load_chat_hformat>
-   Rename usernames <load_chat_multiple>
 
 Visualisations
 --------------
