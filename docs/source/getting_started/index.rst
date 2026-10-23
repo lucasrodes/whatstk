@@ -12,6 +12,7 @@ Getting started with the library is fairly easy.
    Command line tools <command_line>
    The Header format <hformat>
    Automatic header detection <auto_header>
+   What whatstk cannot tell you <limitations>
    Library available chats <library-available-chats>
 
 For examples refer to :ref:`code examples <Code examples>` section.
