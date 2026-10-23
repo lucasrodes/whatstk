@@ -86,7 +86,7 @@ class ChatGenerator:
         messages = [sentences[i] + " " + emojis[i] for i in range(self.size)]
         return messages
 
-    def _generate_emojis(self, k: int = 1) -> str:
+    def _generate_emojis(self, k: int = 1) -> np.ndarray:
         """Generate random list of emojis.
 
         Emojis are sampled from a list of `n` emojis and `k*n` empty strings.
@@ -123,7 +123,7 @@ class ChatGenerator:
         ts = [last - timedelta(seconds=t * 60) for t in ts_]
         return ts[::-1]
 
-    def _generate_users(self) -> str:
+    def _generate_users(self) -> np.ndarray:
         """Generate list of users.
 
         Returns:
@@ -152,7 +152,7 @@ class ChatGenerator:
 
     def generate(
         self, filepath: Optional[str] = None, hformat: Optional[str] = None, last_timestamp: Optional[datetime] = None
-    ) -> str:
+    ) -> WhatsAppChat:
         """Generate random chat as :func:`WhatsAppChat <whatstk.whatsapp.objects.WhatsAppChat>`.
 
         Args:

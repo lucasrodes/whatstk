@@ -91,7 +91,7 @@ def _extract_elements_template_from_lines(lines: List[str]) -> Tuple[List[List[i
     return elements_list, template_list
 
 
-def _extract_possible_header_from_line(line: str) -> str:
+def _extract_possible_header_from_line(line: str) -> Optional[str]:
     """Given a `line` extract possible header. Uses ':' as separator.
 
     Args:
@@ -154,10 +154,7 @@ def _extract_header_parts(header: str) -> Tuple[List[int], str]:
             hformat_template += "{}"
             i = j
         else:
-            if header[i] in ["[", "]"]:
-                hformat_template += "\\" + header[i]
-            else:
-                hformat_template += header[i]
+            hformat_template += header[i]
         i += 1
     items = re.findall(r"[-|\]]\s[^:]*:", hformat_template)
     if len(items) != 1:

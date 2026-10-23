@@ -244,9 +244,6 @@ def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
 
 def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = None) -> pd.DataFrame:
     # Get hformat
-    if hformat:
-        # Bracket is reserved character in RegEx, add backslash before them.
-        hformat = hformat.replace("[", r"\[").replace("]", r"\]")
     if not hformat and auto_header:
         hformat = extract_header_from_text(text)
         if not hformat:
@@ -257,6 +254,10 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
             )
     elif not (hformat or auto_header):
         raise ValueError("If auto_header is False, hformat can't be None.")
+
+    # Bracket is a reserved character in RegEx, add backslash before them. This happens once, after the
+    # format has been obtained, so that a detected format and a user-provided one are treated alike.
+    hformat = hformat.replace("[", r"\[").replace("]", r"\]")
 
     # Generate regex for given hformat
     r, r_x = generate_regex(hformat=hformat)
@@ -346,7 +347,7 @@ def _add_schema(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _parse_line(text: str, headers: List[str], i: int) -> Dict[str, str]:
+def _parse_line(text: str, headers: List[re.Match], i: int) -> Dict[str, Any]:
     """Get date, username and message from the i:th intervention.
 
     Args:
@@ -435,7 +436,7 @@ def _remove_alerts_from_line(r_x: str, line_df: str) -> str:
         return line_df
 
 
-def _get_message(text: str, headers: List[str], i: int) -> str:
+def _get_message(text: str, headers: List[re.Match], i: int) -> str:
     """Get i:th message from text.
 
     Args:

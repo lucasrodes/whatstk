@@ -125,10 +125,11 @@ class BaseChat:
         return self._df_raw[COLNAMES_DF.DATE].max()
 
     @classmethod
-    def from_source(cls, **kwargs: Any) -> None:  # noqa: ANN401
+    def from_source(cls, filepath: str, **kwargs: Any) -> "BaseChat":  # noqa: ANN401
         """Load chat.
 
         Args:
+            filepath (str): Path to the chat source.
             kwargs: Specific to the child class.
 
         Raises:
