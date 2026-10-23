@@ -37,3 +37,30 @@ def test_extract_elements_template_from_lines():
     elements_list, template_list = _extract_elements_template_from_lines(["testing"])
     assert elements_list == []
     assert template_list == []
+
+
+def test_outlier_first_line_does_not_decide_the_format(tmp_path):
+    """The majority shape must win, not whichever valid header happens to come first.
+
+    The outlier filter builds `template_list_`, but the template was then read from the unfiltered
+    `template_list`. A first line whose numeric signature differs from the rest therefore chose the
+    format for the whole chat, producing a malformed hformat with two %name groups and a raw
+    re.PatternError rather than an HFormatError.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "\n".join(
+            ["15.04.2016, 15:04:33 - Pokemon Chat: encrypted notice"]  # has seconds
+            + [f"0{d}.08.2016, 13:2{d} - Ash: msg {d}" for d in range(1, 7)]  # the other six do not
+        ),
+        encoding="utf-8",
+    )
+    text = chat.read_text(encoding="utf-8")
+
+    assert extract_header_from_text(text) == "%d.%m.%y, %H:%M - %name:"
+
+    # The six majority-format messages parse. The odd line out cannot, since no single hformat
+    # matches both shapes -- but that is a dropped outlier, not a crash on the whole file.
+    df = df_from_whatsapp(str(chat))
+    assert len(df) == 6
+    assert set(df["username"]) == {"Ash"}

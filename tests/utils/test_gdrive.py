@@ -7,6 +7,9 @@ import pytest
 from whatstk.utils.gdrive import gdrive_init, _check_gdrive_config, _load_str_from_file_id
 import whatstk
 
+# These tests exercise the Google Drive code path, not its deprecation, which has its own tests.
+pytestmark = pytest.mark.filterwarnings("ignore:Google Drive support is deprecated:FutureWarning")
+
 
 def test_init_1(tmpdir, mocker):
     # Create tmp secrets
@@ -185,3 +188,21 @@ def test_client_secret_content_survives_the_copy(tmpdir, mocker):
     paths = _init_into(tmpdir, mocker)
     with open(paths["CLIENT_SECRETS_PATH"]) as f:
         assert json.load(f) == {"installed": {"client_secret": "SUPERSECRET"}}
+
+
+# --- #177: Google Drive is deprecated, FutureWarning in 0.9, removal in 1.0 ---------------------
+
+
+def test_gdrive_init_warns_it_is_deprecated(tmpdir, mocker):
+    with pytest.warns(FutureWarning, match="deprecated and will be removed in whatstk 1.0"):
+        _init_into(tmpdir, mocker)
+
+
+def test_loading_from_gdrive_warns_it_is_deprecated(mocker):
+    mocker.patch("whatstk.utils.gdrive._check_gdrive_config", return_value=True)
+    mocker.patch("pydrive2.auth.GoogleAuth", return_value=True)
+    mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)
+    mocker.patch("pydrive2.files.GoogleDriveFile.GetContentString", return_value="mock text")
+
+    with pytest.warns(FutureWarning, match="deprecated and will be removed in whatstk 1.0"):
+        _load_str_from_file_id("some-id")

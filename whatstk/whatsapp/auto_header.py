@@ -201,7 +201,9 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
     df = pd.DataFrame(elements_list_)
     # dates_df = df.select_dtypes(int)
     dates_df = df.select_dtypes("number")
-    template = template_list[0]
+    # template_list_ is the outlier-filtered list built just above; reading template_list here
+    # defeated that filtering and let a single odd first line pick the format for the whole chat.
+    template = template_list_[0]
 
     if "%p" in template:
         hour_code = "%I"
