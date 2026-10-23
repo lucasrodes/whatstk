@@ -29,7 +29,7 @@ copyright = f'{datetime.now().year}, sociepy'
 author = 'lucasrodes'
 
 # The full version, including alpha/beta/rc tags
-version = 'v0.8.1'
+version = 'v0.9.0'
 
 
 # -- General configuration ---------------------------------------------------
