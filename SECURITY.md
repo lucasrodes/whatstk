@@ -7,8 +7,8 @@ versions are not backported — please upgrade to the latest release.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.8.x   | :white_check_mark: |
-| < 0.8   | :x:                |
+| 0.10.x  | :white_check_mark: |
+| < 0.10  | :x:                |
 
 The current release is published on [PyPI](https://pypi.org/project/whatstk/).
 
@@ -41,7 +41,7 @@ following are in scope:
 - Arbitrary file write or path traversal when extracting `.zip` exports.
 - Code execution or resource exhaustion (e.g. catastrophic regex backtracking)
   triggered by a crafted chat file.
-- Unintended network access or credential exposure in the `gdrive` extra.
+- Unintended network access when a chat is loaded from a URL.
 
 The following are generally **not** in scope:
 

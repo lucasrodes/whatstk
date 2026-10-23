@@ -106,18 +106,6 @@ def test_df_from_whatsapp_url():
     assert isinstance(df, pd.DataFrame)
 
 
-def test_df_from_whatsapp_gdrive(mocker):
-    gdrive_url = "gdrive://456456456-ewgwegegw"
-    with open(filename1, "r", encoding="utf8") as f:
-        mock_text = f.read()
-    # mocker.patch('whatstk.utils.gdrive._load_str_from_file_id', return_value="bla bla")
-    mocker.patch("pydrive2.files.GoogleDriveFile.FetchMetadata", return_value=True)
-    mocker.patch("pydrive2.files.GoogleDriveFile.GetContentString", return_value=mock_text)
-    mocker.patch("whatstk.utils.gdrive._check_gdrive_config", return_value=None)
-    df = df_from_whatsapp(gdrive_url)
-    assert isinstance(df, pd.DataFrame)
-
-
 def test_df_from_whatsapp_error():
     with pytest.raises(FileNotFoundError):
         _ = df_from_whatsapp("grger")
@@ -415,16 +403,6 @@ def test_remote_file_within_max_size_is_read(mocker):
     assert len(df_from_whatsapp("https://example.invalid/chat.txt", max_size=1024 * 1024)) == 10
 
 
-def test_gdrive_file_exceeding_max_size_is_rejected(mocker):
-    """The Google Drive path is capped too, even though it cannot stream."""
-    mocker.patch("whatstk.utils.gdrive._load_str_from_file_id", return_value=CHAT_LINE * 2_000)
-    with pytest.raises(ValueError, match="exceeds the maximum input size"):
-        df_from_whatsapp("gdrive://some-file-id", max_size=1000)
-
-
-# --- unicode cleaning: NFKC, preserve ZWJ/ZWNJ (#171, #172) ---
-
-
 def _df_from_chat_content(tmp_path: Path, content: str, **kwargs: Any) -> pd.DataFrame:
     """Write chat content to a txt file and load it with df_from_whatsapp."""
     filepath = tmp_path / "chat.txt"
@@ -506,3 +484,13 @@ def test_df_from_whatsapp_narrow_nbsp_ampm(tmp_path):
     df = _df_from_chat_content(tmp_path, content)
     assert len(df) == 3
     assert df["date"].iloc[0].hour == 15
+
+
+def test_gdrive_paths_explain_the_removal():
+    """A gdrive:// path must say what happened, not fail as a missing file.
+
+    Google Drive support was removed in 0.10.0 after a deprecation in 0.9.0. Anyone still passing
+    such a path gets told where to go rather than a confusing FileNotFoundError.
+    """
+    with pytest.raises(ValueError, match="removed in whatstk 0.10.0"):
+        df_from_whatsapp("gdrive://some-file-id")

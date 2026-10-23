@@ -79,9 +79,6 @@ class WhatsAppChat(BaseChat):
 
                 * Local file, e.g. 'path/to/file.txt' or 'path/to/file.zip' (iOS).
                 * URL to a remote hosted file, e.g. 'https://www.url.to/file.txt'.
-                * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
-                  to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
-                  :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
             **kwargs: Refer to the docs from
                         :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` for details on
                         additional arguments.

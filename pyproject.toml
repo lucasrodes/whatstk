@@ -32,9 +32,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-gdrive = ["PyDrive2~=1.21", "PyYAML>=6.0.3,<7"]
 generate = ["scipy>=1.16.1,<2", "python-lorem~=1.3"]
-full = ["whatstk[gdrive,generate]"]
+full = ["whatstk[generate]"]
 test = [
     "pytest~=9.0",
     "pytest-cov~=7.0",

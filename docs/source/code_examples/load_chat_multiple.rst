@@ -46,5 +46,4 @@ username. To fix this, we rename *Maria* and *Maria2* as *Mary*:
 .. seealso::
 
     * :ref:`Load WhatsApp chat <Load WhatsApp chat>`
-    * :ref:`Load WhatsApp chat from Google Drive <Load WhatsApp chat from Google Drive>`
     * :ref:`Load WhatsApp chat with specific hformat <Load WhatsApp chat with specific hformat>`
