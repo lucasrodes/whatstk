@@ -30,8 +30,9 @@ def merge_chats(dfs: List[pd.DataFrame]) -> pd.DataFrame:
         pandas.DataFrame: Merged chat.
 
     """
-    # Sort from oldest
-    dfs = sorted(dfs, key=lambda x: x.index.min())
+    # Sort from oldest. Note this must use the date column: parsed chats have a RangeIndex, so
+    # sorting on the index would leave the chats in their original (possibly unsorted) order.
+    dfs = sorted(dfs, key=lambda x: x[COLNAMES_DF.DATE].min())
     # Merge
     df = dfs[0]
     for i in range(1, len(dfs)):

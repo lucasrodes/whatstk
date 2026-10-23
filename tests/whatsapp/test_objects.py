@@ -1,4 +1,4 @@
-from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR
+from tests.paths import TEST_CHATS_HFORMATS_DIR, TEST_CHATS_MERGE_DIR, CHATS_DIR
 
 import pandas as pd
 import pytest
@@ -103,3 +103,39 @@ def test_rename_users_error():
 def test_len():
     chat = WhatsAppChat.from_source(filename)
     assert isinstance(len(chat), int)
+
+
+pokemon_filename = str(CHATS_DIR / "whatsapp" / "pokemon.txt")
+
+
+def test_from_sources_without_auto_header_requires_hformat():
+    """auto_header=False must be honoured per file, not silently overridden.
+
+    Regression guard: from_sources builds a per-file list from the auto_header flag. If that flag is
+    ignored and detection is always enabled, this call would quietly succeed instead of raising.
+    """
+    with pytest.raises(ValueError, match="hformat can't be None"):
+        WhatsAppChat.from_sources([filename1, filename2], auto_header=False)
+
+
+def test_from_sources_honours_explicit_hformats():
+    """Passing one hformat per file must give the same result as detecting them."""
+    chat_auto = WhatsAppChat.from_sources([filename1, filename2])
+    chat_manual = WhatsAppChat.from_sources(
+        [filename1, filename2], auto_header=False, hformat=[hformat_merge, hformat_merge]
+    )
+    assert chat_manual.df.equals(chat_auto.df)
+
+
+def test_from_source_extra_metadata_populates_name_and_system_messages():
+    """extra_metadata=True must reach the parser and split system messages out of df."""
+    with pytest.warns(FutureWarning):
+        chat = WhatsAppChat.from_source(filepath=pokemon_filename, extra_metadata=True)
+
+    assert chat.name == "Pokemon Chat"
+    assert len(chat.df_system) == 1
+    # The system message is removed from the user-message frame.
+    assert chat.name not in set(chat.df["username"])
+
+    plain = WhatsAppChat.from_source(filepath=pokemon_filename)
+    assert len(plain.df) == len(chat.df) + len(chat.df_system)

@@ -4,7 +4,7 @@ import argparse
 from whatstk.whatsapp.objects import WhatsAppChat
 
 
-def _parse_args() -> None:
+def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Convert a Whatsapp chat from csv to txt.")
     parser.add_argument("input_filename", type=str, help="Input txt file.")
     parser.add_argument("output_filename", type=str, help="Name of output csv file.")

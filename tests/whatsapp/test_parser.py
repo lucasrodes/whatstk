@@ -174,3 +174,35 @@ def test_message_type_non_group():
     # For non-group chats (<=2 users), all messages should be 'user'
     # Check that we have the message_type column (which covers line 150)
     assert len(df) > 0
+
+
+def test_remove_alerts_truncates_embedded_header():
+    """A message body containing a header-like prefix is cut at that point.
+
+    This is what _remove_alerts_from_df exists for: the %name group is `[^:]*`, so a header can
+    over-match into the previous message. Nothing covered this, so the whole function could be
+    reduced to `return line_df` without failing a single test.
+    """
+    from whatstk.whatsapp.parser import generate_regex, _remove_alerts_from_line
+
+    _, r_x = generate_regex("%d.%m.%y, %H:%M - %name:")
+
+    assert _remove_alerts_from_line(r_x, "Hello there 06.08.2016, 13:23 - trailing junk") == "Hello there "
+    # A message with no embedded header is returned untouched.
+    assert _remove_alerts_from_line(r_x, "Hello there, nothing to strip") == "Hello there, nothing to strip"
+
+
+def test_remove_alerts_applied_when_parsing():
+    """The alert stripping runs as part of a normal parse."""
+    from whatstk.whatsapp.parser import _remove_alerts_from_df, generate_regex
+    import pandas as pd
+
+    _, r_x = generate_regex("%d.%m.%y, %H:%M - %name:")
+    df = pd.DataFrame(
+        {
+            COLNAMES_DF.DATE: pd.to_datetime(["2016-08-06 13:23"]),
+            COLNAMES_DF.USERNAME: ["Ash"],
+            COLNAMES_DF.MESSAGE: ["kept 07.08.2016, 11:45 - dropped"],
+        }
+    )
+    assert _remove_alerts_from_df(r_x, df).loc[0, COLNAMES_DF.MESSAGE] == "kept "

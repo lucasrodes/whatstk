@@ -5,7 +5,7 @@ from datetime import datetime
 from whatstk.whatsapp.generation import generate_chats_hformats
 
 
-def _parse_args() -> None:
+def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         "Generate chat. Make sure to install the library with required extension: pip install whatstk[generate] "
         "--upgrade"

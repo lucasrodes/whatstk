@@ -5,7 +5,7 @@ from whatstk.whatsapp.objects import WhatsAppChat
 from whatstk.graph import plot, FigureBuilder
 
 
-def _parse_args() -> None:
+def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Visualise a WhatsApp chat. For advance settings, see package librarydocumentation"
     )

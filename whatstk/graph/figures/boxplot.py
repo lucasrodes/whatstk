@@ -9,7 +9,10 @@ from whatstk.utils.utils import COLNAMES_DF
 
 
 def fig_boxplot_msglen(
-    df: pd.DataFrame, username_to_color: Dict[str, str] = None, title: str = "", xlabel: Optional[str] = None
+    df: pd.DataFrame,
+    username_to_color: Optional[Dict[str, str]] = None,
+    title: str = "",
+    xlabel: Optional[str] = None,
 ) -> go.Figure:
     """Visualize boxplot.
 

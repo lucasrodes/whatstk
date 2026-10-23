@@ -244,9 +244,6 @@ def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
 
 def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = None) -> pd.DataFrame:
     # Get hformat
-    if hformat:
-        # Bracket is reserved character in RegEx, add backslash before them.
-        hformat = hformat.replace("[", r"\[").replace("]", r"\]")
     if not hformat and auto_header:
         hformat = extract_header_from_text(text)
         if not hformat:
@@ -255,8 +252,12 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
                 " input argument `hformat`. Report this issue so that automatic header detection support"
                 " for your header format is added: https://github.com/lucasrodes/whatstk/issues."
             )
-    elif not (hformat or auto_header):
+    elif not hformat:
         raise ValueError("If auto_header is False, hformat can't be None.")
+
+    # Bracket is a reserved character in RegEx, add backslash before them. This happens once, after the
+    # format has been obtained, so that a detected format and a user-provided one are treated alike.
+    hformat = hformat.replace("[", r"\[").replace("]", r"\]")
 
     # Generate regex for given hformat
     r, r_x = generate_regex(hformat=hformat)
@@ -346,7 +347,7 @@ def _add_schema(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _parse_line(text: str, headers: List[str], i: int) -> Dict[str, str]:
+def _parse_line(text: str, headers: List[re.Match], i: int) -> Dict[str, Any]:
     """Get date, username and message from the i:th intervention.
 
     Args:
@@ -359,15 +360,15 @@ def _parse_line(text: str, headers: List[str], i: int) -> Dict[str, str]:
 
     """
     result_ = headers[i].groupdict()
-    if "ampm" in result_:
-        hour = int(result_["hour"])
-        mode = result_.get("ampm").lower()
+    hour = int(result_["hour"])
+    # A 12h header carries an AM/PM marker; convert it to a 24h hour.
+    ampm = result_.get("ampm")
+    if ampm is not None:
+        mode = ampm.lower()
         if hour == 12 and mode == "am":
             hour = 0
         elif hour != 12 and mode == "pm":
             hour += 12
-    else:
-        hour = int(result_["hour"])
 
     # Check format of year. If year is 2-digit represented we add 2000
     if len(result_["year"]) == 2:
@@ -429,13 +430,13 @@ def _remove_alerts_from_line(r_x: str, line_df: str) -> str:
         str: Cleaned message string.
 
     """
-    if re.search(r_x, line_df):
-        return line_df[: re.search(r_x, line_df).start()]
-    else:
-        return line_df
+    match = re.search(r_x, line_df)
+    if match:
+        return line_df[: match.start()]
+    return line_df
 
 
-def _get_message(text: str, headers: List[str], i: int) -> str:
+def _get_message(text: str, headers: List[re.Match], i: int) -> str:
     """Get i:th message from text.
 
     Args:
