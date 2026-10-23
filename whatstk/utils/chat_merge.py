@@ -19,8 +19,9 @@ def merge_chats(dfs: List[pd.DataFrame]) -> pd.DataFrame:
 
     Can come in handy when you have old exports and new ones, and both have relevant data.
 
-    **Note:** The dataframes must have an index with the timestamps of the messages, as this is required to correctly
-    sort and merge the chats.
+    **Note:** Chats are combined pairwise in order. For each pair, the chat with the earlier first message is kept
+    whole and only the messages of the other chat that are strictly newer than its last message are appended. Messages
+    of one chat that fall inside the date range already covered by another are therefore discarded as duplicates.
 
     Args:
         dfs (List[pandas.DataFrame]): List with the chats as DataFrames.

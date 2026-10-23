@@ -20,8 +20,8 @@ filename2 = str(TEST_CHATS_MERGE_DIR / "file2.txt")
 file_type_1 = str(CHATS_DIR / "whatsapp" / "pokemon.txt")
 
 # Chat hosted on repo
-# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/example.txt"
-filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/master/chats/whatsapp/pokemon.txt"
+# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/example.txt"
+filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/pokemon.txt"
 
 
 def test_df_from_whatsapp():

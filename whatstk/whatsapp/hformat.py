@@ -4,7 +4,7 @@ Example: Check if header is available.
 
     ..  code-block:: python
 
-        >>> from whatstk.utils.hformat import is_supported
+        >>> from whatstk.whatsapp.hformat import is_supported
         >>> is_supported('%y-%m-%d, %H:%M:%S - %name:')
         (True, True)
 
@@ -84,10 +84,12 @@ def is_supported_verbose(hformat: str) -> str:
 def get_supported_hformats_as_list(encoding: str = "utf8") -> List[str]:
     """Get list of supported formats.
 
-    Returns:
-        list: List with supported formats (as str).
+    Args:
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
             `List of Python standard encodings <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
+
+    Returns:
+        list: List with supported formats (as str).
     """
     with open(hformat_support_filepath, "r", encoding=encoding) as f:
         h = json.load(f)

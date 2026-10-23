@@ -104,8 +104,8 @@ class WhatsAppChat(BaseChat):
                 (
                     "The argument `extra_metadata` is an experimental feature that might become the default "
                     "in a future version. Set `extra_metadata=False` to keep current behavior. "
-                    "The new behaviour will enables class attributes `chat.name` and `chat.df_system`. "
-                    "Agian, this is very experimental, and has been mostly tested on iOS."
+                    "The new behaviour will enable class attributes `chat.name` and `chat.df_system`. "
+                    "Again, this is very experimental, and has been mostly tested on iOS."
                 ),
                 FutureWarning,
                 stacklevel=2,

@@ -30,7 +30,7 @@ verification code.
 
 .. code-block:: python
 
-    >>> from whatstk.utils import gdrive_init
+    >>> from whatstk.utils.gdrive import gdrive_init
     >>> gdrive_init("path/to/client_secrets.json")
     Go to the following link in your browser:
 

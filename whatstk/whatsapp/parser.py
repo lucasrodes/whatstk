@@ -87,12 +87,12 @@ def df_from_whatsapp(
             >>> from whatstk.data import whatsapp_urls
             >>> df = df_from_whatsapp(filepath=whatsapp_urls.LOREM)
             >>> df.head(5)
-                             date        username                                            message    message_type
-            0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.          system
-            1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰            user
-            2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...            user
-            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...            user
-            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.            user
+                             date        username                                            message
+            0 2020-01-15 02:22:56            Mary                     Nostrud exercitation magna id.
+            1 2020-01-15 03:33:01            Mary     Non elit irure irure pariatur exercitation. 🇩🇰
+            2 2020-01-15 04:18:42  +1 123 456 789  Exercitation esse lorem reprehenderit ut ex ve...
+            3 2020-01-15 06:05:14        Giuseppe  Aliquip dolor reprehenderit voluptate dolore e...
+            4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
         Read a chat, labelling each message as 'user' or 'system'. 'system' messages are those sent by the chat itself
         (creation of chat, etc.)
@@ -135,10 +135,10 @@ def df_from_whatsapp(
     if message_type:
         warnings.warn(
             (
-                "The argument `extra_metadata` is an experimental feature that might become the default "
-                "in a future version. Set `extra_metadata=False` to keep current behavior. "
-                "The new behaviour will enables class attributes `chat.name` and `chat.df_system`. "
-                "Agian, this is very experimental, and has been mostly tested on iOS."
+                "The argument `message_type` is an experimental feature that might become the default "
+                "in a future version. Set `message_type=False` to keep current behavior. "
+                "It adds a `message_type` column labelling each message as 'user' or 'system'. "
+                "Again, this is very experimental, and has been mostly tested on iOS."
             ),
             FutureWarning,
             stacklevel=2,

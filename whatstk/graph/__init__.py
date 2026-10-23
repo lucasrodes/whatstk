@@ -3,7 +3,8 @@
 Import :func:`plot <whatstk.graph.plot>` to plot figures.
 
 ..  code-block:: python
-        >>> from whatstk.graph import plot
+
+    >>> from whatstk.graph import plot
 
 """
 
