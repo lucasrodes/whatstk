@@ -24,8 +24,8 @@ filename2 = str(TEST_CHATS_MERGE_DIR / "file2.txt")
 file_type_1 = str(CHATS_DIR / "whatsapp" / "pokemon.txt")
 
 # Chat hosted on repo
-# filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/example.txt"
-filepath_url = "http://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/pokemon.txt"
+# filepath_url = "https://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/example.txt"
+filepath_url = "https://raw.githubusercontent.com/lucasrodes/whatstk/main/chats/whatsapp/pokemon.txt"
 
 
 def test_df_from_whatsapp():
@@ -401,7 +401,7 @@ def test_remote_file_exceeding_max_size_is_rejected(mocker):
         return_value=_FakeResponse((CHAT_LINE * 2_000).encode("utf-8")),
     )
     with pytest.raises(ValueError, match="exceeds the maximum input size"):
-        df_from_whatsapp("http://example.invalid/chat.txt", max_size=1000)
+        df_from_whatsapp("https://example.invalid/chat.txt", max_size=1000)
 
 
 def test_remote_file_within_max_size_is_read(mocker):
@@ -410,7 +410,7 @@ def test_remote_file_within_max_size_is_read(mocker):
         "whatstk.whatsapp.parser.urlopen",
         return_value=_FakeResponse((CHAT_LINE * 10).encode("utf-8")),
     )
-    assert len(df_from_whatsapp("http://example.invalid/chat.txt", max_size=1024 * 1024)) == 10
+    assert len(df_from_whatsapp("https://example.invalid/chat.txt", max_size=1024 * 1024)) == 10
 
 
 def test_gdrive_file_exceeding_max_size_is_rejected(mocker):

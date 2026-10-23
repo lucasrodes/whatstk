@@ -13,7 +13,7 @@ from collections import namedtuple
 Urls = namedtuple("Urls", ["POKEMON", "LOREM", "LOREM1", "LOREM2", "LOREM_2000"])
 
 branch = "develop"
-chats_folder = f"http://raw.githubusercontent.com/lucasrodes/whatstk/{branch}/chats"  # noqa: E231
+chats_folder = f"https://raw.githubusercontent.com/lucasrodes/whatstk/{branch}/chats"  # noqa: E231
 
 whatsapp_urls = Urls(
     POKEMON=os.path.join(chats_folder, "whatsapp", "pokemon.txt"),

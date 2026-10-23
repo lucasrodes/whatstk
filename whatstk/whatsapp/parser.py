@@ -59,7 +59,7 @@ def df_from_whatsapp(
         filepath (str): Path to the file. Accepted sources are:
 
                 * Local file, e.g. 'path/to/file.txt' OR 'path/to/_chat.zip' (e.g. iOS export).
-                * URL to a remote hosted file, e.g. 'http://www.url.to/file.txt'.
+                * URL to a remote hosted file, e.g. 'https://www.url.to/file.txt'.
                 * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
                   to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
                   :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
@@ -262,7 +262,8 @@ def _str_from_file(filepath: str, encoding: str = "utf-8", max_size: Optional[in
     """Read text content as string.
 
     Args:
-        filepath (str): Path to file. Accepted: local file, url (http://...), Google Drive file (gdrive://[file-id]).
+        filepath (str): Path to file. Accepted: local file, url (http:// or https://), Google Drive file
+                        (gdrive://[file-id]).
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
