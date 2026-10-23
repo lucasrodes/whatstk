@@ -32,6 +32,10 @@ regex_simplifier = {
     "%name": rf"(?P<{COLNAMES_DF.USERNAME}>[^:]*)",
 }
 
+# Matches a single hformat code. Longest first, so '%name' is preferred over any shorter code that
+# could prefix it. Anything that is not a known code is a literal and gets escaped by generate_regex.
+_HFORMAT_CODE_RE = re.compile("|".join(re.escape(code) for code in sorted(regex_simplifier, key=len, reverse=True)))
+
 
 def df_from_whatsapp(
     filepath: str,
@@ -165,11 +169,17 @@ def df_from_txt_whatsapp(filepath: str, **kwargs: Any) -> pd.DataFrame:  # noqa:
 def generate_regex(hformat: str) -> Tuple[str, str]:
     r"""Generate regular expression from hformat.
 
+    Each code is replaced by its named capture group. Everything between the codes is a literal
+    separator and is passed through :func:`re.escape`, so a separator that happens to be a regex
+    metacharacter (``+``, ``*``, ``(``, ``.`` …) matches itself instead of altering the pattern.
+
     Args:
         hformat (str): Simplified syntax for the header, e.g. ``'%y-%m-%d, %H:%M:%S - %name:'``.
 
     Returns:
-        str: Regular expression corresponding to the specified syntax.
+        tuple:
+                * str: Regular expression matching a full header, including the username.
+                * str: The same expression truncated just before the username group.
 
     Example:
         Generate regular expression corresponding to ``'hformat=%y-%m-%d, %H:%M:%S - %name:'``.
@@ -177,19 +187,30 @@ def generate_regex(hformat: str) -> Tuple[str, str]:
         ..  code-block:: python
 
             >>> from whatstk.whatsapp.parser import generate_regex
-            >>> generate_regex('%y-%m-%d, %H:%M:%S - %name:')
-            ('(?P<year>\\d{2,4})-(?P<month>\\d{1,2})-(?P<day>\\d{1,2}), (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?
-            P<seconds>\\d{2}) - (?P<username>[^:]*): ', '(?P<year>\\d{2,4})-(?P<month>\\d{1,2})-(?P<day>\\d{1,2}), (?
-            P<hour>\\d{1,2}):(?P<minutes>\\d{2}):(?P<seconds>\\d{2}) - ')
+            >>> regex, regex_x = generate_regex('%y-%m-%d, %H:%M:%S - %name:')
+            >>> regex
+            '(?P<year>\\d{2,4})\\-(?P<month>\\d{1,2})\\-(?P<day>\\d{1,2}),\\ (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):
+            (?P<seconds>\\d{2})\\ \\-\\ (?P<username>[^:]*): '
+            >>> regex_x
+            '(?P<year>\\d{2,4})\\-(?P<month>\\d{1,2})\\-(?P<day>\\d{1,2}),\\ (?P<hour>\\d{1,2}):(?P<minutes>\\d{2}):
+            (?P<seconds>\\d{2})\\ \\-\\ '
 
     """
-    items = re.findall(r"\%\w*", hformat)
-    for i in items:
-        hformat = hformat.replace(i, regex_simplifier[i])
+    parts: List[str] = []
+    username_at = None
+    last = 0
+    for match in _HFORMAT_CODE_RE.finditer(hformat):
+        # Everything between two codes is a literal separator and must not be read as regex syntax.
+        parts.append(re.escape(hformat[last : match.start()]))
+        if match.group() == "%name":
+            username_at = len(parts)
+        parts.append(regex_simplifier[match.group()])
+        last = match.end()
+    parts.append(re.escape(hformat[last:]) + " ")
 
-    hformat = hformat + " "
-    hformat_x = hformat.split("(?P<username>[^:]*)")[0]
-    return hformat, hformat_x
+    regex = "".join(parts)
+    regex_x = "".join(parts[:username_at]) if username_at is not None else regex
+    return regex, regex_x
 
 
 def _str_from_file(filepath: str, encoding: str = "utf-8") -> str:
@@ -254,10 +275,6 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
             )
     elif not hformat:
         raise ValueError("If auto_header is False, hformat can't be None.")
-
-    # Bracket is a reserved character in RegEx, add backslash before them. This happens once, after the
-    # format has been obtained, so that a detected format and a user-provided one are treated alike.
-    hformat = hformat.replace("[", r"\[").replace("]", r"\]")
 
     # Generate regex for given hformat
     r, r_x = generate_regex(hformat=hformat)
