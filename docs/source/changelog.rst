@@ -2,6 +2,30 @@ Changelog
 =========
 
 
+v0.9.1
+------
+
+A parsing fix, plus dependency updates.
+
+- **Bug fix**: Automatic header detection no longer depends on the chat spanning day 28. The day
+  position was found by looking for a column whose maximum fell between 28 and 31; on a shorter
+  chat nothing matched and the first column was used instead. Measured over the 96 supported
+  formats on a chat confined to days 1–20, only 24 were detected correctly. The rest either parsed
+  to the wrong dates with no error — ``2016-08-15`` read as ``2015-08-16`` — or raised an uncaught
+  ``ValueError`` from ``datetime``. Day, month and year are now chosen by scoring every ordering
+  against the values actually present, which detects all 96 at spans from two days to two years
+  (#175).
+- **Bug fix**: The ``llms.txt`` link on the documentation landing page pointed at a URL that
+  returned 404.
+- **Dependencies**: Updated ``anyio``, ``httplib2``, ``pyasn1`` and ``urllib3``.
+
+.. container:: toggle
+
+    **Show all commits**
+
+    .. git_changelog::
+        :rev-list: v0.9.0..HEAD
+
 v0.9.0
 ------
 
