@@ -163,8 +163,18 @@ git checkout develop
 git pull origin develop
 git merge --no-ff main
 git push origin develop
-git log --oneline origin/main..origin/develop   # expect: empty
+
+git log --oneline origin/develop..origin/main   # expect: empty -- develop has everything main does
+git diff --stat origin/main origin/develop      # expect: empty -- the trees match
 ```
+
+Check those two, not `main..develop`. That direction is never empty here: `main` collects merge
+commits from release PRs while `develop` keeps the individual commits, so it will always show
+dozens even when the branches are identical in content.
+
+Expect a conflict in `uv.lock` if the release branch bumped dependencies. Resolve it by taking
+`main`'s copy (`git checkout --theirs uv.lock`), since that is the released state, then confirm with
+`uv lock --check` and `make test` before committing.
 
 Finally, delete the release branch and report to the user: version published, PyPI URL, release
 notes URL, and whether RTD rebuilt.
