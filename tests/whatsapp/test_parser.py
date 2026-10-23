@@ -1,3 +1,4 @@
+import os
 import re
 import time
 
@@ -274,3 +275,84 @@ def test_dot_separator_is_literal_not_wildcard():
     regex, _ = generate_regex("%d.%m.%y, %H:%M - %name:")
     assert re.match(regex, "06.08.2016, 13:23 - Ash: ")
     assert not re.match(regex, "06X08X2016, 13:23 - Ash: ")
+
+
+# --- Report #1800: decompression bomb in the ZIP loader -----------------------------------------
+
+
+def _write_zip(path, text, name="_chat.txt") -> str:
+    import zipfile
+
+    with zipfile.ZipFile(str(path), "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+        zf.writestr(name, text)
+    return str(path)
+
+
+CHAT_LINE = "06.08.2016, 13:23 - Ash Ketchum: hello there friend\n"
+
+
+def test_zip_exceeding_max_size_is_rejected(tmp_path):
+    """A highly compressible archive must be refused on its decompressed size, not its file size.
+
+    Report #1800: the loader called extractall with no size or ratio limit, so a small archive
+    could write hundreds of MB to disk and load the same again into memory.
+    """
+    bomb = _write_zip(tmp_path / "bomb.zip", CHAT_LINE * 200_000)
+    assert os.path.getsize(bomb) < 100_000  # small on disk...
+
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp(bomb, max_size=1024 * 1024)  # ...but far larger once expanded
+
+
+def test_zip_within_max_size_still_parses(tmp_path):
+    """The limit must not get in the way of an ordinary chat."""
+    ok = _write_zip(tmp_path / "ok.zip", CHAT_LINE * 50)
+    assert len(df_from_whatsapp(ok, max_size=1024 * 1024)) == 50
+
+
+def test_max_size_none_disables_the_limit(tmp_path):
+    """Callers who genuinely have a huge chat can opt out."""
+    big = _write_zip(tmp_path / "big.zip", CHAT_LINE * 2_000)
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp(big, max_size=1000)
+    assert len(df_from_whatsapp(big, max_size=None)) == 2_000
+
+
+def test_plain_text_file_exceeding_max_size_is_rejected(tmp_path):
+    """The cap applies to an uncompressed chat too, not only to archives."""
+    chat = tmp_path / "chat.txt"
+    chat.write_text(CHAT_LINE * 2_000, encoding="utf-8")
+
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp(str(chat), max_size=1000)
+
+
+def test_zip_member_count_checked_before_reading(tmp_path):
+    """The one-file guard must run before anything is decompressed.
+
+    Report #1800 noted the check sat after extractall, so a malformed archive still paid the full
+    decompression cost before being rejected.
+    """
+    import zipfile
+
+    path = tmp_path / "two.zip"
+    with zipfile.ZipFile(str(path), "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+        zf.writestr("_chat.txt", CHAT_LINE * 200_000)
+        zf.writestr("other.txt", CHAT_LINE * 200_000)
+
+    # Rejected on member count, and the tiny limit is never even consulted.
+    with pytest.raises(ValueError, match="Unexpected number of files in the ZIP"):
+        df_from_whatsapp(str(path), max_size=1024)
+
+
+def test_zip_is_not_extracted_to_disk(tmp_path, monkeypatch):
+    """The member is read from the archive; nothing is written to the filesystem."""
+    import tempfile as _tempfile
+
+    ok = _write_zip(tmp_path / "ok.zip", CHAT_LINE * 10)
+
+    def _fail(*args: object, **kwargs: object) -> None:
+        raise AssertionError("ZIP loading must not create a temporary directory")
+
+    monkeypatch.setattr(_tempfile, "TemporaryDirectory", _fail)
+    assert len(df_from_whatsapp(ok)) == 10
