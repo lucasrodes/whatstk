@@ -356,3 +356,14 @@ def test_zip_is_not_extracted_to_disk(tmp_path, monkeypatch):
 
     monkeypatch.setattr(_tempfile, "TemporaryDirectory", _fail)
     assert len(df_from_whatsapp(ok)) == 10
+
+
+def test_size_limit_is_applied_by_default():
+    """The cap must be on by default, not only when a caller remembers to pass it."""
+    import inspect
+
+    from whatstk.whatsapp.parser import MAX_INPUT_SIZE, _str_from_file
+
+    assert MAX_INPUT_SIZE == 50 * 1024 * 1024
+    for func in (df_from_whatsapp, _str_from_file):
+        assert inspect.signature(func).parameters["max_size"].default == MAX_INPUT_SIZE

@@ -35,11 +35,13 @@ regex_simplifier = {
 # could prefix it. Anything that is not a known code is a literal and gets escaped by generate_regex.
 _HFORMAT_CODE_RE = re.compile("|".join(re.escape(code) for code in sorted(regex_simplifier, key=len, reverse=True)))
 
-MAX_INPUT_SIZE = 100 * 1024 * 1024
+MAX_INPUT_SIZE = 50 * 1024 * 1024
 """Default cap on how much chat text is read from a single source, in bytes.
 
-Parsing peaks at roughly 13x the size of the text, so an unbounded read turns a small compressed
-archive into gigabytes of memory. Pass ``max_size`` to raise this or set it to None to disable.
+50 MB is on the order of half a million messages, comfortably more than a real export, while
+keeping a hostile one bounded. Parsing peaks at roughly 13x the size of the text, so even at this
+limit a single chat can cost several hundred MB of memory; services accepting uploads should pass
+a smaller ``max_size``. Set it to None to read without a limit.
 """
 
 
@@ -87,7 +89,7 @@ def df_from_whatsapp(
                                         who sent the message.
         max_size (int, optional): Maximum size of the chat text to read, in bytes. Guards against
                                     compressed archives that expand to far more than they appear to
-                                    hold. Defaults to 100 MB; set to None to read without a limit.
+                                    hold. Defaults to 50 MB; set to None to read without a limit.
 
     Returns:
         WhatsAppChat: Class instance with loaded and parsed chat.
