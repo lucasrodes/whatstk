@@ -128,6 +128,14 @@ def df_from_whatsapp(
 
 
 
+    ..  note::
+
+        The ``username`` column reports who the export says sent a message, which is not the same as
+        who sent it. A WhatsApp export does not mark the continuation lines of a multi-line message,
+        so a participant can place a line shaped like another person's header inside their own
+        message and it parses as genuine. See :ref:`What whatstk cannot tell you
+        <What whatstk cannot tell you>` before relying on the output as a faithful record.
+
     ..  seealso::
 
         * :func:`WhatsAppChat.from_source <whatstk.whatsapp.objects.WhatsAppChat.from_source>`
