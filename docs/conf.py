@@ -83,6 +83,10 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+# Serve llms.txt at the docs root (https://whatstk.readthedocs.io/en/latest/llms.txt).
+# See https://llmstxt.org/ -- it is a condensed map of the library for AI assistants.
+html_extra_path = ['llms.txt']
+
 # -- Copybutton ---------------------------------------------------------------
 copybutton_prompt_text = ">>> "
 

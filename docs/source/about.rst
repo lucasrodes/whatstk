@@ -100,6 +100,9 @@ You can ask questions and join the development discussion on `GitHub <https://gi
 
 For more details, refer to the :ref:`contribute section <Contribute>`.
 
+If you are working with an AI assistant, `llms.txt <../llms.txt>`_ is a condensed map of the
+library — the public API, the header format model and the known limitations — in a single fetch.
+
 ----
 
 Why this name, whatstk?

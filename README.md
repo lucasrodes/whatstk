@@ -90,6 +90,9 @@ Full documentation available at [whatstk.readthedocs.io](https://whatstk.readthe
 - [Getting Started Guide](https://whatstk.readthedocs.io/en/latest/source/getting_started/index.html)
 - [Code Examples](https://whatstk.readthedocs.io/en/latest/source/code_examples/index.html)
 - [API Reference](https://whatstk.readthedocs.io/en/latest/source/api/index.html)
+- [What whatstk cannot tell you](https://whatstk.readthedocs.io/en/latest/source/getting_started/limitations.html) — read before treating parsed output as a faithful record
+
+Using an AI assistant? Point it at [llms.txt](https://whatstk.readthedocs.io/en/latest/llms.txt), a condensed map of the library in one fetch.
 
 ## Contributing
 

@@ -212,14 +212,13 @@ These will each cost you a debugging cycle:
    [#171](https://github.com/lucasrodes/whatstk/issues/171) /
    [#172](https://github.com/lucasrodes/whatstk/issues/172) and draft PR #173 — coordinate there
    rather than patching independently.
-8. **`merge_chats()` sorts by `df.index.min()`**, but the parser returns a RangeIndex, so that sort is
-   a no-op. Ordering currently works only because `_merge_two_chats` compares dates pairwise. Treat
-   the sort as broken if you touch merging.
-9. **`extract_header_from_text()` output cannot be fed back into `hformat=`.** It returns brackets
-   pre-escaped (`'\[%y-%m-%d %H:%M\] %name:'`), while `_df_from_str` escapes a caller-supplied
-   `hformat` again — so the 48 bracketed (iOS-style) formats double-escape and raise a raw
-   `re.PatternError` instead of `HFormatError`. Unescape with
-   `h.replace(r"\[", "[").replace(r"\]", "]")` before round-tripping.
+8. **`merge_chats()` returns the deduplicated union, not a concatenation.** Two messages are the
+   same only when date, username and text all match, so the same message with different timestamps
+   in two exports is kept twice. Repeats are numbered per chat before deduplicating, which is what
+   separates "sent twice" from "exported twice" — preserve that if you touch it.
+9. **Input is size-capped by default.** `df_from_whatsapp(max_size=...)` refuses text over 50 MB
+   (`MAX_INPUT_SIZE`). Parsing peaks at ~13x the text, so the cap is about memory, not disk. Pass
+   `max_size=None` in any test or tool that deliberately handles a huge chat.
 
 ## Documentation
 
@@ -231,8 +230,13 @@ Sphinx sources live in `docs/`, published to
 - `docs/source/code_examples/` — worked examples (several are `.. include::`-ed into getting_started).
 - `docs/source/api/` — the API reference. **This is the only apidoc tree**; a duplicate auto-generated
   set at `docs/source/whatstk*.rst` was removed, do not regenerate it with `sphinx-apidoc`.
+- `docs/llms.txt` — a condensed map of the library for AI assistants, served at the docs root via
+  `html_extra_path`. **Review it whenever you change the public API, the output schema, the header
+  format model, or the known limitations.** It is hand-written, not generated, so nothing will tell
+  you it has gone stale. A substantial change that leaves `llms.txt` describing the old behaviour is
+  worse than no `llms.txt`, because assistants will confidently emit code against it.
 
-`make docs` currently builds with ~17 warnings, all from `index.rst` doing
+`make docs` currently builds with 15 warnings, all from `index.rst` doing
 `.. include:: source/about.rst` (which makes `autosectionlabel` see every label twice). **Do not
 introduce new warnings**; check the count before and after your change.
 
