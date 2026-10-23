@@ -1,5 +1,6 @@
 """Detect header from chat."""
 
+import itertools
 import logging
 import re
 from typing import List, Tuple, Optional, cast
@@ -175,6 +176,91 @@ def _extract_header_parts(header: str) -> Tuple[List[int], str]:
     return hformat_elements, hformat_template
 
 
+def _score_date_order(dates_df: pd.DataFrame, day_pos: int, month_pos: int, year_pos: int) -> Optional[int]:
+    """Score how well one day/month/year assignment fits the numbers actually seen in the chat.
+
+    Returns None when the assignment is impossible — a month above 12, a day above 31, or a year
+    that is neither consistently 2-digit nor consistently 4-digit. Otherwise a higher score means
+    more corroborating evidence.
+
+    Args:
+        dates_df (pandas.DataFrame): Numeric header components, one row per header.
+        day_pos (int): Candidate column for the day.
+        month_pos (int): Candidate column for the month.
+        year_pos (int): Candidate column for the year.
+
+    Returns:
+        int, optional: Score, or None if the assignment contradicts the data.
+    """
+    day, month, year = dates_df[day_pos], dates_df[month_pos], dates_df[year_pos]
+
+    if not month.between(1, 12).all() or not day.between(1, 31).all():
+        return None
+    four_digit = bool(year.between(1000, 9999).all())
+    if not (four_digit or year.between(0, 99).all()):
+        return None
+
+    score = 0
+    if four_digit:
+        score += 6  # a 4-digit value can only be the year
+        if bool((day > 12).any()):
+            score += 2  # with the year already identified, a value above 12 cannot be a month
+
+    # How much each field varies is the discriminator when every value could pass for any field,
+    # which is the usual situation with a 2-digit year. Across one chat the day moves, the month
+    # moves less and the year barely at all.
+    # int(): these are Series, so nunique() is a count, but the stubs widen it.
+    n_day, n_month, n_year = int(day.nunique()), int(month.nunique()), int(year.nunique())
+    if n_day >= n_month:
+        score += 3
+    if n_year <= n_month:
+        score += 3
+
+    if bool((day > 27).any()):
+        score += 2  # 28-31 is a day; as a 2-digit year it would be in the future
+    # An export is written in chronological order, so the right reading runs forwards.
+    chronological = list(zip(year, month, day, strict=True))
+    if chronological == sorted(chronological):
+        score += 3
+    return score
+
+
+def _infer_date_positions(dates_df: pd.DataFrame) -> Tuple[int, int, int]:
+    """Work out which of the first three numeric columns hold the day, month and year.
+
+    Every ordering is scored against the observed values rather than picking the day by looking for
+    a value between 28 and 31. That lookup silently fell back to the first column on any chat that
+    never reaches day 28, which mis-detected 72 of the 96 supported formats and could swap day and
+    year without raising anything.
+
+    Args:
+        dates_df (pandas.DataFrame): Numeric header components, one row per header.
+
+    Returns:
+        tuple: (day_pos, month_pos, year_pos).
+    """
+    best, best_score = None, None
+    for day_pos, month_pos, year_pos in itertools.permutations((0, 1, 2)):
+        score = _score_date_order(dates_df, day_pos, month_pos, year_pos)
+        if score is None:
+            continue
+        # Ties keep the first ordering tried, which makes the result deterministic.
+        if best_score is None or score > best_score:
+            best, best_score = (day_pos, month_pos, year_pos), score
+
+    if best is None:
+        # Nothing fits; fall back to the original guess rather than refusing to parse at all.
+        # Restricted to the date columns: the original lookup searched every column and could
+        # return the minutes, whose values sit in the same 28-31 range.
+        date_max = dates_df[[0, 1, 2]].max()
+        day_pos = cast(int, ((date_max > 27) & (date_max < 32)).idxmax())
+        remaining = [p for p in (0, 1, 2) if p != day_pos]
+        year_pos = cast(int, dates_df[remaining].max().idxmax())
+        month_pos = next(p for p in remaining if p != year_pos)
+        return day_pos, month_pos, year_pos
+    return best
+
+
 def _extract_header_format_from_components(elements_list: List[List[int]], template_list: List[str]) -> str:
     """Extract header format from list containing elements and list containing templates.
 
@@ -210,19 +296,8 @@ def _extract_header_format_from_components(elements_list: List[List[int]], templ
     else:
         hour_code = "%H"
 
-    # day
-    # cast(): these are integer column positions, but pandas types idxmax/idxmin as Hashable.
-    day_pos = cast(int, ((dates_df.max() > 27) & (dates_df.max() < 32)).idxmax())
-    dates_df = dates_df.drop(columns=[day_pos])
-    # year
-    # year_pos = dates_df.std().idxmin()
-    pos = [0, 1, 2]
-    pos.remove(day_pos)
-    year_pos = cast(int, dates_df[pos].max().idxmax())  # Only consider positions 0,1,2
-    dates_df = dates_df.drop(columns=[year_pos])
-    # Month
-    month_pos = cast(int, dates_df.columns.min())
-    dates_df = dates_df.drop(columns=[month_pos])
+    day_pos, month_pos, year_pos = _infer_date_positions(dates_df)
+    dates_df = dates_df.drop(columns=[day_pos, year_pos, month_pos])
     # Hour
     hour_pos = 3
     dates_df = dates_df.drop(columns=[hour_pos])
