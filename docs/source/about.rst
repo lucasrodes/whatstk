@@ -10,7 +10,7 @@ You can also `try a live demo <https://whatstk.streamlit.app/>`_.
 
 
 The project is distributed under the `GPL-3.0 license <https://github.com/lucasrodes/whatstk/blob/main/LICENSE>`_
-and is available on `GitHub <http://github.com/lucasrodes/whatstk>`_.
+and is available on `GitHub <https://github.com/lucasrodes/whatstk>`_.
 
 ----
 
@@ -21,7 +21,7 @@ First contact with whatstk
 chat file into a pandas.DataFrame.
 
 Below, we use method :func:`df_from_whatsapp <whatstk.whatsapp.parser.df_from_whatsapp>` to load `LOREM chat
-<http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own
+<https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_. To test it with your own
 chat, simply :ref:`export it as a txt file <Export a WhatsApp chat>` to your computer and then use class argument ``filepath``, as
 shown in the following example.
 

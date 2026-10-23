@@ -47,7 +47,7 @@ def get_interventions_count(
 
     Example:
             Get number of interventions per user from `POKEMON chat
-            <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_. The counts are
+            <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_. The counts are
             represented as a `NxU` matrix, where `N`: number of time-slots and `U`: number of users.
 
             ..  code-block:: python

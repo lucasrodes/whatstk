@@ -41,7 +41,7 @@ Brief fictional chat with Pokemon characters, which was manually designed by  `@
 
 
 .. seealso:: 
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/pokemon.txt>`_
 
 
 LOREM
@@ -64,7 +64,7 @@ library.
     4 2020-01-15 06:56:00            Mary              Ullamco duis et commodo exercitation.
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem.txt>`_
 
 LOREM1
 ^^^^^^
@@ -84,7 +84,7 @@ Chat with 300 interventions of fictional users, generated using `python-lorem <h
     4 2019-10-20 17:28:00            John                Do ex dolor consequat tempor et ex.
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part1.txt>`_
 
 LOREM2
 ^^^^^^
@@ -106,7 +106,7 @@ Can be used along with **LOREM1** to test :func:`chat merging functionalities <w
     4 2020-06-20 17:28:00            John                      Dolore in cupidatat proident.
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part2.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-merge-part2.txt>`_
 
 LOREM_2000
 ^^^^^^^^^^
@@ -126,4 +126,4 @@ Chat with 2000 interventions of fictional users, generated using `python-lorem <
     4 2019-04-17 15:09:00            John  Eiusmod irure laboris dolore anim, velit velit...
 
 .. seealso::
-    `Chat file <http://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt>`_
+    `Chat file <https://raw.githubusercontent.com/lucasrodes/whatstk/develop/chats/whatsapp/lorem-2000.txt>`_
