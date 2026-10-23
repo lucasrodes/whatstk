@@ -168,16 +168,21 @@ def test_auto_header_extraction_failure():
         _df_from_str(text, auto_header=True, hformat=None)
 
 
-def test_message_type_non_group():
-    """Test that message_type='user' for non-group chats."""
-    # Use a file with 2-3 users - it will have message_type column
-    df = df_from_whatsapp(filename1, message_type=True)
+def test_message_type_non_group(tmp_path):
+    """With two users or fewer there is no chat-level sender, so every message is a user message.
 
-    # Should have message_type column
-    assert COLNAMES_DF.MESSAGE_TYPE in df.columns
-    # For non-group chats (<=2 users), all messages should be 'user'
-    # Check that we have the message_type column (which covers line 150)
-    assert len(df) > 0
+    The previous version of this test used a four-user chat, so it exercised the group branch and
+    never reached the one it describes.
+    """
+    chat = tmp_path / "chat.txt"
+    chat.write_text(
+        "06.08.2016, 13:23 - Ash: hey\n06.08.2016, 13:24 - Misty: hi\n",
+        encoding="utf-8",
+    )
+    df = df_from_whatsapp(str(chat), message_type=True)
+
+    assert len(set(df[COLNAMES_DF.USERNAME])) == 2
+    assert set(df[COLNAMES_DF.MESSAGE_TYPE]) == {"user"}
 
 
 def test_remove_alerts_truncates_embedded_header():
@@ -367,3 +372,49 @@ def test_size_limit_is_applied_by_default():
     assert MAX_INPUT_SIZE == 50 * 1024 * 1024
     for func in (df_from_whatsapp, _str_from_file):
         assert inspect.signature(func).parameters["max_size"].default == MAX_INPUT_SIZE
+
+
+class _FakeResponse:
+    """Minimal stand-in for the object urlopen returns."""
+
+    def __init__(self, payload: bytes) -> None:
+        self._payload = payload
+
+    def read(self, n: int = -1) -> bytes:
+        return self._payload if n == -1 else self._payload[:n]
+
+    def __enter__(self) -> "_FakeResponse":
+        return self
+
+    def __exit__(self, *exc: object) -> bool:
+        return False
+
+
+def test_remote_file_exceeding_max_size_is_rejected(mocker):
+    """A URL has no trustworthy size up front, so the bounded read is the only guard there.
+
+    This is also the backstop that protects the ZIP path when an archive header understates the
+    member size, which the declared-size check would wave through.
+    """
+    mocker.patch(
+        "whatstk.whatsapp.parser.urlopen",
+        return_value=_FakeResponse((CHAT_LINE * 2_000).encode("utf-8")),
+    )
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp("http://example.invalid/chat.txt", max_size=1000)
+
+
+def test_remote_file_within_max_size_is_read(mocker):
+    """The same path must still work for a normal chat."""
+    mocker.patch(
+        "whatstk.whatsapp.parser.urlopen",
+        return_value=_FakeResponse((CHAT_LINE * 10).encode("utf-8")),
+    )
+    assert len(df_from_whatsapp("http://example.invalid/chat.txt", max_size=1024 * 1024)) == 10
+
+
+def test_gdrive_file_exceeding_max_size_is_rejected(mocker):
+    """The Google Drive path is capped too, even though it cannot stream."""
+    mocker.patch("whatstk.utils.gdrive._load_str_from_file_id", return_value=CHAT_LINE * 2_000)
+    with pytest.raises(ValueError, match="exceeds the maximum input size"):
+        df_from_whatsapp("gdrive://some-file-id", max_size=1000)
