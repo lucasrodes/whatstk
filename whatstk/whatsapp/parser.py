@@ -252,7 +252,7 @@ def _df_from_str(text: str, auto_header: bool = True, hformat: Optional[str] = N
                 " input argument `hformat`. Report this issue so that automatic header detection support"
                 " for your header format is added: https://github.com/lucasrodes/whatstk/issues."
             )
-    elif not (hformat or auto_header):
+    elif not hformat:
         raise ValueError("If auto_header is False, hformat can't be None.")
 
     # Bracket is a reserved character in RegEx, add backslash before them. This happens once, after the
@@ -360,15 +360,15 @@ def _parse_line(text: str, headers: List[re.Match], i: int) -> Dict[str, Any]:
 
     """
     result_ = headers[i].groupdict()
-    if "ampm" in result_:
-        hour = int(result_["hour"])
-        mode = result_.get("ampm").lower()
+    hour = int(result_["hour"])
+    # A 12h header carries an AM/PM marker; convert it to a 24h hour.
+    ampm = result_.get("ampm")
+    if ampm is not None:
+        mode = ampm.lower()
         if hour == 12 and mode == "am":
             hour = 0
         elif hour != 12 and mode == "pm":
             hour += 12
-    else:
-        hour = int(result_["hour"])
 
     # Check format of year. If year is 2-digit represented we add 2000
     if len(result_["year"]) == 2:
