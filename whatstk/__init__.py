@@ -11,7 +11,7 @@ from whatstk.whatsapp.parser import df_from_whatsapp
 
 name = "whatstk"
 
-__version__ = "0.8.1"
+__version__ = "0.9.0"
 
 __all__ = [
     "WhatsAppChat",
