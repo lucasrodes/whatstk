@@ -170,11 +170,11 @@ class WhatsAppChat(BaseChat):
 
         """
         dfs = []
+        # auto_header applies to every file; hformat is one entry per file.
         detect_header = auto_header is None or auto_header
-        auto_headers = [detect_header] * len(filepaths)
         hformats: Sequence[Optional[str]] = [None] * len(filepaths) if hformat is None else hformat
-        for filepath, ah, hf in zip(filepaths, auto_headers, hformats, strict=True):
-            chat = WhatsAppChat.from_source(filepath, auto_header=ah, hformat=hf, encoding=encoding)
+        for filepath, hf in zip(filepaths, hformats, strict=True):
+            chat = WhatsAppChat.from_source(filepath, auto_header=detect_header, hformat=hf, encoding=encoding)
             dfs.append(chat.df)
         df = merge_chats(dfs)
         return cls(df)
