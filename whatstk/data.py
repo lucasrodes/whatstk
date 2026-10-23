@@ -7,10 +7,18 @@ to the source code.
 # pip install --upgrade certifi
 
 import os
-from collections import namedtuple
+from typing import NamedTuple
 
 
-Urls = namedtuple("Urls", ["POKEMON", "LOREM", "LOREM1", "LOREM2", "LOREM_2000"])
+class Urls(NamedTuple):
+    """URLs of the sample chats hosted in this repository."""
+
+    POKEMON: str
+    LOREM: str
+    LOREM1: str
+    LOREM2: str
+    LOREM_2000: str
+
 
 branch = "develop"
 chats_folder = f"https://raw.githubusercontent.com/lucasrodes/whatstk/{branch}/chats"  # noqa: E231

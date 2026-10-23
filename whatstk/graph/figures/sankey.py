@@ -6,7 +6,7 @@ import plotly.graph_objs as go
 
 
 def fig_sankey(
-    label: List[str], color: List[str], source: List[str], target: List[str], value: List[int], title: str = ""
+    label: List[str], color: List[str], source: List[int], target: List[int], value: List[int], title: str = ""
 ) -> go.Figure:
     """Generate sankey image.
 

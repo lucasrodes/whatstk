@@ -1,6 +1,6 @@
 """Get infor regarding responses between users."""
 
-from collections import namedtuple
+from typing import NamedTuple
 from typing import TYPE_CHECKING, Optional
 
 import pandas as pd
@@ -10,7 +10,16 @@ from whatstk.utils.utils import _get_df, COLNAMES_DF
 if TYPE_CHECKING:  # pragma: no cover
     from whatstk._chat import BaseChat  # pragma: no cover
 
-Norms = namedtuple("Norms", ["ABSOLUTE", "JOINT", "SENDER", "RECEIVER"])
+
+class Norms(NamedTuple):
+    """Normalisation modes accepted by :func:`get_response_matrix`."""
+
+    ABSOLUTE: str
+    JOINT: str
+    SENDER: str
+    RECEIVER: str
+
+
 NORMS = Norms(ABSOLUTE="absolute", JOINT="joint", SENDER="sender", RECEIVER="receiver")
 
 

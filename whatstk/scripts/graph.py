@@ -69,4 +69,6 @@ def main() -> None:
         )
     elif args.type == "msg_length":
         fig = FigureBuilder(chat=chat).user_msg_length_boxplot()
+    else:
+        raise ValueError(f"Unsupported graph type: {args.type}")
     plot(fig, filename=args.output_filename)

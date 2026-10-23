@@ -224,7 +224,7 @@ class WhatsAppChat(BaseChat):
                              <https://docs.python.org/3/library/codecs.html#standard-encodings>`_.
         """
         if not filepath.endswith(".txt"):
-            raise ValueError(f"filepath {filepath} must end with .zip")
+            raise ValueError(f"filepath {filepath} must end with .txt")
         if not hformat:
             hformat = "%y-%m-%d, %H:%M - %name:"
         text = _df_to_str(self.df, hformat)

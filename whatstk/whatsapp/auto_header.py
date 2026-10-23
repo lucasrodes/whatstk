@@ -46,8 +46,8 @@ def extract_header_from_text(text: str, encoding: str = "utf-8") -> Optional[str
         hformat = _extract_header_format_from_lines(lines)
         logging.info("Format found was %s", hformat)
         return hformat
-    except Exception as err:  # noqa
-        logging.info("Format not found.")
+    except Exception as err:  # noqa: BLE001 - detection is best-effort; the caller raises if it returns None
+        logging.info("Format not found: %s: %s", type(err).__name__, err)
     return None
 
 

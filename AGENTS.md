@@ -196,10 +196,13 @@ These will each cost you a debugging cycle:
    make targets compute the version explicitly to avoid this.
 3. **`.coveragerc` wins over `pyproject.toml`.** Coverage reads `.coveragerc` when present, so
    `[tool.coverage.*]` in `pyproject.toml` is dead configuration. Edit `.coveragerc`.
-4. **`make check.type` passing means little.** `pyrightconfig.json` disables nearly every meaningful
-   check (`reportGeneralTypeIssues`, `reportArgumentType`, `reportReturnType`,
-   `reportAttributeAccessIssue`, `reportCallIssue`…). Do not treat "0 errors" as type safety.
-   Tightening this is part of issue [#177](https://github.com/lucasrodes/whatstk/issues/177).
+4. **`make check.type` is real now, but not complete.** `pyrightconfig.json` runs in `standard`
+   mode with 20 previously-disabled checks back on. Seven remain off, each because the pandas and
+   plotly stubs make them noise rather than signal (`reportReturnType`, `reportArgumentType`,
+   `reportAttributeAccessIssue`, `reportCallIssue`, `reportUnhashable`, `reportMissingTypeStubs`,
+   `reportUnusedFunction`). **Also run `uvx ty check whatstk`** — `ty` found every annotation bug
+   fixed in 0.9.0, including ones pyright still cannot see. Remaining work: issue
+   [#177](https://github.com/lucasrodes/whatstk/issues/177).
 5. **`whatstk/data.py` sample-chat URLs point at the `develop` branch.** Chats added under `chats/`
    are only reachable once they land on `develop`.
 6. **The version string lives in four files** — `pyproject.toml` (twice), `whatstk/__init__.py`,
