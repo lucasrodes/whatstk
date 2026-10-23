@@ -245,6 +245,11 @@ Sphinx sources live in `docs/`, published to
 `.. include:: source/about.rst` (which makes `autosectionlabel` see every label twice). **Do not
 introduce new warnings**; check the count before and after your change.
 
+That same `include` has a sharper trap: **`about.rst` is rendered at two different depths**, as
+`/en/latest/` and as `/en/latest/source/about.html`. A relative link inside it cannot be right in
+both places — `../llms.txt` resolved correctly from the second and 404'd from the first, which is
+the page everyone lands on. Use absolute URLs for anything outside the toctree in that file.
+
 Doc examples are the main thing LLMs learn from, so every snippet should run as written. Verify
 before committing.
 
