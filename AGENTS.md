@@ -8,7 +8,7 @@ whatstk parses WhatsApp chat exports into pandas DataFrames. A maintained person
 2016, ~1.5k PyPI downloads/month, GPL-3.0, Python 3.11+.
 
 **Strategic direction:** double down on being *the* reliable WhatsApp parser. Parsing correctness is
-the product. The plotting (`whatstk.graph`) and chat generation
+the product. The plotting (`whatstk.graph`, behind the `[viz]` extra) and chat generation
 (`whatstk.whatsapp.generation`) modules are legacy scope that is being slimmed down — do not invest in
 them or expand their surface area without being asked. See issue
 [#177](https://github.com/lucasrodes/whatstk/issues/177).
@@ -51,7 +51,7 @@ whatstk/
 │   ├── hformat.py          Queries the supported-format catalogue
 │   └── assets/header_format_support.json   96 supported header formats
 ├── analysis/               get_interventions_count, get_response_matrix
-├── graph/                  FigureBuilder + plotly figures (legacy scope)
+├── graph/                  FigureBuilder + plotly figures (optional, `[viz]` extra)
 ├── utils/                  chat_merge, exceptions, COLNAMES_DF
 └── scripts/                CLI entry points: whatstk-to-csv, whatstk-graph, whatstk-generate-chat
 ```

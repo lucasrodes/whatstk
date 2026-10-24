@@ -1931,8 +1931,6 @@ dependencies = [
     { name = "emoji" },
     { name = "numpy" },
     { name = "pandas" },
-    { name = "plotly" },
-    { name = "seaborn" },
 ]
 
 [package.optional-dependencies]
@@ -1943,6 +1941,7 @@ dev = [
     { name = "codecov" },
     { name = "coverage" },
     { name = "docutils" },
+    { name = "plotly" },
     { name = "pyright" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -1954,6 +1953,7 @@ dev = [
     { name = "recommonmark" },
     { name = "ruff" },
     { name = "scipy" },
+    { name = "seaborn" },
     { name = "sphinx" },
     { name = "sphinx-copybutton" },
     { name = "sphinx-git" },
@@ -1987,6 +1987,10 @@ test = [
     { name = "python-lorem" },
     { name = "scipy" },
 ]
+viz = [
+    { name = "plotly" },
+    { name = "seaborn" },
+]
 
 [package.metadata]
 requires-dist = [
@@ -1999,7 +2003,7 @@ requires-dist = [
     { name = "emoji", specifier = "~=2.15" },
     { name = "numpy", specifier = ">=2.3.2,<3" },
     { name = "pandas", specifier = ">=2.3.3,<4" },
-    { name = "plotly", specifier = "~=6.5" },
+    { name = "plotly", marker = "extra == 'viz'", specifier = "~=6.5" },
     { name = "pyright", marker = "extra == 'lint'", specifier = "~=1.1" },
     { name = "pytest", marker = "extra == 'test'", specifier = "~=9.0" },
     { name = "pytest-cov", marker = "extra == 'test'", specifier = "~=7.0" },
@@ -2011,15 +2015,15 @@ requires-dist = [
     { name = "recommonmark", marker = "extra == 'docs'", specifier = "~=0.7" },
     { name = "ruff", marker = "extra == 'lint'", specifier = "~=0.14" },
     { name = "scipy", marker = "extra == 'test'", specifier = ">=1.16.1,<2" },
-    { name = "seaborn", specifier = "~=0.13" },
+    { name = "seaborn", marker = "extra == 'viz'", specifier = "~=0.13" },
     { name = "sphinx", marker = "extra == 'docs'", specifier = "~=8.0" },
     { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = "~=0.5" },
     { name = "sphinx-git", marker = "extra == 'docs'", specifier = "~=11.0" },
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = "~=3.0" },
     { name = "sphinx-togglebutton", marker = "extra == 'docs'", specifier = "~=0.3" },
-    { name = "whatstk", extras = ["test", "lint", "docs"], marker = "extra == 'dev'" },
+    { name = "whatstk", extras = ["test", "lint", "docs", "viz"], marker = "extra == 'dev'" },
 ]
-provides-extras = ["test", "lint", "docs", "dev"]
+provides-extras = ["viz", "test", "lint", "docs", "dev"]
 
 [[package]]
 name = "wheel"

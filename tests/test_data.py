@@ -1,3 +1,5 @@
+import pytest
+
 from whatstk.data import whatsapp_urls
 
 
@@ -28,3 +30,20 @@ def test_deprecated_alias_is_not_exported_at_top_level():
     from whatstk.whatsapp.parser import df_from_txt_whatsapp  # still importable
 
     assert callable(df_from_txt_whatsapp)
+
+
+def test_figurebuilder_is_resolved_lazily():
+    """`import whatstk` must not pull in plotly.
+
+    Plotting sits behind the `viz` extra, so FigureBuilder is resolved on first attribute access
+    rather than at import time. Without this, installing whatstk to parse a chat would still
+    require plotly and seaborn.
+    """
+    import whatstk
+
+    assert "FigureBuilder" in whatstk.__all__
+    # Resolvable here because the dev environment installs [viz].
+    assert whatstk.FigureBuilder is not None
+
+    with pytest.raises(AttributeError, match="has no attribute"):
+        _ = whatstk.NotAThing
