@@ -9,7 +9,7 @@ from whatstk.whatsapp.auto_header import (
     _extract_elements_template_from_lines,
     _score_date_order,
 )
-from whatstk.whatsapp.generation import ChatGenerator
+from tests.chatgen import ChatGenerator
 from whatstk.whatsapp.hformat import get_supported_hformats_as_list
 from whatstk.whatsapp.parser import df_from_whatsapp
 

@@ -1950,8 +1950,10 @@ dev = [
     { name = "pytest-mock" },
     { name = "pytest-rerunfailures" },
     { name = "pytest-xdist" },
+    { name = "python-lorem" },
     { name = "recommonmark" },
     { name = "ruff" },
+    { name = "scipy" },
     { name = "sphinx" },
     { name = "sphinx-copybutton" },
     { name = "sphinx-git" },
@@ -1969,14 +1971,6 @@ docs = [
     { name = "sphinx-rtd-theme" },
     { name = "sphinx-togglebutton" },
 ]
-full = [
-    { name = "python-lorem" },
-    { name = "scipy" },
-]
-generate = [
-    { name = "python-lorem" },
-    { name = "scipy" },
-]
 lint = [
     { name = "pyright" },
     { name = "ruff" },
@@ -1990,6 +1984,8 @@ test = [
     { name = "pytest-mock" },
     { name = "pytest-rerunfailures" },
     { name = "pytest-xdist" },
+    { name = "python-lorem" },
+    { name = "scipy" },
 ]
 
 [package.metadata]
@@ -2011,20 +2007,19 @@ requires-dist = [
     { name = "pytest-mock", marker = "extra == 'test'", specifier = "~=3.14" },
     { name = "pytest-rerunfailures", marker = "extra == 'test'", specifier = "~=16.0" },
     { name = "pytest-xdist", marker = "extra == 'test'", specifier = "~=3.6" },
-    { name = "python-lorem", marker = "extra == 'generate'", specifier = "~=1.3" },
+    { name = "python-lorem", marker = "extra == 'test'", specifier = "~=1.3" },
     { name = "recommonmark", marker = "extra == 'docs'", specifier = "~=0.7" },
     { name = "ruff", marker = "extra == 'lint'", specifier = "~=0.14" },
-    { name = "scipy", marker = "extra == 'generate'", specifier = ">=1.16.1,<2" },
+    { name = "scipy", marker = "extra == 'test'", specifier = ">=1.16.1,<2" },
     { name = "seaborn", specifier = "~=0.13" },
     { name = "sphinx", marker = "extra == 'docs'", specifier = "~=8.0" },
     { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = "~=0.5" },
     { name = "sphinx-git", marker = "extra == 'docs'", specifier = "~=11.0" },
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = "~=3.0" },
     { name = "sphinx-togglebutton", marker = "extra == 'docs'", specifier = "~=0.3" },
-    { name = "whatstk", extras = ["generate"], marker = "extra == 'full'" },
     { name = "whatstk", extras = ["test", "lint", "docs"], marker = "extra == 'dev'" },
 ]
-provides-extras = ["generate", "full", "test", "lint", "docs", "dev"]
+provides-extras = ["test", "lint", "docs", "dev"]
 
 [[package]]
 name = "wheel"
