@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 from whatstk.whatsapp.objects import WhatsAppChat
-from whatstk.whatsapp.generation import ChatGenerator, generate_chats_hformats
+from tests.chatgen import ChatGenerator, generate_chats_hformats
 
 
 USERS = ["laurent", "anna", "lua", "miquel"]
