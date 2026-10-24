@@ -27,11 +27,11 @@ dependencies = [
     # pandas 2.2's case, segfault at runtime on 3.14. Upper bounds are the next major.
     "numpy>=2.3.2,<3",
     "pandas>=2.3.3,<4",
-    "plotly~=6.5",
-    "seaborn~=0.13",
 ]
 
 [project.optional-dependencies]
+# Plotting is optional: parsing a chat needs none of it.
+viz = ["plotly~=6.5", "seaborn~=0.13"]
 test = [
     # scipy and python-lorem back the fixture generator under tests/chatgen; they are not needed
     # to use whatstk.
@@ -58,7 +58,7 @@ docs = [
     "auto-changelog~=0.6",
     "docutils~=0.20",
 ]
-dev = ["whatstk[test,lint,docs]", "bump-my-version~=1.2"]
+dev = ["whatstk[test,lint,docs,viz]", "bump-my-version~=1.2"]
 
 [project.urls]
 Documentation = "https://whatstk.readthedocs.io/en/latest/"

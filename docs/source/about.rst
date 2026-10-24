@@ -63,11 +63,12 @@ Clone the project from the `official repository <https://github.com/lucasrodes/w
 
 Extensions
 ^^^^^^^^^^
-To generate sample chats, install the library with the corresponding extension:
+Plotting is optional. Parsing a chat needs neither plotly nor seaborn, so they are not installed
+by default. To use :class:`FigureBuilder <whatstk.FigureBuilder>` or the ``whatstk-graph`` command:
 
 .. code-block:: bash
 
-    pip install whatstk[generate]
+    pip install whatstk[viz]
 
 .. note::
 

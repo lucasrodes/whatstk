@@ -7,6 +7,9 @@
 
 Install with `pip install whatstk`. Everything runs locally; no chat data leaves the machine.
 
+Plotting is an optional extra: `pip install whatstk[viz]`. Parsing and analysis need nothing beyond
+the base install.
+
 ## Parse a chat
 
 ```python
@@ -82,7 +85,7 @@ FigureBuilder(chat=chat).user_interventions_count_linechart(date_mode="date")
 ```
 
 `FigureBuilder` also offers `user_msg_length_boxplot`, `user_message_responses_flow` and
-`user_message_responses_heatmap`. All return plotly figures.
+`user_message_responses_heatmap`. All return plotly figures, and all require `whatstk[viz]`.
 
 ## Command line
 
