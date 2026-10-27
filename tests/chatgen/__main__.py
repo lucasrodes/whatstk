@@ -1,15 +1,12 @@
-"""Generate chats in all hformats with `size` number of messages and export them to a given `output_path`."""
+"""CLI for the fixture generator: ``python -m tests.chatgen --help``."""
 
 import argparse
 from datetime import datetime
-from whatstk.whatsapp.generation import generate_chats_hformats
+from tests.chatgen.generator import generate_chats_hformats
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        "Generate chat. Make sure to install the library with required extension: pip install whatstk[generate] "
-        "--upgrade"
-    )
+    parser = argparse.ArgumentParser("Generate the synthetic chats used as test fixtures.")
     parser.add_argument(
         "-o", "--output-path", type=str, required=True, help=("Path where to store generated chats. Must exist.")
     )
@@ -53,3 +50,7 @@ def main() -> None:
         filepaths=args.filenames,
         export_as_zip=args.export_as_zip,
     )
+
+
+if __name__ == "__main__":
+    main()

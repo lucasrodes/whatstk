@@ -41,15 +41,6 @@ whatstk.whatsapp.auto\_header
 
 ----
 
-whatstk.whatsapp.generation
-------------------------------
-
-.. automodule:: whatstk.whatsapp.generation
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-----
 
 whatstk.whatsapp.hformat
 -------------------------
