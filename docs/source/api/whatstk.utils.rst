@@ -19,16 +19,6 @@ whatstk.utils.chat\_merge
 
 ----
 
-whatstk.utils.gdrive
-------------------------
-
-.. automodule:: whatstk.utils.gdrive
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-----
-
 whatstk.utils.exceptions
 ------------------------
 

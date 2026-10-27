@@ -60,9 +60,6 @@ def df_from_whatsapp(
 
                 * Local file, e.g. 'path/to/file.txt' OR 'path/to/_chat.zip' (e.g. iOS export).
                 * URL to a remote hosted file, e.g. 'https://www.url.to/file.txt'.
-                * Link to Google Drive file, e.g. 'gdrive://35gKKrNk-i3t05zPLyH4_P1rPdOmKW9NZ'. The format is expected
-                  to be 'gdrive://[FILE-ID]'. Note that in order to load a file from Google Drive you first need to run
-                  :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`.
         auto_header (bool, optional): Detect header automatically. If False, ``hformat`` is required.
         hformat (str, optional): :ref:`Format of the header <The header format>`, e.g.
                                     ``'[%y-%m-%d %H:%M:%S] - %name:'``. Use following keywords:
@@ -140,7 +137,6 @@ def df_from_whatsapp(
 
         * :func:`WhatsAppChat.from_source <whatstk.whatsapp.objects.WhatsAppChat.from_source>`
         * :func:`extract_header_from_text <whatstk.whatsapp.auto_header.extract_header_from_text>`
-        * :func:`gdrive_init <whatstk.utils.gdrive.gdrive_init>`
 
     """
     # Read local file
@@ -270,8 +266,7 @@ def _str_from_file(filepath: str, encoding: str = "utf-8", max_size: Optional[in
     """Read text content as string.
 
     Args:
-        filepath (str): Path to file. Accepted: local file, url (http:// or https://), Google Drive file
-                        (gdrive://[file-id]).
+        filepath (str): Path to file. Accepted: a local file, or a url (http:// or https://).
         encoding (str, optional): Encoding to use for UTF when reading/writing (ex. ‘utf-8’).
                                   `List of Python standard encodings <https://docs.python.org/3/library/codecs.
                                   html#standard-encodings>`_.
@@ -315,13 +310,12 @@ def _str_from_file(filepath: str, encoding: str = "utf-8", max_size: Optional[in
             with urlopen(filepath) as response:  # noqa
                 raw_bytes = _read_bounded(response, max_size, f"Remote file '{filepath}'")
             text = raw_bytes.decode(encoding)
-        elif filepath.startswith("gdrive"):
-            from whatstk.utils.gdrive import _load_str_from_file_id
-
-            file_id = filepath.replace("gdrive://", "")
-            text = _load_str_from_file_id(file_id)
-            if max_size is not None and len(text) > max_size:
-                raise _too_large(f"Google Drive file '{file_id}'", max_size)
+        elif filepath.startswith("gdrive://"):
+            raise ValueError(
+                "Google Drive support was removed in whatstk 0.10.0. Download the file from Drive "
+                "and pass the local path instead. See "
+                "https://github.com/lucasrodes/whatstk/issues/177"
+            )
         else:
             raise FileNotFoundError(f"File {filepath} was not found locally or remotely. Please check it exists.")
     return text
