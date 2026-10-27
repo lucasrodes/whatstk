@@ -25,8 +25,7 @@ Please include:
 - The affected version of whatstk and your Python version.
 - A description of the issue and its impact.
 - A minimal reproduction — ideally a short chat snippet or script. Redact any
-  personal data; a synthetic chat generated with `whatstk-generate-chat` is
-  preferred over a real export.
+  personal data; a synthetic chat is preferred over a real export.
 
 You can expect an initial response within 14 days. If the issue is confirmed, a
 patch release will follow and you will be credited in the advisory unless you
@@ -35,8 +34,8 @@ prefer otherwise.
 ## Scope
 
 whatstk parses untrusted input: WhatsApp export files (`.txt`, `.zip`) supplied
-by the user, and optionally files fetched over HTTP or from Google Drive. The
-following are in scope:
+by the user, and optionally files fetched over HTTP. The following are in
+scope:
 
 - Arbitrary file write or path traversal when extracting `.zip` exports.
 - Code execution or resource exhaustion (e.g. catastrophic regex backtracking)

@@ -201,13 +201,16 @@ on this codebase.
 
 **Worth taking seriously:**
 
-- **Decompression bombs.** `extractall` enforces no size limit, so a small `.zip` can exhaust disk or
-  memory. A real availability issue; check `ZipInfo.file_size` before extracting.
-- **Catastrophic regex backtracking.** Header regexes are built from user-supplied `hformat` strings
-  and run across the whole file. `_remove_alerts_from_line` additionally runs `re.search` once per
-  message. Time any suspected input against a known-good baseline rather than reasoning about it.
-- **URL and Google Drive fetching.** `_str_from_file` calls `urlopen` on anything starting with
-  `http`. Consider what an attacker-supplied path reaches in a server-side deployment.
+- **Decompression bombs.** Fixed in 0.9.0: the zip member is read bounded and in memory, and
+  `max_size` (50 MB default) caps every source. A new report here must show how it gets past
+  `max_size`. Note parsing still peaks at ~13x the text — bounded, not cheap (issue #186).
+- **Catastrophic regex backtracking.** Fixed in 0.9.0 by passing hformat literals through
+  `re.escape`. The regex is still built per file and run across the whole text, and
+  `_remove_alerts_from_line` runs `re.search` once per message. Time any suspected input against a
+  known-good baseline rather than reasoning about it.
+- **URL fetching.** `_str_from_file` calls `urlopen` on anything starting with `http`. Consider what
+  an attacker-supplied path reaches in a server-side deployment. Google Drive loading was removed in
+  0.10.0, so `gdrive://` paths now raise `ValueError` instead of reaching the network.
 
 Confirm the affected version and the exact entry point, reproduce it, then follow the normal flow
 above: failing test, narrow fix, PR to `develop`. Coordinate disclosure through
