@@ -32,7 +32,8 @@ names.
 `df_from_whatsapp(filepath, auto_header=True, hformat=None, encoding="utf-8", message_type=None,
 max_size=52428800)`
 
-- `filepath` — local `.txt`/`.zip`, an `https://` URL, or `gdrive://FILE-ID`.
+- `filepath` — local `.txt`/`.zip`, or an `https://` URL. Google Drive (`gdrive://FILE-ID`) was
+  removed in 0.10.0; download the export and pass a local path.
 - `hformat` — the header format. Omit it and the format is inferred.
 - `max_size` — refuse an input whose text exceeds this many bytes. Defaults to 50 MB; pass `None`
   to disable. Parsing peaks at roughly 13x the text, so lower it if you parse untrusted uploads.

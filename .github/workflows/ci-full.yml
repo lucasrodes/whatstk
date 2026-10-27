@@ -135,3 +135,45 @@ jobs:
 
       - name: Run tests
         run: uv run pytest tests -q --no-header
+
+  lean-install:
+    name: Base install carries no extras (Python ${{ matrix.python-version }})
+    needs: check-ready
+    if: needs.check-ready.outputs.should-run == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.14"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Every other job installs --all-extras, so nothing there would notice a module-scope import
+      # of plotly creeping back into the parsing path. This job installs the built wheel on its own,
+      # the way a user running `pip install whatstk` gets it, and checks the promise directly.
+      - name: Build the wheel
+        run: uv build --wheel -o dist
+
+      - name: Install it with no extras
+        run: |
+          uv venv --python ${{ matrix.python-version }} .venv-lean
+          uv pip install --python .venv-lean dist/*.whl
+
+      - name: Show what a base install pulls in
+        run: uv pip list --python .venv-lean
+
+      - name: Parsing works, and plotting is absent but explains itself
+        run: .venv-lean/bin/python tests/lean_install_check.py

@@ -35,6 +35,12 @@
 pip install whatstk
 ```
 
+That installs the parser and its analysis tools. Plotting is an optional extra:
+
+```bash
+pip install whatstk[viz]
+```
+
 **Requirements:** Python 3.11+
 
 <details>
@@ -75,11 +81,13 @@ whatstk-to-csv input_chat.txt output.csv
 
 ### Visualize
 
+Requires the `viz` extra (`pip install whatstk[viz]`).
+
 ```python
-from whatstk.graph import plot_user_message_count
+from whatstk import FigureBuilder
 
 # Interactive message count chart
-fig = plot_user_message_count(df)
+fig = FigureBuilder(df=df).user_interventions_count_linechart(date_mode="date")
 fig.show()
 ```
 
