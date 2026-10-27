@@ -15,7 +15,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 name = "whatstk"
 
-__version__ = "0.9.1"
+__version__ = "0.10.0"
 
 __all__ = [
     "WhatsAppChat",
