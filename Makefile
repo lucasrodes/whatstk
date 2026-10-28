@@ -107,11 +107,11 @@ $(TEST_CHATS_DIR):
 
 generate-test-data: ## Generate test chat files
 	mkdir -p $(TEST_DIR)/chats/hformats $(TEST_DIR)/chats/merge
-	uv run whatstk-generate-chat --size 500 -z --output-path $(TEST_DIR)/chats/hformats/
-	uv run whatstk-generate-chat --size 300 --last-timestamp 2019-09-01 \
+	uv run python -m tests.chatgen --size 500 -z --output-path $(TEST_DIR)/chats/hformats/
+	uv run python -m tests.chatgen --size 300 --last-timestamp 2019-09-01 \
 		--hformats '%Y-%m-%d, %H:%M - %name:' \
 		--output-path $(TEST_DIR)/chats/merge/ --filenames file1.txt
-	uv run whatstk-generate-chat --size 300 --last-timestamp 2020-01-01 \
+	uv run python -m tests.chatgen --size 300 --last-timestamp 2020-01-01 \
 		--hformats '%Y-%m-%d, %H:%M - %name:' \
 		--output-path $(TEST_DIR)/chats/merge/ --filenames file2.txt
 

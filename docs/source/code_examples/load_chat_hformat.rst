@@ -23,5 +23,4 @@ we have that the ``hformat='%d.%m.%y, %H:%M - %name:'``.
 
     * :ref:`The header format <The header format>`
     * :ref:`Load WhatsApp chat <Load WhatsApp chat>`
-    * :ref:`Load WhatsApp chat from Google Drive <Load WhatsApp chat from Google Drive>`
     * :ref:`Load WhatsApp chat with specific hformat <Load WhatsApp chat with specific hformat>`

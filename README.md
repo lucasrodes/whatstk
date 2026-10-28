@@ -5,7 +5,7 @@
 
   **Parse, analyze, and visualize WhatsApp chats with Python**
 
-  [![PyPI](https://img.shields.io/badge/pypi-v0.9.1-25D366?logo=whatsapp)](https://pypi.org/project/whatstk/)
+  [![PyPI](https://img.shields.io/badge/pypi-v0.10.0-25D366?logo=whatsapp)](https://pypi.org/project/whatstk/)
   [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg?logo=python&logoColor=yellow)](https://www.python.org/downloads/)
   [![Build](https://img.shields.io/github/actions/workflow/status/lucasrodes/whatstk/ci-full.yml?branch=main)](https://github.com/lucasrodes/whatstk/actions)
   [![codecov](https://codecov.io/gh/lucasrodes/whatstk/branch/main/graph/badge.svg)](https://codecov.io/gh/lucasrodes/whatstk)
@@ -33,6 +33,12 @@
 
 ```bash
 pip install whatstk
+```
+
+That installs the parser and its analysis tools. Plotting is an optional extra:
+
+```bash
+pip install whatstk[viz]
 ```
 
 **Requirements:** Python 3.11+
@@ -75,11 +81,13 @@ whatstk-to-csv input_chat.txt output.csv
 
 ### Visualize
 
+Requires the `viz` extra (`pip install whatstk[viz]`).
+
 ```python
-from whatstk.graph import plot_user_message_count
+from whatstk import FigureBuilder
 
 # Interactive message count chart
-fig = plot_user_message_count(df)
+fig = FigureBuilder(df=df).user_interventions_count_linechart(date_mode="date")
 fig.show()
 ```
 

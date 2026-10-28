@@ -63,21 +63,17 @@ Clone the project from the `official repository <https://github.com/lucasrodes/w
 
 Extensions
 ^^^^^^^^^^
-To use :ref:`Google Drive <Load WhatsApp chat from Google Drive>` or Chat Generation support, install the library along with the corresponding extensions:
+Plotting is optional. Parsing a chat needs neither plotly nor seaborn, so they are not installed
+by default. To use :class:`FigureBuilder <whatstk.FigureBuilder>` or the ``whatstk-graph`` command:
 
 .. code-block:: bash
 
-    pip install whatstk[gdrive]
+    pip install whatstk[viz]
 
-.. code-block:: bash
+.. note::
 
-    pip install whatstk[generate]
-
-Or install the full suite:
-
-.. code-block:: bash
-
-    pip install whatstk[full]
+    Google Drive support was removed in 0.10.0, after being deprecated in 0.9.0. Download the file
+    from Drive and pass the local path instead.
 
 
 Develop

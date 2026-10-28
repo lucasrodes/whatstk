@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "whatstk"
-version = "0.9.1"
+version = "0.10.0"
 description = "Parser and analytics tools for WhatsApp group chats"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -27,15 +27,16 @@ dependencies = [
     # pandas 2.2's case, segfault at runtime on 3.14. Upper bounds are the next major.
     "numpy>=2.3.2,<3",
     "pandas>=2.3.3,<4",
-    "plotly~=6.5",
-    "seaborn~=0.13",
 ]
 
 [project.optional-dependencies]
-gdrive = ["PyDrive2~=1.21", "PyYAML>=6.0.3,<7"]
-generate = ["scipy>=1.16.1,<2", "python-lorem~=1.3"]
-full = ["whatstk[gdrive,generate]"]
+# Plotting is optional: parsing a chat needs none of it.
+viz = ["plotly~=6.5", "seaborn~=0.13"]
 test = [
+    # scipy and python-lorem back the fixture generator under tests/chatgen; they are not needed
+    # to use whatstk.
+    "scipy>=1.16.1,<2",
+    "python-lorem~=1.3",
     "pytest~=9.0",
     "pytest-cov~=7.0",
     "coverage~=7.6",
@@ -57,7 +58,7 @@ docs = [
     "auto-changelog~=0.6",
     "docutils~=0.20",
 ]
-dev = ["whatstk[test,lint,docs]", "bump-my-version~=1.2"]
+dev = ["whatstk[test,lint,docs,viz]", "bump-my-version~=1.2"]
 
 [project.urls]
 Documentation = "https://whatstk.readthedocs.io/en/latest/"
@@ -65,7 +66,6 @@ Github = "https://github.com/lucasrodes/whatstk"
 "Bug Tracker" = "https://github.com/lucasrodes/whatstk/issues"
 
 [project.scripts]
-whatstk-generate-chat = "whatstk.scripts.generate_chats:main"
 whatstk-to-csv = "whatstk.scripts.txt_to_csv:main"
 whatstk-graph = "whatstk.scripts.graph:main"
 
@@ -97,7 +97,7 @@ exclude_lines = [
 ]
 
 [tool.bumpversion]
-current_version = "0.9.1"
+current_version = "0.10.0"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(\\.(?P<pre>[a-z]+)(?P<prenum>\\d+))?"
 serialize = ["{major}.{minor}.{patch}.{pre}{prenum}", "{major}.{minor}.{patch}"]
 search = "{current_version}"
