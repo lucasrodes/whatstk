@@ -2,6 +2,54 @@ Changelog
 =========
 
 
+v0.10.0
+-------
+
+The slimming release. ``pip install whatstk`` now brings in the parser and nothing else — seven
+packages instead of thirty-odd. Parsing behaviour is unchanged.
+
+.. warning::
+
+    Three removals. All of them are breaking, and the first two have a one-line fix.
+
+    - **Plotting moved behind an extra.** ``from whatstk import FigureBuilder`` and
+      ``import whatstk.graph`` now require ``pip install whatstk[viz]``. Without it they raise an
+      ``ImportError`` naming the extra. Nothing else in the library needs plotly or seaborn, so
+      importing whatstk no longer pulls them in.
+    - **Google Drive support removed**, as announced in 0.9.0. A ``gdrive://FILE-ID`` path raises a
+      ``ValueError`` explaining the change. Download the export and pass a local path instead.
+    - **The chat generator is gone from the package**: the ``whatstk-generate-chat`` command, the
+      ``whatstk.whatsapp.generation`` module and the ``[generate]`` extra. Unlike the two above
+      this had no deprecation warning in 0.9.0. It existed to build the project's own test
+      fixtures, has no role in parsing a real chat, and now lives in the repository under
+      ``tests/chatgen`` as ``python -m tests.chatgen``.
+
+- **Packaging**: A base install is now ``emoji``, ``numpy``, ``pandas`` and their three transitive
+  dependencies. plotly, seaborn and scipy are no longer installed for someone who only wants a
+  DataFrame out of a chat export.
+- **Dependencies**: Removing Google Drive drops twenty packages from the dependency graph — the
+  whole PyDrive2 tree, including ``cryptography``, ``pyOpenSSL``, ``protobuf`` and the Google API
+  client libraries. Those accounted for nearly all of the project's recent security advisories,
+  none of which were ever reachable from parsing a chat.
+- **Documentation**: The README's only plotting example called ``plot_user_message_count``, a
+  function that has never existed in the package; it now uses ``FigureBuilder`` and is verified to
+  run. ``llms.txt``, ``SECURITY.md`` and the contributor guide no longer describe Google Drive or
+  the generator as part of the library.
+- **Testing**: A new CI job installs the built wheel on its own, with no extras, and checks that
+  parsing works and that plotly and seaborn are neither present nor imported. Every other job
+  installs all extras, so nothing would otherwise notice a plotting import creeping back into the
+  parsing path.
+
+This completes the slimming tracked in
+`#177 <https://github.com/lucasrodes/whatstk/issues/177>`_.
+
+.. container:: toggle
+
+    **Show all commits**
+
+    .. git_changelog::
+        :rev-list: v0.9.1..HEAD
+
 v0.9.1
 ------
 
